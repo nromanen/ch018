@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+
 @Entity
 @Table(name="books")
 public class Book {
@@ -134,5 +135,30 @@ public class Book {
 		this.term = term;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		if (this.title.equals(((Book) obj).getTitle())
+				&& this.getAuthors().equals(((Book) obj).getAuthors())
+				&& this.getPublication().equals(((Book) obj).getPublication())) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override 
+	public int hashCode() {
+		return this.id;
+	}
+
+	@Override
+	public String toString() {
+		return getId() + " " + getTitle() + " " + getAuthors() + " " + getYear();
+	}
+
 	
 }

@@ -15,10 +15,11 @@ public class TestController {
 	
 	private int visitorCount = 0;
 	
-	@RequestMapping("/index.html")
+	@RequestMapping("/")
 	public String index(Model model) {
-		model.addAttribute("visitorCount", visitorCount++);
-		return "view/index.jsp";
+		model.addAttribute("visitorCount", ++visitorCount);
+		model.addAttribute("today", new java.util.Date().toString() );
+		return "index";
 	}
 
 }

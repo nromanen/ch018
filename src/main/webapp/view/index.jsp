@@ -6,5 +6,6 @@
 <body>
 <h4> Congradulations! </h4>
 You are <b>${visitorCount}</b> visitor <br/>
+Today is <b>${today}</b>
 </body>
 </html>
