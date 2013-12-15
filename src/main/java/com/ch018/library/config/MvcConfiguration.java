@@ -19,6 +19,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/view/");
 		resolver.setSuffix(".jsp");
+		
 		return resolver;
     }
     
@@ -31,4 +32,5 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+    
 }

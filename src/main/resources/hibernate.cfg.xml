@@ -22,5 +22,7 @@
     <property name="hbm2ddl.auto">update</property>
     
     <mapping class="com.ch018.library.entity.Book"/>
+    <mapping class="com.ch018.library.entity.Bookcase"/>
+    <mapping class="com.ch018.library.entity.BooksInUse"/>
   </session-factory>
 </hibernate-configuration>

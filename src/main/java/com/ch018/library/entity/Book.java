@@ -2,6 +2,7 @@ package com.ch018.library.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Book {
 	
 	private int id;
-	private int bookcaseId;
+	private Bookcase bookcase;
 	private String title;
 	private String authors;
 	private int year;
@@ -44,9 +45,10 @@ public class Book {
 		return this.id;
 	}
 	
-	@Column(name="Bookcase_id")
-	public int getBookase() {
-		return bookcaseId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="Bookcase_id")
+	public Bookcase getBookase() {
+		return bookcase;
 	}
 	
 	@Column(name="title")
@@ -95,12 +97,13 @@ public class Book {
 		return person;
 	}
 	
+	
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public void setBookase(int bookcaseId) {
-		this.bookcaseId = bookcaseId;
+	public void setBookase(Bookcase bookcase) {
+		this.bookcase = bookcase;
 	}
 	
 	public void setTitle(String title) {
