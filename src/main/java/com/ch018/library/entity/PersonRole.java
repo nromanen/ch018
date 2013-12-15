@@ -4,6 +4,11 @@
  */
 package com.ch018.library.entity;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +22,8 @@ import javax.persistence.Table;
  * @author Edd Arazian
  */
 @Entity
-@Table(name = "role")
-public class PersoneRole {
+@Table(name = "personrole")
+public class PersonRole implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +32,14 @@ public class PersoneRole {
     @JoinColumn(name = "rolename")
     private String roleName;
     
-    public PersoneRole() {
+    @OneToMany(mappedBy = "role")
+    private Set<Person> persons = new HashSet<>();
+    
+    public PersonRole() {
         
     }
 
-    public PersoneRole(String roleName) {
+    public PersonRole(String roleName) {
         this.roleName = roleName;
     }
 
@@ -49,6 +57,14 @@ public class PersoneRole {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Set<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
     }
     
     

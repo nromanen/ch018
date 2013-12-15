@@ -8,8 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -35,9 +39,10 @@ public class Person implements Serializable {
     @Column(name = "password")
     private String password;
     
-    @Column(name = "prole")
-    @PrimaryKeyJoinColumn(name = "personrole")
-    private int role;
+    @ManyToOne()
+    @JoinColumn(name = "rid")
+    private PersonRole role;
+   
     
     @Column(name = "cellphone")
     private String cellphone;
@@ -47,22 +52,6 @@ public class Person implements Serializable {
     
     @Column(name = "sms")
     private boolean sms;
-    
-    @Column(name = "timelyReturn")
-    private int timelyReturn;
-    
-    @Column(name = "untimelyReturn")
-    private int untimekyReturn;
-    
-    @Column(name = "booksAllowed")
-    private int booksAllowed;
-    
-    @Column(name = "failedOrders")
-    private int failedOrders;
-    
-    @Column(name = "generalRatio")
-    private float generalRatio;
-    
     
     
     public Person() {
@@ -137,46 +126,14 @@ public class Person implements Serializable {
         this.sms = sms;
     }
 
-    public int getTimelyReturn() {
-        return timelyReturn;
+    public PersonRole getRole() {
+        return role;
     }
 
-    public void setTimelyReturn(int timelyReturn) {
-        this.timelyReturn = timelyReturn;
+    public void setRole(PersonRole role) {
+        this.role = role;
     }
 
-    public int getUntimekyReturn() {
-        return untimekyReturn;
-    }
-
-    public void setUntimekyReturn(int untimekyReturn) {
-        this.untimekyReturn = untimekyReturn;
-    }
-
-    public int getBooksAllowed() {
-        return booksAllowed;
-    }
-
-    public void setBooksAllowed(int booksAllowed) {
-        this.booksAllowed = booksAllowed;
-    }
-
-    public int getFailedOrders() {
-        return failedOrders;
-    }
-
-    public void setFailedOrders(int failedOrders) {
-        this.failedOrders = failedOrders;
-    }
-
-    public float getGeneralRatio() {
-        return generalRatio;
-    }
-
-    public void setGeneralRatio(float generalRatio) {
-        this.generalRatio = generalRatio;
-    }
-    
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;
