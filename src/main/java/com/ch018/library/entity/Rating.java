@@ -5,15 +5,21 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -24,12 +30,15 @@ import org.hibernate.annotations.Generated;
 public class Rating implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "selfgen")
+    @GenericGenerator(name = "selfgen", strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "person"))
+    private int personid;
     
+    //@OneToOne(mappedBy = "rating")
     @OneToOne
     @PrimaryKeyJoinColumn
-    private Person userId;
+    private Person person;
     
     @Column(name = "timelyreturn")
     private int timelyReturn;
@@ -44,20 +53,24 @@ public class Rating implements Serializable {
     private int failedOrders;
     
     @Column(name = "generalratio")
-    private float generalRatio;
+    private float generalRating;
+    
     
     public Rating() {
         
     }
 
-    public Person getUserId() {
-        return userId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUserId(Person userId) {
-        this.userId = userId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
+   
+    
+    
     public int getTimelyReturn() {
         return timelyReturn;
     }
@@ -90,21 +103,23 @@ public class Rating implements Serializable {
         this.failedOrders = failedOrders;
     }
 
-    public float getGeneralRatio() {
-        return generalRatio;
+    public float getGeneralRating() {
+        return generalRating;
     }
 
-    public void setGeneralRatio(float generalRatio) {
-        this.generalRatio = generalRatio;
+    public void setGeneralRating(float generalRatio) {
+        this.generalRating = generalRatio;
     }
 
-    public int getId() {
-        return id;
+    public int getPersonid() {
+        return personid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonid(int personid) {
+        this.personid = personid;
     }
+
+    
     
     
     

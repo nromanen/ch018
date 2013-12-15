@@ -12,11 +12,13 @@ import java.util.List;
 import org.apache.logging.log4j.core.Logger;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Edd Arazian
  */
+@Component
 public class PersonDaoImpl implements PersonDao {
 
  

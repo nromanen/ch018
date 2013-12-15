@@ -1,6 +1,7 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,8 @@ public class Person implements Serializable {
     @JoinColumn(name = "rid")
     private PersonRole role;
    
+    @OneToOne(mappedBy = "person")
+    private Rating rating;
     
     @Column(name = "cellphone")
     private String cellphone;
@@ -134,6 +137,16 @@ public class Person implements Serializable {
         this.role = role;
     }
 
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    
+    
     @Override
     public boolean equals(Object other) {
         if (other == null) return false;

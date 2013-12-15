@@ -7,11 +7,13 @@ package com.ch018.library.dao;
 import com.ch018.library.entity.Person;
 import com.ch018.library.entity.PersonRole;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Edd Arazian
  */
+@Component
 public interface PersonDao {
     
     void save(Person person);

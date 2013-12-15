@@ -6,5 +6,6 @@
 <body>
 <h4> Congradulations! </h4>
 You are <b>${visitorCount}</b> visitor <br/>
+Test value <b>${result.get(0).getGeneralRating()}</b>
 </body>
 </html>
