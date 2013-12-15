@@ -30,7 +30,7 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> getAllBooks() {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createCriteria(Book.class).list();
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
-@Service("BookService")
+@Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired

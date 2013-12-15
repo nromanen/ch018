@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
-@Component
 public interface BookDAO {
 	void addBook(Book book);
 	void updateBook(int id, Book book);
