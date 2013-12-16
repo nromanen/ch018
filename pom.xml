@@ -26,16 +26,21 @@
       <version>2.0-beta9</version>
     </dependency>
     <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.8.7</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j.osgi</groupId>
+      <artifactId>log4j-core-osgi-reduced</artifactId>
+      <version>2.0-beta9</version>
+    </dependency>
+    <dependency>
 	  <groupId>org.hibernate</groupId>
-	  <artifactId>hibernate</artifactId>
-	  <version>3.2.5.ga</version>
-	 </dependency>
-	 <dependency>
-	  <groupId>org.hibernate</groupId>
-	  <artifactId>hibernate-entitymanager</artifactId>
-	  <version>3.3.2.GA</version>
-         </dependency>
-    
+	  <artifactId>hibernate-core</artifactId>
+	  <version>4.2.7.SP1</version>
+    </dependency>
     <dependency>
 	  <groupId>mysql</groupId>
 	  <artifactId>mysql-connector-java</artifactId>
@@ -67,21 +72,6 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
  	</dependency>
- 	<dependency>
-      <groupId>org.javassist</groupId>
-      <artifactId>javassist</artifactId>
-      <version>3.18.0-GA</version>
-    </dependency>
-  <dependency>
-	  <groupId>org.springframework</groupId>
-	  <artifactId>spring-orm</artifactId>
-	  <version>3.2.5.RELEASE</version>
-  </dependency>
-  <dependency>
-      <groupId>javax.transaction</groupId>
-      <artifactId>jta</artifactId>
-      <version>1.1</version>
-    </dependency>
   </dependencies>
   <build>
     <finalName>library</finalName>
@@ -90,17 +80,7 @@
 	  		<groupId>org.apache.tomcat.maven</groupId>
 	  		<artifactId>tomcat7-maven-plugin</artifactId>
 	  		<version>2.2</version>
-
 		</plugin>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.1</version>
-			<configuration>
-        <source>1.7</source>
-        <target>1.7</target>
-      </configuration>
-   </plugin>
      </plugins>
   </build>
   <properties>
