@@ -2,9 +2,12 @@ package com.ch018.library.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
+@Service
 public interface BookService {
 	void addBook(Book book);
 	void updateBook(int id, Book book);

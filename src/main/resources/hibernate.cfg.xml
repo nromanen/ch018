@@ -20,6 +20,5 @@
     
     <mapping class="com.ch018.library.entity.Book"/>
     <mapping class="com.ch018.library.entity.Bookcase"/>
-    <mapping class="com.ch018.library.entity.BooksInUse"/>
-  </session-factory>
+     </session-factory>
 </hibernate-configuration>

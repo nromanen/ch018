@@ -1,5 +1,6 @@
 package com.ch018.library.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,15 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
-@Table(name="boockase")
-public class Bookcase {
+@Table(name="bookcase")
+public class Bookcase  implements Serializable {
 	
 	private int id;
 	private String name;
@@ -30,9 +30,8 @@ public class Bookcase {
 	}
 	
 	@Id
-	@GeneratedValue
-	@GenericGenerator(name="increment", strategy = "increment")
-	@Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "bcid", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
 	}

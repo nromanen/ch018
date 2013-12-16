@@ -1,24 +1,45 @@
 package com.ch018.library.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
+import com.ch018.library.util.HibernateUtil;
 
-@Repository
+@Component
 public class BookDAOImpl implements BookDAO {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+
 	
+	static Logger log = LogManager.getLogger(BookDAOImpl.class);
+
 	@Override
 	public void addBook(Book book) {
 		// TODO Auto-generated method stub
-		sessionFactory.getCurrentSession().save(book);
+		Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(book);
+            session.getTransaction().commit();
+        } catch(Exception e){
+            log.error(e);
+        }finally{
+            try{
+                session.close();
+            }catch(Exception e){
+                log.error(e);
+            }
+        }
 	}
 
 	@Override
@@ -30,7 +51,21 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> getAllBooks() {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createCriteria(Book.class).list();
+		List<Book> books = new ArrayList<>();
+		Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            books.addAll(session.createCriteria(Book.class).list());
+        } catch(Exception e){
+            log.error(e);
+        }finally{
+            try{
+                session.close();
+            }catch(Exception e){
+                log.error(e);
+            }
+        }
+		return books;
 	}
 
 	@Override

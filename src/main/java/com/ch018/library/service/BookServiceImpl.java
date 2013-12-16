@@ -16,67 +16,66 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	BookDAO bookDAO;
 	
-	@Transactional
+
 	public void addBook(Book book) {
 		// TODO Auto-generated method stub
 		bookDAO.addBook(book);
 	}
 
-	@Transactional
+
 	public void updateBook(int id, Book book) {
 		// TODO Auto-generated method stub
 		bookDAO.updateBook(id, book);
 	}
 
-	@Transactional
+
 	public List<Book> getAllBooks() {
 		// TODO Auto-generated method stub
 		return bookDAO.getAllBooks();
 	}
 
-	@Transactional
+
 	public Book getBooksById(int id) {
 		// TODO Auto-generated method stub
 		return bookDAO.getBooksById(id);
 	}
 
-	@Transactional
+
 	public void deleteBook(Book book) {
 		// TODO Auto-generated method stub
 		bookDAO.deleteBook(book);
 	}
 
-	@Transactional
+
 	public List<Book> getBooksByTitle(String title) {
 		// TODO Auto-generated method stub
 		return bookDAO.getBooksByTitle(title);
 	}
 
-	@Transactional
+
 	public List<Book> getBooksByAuthors(String authors) {
 		// TODO Auto-generated method stub
 		return bookDAO.getBooksByAuthors(authors);
 	}
 
-	@Transactional
+
 	public List<Book> getBooksByYear(int year) {
 		// TODO Auto-generated method stub
 		return bookDAO.getBooksByYear(year);
 	}
 
-	@Transactional
+
 	public List<Book> getBooksByPerson(Person person) {
 		// TODO Auto-generated method stub
 		return bookDAO.getBooksByPerson(person);
 	}
 
-	@Transactional
 	public int getCount(Book book) {
 		// TODO Auto-generated method stub
 		return bookDAO.getCount(book);
 	}
 
-	@Transactional
+
 	public int getCurrentCount(Book book) {
 		// TODO Auto-generated method stub
 		return bookDAO.getCurrentCount(book);

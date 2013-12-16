@@ -1,9 +1,12 @@
 package com.ch018.library.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -15,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="books")
-public class Book {
+public class Book implements Serializable{
 	
 	private int id;
 	private Bookcase bookcase;
@@ -37,18 +40,18 @@ public class Book {
 		title = b.getTitle();
 	}
 	
+	
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
-	@Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="Bookcase_id")
-	public Bookcase getBookase() {
-		return bookcase;
+	@JoinColumn(name="bcid", nullable = false)
+	public Bookcase getBookcase() {
+		return this.bookcase;
 	}
 	
 	@Column(name="title")
@@ -91,18 +94,18 @@ public class Book {
 		return term;
 	}
 	
-	@ManyToOne
+	/*@ManyToOne
 	@JoinTable(name="BooksInUse", joinColumns = @JoinColumn(name="Books_id"), inverseJoinColumns = @JoinColumn(name="Person_id"))
 	public Person getPerson() {
 		return person;
-	}
+	}*/
 	
 	
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public void setBookase(Bookcase bookcase) {
+	public void setBookcase(Bookcase bookcase) {
 		this.bookcase = bookcase;
 	}
 	
