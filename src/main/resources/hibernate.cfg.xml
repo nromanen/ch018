@@ -20,5 +20,9 @@
     
     <mapping class="com.ch018.library.entity.Book"/>
     <mapping class="com.ch018.library.entity.Bookcase"/>
+    <mapping class="com.ch018.library.entity.Person"/>
+    <mapping class="com.ch018.library.entity.PersonRole"/>
+    <mapping class="com.ch018.library.entity.Rating"/>
      </session-factory>
 </hibernate-configuration>
+
