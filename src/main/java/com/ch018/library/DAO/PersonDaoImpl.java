@@ -2,11 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ch018.library.dao;
+package com.ch018.library.DAO;
 
-import com.ch018.library.dao.util.HibernateUtil;
+import com.ch018.library.util.HibernateUtil;
 import com.ch018.library.entity.Person;
-import com.ch018.library.entity.PersonRole;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.core.Logger;
@@ -217,7 +216,7 @@ public class PersonDaoImpl implements PersonDao {
     }
 
     @Override
-    public List<Person> getByRole(int role) {
+    public List<Person> getByRole(String role) {
         Session session = null;
         List<Person> persons = null;
         try {
