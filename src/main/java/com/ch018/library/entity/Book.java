@@ -35,6 +35,7 @@ public class Book implements Serializable{
 	private int shelf;
 	private int bookcase;
 	private int term;
+        
 	private Set<BooksInUse> booksinuse = new HashSet<>();
 	
 	public Book() {

@@ -56,7 +56,7 @@ public class WishListDAOImpl implements WishListDAO{
     }
 
     @Override
-    public ArrayList<WishList> getAllWishes() {
+    public Collection getAllWishes() {
        ArrayList<WishList> wish = new ArrayList<WishList>();
        Session session = null;
        try{
@@ -72,9 +72,12 @@ public class WishListDAOImpl implements WishListDAO{
     public WishList getWishById(int id) {
          WishList wish = new WishList();
          Session session = null;
+         Query query = session.createQuery("from wishlist WHERE id=:id");
          try{
-             
-            }catch(Exception e){
+             session = HibernateUtil.getSessionFactory().openSession();   
+             session.getTransaction().begin();
+             query.setParameter("id", id);
+             }catch(Exception e){
              log.error(e);
          }
       return wish;

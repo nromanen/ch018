@@ -30,12 +30,12 @@ public class WishListServiceImpl implements WishListService{
 
     @Override
     public Collection getAllWishes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return wishlistDAO.getAllWishes();
     }
 
     @Override
     public WishList getWishById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return wishlistDAO.getWishById(id);
     }
     
 }

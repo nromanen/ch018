@@ -16,6 +16,6 @@ import java.util.Collection;
 public interface WishListDAO {
     public void addWish(WishList wish);
     public void deleteWish(WishList wish);
-    public ArrayList<WishList> getAllWishes();
+    public Collection getAllWishes();
     public WishList getWishById(int id);
 }
