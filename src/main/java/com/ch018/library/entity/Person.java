@@ -48,7 +48,7 @@ public class Person implements Serializable {
     @Column(name = "cellphone")
     private String cellphone;
     
-    @Column(name = "role")
+    @Column(name = "prole")
     private Role role;
     
     @Column(name = "confirmed")
