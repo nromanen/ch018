@@ -23,7 +23,7 @@
     <mapping class="com.ch018.library.entity.Book"/>
     <mapping class="com.ch018.library.entity.Genre"/>
     <mapping class="com.ch018.library.entity.BooksInUse"/>
-
+    <mapping class="com.ch018.library.entity.WishList"/>
      </session-factory>
 </hibernate-configuration>
 
