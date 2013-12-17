@@ -111,19 +111,87 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	@Override
 	public List<BooksInUse> getByIssueDate(Date issueDate) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<BooksInUse> booksInUses = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            booksInUses.addAll(session.createCriteria(BooksInUse.class).add(Restrictions.eq("issue_date", issueDate)).
+                    list());
+        } catch(Exception e){
+            System.out.println(e);
+            log.error(e);
+        }finally{
+            try{
+                session.close();
+            }catch(Exception e){
+                log.error(e);
+            }
+        }
+        return booksInUses;
 	}
 
 	@Override
 	public List<BooksInUse> getByReturnDate(Date returnDate) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<BooksInUse> booksInUses = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            booksInUses.addAll(session.createCriteria(BooksInUse.class).add(Restrictions.eq("return_date", returnDate)).
+                    list());
+        } catch(Exception e){
+            System.out.println(e);
+            log.error(e);
+        }finally{
+            try{
+                session.close();
+            }catch(Exception e){
+                log.error(e);
+            }
+        }
+        return booksInUses;
 	}
 
 	@Override
 	public List<BooksInUse> getInUse(boolean inUse) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<BooksInUse> booksInUses = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            booksInUses.addAll(session.createCriteria(BooksInUse.class).add(Restrictions.eq("inUse", inUse)).
+                    list());
+        } catch(Exception e){
+            System.out.println(e);
+            log.error(e);
+        }finally{
+            try{
+                session.close();
+            }catch(Exception e){
+                log.error(e);
+            }
+        }
+        return booksInUses;
+	}
+
+	@Override
+	public void updateBooksInUse(int id, BooksInUse booksInUse) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			booksInUse.setBuid(id);			
+			session.update(booksInUse);
+			session.getTransaction().commit();
+			log.info("Updated booksInUse: " + booksInUse);
+		} catch (Exception e) {
+			log.error("Error insert " + e);
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
 	}
 
 }

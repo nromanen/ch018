@@ -78,8 +78,8 @@ public class BooksController {
 		b1.setGenre(g);
 		b2.setGenre(g);
 		bookService.addBook(b1);
-		bookService.addBook(b2);*/
-		/*
+		bookService.addBook(b2);
+		
 		Person p1 = new Person();
 		p1.setCellphone("111111111");
 		p1.setConfirm(true);
@@ -93,10 +93,10 @@ public class BooksController {
 		p1.setSurname("asddsas");
 		
 		personService.save(p1);
-		*/
 		
+		*/
 		Book book = bookService.getBooksById(1);
-		Person person = personService.getById(1);
+		/*Person person = personService.getById(1);
 		
 		BooksInUse biu = new BooksInUse();
 		biu.setBook(book);
@@ -108,7 +108,11 @@ public class BooksController {
 		
 		
 		booksInUseService.addBooksInUse(biu);
+		*/
 		
+		//book.setDescription("new desc");
+		
+		//bookService.updateBook(book.getId(), book);
 		
 		return new ModelAndView("books", "books", bookService.getAllBooks());
 	}

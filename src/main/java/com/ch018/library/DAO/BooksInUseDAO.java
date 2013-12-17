@@ -8,7 +8,7 @@ import com.ch018.library.entity.BooksInUse;
 public interface BooksInUseDAO {
 	void addBooksInUse(BooksInUse booksInUse);
 	void removeBooksInUse(BooksInUse booksInUse);
-	//void updateBooksInUse(int id, Book book);
+	void updateBooksInUse(int id, BooksInUse booksInUse);
 	List<BooksInUse> getAllBooksInUse();
 	List<BooksInUse> getByPersonId(int personId);
 	List<BooksInUse> getByBookId(int bookId);

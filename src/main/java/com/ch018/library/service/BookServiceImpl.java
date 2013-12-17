@@ -70,15 +70,4 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.getBooksByPerson(person);
 	}
 
-	public int getCount(Book book) {
-		// TODO Auto-generated method stub
-		return bookDAO.getCount(book);
-	}
-
-
-	public int getCurrentCount(Book book) {
-		// TODO Auto-generated method stub
-		return bookDAO.getCurrentCount(book);
-	}
-
 }
