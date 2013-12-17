@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 16 2013 г., 23:00
+-- Время создания: Дек 17 2013 г., 12:16
 -- Версия сервера: 5.6.11
 -- Версия PHP: 5.5.3
 
@@ -29,20 +29,27 @@ USE `library`;
 --
 
 CREATE TABLE IF NOT EXISTS `books` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Genre_gid` int(10) unsigned NOT NULL,
-  `title` varchar(45) DEFAULT NULL,
-  `authors` varchar(45) DEFAULT NULL,
-  `year_public` int(10) unsigned DEFAULT NULL,
-  `publication` varchar(45) DEFAULT NULL,
-  `pages` int(10) unsigned DEFAULT NULL,
-  `description` varchar(45) DEFAULT NULL,
-  `term` int(10) unsigned DEFAULT NULL,
-  `shelf` int(10) unsigned NOT NULL,
-  `bookcase` int(10) unsigned NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `authors` varchar(255) DEFAULT NULL,
+  `bookcase` int(11) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `pages` int(11) DEFAULT NULL,
+  `publication` varchar(255) DEFAULT NULL,
+  `shelf` int(11) DEFAULT NULL,
+  `term` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `year_public` int(11) DEFAULT NULL,
+  `gid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `Books_FKIndex3` (`Genre_gid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `FK_k00r52dx96mgbrvv8i05saupq` (`gid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `books`
+--
+
+INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`) VALUES
+(1, '0000', 1, 'asas', 5, 'asda', 1, 14, 'asssss', 1999, 3);
 
 -- --------------------------------------------------------
 
@@ -71,9 +78,14 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
   `return_date` datetime NOT NULL,
   `term` int(10) unsigned NOT NULL,
   `inUse` tinyint(1) NOT NULL DEFAULT '0',
+  `buid` int(11) NOT NULL,
+  `issue_date` datetime DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
   PRIMARY KEY (`Person_id`,`Books_id`),
   KEY `Person_has_Books_FKIndex1` (`Person_id`),
-  KEY `Person_has_Books_FKIndex2` (`Books_id`)
+  KEY `Person_has_Books_FKIndex2` (`Books_id`),
+  KEY `FK_4w24l2ceif0klp5lk73bc3qjc` (`id`),
+  KEY `FK_rece9y8w4qeg63ksgcrecwn54` (`Person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -83,10 +95,17 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
 --
 
 CREATE TABLE IF NOT EXISTS `genre` (
-  `gid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `gid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `genre`
+--
+
+INSERT INTO `genre` (`gid`, `name`) VALUES
+(3, 'G1');
 
 -- --------------------------------------------------------
 
@@ -131,6 +150,22 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `ratings`
+--
+
+CREATE TABLE IF NOT EXISTS `ratings` (
+  `personid` int(11) NOT NULL,
+  `booksallowed` int(11) DEFAULT NULL,
+  `failedorders` int(11) DEFAULT NULL,
+  `generalratio` float DEFAULT NULL,
+  `timelyreturn` int(11) DEFAULT NULL,
+  `untimelyreturn` int(11) DEFAULT NULL,
+  PRIMARY KEY (`personid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `wishlist`
 --
 
@@ -141,6 +176,23 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   PRIMARY KEY (`id`),
   KEY `WishList_FKIndex1` (`Books_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `books`
+--
+ALTER TABLE `books`
+  ADD CONSTRAINT `FK_k00r52dx96mgbrvv8i05saupq` FOREIGN KEY (`gid`) REFERENCES `genre` (`gid`);
+
+--
+-- Ограничения внешнего ключа таблицы `booksinuse`
+--
+ALTER TABLE `booksinuse`
+  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
+  ADD CONSTRAINT `FK_4w24l2ceif0klp5lk73bc3qjc` FOREIGN KEY (`id`) REFERENCES `books` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,7 +1,10 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -21,7 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Book implements Serializable{
 	
 	private int id;
-	private Bookcase bookcase;
+	private Genre genre;
 	private String title;
 	private String authors;
 	private int year;
@@ -29,8 +33,9 @@ public class Book implements Serializable{
 	private int pages;
 	private String description;
 	private int shelf;
+	private int bookcase;
 	private int term;
-	private Person person;
+	private Set<BooksInUse> booksinuse = new HashSet<>();
 	
 	public Book() {
 		
@@ -49,9 +54,9 @@ public class Book implements Serializable{
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="bcid", nullable = false)
-	public Bookcase getBookcase() {
-		return this.bookcase;
+	@JoinColumn(name="gid", nullable = false)
+	public Genre getGenre() {
+		return this.genre;
 	}
 	
 	@Column(name="title")
@@ -89,6 +94,11 @@ public class Book implements Serializable{
 		return shelf;
 	}
 	
+	@Column(name="bookcase")
+	public int getBookcase() {
+		return bookcase;
+	}
+	
 	@Column(name="term")
 	public int getTerm() {
 		return term;
@@ -100,13 +110,27 @@ public class Book implements Serializable{
 		return person;
 	}*/
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	public Set<BooksInUse> getBooksinuse() {
+		return booksinuse;
+	}
+	
+	public void setBooksinuse(Set<BooksInUse> booksinuse) {
+		this.booksinuse = booksinuse;
+	}
+	
+	
 	
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public void setBookcase(Bookcase bookcase) {
+	public void setBookcase(int bookcase) {
 		this.bookcase = bookcase;
+	}
+	
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
 	
 	public void setTitle(String title) {

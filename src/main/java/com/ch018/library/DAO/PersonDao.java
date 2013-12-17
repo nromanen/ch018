@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ch018.library.dao;
+package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Person;
-import com.ch018.library.entity.PersonRole;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +24,7 @@ public interface PersonDao {
     List<Person> getByName(String name);
     List<Person> getBySurname(String surname);
     Person getByCellPhone(String cellphone);
-    List<Person> getByRole(int role);
+    List<Person> getByRole(String role);
     List<Person> getConfirmed();
     List<Person> getSmsEnabled();
     
