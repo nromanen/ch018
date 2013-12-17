@@ -14,24 +14,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="bookcase")
-public class Bookcase  implements Serializable {
+@Table(name="genre")
+public class Genre  implements Serializable {
 	
 	private int id;
 	private String name;
 	private Set<Book> books = new HashSet<>();
 	
-	public Bookcase() {
+	public Genre() {
 		
 	}
 	
-	public Bookcase(String name) {
+	public Genre(String name) {
 		this.name = name;
 	}
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "bcid", unique = true, nullable = false)
+	@Column(name = "gid", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
 	}
@@ -41,7 +41,7 @@ public class Bookcase  implements Serializable {
 		return name;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bookcase")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
 	public Set<Book> getBooks() {
 		return this.books;
 	}
@@ -65,7 +65,7 @@ public class Bookcase  implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		if (this.name.equals(((Bookcase) obj).getName())) {
+		if (this.name.equals(((Genre) obj).getName())) {
 			return true;
 		}
 		return false;

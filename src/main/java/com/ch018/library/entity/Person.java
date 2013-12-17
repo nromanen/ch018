@@ -1,9 +1,13 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,18 +18,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.ForeignKey;
 
 /**
  *
  * @author Edd Arazian
  */
+enum Role {ADMINISTRATOR, LIBRARIAN, USER};
+
 @Entity
-@Table(name = "persons")
+@Table(name = "person")
 public class Person implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     
     @Column(name = "name")
@@ -34,28 +42,42 @@ public class Person implements Serializable {
     @Column(name = "surname")
     private String surname;
     
-    @Column(name = "email")
+    @Column(name = "e_mail")
     private String email;
-    
-    @Column(name = "password")
-    private String password;
-    
-    @ManyToOne()
-    @JoinColumn(name = "rid")
-    private PersonRole role;
-   
-    @OneToOne(mappedBy = "person")
-    private Rating rating;
     
     @Column(name = "cellphone")
     private String cellphone;
     
-    @Column(name = "confirm")
+    @Column(name = "role")
+    private Role role;
+    
+    @Column(name = "confirmed")
     private boolean confirm;
     
     @Column(name = "sms")
     private boolean sms;
     
+    @Column(name = "hash")
+    private String password;
+    
+    @Column(name = "salt")
+    private String salt;
+    
+    @Column(name = "timely_returns")
+    private int timelyReturns;
+    
+    @Column(name = "untimely_returns")
+    private int untimelyReturns;
+    
+    @Column(name = "multibookAllowed")
+    private int multibookAllowed;
+    
+    @Column(name = "failedOrders")
+    private int failedOrders;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<BooksInUse> booksinuses = new HashSet<>();
+     
     
     public Person() {
         
@@ -104,6 +126,14 @@ public class Person implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public String getCellphone() {
         return cellphone;
@@ -113,7 +143,7 @@ public class Person implements Serializable {
         this.cellphone = cellphone;
     }
 
-    public boolean isConfirm() {
+    public boolean getConfirmed() {
         return confirm;
     }
 
@@ -121,7 +151,7 @@ public class Person implements Serializable {
         this.confirm = confirm;
     }
 
-    public boolean isSms() {
+    public boolean getSms() {
         return sms;
     }
 
@@ -129,21 +159,54 @@ public class Person implements Serializable {
         this.sms = sms;
     }
 
-    public PersonRole getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(PersonRole role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = Role.valueOf(role);
     }
 
-    public Rating getRating() {
-        return rating;
+    public int getTimelyReturns() {
+        return timelyReturns;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setTimelyReturns(int timelyReturns) {
+        this.timelyReturns = timelyReturns;
     }
+    
+    public int getUntimelyReturns() {
+        return untimelyReturns;
+    }
+
+    public void setUntimelyReturns(int untimelyReturns) {
+        this.untimelyReturns = untimelyReturns;
+    }
+    
+    public int getMultibookAllowed() {
+        return multibookAllowed;
+    }
+
+    public void setMultibookAllowed(int multibookAllowed) {
+        this.multibookAllowed = multibookAllowed;
+    }
+    
+    public int getFailedOrders() {
+        return failedOrders;
+    }
+
+    public void setFailedOrders(int failedOrders) {
+        this.failedOrders = failedOrders;
+    }
+    
+    
+	public Set<BooksInUse> getBooksinuses() {
+		return booksinuses;
+	}
+	
+	public void setBooksinuses(Set<BooksInUse> booksinuses) {
+		this.booksinuses = booksinuses;
+	}
 
     
     

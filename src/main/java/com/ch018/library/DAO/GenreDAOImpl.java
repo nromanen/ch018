@@ -12,22 +12,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Bookcase;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.util.HibernateUtil;
 
 @Component
-public class BookcaseDAOImpl implements BookcaseDAO {
+public class GenreDAOImpl implements GenreDAO {
 	
-	static Logger log = LogManager.getLogger(BookcaseDAOImpl.class);
+	static Logger log = LogManager.getLogger(GenreDAOImpl.class);
 	
 	@Override
-	public void addBokcase(Bookcase bookcase) {
+	public void addGenre(Genre genre) {
 		// TODO Auto-generated method stub
 		Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(bookcase);
+            session.save(genre);
             session.getTransaction().commit();
         } catch(Exception e){
             log.error(e);
@@ -41,19 +41,19 @@ public class BookcaseDAOImpl implements BookcaseDAO {
 	}
 
 	@Override
-	public void updateBookcase(int id, Bookcase bookcase) {
+	public void updateGenre(int id, Genre genre) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public List<Bookcase> getAllBookcases() {
+	public List<Genre> getAllGenres() {
 		// TODO Auto-generated method stub
-		List<Bookcase> bookcase = new ArrayList<>();
+		List<Genre> bookcase = new ArrayList<>();
 		Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            bookcase.addAll(session.createCriteria(Bookcase.class).list());
+            bookcase.addAll(session.createCriteria(Genre.class).list());
         } catch(Exception e){
             log.error(e);
         }finally{
@@ -67,13 +67,13 @@ public class BookcaseDAOImpl implements BookcaseDAO {
 	}
 
 	@Override
-	public Bookcase getBookcaseById(int id) {
+	public Genre getGenreById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteBookcase(Bookcase bookcase) {
+	public void deleteGenre(Genre genre) {
 		// TODO Auto-generated method stub
 
 	}
