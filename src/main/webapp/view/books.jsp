@@ -6,9 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="<c:url value="resources/css/style.css" />" rel="stylesheet">
 <title>Books</title>
 </head>
 <body>
+<div class = "TableBooks">
 <table>
 	<thead>
 		<tr>
@@ -31,5 +33,6 @@
 		</tr>
 	</c:forEach>
 </table>
+</div>
 </body>
 </html>

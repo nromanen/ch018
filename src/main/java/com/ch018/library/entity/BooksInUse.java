@@ -26,6 +26,7 @@ public class BooksInUse {
 	private Date issueDate;
 	private Date returnDate;
 	private boolean inUse;
+	private int term;
 	
 	public BooksInUse() {
 		
@@ -45,7 +46,7 @@ public class BooksInUse {
 	}
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
+	@JoinColumn(name="Books_id")
 	public Book getBook() {
 		return book;
 	}
@@ -64,6 +65,11 @@ public class BooksInUse {
 	@Column(name="inUse")
 	public boolean getInUse() {
 		return inUse;
+	}
+	
+	@Column(name = "term")
+	public int getTerm() {
+		return term;
 	}
 	
 	public void setBuid(int buid) {
@@ -89,6 +95,10 @@ public class BooksInUse {
 	
 	public void setInUse(boolean inUse) {
 		this.inUse = inUse;
+	}
+	
+	public void setTerm(int term) {
+		this.term = term;
 	}
 	
 }

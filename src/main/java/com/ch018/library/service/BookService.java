@@ -18,6 +18,4 @@ public interface BookService {
 	List<Book> getBooksByAuthors(String authors);
 	List<Book> getBooksByYear(int year);
 	List<Book> getBooksByPerson(Person person);
-	int getCount(Book book);
-	int getCurrentCount(Book book);
 }
