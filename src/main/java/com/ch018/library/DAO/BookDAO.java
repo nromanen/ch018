@@ -1,8 +1,7 @@
+
 package com.ch018.library.DAO;
 
 import java.util.List;
-
-import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
@@ -17,6 +16,4 @@ public interface BookDAO {
 	List<Book> getBooksByAuthors(String authors);
 	List<Book> getBooksByYear(int year);
 	List<Book> getBooksByPerson(Person person);
-	int getCount(Book book);
-	int getCurrentCount(Book book);
 }

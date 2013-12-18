@@ -133,7 +133,7 @@ public class PersonDaoImpl implements PersonDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            person = (Person) session.createCriteria(Person.class).add(Restrictions.eq("email", email)).
+            person = (Person) session.createCriteria(Person.class).add(Restrictions.eq("e_mail", email)).
                     list().get(0);
             session.getTransaction().commit();
         } catch(Exception e){
