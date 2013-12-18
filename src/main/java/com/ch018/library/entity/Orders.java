@@ -38,7 +38,6 @@ public class Orders {
     }
     
     @Column(name="order_date")
-    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getOrderDate(){
         return this.date;
     }
@@ -55,7 +54,7 @@ public class Orders {
         this.idPerson=idPerson;
     }
     
-    public void setDate(Date date){
+    public void setOrderDate(Date date){
         this.date=date;
     }
     

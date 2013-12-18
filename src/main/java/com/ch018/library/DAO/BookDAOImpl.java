@@ -49,7 +49,6 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			book.setId(id);			
 			session.update(book);
 			session.getTransaction().commit();
 			log.info("Updated book: " + book);

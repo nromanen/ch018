@@ -6,13 +6,18 @@ package com.ch018.library.service;
 
 import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.entity.Orders;
+
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author okryvortc
  */
+
+@Service
 public class OrdersServiceImpl implements OrdersService{
 
     @Autowired

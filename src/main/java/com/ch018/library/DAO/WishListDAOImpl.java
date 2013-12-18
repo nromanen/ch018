@@ -8,22 +8,23 @@ package com.ch018.library.DAO;
 
 import com.ch018.library.entity.WishList;
 import com.ch018.library.util.HibernateUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import org.hibernate.Session;
-import org.hibernate.Query;
-import javax.swing.JOptionPane;
 
-import com.ch018.library.util.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 /**
  *
  * @author win7
  */
+@Component
 public class WishListDAOImpl implements WishListDAO{
 
-    static Logger log = LogManager.getLogger(GenreDAOImpl.class); 
+    static Logger log = LogManager.getLogger(WishListDAOImpl.class); 
     
     @Override
     public void addWish(WishList wish) {

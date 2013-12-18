@@ -8,11 +8,14 @@ package com.ch018.library.service;
 
 import com.ch018.library.DAO.WishListDAO;
 import com.ch018.library.entity.WishList;
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WishListServiceImpl implements WishListService{
     
     @Autowired

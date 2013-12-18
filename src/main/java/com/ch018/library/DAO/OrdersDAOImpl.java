@@ -6,17 +6,22 @@ package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Orders;
 import com.ch018.library.util.HibernateUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author okryvortc
  */
+
+@Component
 public class OrdersDAOImpl implements OrdersDAO{
 
     static Logger log = LogManager.getLogger(GenreDAOImpl.class);   
