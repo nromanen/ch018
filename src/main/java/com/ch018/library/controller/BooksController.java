@@ -35,8 +35,8 @@ public class BooksController {
 	@Autowired
 	GenreService genreService;
 	
-	@Autowired
-	PersonService personService;
+	@Autowired       
+      	PersonService personService;
 	
 	@Autowired
 	BooksInUseService booksInUseService;

@@ -1,18 +1,15 @@
-<%-- 
-    Document   : wishList
-    Created on : 18.12.2013, 12:14:26
-    Author     : win7
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h3>wishList</h3>
         
         <table>
 	<thead>
@@ -22,7 +19,14 @@
 			<td>personId</td>
 		</tr>
 	</thead>
-        <c:>
+            <c:forEach items="${wish}" var="wish">
+		<tr>
+			<td>${wish.id}</td>
+			<td>${book.booksID}</td>
+			<td>${wish.personId}</td>
+			
+		</tr>
+	</c:forEach>
         </table>
     </body>
 </html>

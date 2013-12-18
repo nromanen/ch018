@@ -17,10 +17,12 @@ import javax.swing.JOptionPane;
 import com.ch018.library.util.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 /**
  *
  * @author win7
  */
+@Component
 public class WishListDAOImpl implements WishListDAO{
 
     static Logger log = LogManager.getLogger(GenreDAOImpl.class); 

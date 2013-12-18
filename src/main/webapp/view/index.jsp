@@ -11,5 +11,6 @@
 You are <b>${visitorCount}</b> visitor <br/>
 Today is <b>${today}</b>
 <a href="<c:url value="/books"/>">Books</a>
+<a href="<c:url value= "/wishList"/>">Wish lists</a>
 </body>
 </html>
