@@ -26,17 +26,6 @@
       <version>2.0-beta9</version>
     </dependency>
     <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>6.8.7</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j.osgi</groupId>
-      <artifactId>log4j-core-osgi-reduced</artifactId>
-      <version>2.0-beta9</version>
-    </dependency>
-    <dependency>
 	  <groupId>org.hibernate</groupId>
 	  <artifactId>hibernate-core</artifactId>
 	  <version>4.2.7.SP1</version>
