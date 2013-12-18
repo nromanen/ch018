@@ -2,8 +2,6 @@ package com.ch018.library.DAO;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
