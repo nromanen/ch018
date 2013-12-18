@@ -64,6 +64,22 @@ public class Orders {
         return getId()+" "+getIdBooks()+" "+getIdPerson()+" "+getOrderDate();
     }
     
-    
-    
+    @Override
+    public boolean equals(Object obj){
+     if (this == obj) 
+         return true;
+     if (obj instanceof Orders){
+               if ( ((Orders)obj).getIdBooks()==this.getIdBooks() &&
+                   ((Orders)obj).getIdPerson()==this.getIdPerson() && 
+                   ((Orders)obj).getOrderDate()== this.getOrderDate()) {  return true;
+                                                                         }
+               else {
+                     return false;
+                     }
+           
+           } else {
+                    return false;
+                   }
+    }
+
 }

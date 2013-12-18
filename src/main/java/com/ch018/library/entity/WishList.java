@@ -46,4 +46,25 @@ public class WishList {
     public int getPersonId(){
         return this.personId;
     }
+    
+    @Override
+    public String toString(){
+        return this.getId()+" "+this.getBooksId()+" "+this.getPersonId();
+    }
+    
+    public boolean equals(Object obj){
+        if (this == obj) 
+         return true;
+     if (obj instanceof WishList){
+               if ( ((WishList)obj).getBooksId()==this.getBooksId() &&
+                    ((WishList)obj).getPersonId()==this.getPersonId()) {  return true;
+                                                                         }
+               else {
+                     return false;
+                     }
+           
+           } else {
+                    return false;
+                   }
+    }
 }
