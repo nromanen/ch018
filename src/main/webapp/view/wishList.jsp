@@ -15,14 +15,14 @@
 	<thead>
 		<tr>
 			<td>Id</td>
-			<td>booksId</td>
+			<td>booksID</td>
 			<td>personId</td>
 		</tr>
 	</thead>
             <c:forEach items="${wish}" var="wish">
 		<tr>
 			<td>${wish.id}</td>
-			<td>${book.booksID}</td>
+			<td>${wish.booksId}</td>
 			<td>${wish.personId}</td>
 			
 		</tr>

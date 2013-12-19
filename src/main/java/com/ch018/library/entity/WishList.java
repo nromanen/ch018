@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="wishlist")
 public class WishList {
     private int id;
-    private int booksID;
+    private int booksId;
     private int personId;
 
     public WishList() {
@@ -23,7 +23,7 @@ public class WishList {
     }
     
     public void setBooksId(int booksId){
-        this.booksID=booksId;
+        this.booksId=booksId;
     }
     
     public void setPersonId(int pId){
@@ -39,7 +39,7 @@ public class WishList {
     
     @Column(name="Books_id")
     public int getBooksId(){
-        return this.booksID;
+        return this.booksId;
     }
     
     @Column(name="person_id")
