@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 
 @Service
@@ -17,14 +18,16 @@ public class BookServiceImpl implements BookService {
 	BookDAO bookDAO;
 	
 	@Transactional
-	public void addBook(Book book) {
+	public void addBook(Book book, Genre genre) {
 		// TODO Auto-generated method stub
+		book.setGenre(genre);
 		bookDAO.addBook(book);
 	}
 
 	@Transactional
-	public void updateBook(Book book) {
+	public void updateBook(Book book, Genre genre) {
 		// TODO Auto-generated method stub
+		book.setGenre(genre);
 		bookDAO.updateBook(book);
 	}
 

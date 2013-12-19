@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Table(name = "wishlist")
 public class WishList {
 	private int id;
-	private int booksID;
-	private int personId;
+	private Person person;
+	private Book book;
 
 	public WishList() {
 	}
@@ -22,12 +22,12 @@ public class WishList {
 		this.id = id;
 	}
 
-	public void setBooksId(int booksId) {
-		this.booksID = booksId;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
-	public void setPersonId(int pId) {
-		this.personId = pId;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	@Id
@@ -37,35 +37,30 @@ public class WishList {
 		return this.id;
 	}
 
-	@Column(name = "Books_id")
-	public int getBooksId() {
-		return this.booksID;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Person_id")
+	public Person getPerson() {
+		return person;
 	}
 
-	@Column(name = "person_id")
-	public int getPersonId() {
-		return this.personId;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Books_id")
+	public Book getBook() {
+		return book;
 	}
 
 	@Override
 	public String toString() {
-		return this.getId() + " " + this.getBooksId() + " "
-				+ this.getPersonId();
+		return getId() + ": " + getPerson() + " - " + getBook();
 	}
 
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj instanceof WishList) {
-			if (((WishList) obj).getBooksId() == this.getBooksId()
-					&& ((WishList) obj).getPersonId() == this.getPersonId()) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
+		if (obj instanceof Orders) return true;
+		if (((Orders) obj).getBook().equals(this.getBook())
+				&& ((Orders) obj).getPerson().equals(this.getPerson())) 
+			return true;
+		return false;
 	}
 }

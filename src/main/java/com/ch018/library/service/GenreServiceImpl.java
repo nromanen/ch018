@@ -56,4 +56,11 @@ public class GenreServiceImpl implements GenreService {
 		return genreDAO.getCount();
 	}
 
+	@Override
+	@Transactional
+	public Genre getGenreByName(String name) {
+		// TODO Auto-generated method stub
+		return genreDAO.getGenreByName(name);
+	}
+
 }

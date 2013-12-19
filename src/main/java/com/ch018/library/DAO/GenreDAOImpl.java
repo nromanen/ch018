@@ -5,15 +5,12 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
-import com.ch018.library.util.HibernateUtil;
 
 @Component
 public class GenreDAOImpl implements GenreDAO {
@@ -57,8 +54,27 @@ public class GenreDAOImpl implements GenreDAO {
 		// TODO Auto-generated method stub
 		Genre genre = null;
 		try {
-			genre = (Genre) sessionFactory.getCurrentSession()
-					.get(Genre.class, id);
+			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
+					id);
+		} catch (Exception e) {
+			System.out.println(e);
+			log.error(e);
+		}
+		return genre;
+	}
+
+	@Override
+	public Genre getGenreByName(String name) {
+		// TODO Auto-generated method stub
+		Genre genre = null;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select " + "G from Genre G where lower(G.name) "
+									+ "LIKE lower(:name)")
+					.setString("name", name);
+			genre = (Genre) query;
 		} catch (Exception e) {
 			System.out.println(e);
 			log.error(e);

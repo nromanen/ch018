@@ -49,13 +49,13 @@ public class BooksController {
 	@RequestMapping(value = "/books")
 	public ModelAndView booksList() {
 		
-		Book b = bookService.getBooksById(1);
+		/*Book b = bookService.getBooksById(1);
 		Genre g = genreService.getGenreById(2);
 		
 		b.setGenre(g);
 		
 		bookService.updateBook(b);
-		
+		*/
 		return new ModelAndView("books", "books", bookService.getAllBooks());
 	}
 	
@@ -64,26 +64,30 @@ public class BooksController {
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
-		return "WEB-INF/view/addEditBook";
+		return "book";
 	}
 	
 	@RequestMapping(value = "/addbook", method = RequestMethod.POST)
 	public String addBook(@ModelAttribute("book") Book book, BindingResult result) {
-		bookService.addBook(book);
+		int genreId = Integer.parseInt(book.getGenre().getName());
+		Genre genre = genreService.getGenreById(genreId);
+		bookService.addBook(book, genre);
 		return "redirect:/books";
 	}
 	
 	@RequestMapping(value = "/editbook", method = RequestMethod.GET)
-	public String showEditStudent(@RequestParam("id") Integer id, Model model) {
+	public String showEditBook(@RequestParam("id") Integer id, Model model) {
 		model.addAttribute("book", bookService.getBooksById(id));
 		model.addAttribute("genre", genreService.getAllGenres());
-		return "addEditBook";
+		return "book";
 		
 	}
 	
 	@RequestMapping(value = "/editbook", method = RequestMethod.POST)
 	public String editBook(@ModelAttribute("book") Book book, BindingResult result) {
-		bookService.updateBook(book);
+		int genreId = Integer.parseInt(book.getGenre().getName());
+		Genre genre = genreService.getGenreById(genreId);
+		bookService.updateBook(book, genre);
 		return "redirect:/books";
 	}
 }
