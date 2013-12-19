@@ -7,12 +7,17 @@
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.WishList;
+
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.springframework.stereotype.Component;
 /**
  *
  * @author win7
  */
+
+@Component
 public interface WishListDAO {
     public void addWish(WishList wish);
     public void deleteWish(WishList wish);
