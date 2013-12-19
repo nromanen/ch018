@@ -46,28 +46,22 @@ public class BooksController {
 	@Autowired
 	BooksInUseService booksInUseService;
 	
+	/*
 	@RequestMapping(value = "/books")
 	public ModelAndView booksList() {
-		
-		/*Book b = bookService.getBooksById(1);
-		Genre g = genreService.getGenreById(2);
-		
-		b.setGenre(g);
-		
-		bookService.updateBook(b);
-		*/
 		return new ModelAndView("books", "books", bookService.getAllBooks());
-	}
+	}*/
 	
-	@RequestMapping(value = "/addbook")
+	@RequestMapping(value = "/books")
 	public String showAddBook(Model model) {
 		Book book = new Book();
+		model.addAttribute("books", bookService.getAllBooks());
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
-		return "book";
+		return "books";
 	}
 	
-	@RequestMapping(value = "/addbook", method = RequestMethod.POST)
+	@RequestMapping(value = "/books", method = RequestMethod.POST)
 	public String addBook(@ModelAttribute("book") Book book, BindingResult result) {
 		int genreId = Integer.parseInt(book.getGenre().getName());
 		Genre genre = genreService.getGenreById(genreId);

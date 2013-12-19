@@ -6,7 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
-
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/addbook.js"></script>
 <title>Books</title>
 	<script type="text/javascript">
    function toggle_visibility(id) {
@@ -68,7 +70,63 @@
 			</c:forEach>
 		</table>
 		</div>
-		<a href="<c:url value="/addbook"/>">New Book</a>
+		<a href="#" id="newbookbutton" onclick="toggle_visibility('newbook')">New Book</a>
+		
+		<div id = "newbook">
+			<form:form method="POST" commandName="book">
+		<form:label path="id"/>
+		<table>
+			<tr>
+				<td>Title</td>
+				<td><form:input path="title"/></td>
+			</tr>
+			<tr>
+				<td>Authors</td>
+				<td><form:input path="authors"/></td>
+			</tr>
+			<tr>
+				<td>Year</td>
+				<td><form:input path="year"/></td>
+			</tr>
+			<tr>
+				<td>Publication</td>
+				<td><form:input path="publication"/></td>
+			</tr>
+			<tr>
+				<td>Pages</td>
+				<td><form:input path="pages"/></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td><form:input path="description"/></td>
+			</tr>
+			<tr>
+				<td>Term</td>
+				<td><form:input path="term"/></td>
+			</tr>
+			<tr>
+				<td>Bookcase</td>
+				<td><form:input path="bookcase"/></td>
+			</tr>
+			<tr>
+				<td>Shelf</td>
+				<td><form:input path="shelf"/></td>
+			</tr>
+			<tr>
+				<td>Genre</td>
+				<td>
+					<form:select path="genre" id="genre" items="${genre}" itemValue="id" itemLabel="name" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="Save"/></td>
+				<td colspan="2"><input type="button" value="Cancel"/></td>
+			</tr>
+		</table>
+	</form:form>
+		</div>
+		
+		<!--  <a href="<c:url value="/addbook"/>">New Book</a> -->
 </div>
 </body>
 </html>

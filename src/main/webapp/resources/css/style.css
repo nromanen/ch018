@@ -16,6 +16,15 @@
 	width: 800px;
 }
 
+#newbook {
+	width: 330px; 
+	margin:5px 0px; 
+	padding: 5px;
+	border: gray dashed 1px;
+	background: #D4FFAA; 
+	display:none;		
+}
+
 .TableBooks a {
 	text-decoration: none;
 }
