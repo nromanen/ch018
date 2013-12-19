@@ -1,9 +1,7 @@
-<%-- 
-    Document   : wishList
-    Created on : 18.12.2013, 12:14:26
-    Author     : win7
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
+    pageEncoding="UTF-8"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,7 +20,6 @@
 			<td>personId</td>
 		</tr>
 	</thead>
-        <c:>
         </table>
     </body>
 </html>

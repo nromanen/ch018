@@ -17,27 +17,20 @@ import com.ch018.library.util.HibernateUtil;
 
 @Component
 public class GenreDAOImpl implements GenreDAO {
-	
+
 	static Logger log = LogManager.getLogger(GenreDAOImpl.class);
-	
+
+	@Autowired
+	SessionFactory sessionFactory;
+
 	@Override
 	public void addGenre(Genre genre) {
 		// TODO Auto-generated method stub
-		Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(genre);
-            session.getTransaction().commit();
-        } catch(Exception e){
-            log.error(e);
-        }finally{
-            try{
-                session.close();
-            }catch(Exception e){
-                log.error(e);
-            }
-        }
+		try {
+			sessionFactory.getCurrentSession().save(genre);
+		} catch (Exception e) {
+			log.error(e);
+		}
 	}
 
 	@Override
@@ -50,26 +43,27 @@ public class GenreDAOImpl implements GenreDAO {
 	public List<Genre> getAllGenres() {
 		// TODO Auto-generated method stub
 		List<Genre> bookcase = new ArrayList<>();
-		Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            bookcase.addAll(session.createCriteria(Genre.class).list());
-        } catch(Exception e){
-            log.error(e);
-        }finally{
-            try{
-                session.close();
-            }catch(Exception e){
-                log.error(e);
-            }
-        }
+		try {
+			bookcase.addAll(sessionFactory.getCurrentSession()
+					.createCriteria(Genre.class).list());
+		} catch (Exception e) {
+			log.error(e);
+		}
 		return bookcase;
 	}
 
 	@Override
 	public Genre getGenreById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Genre genre = null;
+		try {
+			genre = (Genre) sessionFactory.getCurrentSession()
+					.get(Genre.class, id);
+		} catch (Exception e) {
+			System.out.println(e);
+			log.error(e);
+		}
+		return genre;
 	}
 
 	@Override
