@@ -11,217 +11,217 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ForeignKey;
 
 /**
- *
+ * 
  * @author Edd Arazian
  */
-enum Role {ADMINISTRATOR, LIBRARIAN, USER};
+enum Role {
+	ADMINISTRATOR, LIBRARIAN, USER
+};
 
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "surname")
-    private String surname;
-    
-    @Column(name = "e_mail")
-    private String email;
-    
-    @Column(name = "cellphone")
-    private String cellphone;
-    
-    @Column(name = "prole")
-    private Role role;
-    
-    @Column(name = "confirmed")
-    private boolean confirm;
-    
-    @Column(name = "sms")
-    private boolean sms;
-    
-    @Column(name = "hash")
-    private String password;
-    
-    @Column(name = "salt")
-    private String salt;
-    
-    @Column(name = "timely_returns")
-    private int timelyReturns;
-    
-    @Column(name = "untimely_returns")
-    private int untimelyReturns;
-    
-    @Column(name = "multibookAllowed")
-    private int multibookAllowed;
-    
-    @Column(name = "failedOrders")
-    private int failedOrders;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
-    private Set<BooksInUse> booksinuses = new HashSet<>();
-     
-    
-    public Person() {
-        
-    }
 
-    public Person(String email) {
-        this.email = email;
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3607258059474732202L;
 
-    public int getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@Column(name = "name")
+	private String name;
 
-    public String getName() {
-        return name;
-    }
+	@Column(name = "surname")
+	private String surname;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(name = "e_mail")
+	private String email;
 
-    public String getSurname() {
-        return surname;
-    }
+	@Column(name = "cellphone")
+	private String cellphone;
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+	@Column(name = "prole")
+	private Role role;
 
-    public String getEmail() {
-        return email;
-    }
+	@Column(name = "confirmed")
+	private boolean confirm;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	@Column(name = "sms")
+	private boolean sms;
 
-    public String getPassword() {
-        return password;
-    }
+	@Column(name = "hash")
+	private String password;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getSalt() {
-        return salt;
-    }
+	@Column(name = "salt")
+	private String salt;
 
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
+	@Column(name = "timely_returns")
+	private int timelyReturns;
 
-    public String getCellphone() {
-        return cellphone;
-    }
+	@Column(name = "untimely_returns")
+	private int untimelyReturns;
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
+	@Column(name = "multibookAllowed")
+	private int multibookAllowed;
 
-    public boolean getConfirmed() {
-        return confirm;
-    }
+	@Column(name = "failedOrders")
+	private int failedOrders;
 
-    public void setConfirm(boolean confirm) {
-        this.confirm = confirm;
-    }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	private Set<BooksInUse> booksinuses = new HashSet<>();
 
-    public boolean getSms() {
-        return sms;
-    }
+	public Person() {
 
-    public void setSms(boolean sms) {
-        this.sms = sms;
-    }
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public Person(String email) {
+		this.email = email;
+	}
 
-    public void setRole(String role) {
-        this.role = Role.valueOf(role);
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getTimelyReturns() {
-        return timelyReturns;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setTimelyReturns(int timelyReturns) {
-        this.timelyReturns = timelyReturns;
-    }
-    
-    public int getUntimelyReturns() {
-        return untimelyReturns;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setUntimelyReturns(int untimelyReturns) {
-        this.untimelyReturns = untimelyReturns;
-    }
-    
-    public int getMultibookAllowed() {
-        return multibookAllowed;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setMultibookAllowed(int multibookAllowed) {
-        this.multibookAllowed = multibookAllowed;
-    }
-    
-    public int getFailedOrders() {
-        return failedOrders;
-    }
+	public String getSurname() {
+		return surname;
+	}
 
-    public void setFailedOrders(int failedOrders) {
-        this.failedOrders = failedOrders;
-    }
-    
-    
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
+
+	public boolean getConfirmed() {
+		return confirm;
+	}
+
+	public void setConfirm(boolean confirm) {
+		this.confirm = confirm;
+	}
+
+	public boolean getSms() {
+		return sms;
+	}
+
+	public void setSms(boolean sms) {
+		this.sms = sms;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = Role.valueOf(role);
+	}
+
+	public int getTimelyReturns() {
+		return timelyReturns;
+	}
+
+	public void setTimelyReturns(int timelyReturns) {
+		this.timelyReturns = timelyReturns;
+	}
+
+	public int getUntimelyReturns() {
+		return untimelyReturns;
+	}
+
+	public void setUntimelyReturns(int untimelyReturns) {
+		this.untimelyReturns = untimelyReturns;
+	}
+
+	public int getMultibookAllowed() {
+		return multibookAllowed;
+	}
+
+	public void setMultibookAllowed(int multibookAllowed) {
+		this.multibookAllowed = multibookAllowed;
+	}
+
+	public int getFailedOrders() {
+		return failedOrders;
+	}
+
+	public void setFailedOrders(int failedOrders) {
+		this.failedOrders = failedOrders;
+	}
+
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
-	
+
 	public void setBooksinuses(Set<BooksInUse> booksinuses) {
 		this.booksinuses = booksinuses;
 	}
 
-    
-    
-    @Override
-    public boolean equals(Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        if (!(other instanceof Person))return false;
-        Person otherPerson = (Person) other;
-        return email.equals(otherPerson.getEmail());
-    }
-    
-    @Override
-    public String toString() {
-        return this.id + " " + " " + email;
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (other == null)
+			return false;
+		if (other == this)
+			return true;
+		if (!(other instanceof Person))
+			return false;
+		Person otherPerson = (Person) other;
+		return email.equals(otherPerson.getEmail());
+	}
+
+	@Override
+	public String toString() {
+		return this.id + " " + " " + email;
+	}
 
 }
