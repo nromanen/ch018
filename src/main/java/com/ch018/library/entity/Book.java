@@ -12,18 +12,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-
-
 @Entity
-@Table(name="books")
-public class Book implements Serializable{
-	
+@Table(name = "books")
+public class Book implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
 	private Genre genre;
 	private String title;
@@ -35,141 +35,142 @@ public class Book implements Serializable{
 	private int shelf;
 	private int bookcase;
 	private int term;
-        
+
 	private Set<BooksInUse> booksinuse = new HashSet<>();
-	
+
 	public Book() {
-		
+
 	}
-	
+
 	public Book(Book b) {
 		title = b.getTitle();
 	}
-	
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
 	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="gid", nullable = false)
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "gid", nullable = false)
 	public Genre getGenre() {
 		return this.genre;
 	}
-	
-	@Column(name="title")
+
+	@Column(name = "title")
 	public String getTitle() {
 		return title;
 	}
-	
-	@Column(name="authors")
+
+	@Column(name = "authors")
 	public String getAuthors() {
 		return authors;
 	}
-	
-	@Column(name="year_public")
+
+	@Column(name = "year_public")
 	public int getYear() {
 		return year;
 	}
-	
-	@Column(name="publication")
+
+	@Column(name = "publication")
 	public String getPublication() {
 		return publication;
 	}
-	
-	@Column(name="pages")
+
+	@Column(name = "pages")
 	public int getPages() {
 		return pages;
 	}
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
-	
-	@Column(name="shelf")
+
+	@Column(name = "shelf")
 	public int getShelf() {
 		return shelf;
 	}
-	
-	@Column(name="bookcase")
+
+	@Column(name = "bookcase")
 	public int getBookcase() {
 		return bookcase;
 	}
-	
-	@Column(name="term")
+
+	@Column(name = "term")
 	public int getTerm() {
 		return term;
 	}
-	
-	/*@ManyToOne
-	@JoinTable(name="BooksInUse", joinColumns = @JoinColumn(name="Books_id"), inverseJoinColumns = @JoinColumn(name="Person_id"))
-	public Person getPerson() {
-		return person;
-	}*/
-	
+
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinTable(name="BooksInUse", joinColumns = @JoinColumn(name="Books_id"),
+	 * inverseJoinColumns = @JoinColumn(name="Person_id")) public Person
+	 * getPerson() { return person; }
+	 */
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	public Set<BooksInUse> getBooksinuse() {
 		return booksinuse;
 	}
-	
+
 	public void setBooksinuse(Set<BooksInUse> booksinuse) {
 		this.booksinuse = booksinuse;
 	}
-	
-	
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public void setBookcase(int bookcase) {
 		this.bookcase = bookcase;
 	}
-	
+
 	public void setGenre(Genre genre) {
 		this.genre = genre;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public void setAuthors(String authors) {
 		this.authors = authors;
 	}
-	
+
 	public void setYear(int year) {
 		this.year = year;
 	}
-	
+
 	public void setPublication(String publication) {
 		this.publication = publication;
 	}
-	
+
 	public void setPages(int pages) {
 		this.pages = pages;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public void setShelf(int shelf) {
 		this.shelf = shelf;
 	}
-	
+
 	public void setTerm(int term) {
 		this.term = term;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
@@ -180,16 +181,16 @@ public class Book implements Serializable{
 		}
 		return false;
 	}
-	
-	@Override 
+
+	@Override
 	public int hashCode() {
 		return this.id;
 	}
 
 	@Override
 	public String toString() {
-		return getId() + " " + getTitle() + " " + getAuthors() + " " + getYear();
+		return getId() + " " + getTitle() + " " + getAuthors() + " "
+				+ getYear();
 	}
 
-	
 }

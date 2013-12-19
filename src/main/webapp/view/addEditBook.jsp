@@ -29,7 +29,7 @@
 			</tr>
 			<tr>
 				<td>Publication</td>
-				<td><form:input path="year"/></td>
+				<td><form:input path="publication"/></td>
 			</tr>
 			<tr>
 				<td>Pages</td>
@@ -54,7 +54,7 @@
 			<tr>
 				<td>Genre</td>
 				<td>
-					<form:select path="id" id="id" items="${genre}" itemValue="id" itemLabel="name" />
+					<form:select path="genre" id="genre" items="${genre}" itemValue="genre.gid" itemLabel="name" />
 				</td>
 			</tr>
 			<tr>

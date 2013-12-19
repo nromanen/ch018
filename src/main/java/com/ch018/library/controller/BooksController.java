@@ -1,5 +1,7 @@
 package com.ch018.library.controller;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.DAO.BookDAOImpl;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -39,12 +42,20 @@ public class BooksController {
 	
 	@Autowired
 	PersonService personService;
-	
+	 
 	@Autowired
 	BooksInUseService booksInUseService;
 	
 	@RequestMapping(value = "/books")
 	public ModelAndView booksList() {
+		
+		Book b = bookService.getBooksById(1);
+		Genre g = genreService.getGenreById(2);
+		
+		b.setGenre(g);
+		
+		bookService.updateBook(b);
+		
 		return new ModelAndView("books", "books", bookService.getAllBooks());
 	}
 	
@@ -72,8 +83,7 @@ public class BooksController {
 	
 	@RequestMapping(value = "/editbook", method = RequestMethod.POST)
 	public String editBook(@ModelAttribute("book") Book book, BindingResult result) {
-		System.out.println(book);
-		bookService.updateBook(book.getId(), book);
+		bookService.updateBook(book);
 		return "redirect:/books";
 	}
 }
