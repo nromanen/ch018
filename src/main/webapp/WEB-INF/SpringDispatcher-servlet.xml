@@ -58,12 +58,6 @@
 	</bean>
 
 	<tx:annotation-driven />
-
-
-
-
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-
 	<mvc:annotation-driven />
-
 </beans>
