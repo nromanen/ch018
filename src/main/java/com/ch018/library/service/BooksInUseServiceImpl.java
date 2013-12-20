@@ -14,7 +14,7 @@ import com.ch018.library.entity.BooksInUse;
 public class BooksInUseServiceImpl implements BooksInUseService {
 
 	@Autowired
-	BooksInUseDAO booksInUseDAO;
+	private BooksInUseDAO booksInUseDAO;
 	
 	@Override
 	@Transactional

@@ -13,7 +13,7 @@ import com.ch018.library.entity.Genre;
 public class GenreServiceImpl implements GenreService {
 
 	@Autowired
-	GenreDAO genreDAO;
+	private GenreDAO genreDAO;
 	
 	@Transactional
 	public void addGenre(Genre genre) {

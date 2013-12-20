@@ -24,47 +24,41 @@
 <%@ include file="/view/top.jsp" %>
 <%@ include file="/view/left.jsp" %>
 <div id = "content">
-	<div id = "linksblock">
-		<a href="<c:url value="/books?show=all"/>">All</a>
-		<a href="<c:url value="/books?show=issuetd"/>">To issue today</a>
-		<a href="<c:url value="/books?show=issueph"/>">To issue per hour</a>
-		<a href="<c:url value="/books?show=return"/>">To return</a>
-		<a href="<c:url value="/books?show=returntd"/>">All</a>
-	</div>
 		<div class = "TableBooks">
 		<table>
 				<tr>
-					<td>#<a href="<c:url value="/books?orderby=id"/>">^v</a></td>
-					<td>Title<a href="<c:url value="/books?orderby=title"/>">^v</a></td>
-					<td>Authors<a href="<c:url value="/books?orderby=authors"/>">^v</a></td>
-					<td>Publication<a href="<c:url value="/books?orderby=publ"/>">^v</a></td>
-					<td>Year<a href="<c:url value="/books?orderby=year"/>">^v</a></td>
-					<td>Pages<a href="<c:url value="/books?orderby=pages"/>">^v</a></td>
-					<td>Bookcase<a href="<c:url value="/books?orderby=bc"/>">^v</a></td>
-					<td>Shelf<a href="<c:url value="/books?orderby=shelf"/>">^v</a></td>
-					<td>Genre<a href="<c:url value="/books?orderby=genre"/>">^v</a></td>
+					<td>First Name<a href="<c:url value="/persons?orderby=fname"/>">^v</a></td>
+					<td>Second Name<a href="<c:url value="/persons?orderby=sname"/>">^v</a></td>
+					<td>E-mail<a href="<c:url value="/persons?orderby=mail"/>">^v</a></td>
+					<td>Mobile<a href="<c:url value="/persons?orderby=mobile"/>">^v</a></td>
+					<td>Multibook Allowed<a href="<c:url value="/persons?orderby=mb"/>">^v</a></td>
+					<td>Untimelly<a href="<c:url value="/persons?orderby=ur"/>">^v</a></td>
+					<td>Timelly<a href="<c:url value="/persons?orderby=tr"/>">^v</a></td>
+					<td>Failed Orders<a href="<c:url value="/persons?orderby=fails"/>">^v</a></td>
+					
+					<td>Confirmed<a href="<c:url value="/persons?orderby=congirm"/>">^v</a></td>
 					<td></td>
 					<td></td>
 				</tr>
-			<c:forEach items="${books}" var="book">
+			<c:forEach items="${persons}" var="person">
 				<tr>
-					<td>${book.id}</td>
-					<td><c:out value="${book.title}" escapeXml="true"/></td>
-					<td><c:out value="${book.authors}" escapeXml="true"/></td>
-					<td><c:out value="${book.publication}" escapeXml="true"/></td>
-					<td>${book.year}</td>
-					<td>${book.pages}</td>
-					<td>${book.bookcase}</td>
-					<td>${book.shelf}</td>
-					<td><c:out value="${book.genre}" escapeXml="true"/></td>
+					<td><c:out value="${person.name}" escapeXml="true"/></td>
+					<td><c:out value="${person.surname}" escapeXml="true"/></td>
+					<td><c:out value="${person.email}" escapeXml="true"/></td>
+					<td><c:out value="${person.cellphone}" escapeXml="true"/></td>
+					<td>${person.multibookAllowed}</td>
+					<td>${person.untimelyReturns}</td>
+					<td>${person.timelyReturns}</td>
+					<td>${person.failedOrders}</td>
+					<td><c:out value="${person.confirm}" escapeXml="true"/></td>
 					
-					<td><a href="<c:url value="/editbook?id=${book.id}"/>">Edit</a></td>
-					<td><a href="<c:url value="/deletebook?id=${book.id}"/>">Delete</a></td>
+					<td><a href="<c:url value="/editstudent?id=${student.id}"/>">Edit</a></td>
+					<td><a href="<c:url value="/deletestudent?id=${student.id}"/>">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 		</div>
-		<a href="#" id="newbookbutton" onclick="toggle_visibility('newbook')">New Book</a>
+		<a href="#" id="newbookbutton" onclick="toggle_visibility('newuser')">New Book</a>
 		
 		<div id = "newbook">
 			<form:form method="POST" commandName="book">

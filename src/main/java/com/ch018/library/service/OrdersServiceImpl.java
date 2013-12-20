@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrdersServiceImpl implements OrdersService{
 
     @Autowired
-    OrdersDAO ordDAO;
+    private OrdersDAO ordDAO;
     
     @Transactional
     public void addOrder(Orders ord) {
