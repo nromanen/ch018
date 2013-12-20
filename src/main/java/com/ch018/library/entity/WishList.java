@@ -57,9 +57,9 @@ public class WishList {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj instanceof Orders) return true;
-		if (((Orders) obj).getBook().equals(this.getBook())
-				&& ((Orders) obj).getPerson().equals(this.getPerson())) 
+		if (obj instanceof WishList) return true;
+		if (((WishList) obj).getBook().equals(this.getBook())
+				&& ((WishList) obj).getPerson().equals(this.getPerson())) 
 			return true;
 		return false;
 	}

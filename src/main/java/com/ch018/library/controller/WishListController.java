@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.entity.WishList;
+import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.WishListService;
 
 
@@ -20,9 +21,11 @@ public class WishListController {
     
     @Autowired
     WishListService wish;
-    
+    OrdersService order;
     @RequestMapping(value="/wishList")
     public ModelAndView wishlist(){
        return new ModelAndView("wishList","wish",wish.getAllWishes());
     }
+    
+    
 }

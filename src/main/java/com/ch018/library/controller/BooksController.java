@@ -63,7 +63,7 @@ public class BooksController {
 	
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
 	public String addBook(@ModelAttribute("book") Book book, BindingResult result) {
-		int genreId = Integer.parseInt(book.getGenre().getName());
+		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
 		book.setGenre(genre);
 		bookService.addBook(book);
@@ -80,7 +80,7 @@ public class BooksController {
 	
 	@RequestMapping(value = "/editbook", method = RequestMethod.POST)
 	public String editBook(@ModelAttribute("book") Book book, BindingResult result) {
-		int genreId = Integer.parseInt(book.getGenre().getName());
+		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
 		book.setGenre(genre);
 		bookService.updateBook(book);

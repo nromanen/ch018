@@ -1,7 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ include file="/view/includes.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -22,9 +21,9 @@
             <c:forEach items="${wish}" var="wish">
 		<tr>
 			<td>${wish.id}</td>
-			<td>${wish.booksId}</td>
-			<td>${wish.personId}</td>
-			
+			<td>${wish.book.id}</td>
+			<td>${wish.person.name}</td>
+                        <td><a href="<c:url value="/order"/>">Create order</a></td>
 		</tr>
 	</c:forEach>
         </table>
