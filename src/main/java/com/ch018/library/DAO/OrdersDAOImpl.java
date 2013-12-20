@@ -5,7 +5,6 @@
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Orders;
-import com.ch018.library.util.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +31,6 @@ public class OrdersDAOImpl implements OrdersDAO {
 	SessionFactory sessionFactory;
 
 	public void addOrder(Orders ord) {
-		Session session = null;
 		try {
 			sessionFactory.getCurrentSession().save(ord);
 		} catch (Exception e) {

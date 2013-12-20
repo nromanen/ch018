@@ -1,5 +1,37 @@
+#header {
+	width:100%;
+	height: 200px;
+	border: 1px solid #373737;
+}
+
+#left {
+	height: 1000px;
+	width: 200px;
+	float: left;
+	border: 1px solid #373737;
+}
+
+#content {
+	float: left;
+	width: 800px;
+}
+
+#newbook {
+	width: 330px; 
+	margin:5px 0px; 
+	padding: 5px;
+	border: gray dashed 1px;
+	background: #D4FFAA; 
+	display:none;		
+}
+
+.TableBooks a {
+	text-decoration: none;
+}
+
 .TableBooks {
-	margin:0px;padding:0px;
+	margin:0px;
+	padding:0px;
 	width:100%;
 	box-shadow: 10px 10px 5px #888888;
 	border:1px solid #000000;

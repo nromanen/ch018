@@ -5,6 +5,7 @@
 package com.ch018.library.entity;
 
 import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,9 +13,9 @@ import javax.persistence.*;
 public class Orders {
 
 	private int id;
-	private int idBooks;
-	private int idPerson;
 	private Date date;
+	private Person person;
+	private Book book;
 
 	public Orders() {
 
@@ -27,14 +28,16 @@ public class Orders {
 		return this.id;
 	}
 
-	@Column(name = "Books_id")
-	public int getIdBooks() {
-		return this.idBooks;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Person_id")
+	public Person getPerson() {
+		return person;
 	}
 
-	@Column(name = "Person_id")
-	public int getIdPerson() {
-		return this.idPerson;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "Books_id")
+	public Book getBook() {
+		return book;
 	}
 
 	@Column(name = "order_date")
@@ -46,12 +49,12 @@ public class Orders {
 		this.id = id;
 	}
 
-	public void setIdBooks(int idBook) {
-		this.idBooks = idBook;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
-	public void setIdPerson(int idPerson) {
-		this.idPerson = idPerson;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	public void setOrderDate(Date date) {
@@ -60,26 +63,19 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return getId() + " " + getIdBooks() + " " + getIdPerson() + " "
-				+ getOrderDate();
+		return getId() + ": " + getPerson() + " ordered " + getBook() + ". Date: " + getOrderDate();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj instanceof Orders) {
-			if (((Orders) obj).getIdBooks() == this.getIdBooks()
-					&& ((Orders) obj).getIdPerson() == this.getIdPerson()
-					&& ((Orders) obj).getOrderDate() == this.getOrderDate()) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} else {
-			return false;
-		}
+		if (obj instanceof Orders) return true;
+		if (((Orders) obj).getBook().equals(this.getBook())
+				&& ((Orders) obj).getPerson().equals(this.getPerson())
+				&& ((Orders) obj).getOrderDate() == this.getOrderDate()) 
+			return true;
+		return false;
 	}
 
 }
