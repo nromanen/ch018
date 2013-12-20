@@ -18,16 +18,15 @@ public class BookServiceImpl implements BookService {
 	BookDAO bookDAO;
 	
 	@Transactional
-	public void addBook(Book book, Genre genre) {
+	public void addBook(Book book) {
 		// TODO Auto-generated method stub
-		book.setGenre(genre);
+		
 		bookDAO.addBook(book);
 	}
 
 	@Transactional
-	public void updateBook(Book book, Genre genre) {
+	public void updateBook(Book book) {
 		// TODO Auto-generated method stub
-		book.setGenre(genre);
 		bookDAO.updateBook(book);
 	}
 

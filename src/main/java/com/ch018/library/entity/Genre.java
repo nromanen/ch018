@@ -29,9 +29,9 @@ public class Genre implements Serializable {
 
 	}
 
-	public Genre(String name) {
+	/*public Genre(String name) {
 		this.name = name;
-	}
+	}*/
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
