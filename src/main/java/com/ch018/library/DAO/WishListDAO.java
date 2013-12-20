@@ -12,15 +12,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.stereotype.Component;
+
 /**
- *
+ * 
  * @author win7
  */
 
 @Component
 public interface WishListDAO {
-    public void addWish(WishList wish);
-    public void deleteWish(WishList wish);
-    public Collection getAllWishes();
-    public WishList getWishById(int id);
+	public void addWish(WishList wish);
+
+	public void deleteWish(WishList wish);
+
+	public Collection getAllWishes();
+
+	public WishList getWishById(int id);
 }

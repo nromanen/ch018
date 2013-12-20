@@ -7,7 +7,6 @@
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.WishList;
-import com.ch018.library.util.HibernateUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +15,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 /**
  * 
@@ -53,7 +50,7 @@ public class WishListDAOImpl implements WishListDAO {
 	}
 
 	@Override
-	public Collection getAllWishes() {
+	public Collection<WishList> getAllWishes() {
 		ArrayList<WishList> wish = new ArrayList<WishList>();
 		try {
 			wish.addAll(sessionFactory.getCurrentSession()

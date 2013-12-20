@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"  isELIgnored="false" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ include file="/view/includes.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +9,7 @@
 		<c:if test="${empty book.id}">Add new Book</c:if>
 		<c:if test="${not empty book.id}">Edit Book</c:if>
 	</title>
+
 </head>
 <body>
 	<form:form method="POST" commandName="book">
@@ -54,11 +54,12 @@
 			<tr>
 				<td>Genre</td>
 				<td>
-					<form:select path="genre" id="genre" items="${genre}" itemValue="genre.gid" itemLabel="name" />
+					<form:select path="genre" id="genre" items="${genre}" itemValue="id" itemLabel="name" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="submit" value="Save"/></td>
+				<td colspan="2"><input type="button" value="Cancel"/></td>
 			</tr>
 		</table>
 	</form:form>

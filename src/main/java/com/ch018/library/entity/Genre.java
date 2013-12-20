@@ -29,18 +29,18 @@ public class Genre implements Serializable {
 
 	}
 
-	public Genre(String name) {
+	/*public Genre(String name) {
 		this.name = name;
-	}
+	}*/
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "gid", unique = true, nullable = false)
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	public String getName() {
 		return name;
 	}
@@ -74,6 +74,8 @@ public class Genre implements Serializable {
 		if (this.name.equals(((Genre) obj).getName())) {
 			return true;
 		}
+		if (this.id == ((Genre) obj).getId())
+			return true;
 		return false;
 	}
 
