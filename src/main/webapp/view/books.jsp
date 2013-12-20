@@ -115,7 +115,7 @@
 			<tr>
 				<td>Genre</td>
 				<td>
-					<form:select path="genre" id="genre" items="${genre}" itemValue="id" itemLabel="name" />
+					<form:select path="genre" id="genre" items="${genre}" itemValue = "id" itemLabel="name" />
 				</td>
 			</tr>
 			<tr>

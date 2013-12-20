@@ -10,8 +10,8 @@ import com.ch018.library.entity.Person;
 
 @Service
 public interface BookService {
-	void addBook(Book book, Genre genre);
-	void updateBook(Book book, Genre genre);
+	void addBook(Book book);
+	void updateBook(Book book);
 	List<Book> getAllBooks();
 	Book getBooksById(int id);
 	void deleteBook(Book book);

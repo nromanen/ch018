@@ -65,7 +65,8 @@ public class BooksController {
 	public String addBook(@ModelAttribute("book") Book book, BindingResult result) {
 		int genreId = Integer.parseInt(book.getGenre().getName());
 		Genre genre = genreService.getGenreById(genreId);
-		bookService.addBook(book, genre);
+		book.setGenre(genre);
+		bookService.addBook(book);
 		return "redirect:/books";
 	}
 	
@@ -81,7 +82,8 @@ public class BooksController {
 	public String editBook(@ModelAttribute("book") Book book, BindingResult result) {
 		int genreId = Integer.parseInt(book.getGenre().getName());
 		Genre genre = genreService.getGenreById(genreId);
-		bookService.updateBook(book, genre);
+		book.setGenre(genre);
+		bookService.updateBook(book);
 		return "redirect:/books";
 	}
 }
