@@ -42,12 +42,9 @@
                      <!--   <td>${wishByPers.id}</td>   -->
 			<td>${wishByPers.book.id}</td>
 			<td>${wishByPers.person.id}</td>
-                        
-                        <td><a href="<c:url value="/order"/>"><input type="submit" value="Create Order"/></a></td>
+                        <td><a href="<c:url value="/order?id=${wishByPers.person.id}"/>"><input type="submit" value="Create Order"/></a></td>
 		</tr>
 	</c:forEach>
         </table>
-     
-      
     </body>
 </html>
