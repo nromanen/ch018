@@ -10,7 +10,7 @@
     <body>
         <h3>wishList</h3>
         
-        <table>
+   <!--     <table>
 	<thead>
 		<tr>
 			<td>Id</td>
@@ -22,10 +22,32 @@
 		<tr>
 			<td>${wish.id}</td>
 			<td>${wish.book.id}</td>
-			<td>${wish.person.name}</td>
+			<td>${wish.person.id}</td>
                         <td><a href="<c:url value="/order"/>">Create order</a></td>
 		</tr>
 	</c:forEach>
         </table>
+        <br>      -->
+         <table>
+	 <thead>
+		<tr>
+                    <td>&nbsp;</td>
+			<td>booksID</td>
+			<td>personId</td>
+		</tr>
+	 </thead>
+            <c:forEach items="${wishByPers}" var="wishByPers">
+		<tr>
+                        <td><input type="checkbox" name="maths" checked="checked" /></td>
+                     <!--   <td>${wishByPers.id}</td>   -->
+			<td>${wishByPers.book.id}</td>
+			<td>${wishByPers.person.id}</td>
+                        
+                        <td><a href="<c:url value="/order"/>"><input type="submit" value="Create Order"/></a></td>
+		</tr>
+	</c:forEach>
+        </table>
+     
+      
     </body>
 </html>

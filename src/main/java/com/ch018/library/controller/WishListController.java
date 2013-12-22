@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ch018.library.entity.WishList;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.WishListService;
+import org.springframework.validation.BindingResult;
 
 
 @Controller
@@ -21,10 +22,17 @@ public class WishListController {
     
     @Autowired
     WishListService wish;
+    
+    @Autowired
     OrdersService order;
-    @RequestMapping(value="/wishList")
+   /* @RequestMapping(value="/wishList")
     public ModelAndView wishlist(){
        return new ModelAndView("wishList","wish",wish.getAllWishes());
+    }*/
+    
+    @RequestMapping(value="/wishList")
+    public ModelAndView getWisheByPersonId(){
+        return new ModelAndView("wishList","wishByPers",wish.getWishesByPerson(1));
     }
     
     

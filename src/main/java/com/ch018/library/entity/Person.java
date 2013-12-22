@@ -78,7 +78,13 @@ public class Person implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 
-	public Person() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+        private Set<WishList> wishList = new HashSet();
+        
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+        private Set<Orders> orders = new HashSet();
+        
+        public Person() {
 
 	}
 
@@ -205,7 +211,22 @@ public class Person implements Serializable {
 	public void setBooksinuses(Set<BooksInUse> booksinuses) {
 		this.booksinuses = booksinuses;
 	}
-
+        
+        public void setWishList(Set<WishList> wishlist){
+            this.wishList=wishlist;
+        }
+        
+        public Set<WishList> getWishList(){
+            return this.wishList;
+        }
+        
+        public void setOrders(Set<Orders> orders){
+            this.orders=orders;
+        }
+        
+        public Set<Orders> getOrders(){
+            return this.orders;
+        }
 	@Override
 	public boolean equals(Object other) {
 		if (other == null)

@@ -4,8 +4,10 @@
  */
 package com.ch018.library.DAO;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 import java.util.Collection;
+import java.util.List;
 
 public interface OrdersDAO {
 	public void addOrder(Orders ord);
@@ -17,4 +19,6 @@ public interface OrdersDAO {
 	public Collection getOrdersByPersonId(int id);
 
 	public Collection getAllOrders();
+        
+         public List<Book> getAllBooks(); 
 }

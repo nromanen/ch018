@@ -4,16 +4,19 @@
  */
 package com.ch018.library.DAO;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -84,5 +87,18 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 		return result;
 	}
+
+    @Override
+    public List<Book> getAllBooks() {
+         List<Book> books = new ArrayList<>();
+          try {
+          books.addAll(sessionFactory.getCurrentSession()
+          .createCriteria(Orders.class).setProjection(Projections.distinct(Projections.property("book"))).list());
+                } catch (Exception e) {
+                                      log.error(e);
+                                      }
+         return books;
+    }
+    
 
 }

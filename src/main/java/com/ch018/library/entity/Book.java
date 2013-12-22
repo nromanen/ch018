@@ -36,7 +36,9 @@ public class Book implements Serializable {
 	private int bookcase;
 	private int term;
 
-	private Set<BooksInUse> booksinuse = new HashSet<>();
+	private Set<BooksInUse> booksinuses = new HashSet<>();
+        private Set<WishList> wishList = new HashSet<>();
+        private Set<Orders> orders = new HashSet<>();
 
 	public Book() {
 
@@ -114,14 +116,33 @@ public class Book implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	public Set<BooksInUse> getBooksinuse() {
-		return booksinuse;
+		return booksinuses;
 	}
 
-	public void setBooksinuse(Set<BooksInUse> booksinuse) {
-		this.booksinuse = booksinuse;
+	
+        public void setBooksinuse(Set<BooksInUse> booksinuse) {
+		this.booksinuses = booksinuse;
 	}
 
-	public void setId(int id) {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+        public Set<WishList> getWishList() {
+                return wishList;
+         }
+
+        public void setWishList(Set<WishList> wishList) {
+                this.wishList = wishList;
+         }
+
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+        public Set<Orders> getOrders() {
+                return orders;
+         }
+
+        public void setOrders(Set<Orders> orders) {
+                this.orders = orders;
+        }
+        
+        public void setId(int id) {
 		this.id = id;
 	}
 
