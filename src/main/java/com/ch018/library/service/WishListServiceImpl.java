@@ -8,12 +8,14 @@ package com.ch018.library.service;
 
 import com.ch018.library.DAO.WishListDAO;
 import com.ch018.library.entity.WishList;
+import java.util.ArrayList;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class WishListServiceImpl implements WishListService{
@@ -43,6 +45,12 @@ public class WishListServiceImpl implements WishListService{
     @Transactional
     public WishList getWishById(int id) {
         return wishlistDAO.getWishById(id);
+    }
+
+    @Override
+    @Transactional
+    public ArrayList<WishList> getWishesByPerson(int personId) {
+        return wishlistDAO.getWishesByPerson(personId);
     }
     
 }

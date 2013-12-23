@@ -7,6 +7,7 @@
 package com.ch018.library.service;
 
 import com.ch018.library.entity.WishList;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -16,4 +17,5 @@ public interface WishListService {
     public void deleteWish(WishList wish);
     public Collection getAllWishes();
     public WishList getWishById(int id);
+    public ArrayList<WishList> getWishesByPerson(int personId);
 }

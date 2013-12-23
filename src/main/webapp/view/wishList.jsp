@@ -1,7 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" isELIgnored="false"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ include file="/view/includes.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -10,21 +9,23 @@
     </head>
     <body>
         <h3>wishList</h3>
-        
-        <table>
-	<thead>
+ 
+         <table>
+	 <thead>
 		<tr>
-			<td>Id</td>
+                    <td>&nbsp;</td>
 			<td>booksID</td>
 			<td>personId</td>
 		</tr>
-	</thead>
-            <c:forEach items="${wish}" var="wish">
+	 </thead>
+            <c:forEach items="${wishByPers}" var="wishByPers">
 		<tr>
-			<td>${wish.id}</td>
-			<td>${wish.book.id}</td>
-			<td>${wish.person.id}</td>
-			
+                        <td><input type="checkbox" name="maths" checked="checked" /></td>
+                        <!--<td>${wishByPers.id}</td>  -->
+			<td>${wishByPers.book.id}</td>
+			<td>${wishByPers.person.id}</td>
+                        <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>">Delete</a></td>
+                        <td><a href="<c:url value="/order?id=${wishByPers.person.id}"/>"><input type="submit" value="Create Order"/></a></td>
 		</tr>
 	</c:forEach>
         </table>

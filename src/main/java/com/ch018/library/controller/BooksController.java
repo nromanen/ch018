@@ -77,6 +77,7 @@ public class BooksController {
 	 * @return
 	 */
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
+
 	public String addBook(@ModelAttribute("book") Book book,
 			BindingResult result) {
 		int genreId = book.getGenre().getId();

@@ -10,12 +10,16 @@ import com.ch018.library.entity.WishList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,15 +67,31 @@ public class WishListDAOImpl implements WishListDAO {
 
 	@Override
 	public WishList getWishById(int id) {
-		WishList wish = new WishList();
+		WishList wish = null;
 		try {
-			Query query = sessionFactory.getCurrentSession()
-					.createQuery("from wishlist WHERE id=:id")
-					.setParameter("id", id);
+			wish = (WishList) sessionFactory.getCurrentSession().get(WishList.class,id);
+                        
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return wish;
 	}
+
+    @Override
+    public ArrayList<WishList> getWishesByPerson(int personId) {
+       ArrayList<WishList> wish = new ArrayList<WishList>();
+       try{
+           //Query query = );
+           //query.setInteger("id", personId);
+           
+          wish.addAll(sessionFactory.getCurrentSession().createCriteria(WishList.class)
+                                       .add(Restrictions.eq("person.id", personId)).list());
+           
+       }catch(Exception e){
+           log.error(e);
+           System.out.println(e);
+       }
+       return wish;
+    }
 
 }
