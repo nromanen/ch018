@@ -82,10 +82,15 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
+                <dependency>
+	                <groupId>javax.servlet.jsp</groupId>
+	                <artifactId>jsp-api</artifactId>
+	                <version>2.2</version>
+                </dependency>
+               
 	</dependencies>
 	<build>
-		<finalName>library5</finalName>
+		<finalName>library</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>

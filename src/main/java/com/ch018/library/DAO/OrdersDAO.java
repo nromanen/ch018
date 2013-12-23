@@ -20,6 +20,6 @@ public interface OrdersDAO {
 	public Collection getOrdersByPersonId(int id);
 
 	public Collection getAllOrders();
-
-	List<Book> getAllBooks();
+        
+  public List<Book> getAllBooks(); 
 }
