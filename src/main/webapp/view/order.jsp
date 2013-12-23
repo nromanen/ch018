@@ -14,13 +14,13 @@
         
         <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy"); %>
         <input type="text" name="orderDate" value="<%= df.format(new java.util.Date()) %>"/>
-        <c:forEach items="${newOrder}" var="wish">
-              <table>
+             <c:forEach items="${newOrder}" var="wish">
+               <table>
                 
-                <tr><td>You wish to order ${wish.book.title}</td></tr>
-           <!--     <tr><td>Your name${wish.person.name}</td></tr>
-                <tr><td>Your Surname${wish.person.surname}</td></tr>-->
-               </table>
-       </c:forEach>        
+                    <tr><td>You wish to order ${wish.book.title}</td></tr>
+               <!-- <tr><td>Your name${wish.person.name}</td></tr>
+                     <tr><td>Your Surname${wish.person.surname}</td></tr>-->
+                 </table>
+           </c:forEach>   
     </body>
 </html>

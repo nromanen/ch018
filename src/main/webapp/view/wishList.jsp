@@ -25,7 +25,7 @@
 			<td>${wishByPers.book.id}</td>
 			<td>${wishByPers.person.id}</td>
                         <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>">Delete</a></td>
-                        <td><a href="<c:url value="/order?id=${wishByPers.person.id}"/>"><input type="submit" value="Create Order"/></a></td>
+                        <td><a href="<c:url value="/order?id=${wishByPers.person.id}&book=${wishByPers.book.id}&pers=${wishByPers.person.id}"/>"><input type="submit" value="Create Order"/></a></td>
 		</tr>
 	</c:forEach>
         </table>
