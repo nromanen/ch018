@@ -9,25 +9,7 @@
     </head>
     <body>
         <h3>wishList</h3>
-        
-   <!--     <table>
-	<thead>
-		<tr>
-			<td>Id</td>
-			<td>booksID</td>
-			<td>personId</td>
-		</tr>
-	</thead>
-            <c:forEach items="${wish}" var="wish">
-		<tr>
-			<td>${wish.id}</td>
-			<td>${wish.book.id}</td>
-			<td>${wish.person.id}</td>
-                        <td><a href="<c:url value="/order"/>">Create order</a></td>
-		</tr>
-	</c:forEach>
-        </table>
-        <br>      -->
+ 
          <table>
 	 <thead>
 		<tr>

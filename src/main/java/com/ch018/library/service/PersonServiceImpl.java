@@ -13,7 +13,7 @@ import com.ch018.library.entity.Person;
 public class PersonServiceImpl implements PersonService {
 
 	@Autowired
-	PersonDao personDao;
+	private PersonDao personDao;
 	
 	@Override
 	@Transactional

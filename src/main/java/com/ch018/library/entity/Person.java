@@ -42,14 +42,14 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
-	@Column(name = "e_mail")
+	@Column(name = "e_mail", unique = true)
 	private String email;
 
 	@Column(name = "cellphone")
 	private String cellphone;
 
 	@Column(name = "prole")
-	private Role role;
+	private String role;
 
 	@Column(name = "confirmed")
 	private boolean confirm;
@@ -79,12 +79,12 @@ public class Person implements Serializable {
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
-        private Set<WishList> wishList = new HashSet();
-        
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
-        private Set<Orders> orders = new HashSet();
-        
-        public Person() {
+	private Set<WishList> wishList = new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	private Set<Orders> orders = new HashSet<>();
+	
+	public Person() {
 
 	}
 
@@ -148,7 +148,7 @@ public class Person implements Serializable {
 		this.cellphone = cellphone;
 	}
 
-	public boolean getConfirmed() {
+	public boolean getConfirm() {
 		return confirm;
 	}
 
@@ -164,12 +164,12 @@ public class Person implements Serializable {
 		this.sms = sms;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
 	public void setRole(String role) {
-		this.role = Role.valueOf(role);
+		this.role = role;
 	}
 
 	public int getTimelyReturns() {
@@ -211,22 +211,24 @@ public class Person implements Serializable {
 	public void setBooksinuses(Set<BooksInUse> booksinuses) {
 		this.booksinuses = booksinuses;
 	}
-        
-        public void setWishList(Set<WishList> wishlist){
-            this.wishList=wishlist;
-        }
-        
-        public Set<WishList> getWishList(){
-            return this.wishList;
-        }
-        
-        public void setOrders(Set<Orders> orders){
-            this.orders=orders;
-        }
-        
-        public Set<Orders> getOrders(){
-            return this.orders;
-        }
+	
+	public Set<WishList> getWishList() {
+		return wishList;
+	}
+
+	public void setWishList(Set<WishList> wishList) {
+		this.wishList = wishList;
+	}
+
+	public Set<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Orders> orders) {
+		this.orders = orders;
+	}
+
+
 	@Override
 	public boolean equals(Object other) {
 		if (other == null)

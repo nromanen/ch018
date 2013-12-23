@@ -6,6 +6,7 @@ package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface OrdersDAO {
 
 	public Collection getAllOrders();
         
-         public List<Book> getAllBooks(); 
+  public List<Book> getAllBooks(); 
 }

@@ -3,6 +3,7 @@ package com.ch018.library.DAO;
 import java.util.Date;
 import java.util.List;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 
 public interface BooksInUseDAO {
@@ -23,4 +24,6 @@ public interface BooksInUseDAO {
 	List<BooksInUse> getByReturnDate(Date returnDate);
 
 	List<BooksInUse> getInUse(boolean inUse);
+
+	List<Book> getAllBooks();
 }

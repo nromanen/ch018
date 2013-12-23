@@ -7,10 +7,15 @@
  <title>Test</title>
 </head>
 <body>
-<h4> Congratulations! </h4>
-You are <b>${visitorCount}</b> visitor <br/>
-Today is <b>${today}</b>
-<a href="<c:url value="/books"/>">Books</a>
-<a href="<c:url value= "/wishList"/>">Wish lists</a>
+<%@ include file="/view/top.jsp" %>
+<%@ include file="/view/left.jsp" %>
+<div id = "content">
+	<h4> Congradulations! </h4>
+	You are <b>${visitorCount}</b> visitor <br/>
+	Today is <b>${today}</b>
+	<a href="<c:url value="/books"/>">Books</a>
+	<a href="<c:url value="/users"/>">Users</a>
+	<a href="<c:url value= "/wishList"/>">Wish lists</a>
+</div>
 </body>
 </html>

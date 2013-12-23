@@ -45,6 +45,7 @@ public class GenreDAOImpl implements GenreDAO {
 					.createCriteria(Genre.class).list());
 		} catch (Exception e) {
 			log.error(e);
+			System.out.println(e);
 		}
 		return bookcase;
 	}

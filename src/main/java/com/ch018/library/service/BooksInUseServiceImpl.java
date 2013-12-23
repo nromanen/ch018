@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BooksInUseDAO;
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 
 @Service
 public class BooksInUseServiceImpl implements BooksInUseService {
 
 	@Autowired
-	BooksInUseDAO booksInUseDAO;
+	private BooksInUseDAO booksInUseDAO;
 	
 	@Override
 	@Transactional
@@ -70,6 +71,13 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	public List<BooksInUse> getInUse(boolean inUse) {
 		// TODO Auto-generated method stub
 		return booksInUseDAO.getInUse(inUse);
+	}
+
+	@Override
+	@Transactional
+	public List<Book> getAllBooks() {
+		// TODO Auto-generated method stub
+		return booksInUseDAO.getAllBooks();
 	}
 
 }

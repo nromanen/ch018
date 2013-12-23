@@ -4,8 +4,11 @@
  */
 package com.ch018.library.service;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
+
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -16,5 +19,6 @@ public interface OrdersService {
     public void deleteOrder(Orders ord);
     public Collection getOrdersByBooksId(int id);
     public Collection getOrdersByPersonId(int id);
-    public Collection getAllOrders();    
+    public Collection getAllOrders(); 
+    List<Book> getAllBooks();
 }
