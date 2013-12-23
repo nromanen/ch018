@@ -15,12 +15,11 @@
         <input type="text" name="orderDate" value="<%= df.format(new java.util.Date()) %>"/>
         <c:forEach items="${newOrder}" var="wish">
               <table>
-                <tr>
-                    <td>${wish.book.title}</td>
-                    <td>${wish.person.name}</td>
-                    <td>${wish.person.surname}</td>
-                </tr>
-            </table>
-        </c:forEach>
+                
+                <tr><td>Yoy wish to order ${wish.book.title}</td></tr>
+                <tr><td>Yuor name${wish.person.name}</td></tr>
+                <tr><td>Your Surname${wish.person.surname}</td></tr>
+               </table>
+       </c:forEach>        
     </body>
 </html>

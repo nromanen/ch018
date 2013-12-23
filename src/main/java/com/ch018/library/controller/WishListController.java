@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -37,15 +38,22 @@ public class WishListController {
     
     @RequestMapping(value="/wishList")
     public ModelAndView getWisheByPersonId(){
-        return new ModelAndView("wishList","wishByPers",wish.getWishesByPerson(2));
+        return new ModelAndView("wishList","wishByPers",wish.getWishesByPerson(3));
     }
     
-   /* @RequestMapping(value="/wishList", method = RequestMethod.POST)
+   /*@RequestMapping(value="/wishList", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders order, BindingResult result, Model model){
        // int personId = 
        // orderService.addOrder(order);
         model.addAttribute("order", wish.getWishesByPerson(1));
         return "wishList";
     }*/
+    
+    @RequestMapping(value="/delete", method = RequestMethod.GET)
+    public String deleteWish(@RequestParam("del")Integer id){
+        WishList w = wish.getWishById(id);
+        wish.deleteWish(w);
+        return "redirect:/wishList";
+    }
     
 }

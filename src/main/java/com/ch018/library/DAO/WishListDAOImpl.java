@@ -67,11 +67,9 @@ public class WishListDAOImpl implements WishListDAO {
 
 	@Override
 	public WishList getWishById(int id) {
-		WishList wish = new WishList();
+		WishList wish = null;
 		try {
-			Query query = sessionFactory.getCurrentSession()
-					.createQuery("from wishlist WHERE id=:id")
-					.setParameter("id", id);
+			wish = (WishList) sessionFactory.getCurrentSession().get(WishList.class,id);
                         
 		} catch (Exception e) {
 			log.error(e);
