@@ -22,8 +22,8 @@
             <c:forEach items="${wish}" var="wish">
 		<tr>
 			<td>${wish.id}</td>
-			<td>${wish.booksId}</td>
-			<td>${wish.personId}</td>
+			<td>${wish.book.id}</td>
+			<td>${wish.person.id}</td>
 			
 		</tr>
 	</c:forEach>

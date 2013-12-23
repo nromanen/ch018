@@ -5,9 +5,11 @@
 package com.ch018.library.service;
 
 import com.ch018.library.DAO.OrdersDAO;
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrdersServiceImpl implements OrdersService{
 
     @Autowired
-    OrdersDAO ordDAO;
+    private OrdersDAO ordDAO;
     
     @Transactional
     public void addOrder(Orders ord) {
@@ -48,5 +50,11 @@ public class OrdersServiceImpl implements OrdersService{
     public Collection getAllOrders() {
         return ordDAO.getAllOrders();
     }
+
+	@Transactional
+	public List<Book> getAllBooks() {
+		// TODO Auto-generated method stub
+		return ordDAO.getAllBooks();
+	}
     
 }

@@ -3,6 +3,7 @@ package com.ch018.library.service;
 import java.util.Date;
 import java.util.List;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 
 public interface BooksInUseService {
@@ -15,4 +16,5 @@ public interface BooksInUseService {
 	List<BooksInUse> getByIssueDate(Date issueDate);
 	List<BooksInUse> getByReturnDate(Date returnDate);
 	List<BooksInUse> getInUse(boolean inUse);
+	List<Book> getAllBooks();
 }

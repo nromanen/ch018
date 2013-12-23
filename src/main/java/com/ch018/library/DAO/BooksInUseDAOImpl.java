@@ -7,10 +7,12 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 
 @Component
@@ -57,7 +59,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.add(Restrictions.eq("Person_id", personId)).list());
+					.add(Restrictions.eq("person.id", personId)).list());
 		} catch (Exception e) {
 			System.out.println(e);// log.error(e);
 		}
@@ -71,7 +73,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.add(Restrictions.eq("Books_id", bookId)).list());
+					.add(Restrictions.eq("book.id", bookId)).list());
 		} catch (Exception e) {
 			System.out.println(e);// log.error(e);
 		}
@@ -132,6 +134,23 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		} catch (Exception e) {
 			log.error("Error insert " + e);
 		}
+	}
+
+	@Override
+	public List<Book> getAllBooks() {
+		// TODO Auto-generated method stub
+		List<Book> booksInUses = new ArrayList<>();
+		try {
+			booksInUses.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.setProjection(
+							Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return booksInUses;
 	}
 
 }

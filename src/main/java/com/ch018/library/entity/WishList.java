@@ -8,6 +8,8 @@ package com.ch018.library.entity;
 
 import javax.persistence.*;
 
+import org.eclipse.jdt.internal.compiler.ast.FalseLiteral;
+
 @Entity
 @Table(name = "wishlist")
 public class WishList {
@@ -57,9 +59,9 @@ public class WishList {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj instanceof Orders) return true;
-		if (((Orders) obj).getBook().equals(this.getBook())
-				&& ((Orders) obj).getPerson().equals(this.getPerson())) 
+		if (obj instanceof WishList) return true;
+		if (((WishList) obj).getBook().equals(this.getBook())
+				&& ((WishList) obj).getPerson().equals(this.getPerson())) 
 			return true;
 		return false;
 	}
