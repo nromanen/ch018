@@ -10,15 +10,7 @@
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/addbook.js"></script>
 <title>Users</title>
-	<script type="text/javascript">
-   function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-   }
-</script>
+	<script type="text/javascript"></script>
 </head>
 <body>	<div id="wrapper">
 	<div id="header">
@@ -28,15 +20,18 @@
 <div id = "content">
 	<div class = "TableBooks">
 		<table>
+			<thead>
 				<tr>
-					<td>First Name<a href="<c:url value="/persons?orderby=fname"/>">^v</a></td>
-					<td>Second Name<a href="<c:url value="/persons?orderby=sname"/>">^v</a></td>
-					<td>E-mail<a href="<c:url value="/persons?orderby=mail"/>">^v</a></td>
-					<td>Mobile<a href="<c:url value="/persons?orderby=mobile"/>">^v</a></td>
-					<td>Return Date</td>
-					<td></td>
-					<td></td>
+					<th>First Name<a href="<c:url value="/persons?orderby=fname"/>">^v</a></th>
+					<th>Second Name<a href="<c:url value="/persons?orderby=sname"/>">^v</a></th>
+					<th>E-mail<a href="<c:url value="/persons?orderby=mail"/>">^v</a></th>
+					<th>Mobile<a href="<c:url value="/persons?orderby=mobile"/>">^v</a></th>
+					<th>Return Date</th>
+					<th></th>
+
 				</tr>
+			</thead>
+			<tbody>
 			<c:forEach items="${booksinuse}" var="bookinuse">
 				<tr>
 					<td><c:out value="${bookinuse.person.name}" escapeXml="true"/></td>
@@ -45,10 +40,10 @@
 					<td><c:out value="${bookinuse.person.cellphone}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.returnDate}" escapeXml="true"/></td>
 
-					<td><a href="<c:url value="/edituser?id=${student.id}"/>">Edit</a></td>
-					<td><a href="<c:url value="/deleteuser?id=${student.id}"/>">Delete</a></td>
+					<td><a href="<c:url value="/edituser?id=${person.id}"/>">Edit</a></td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
 	</div>
 </div>

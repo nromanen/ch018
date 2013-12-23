@@ -10,6 +10,7 @@ function open_andfill(box, id) {
 	  $("#background").show(); 
 	  $(box).centered_popup(); 
 	  $(box).delay(100).show(1); 
+	  $("#id").text($(".id"+id).text());
 	  $("#title").val($(".title" + id).text());
 	  $("#authors").val($(".authors" + id).text());
 	  $("#year").val($(".year" + id).text());

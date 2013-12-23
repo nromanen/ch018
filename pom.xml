@@ -85,7 +85,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>library</finalName>
+		<finalName>library5</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>

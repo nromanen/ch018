@@ -81,9 +81,15 @@ public class BooksController {
 			BindingResult result) {
 		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
+		
 		book.setGenre(genre);
-		bookService.addBook(book);
-		return "books";
+		if (book.getId()==0) {
+			bookService.addBook(book);
+		} else {
+			bookService.updateBook(book);
+		}
+		
+		return "redirect:/books";
 	}
 
 	/**
@@ -142,17 +148,17 @@ public class BooksController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/books/edit/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	/*
+	@RequestMapping(value = "/books", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String editBook(@PathVariable int id, @RequestBody Book book) {
-		book.setId(id);
+	public String editBook(@RequestBody Book book) {
 		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
 		book.setGenre(genre);
 		bookService.updateBook(book);
 		return "redirect:/books";
 	}
-
+*/
 	/**
 	 * Show Book in users table
 	 * 

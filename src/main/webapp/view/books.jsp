@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -17,7 +17,7 @@
 $(document).ready(function()
 		{ 
 	        $("table").tablesorter(); 
-	        $('#editbook').submit(function(event) {
+	        $('#editbookdddddd').submit(function(event) {
 	              
 	              var title = $('#title').val();
 	              var authors = $('#authors').val();
@@ -117,6 +117,7 @@ $(document).ready(function()
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a></td>
 									<td><a href="#" class="book${book.id}" onclick="open_andfill('#newbook',${book.id});">Edit</a></td>
 									<td><a href="<c:url value="/deletebook?id=${book.id}"/>">Delete</a></td>
+									
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -126,8 +127,8 @@ $(document).ready(function()
 					Book</a>
 
 				<div id="newbook">
-					<form:form id="editbook" method="PUT" commandName="book" action="${pageContext.request.contextPath}/books/edit/${book.id}.json">
-						<form:label path="id" />
+					<form:form id="editbook" method="POST" commandName="book">
+						<form:label path="id" id="id"/>
 						<table>
 							<tr>
 								<td>Title</td>
