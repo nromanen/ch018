@@ -10,6 +10,7 @@ import com.ch018.library.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -103,6 +105,33 @@ public class OrdersDAOImpl implements OrdersDAO {
 			log.error(e);
 		}
 		return books;
+	}
+
+	@Override
+	public List<Orders> toIssueToday() {
+		Date startDate = new Date();
+		Date endDate = new Date();
+		
+		startDate.setHours(0);
+		startDate.setMinutes(0);
+		endDate.setHours(23);
+		endDate.setMinutes(59);
+		
+		ArrayList<Orders> result = new ArrayList<Orders>();
+		try {
+			result.addAll(sessionFactory.getCurrentSession()
+					.createCriteria(Orders.class).add(Expression.ge("date",startDate)).add(Expression.le("date",endDate)).list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+
+		return result;
+	}
+
+	@Override
+	public List<Orders> toIssuePerHour() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

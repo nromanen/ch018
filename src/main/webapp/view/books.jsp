@@ -75,7 +75,7 @@ $(document).ready(function()
 		<div id="contentliquid">
 			<div id="content">
 				<div id="linksblock">
-					<a href="<c:url value="/books?show=all"/>">All</a> <a
+					<a href="<c:url value="/books"/>">All</a> <a
 						href="<c:url value="/books?show=issuetd"/>">To issue today</a> <a
 						href="<c:url value="/books?show=issueph"/>">To issue per hour</a>
 					<a href="<c:url value="/books?show=return"/>">To return</a> <a

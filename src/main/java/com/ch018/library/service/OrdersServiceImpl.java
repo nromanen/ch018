@@ -56,5 +56,17 @@ public class OrdersServiceImpl implements OrdersService{
 		// TODO Auto-generated method stub
 		return ordDAO.getAllBooks();
 	}
+
+	@Override
+	public List<Orders> toIssueToday() {
+		// TODO Auto-generated method stub
+		return ordDAO.toIssueToday();
+	}
+
+	@Override
+	public List<Orders> toIssuePerHour() {
+		// TODO Auto-generated method stub
+		return ordDAO.toIssuePerHour();
+	}
     
 }

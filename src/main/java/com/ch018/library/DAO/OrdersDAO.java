@@ -21,5 +21,9 @@ public interface OrdersDAO {
 
 	public Collection getAllOrders();
         
-  public List<Book> getAllBooks(); 
+	public List<Book> getAllBooks(); 
+  
+	public List<Orders> toIssueToday();
+	
+	public List<Orders> toIssuePerHour();
 }

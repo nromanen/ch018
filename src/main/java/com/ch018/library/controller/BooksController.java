@@ -77,9 +77,10 @@ public class BooksController {
 	 * @return
 	 */
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
-
 	public String addBook(@ModelAttribute("book") Book book,
 			BindingResult result) {
+		
+		
 		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
 		
@@ -104,6 +105,7 @@ public class BooksController {
 	public String showBooks(
 			@RequestParam(value = "show", required = false) String show,
 			Model model) {
+		ordersService.toIssueToday();
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
