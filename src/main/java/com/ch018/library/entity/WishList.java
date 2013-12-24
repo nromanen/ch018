@@ -8,8 +8,6 @@ package com.ch018.library.entity;
 
 import javax.persistence.*;
 
-import org.eclipse.jdt.internal.compiler.ast.FalseLiteral;
-
 @Entity
 @Table(name = "wishlist")
 public class WishList {

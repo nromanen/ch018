@@ -14,6 +14,7 @@ public class Orders {
 
 	private int id;
 	private Date date;
+	private Date issueDate;
 	private Person person;
 	private Book book;
 
@@ -44,6 +45,11 @@ public class Orders {
 	public Date getOrderDate() {
 		return this.date;
 	}
+	
+	@Column(name = "issue_date")
+	public Date getIssueDate() {
+		return this.issueDate;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -59,6 +65,10 @@ public class Orders {
 
 	public void setOrderDate(Date date) {
 		this.date = date;
+	}
+	
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
 	}
 
 	@Override

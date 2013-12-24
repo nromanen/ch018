@@ -22,30 +22,42 @@
 		<table>
 			<thead>
 				<tr>
+					<th>Id</th>
 					<th>First Name<a href="<c:url value="/persons?orderby=fname"/>">^v</a></th>
 					<th>Second Name<a href="<c:url value="/persons?orderby=sname"/>">^v</a></th>
 					<th>E-mail<a href="<c:url value="/persons?orderby=mail"/>">^v</a></th>
 					<th>Mobile<a href="<c:url value="/persons?orderby=mobile"/>">^v</a></th>
-					<th>Return Date</th>
+					<th>Issue Date</th>
+					<th></th>
 					<th></th>
 
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${booksinuse}" var="bookinuse">
+			<c:forEach items="${orders}" var="order">
 				<tr>
-					<td><c:out value="${bookinuse.person.name}" escapeXml="true"/></td>
-					<td><c:out value="${bookinuse.person.surname}" escapeXml="true"/></td>
-					<td><c:out value="${bookinuse.person.email}" escapeXml="true"/></td>
-					<td><c:out value="${bookinuse.person.cellphone}" escapeXml="true"/></td>
-					<td><c:out value="${bookinuse.returnDate}" escapeXml="true"/></td>
+					<td><c:out value="${order.id}" escapeXml="true"/></td>
+					<td><c:out value="${order.person.name}" escapeXml="true"/></td>
+					<td><c:out value="${order.person.surname}" escapeXml="true"/></td>
+					<td><c:out value="${order.person.email}" escapeXml="true"/></td>
+					<td><c:out value="${order.person.cellphone}" escapeXml="true"/></td>
+					<td><c:out value="${order.issueDate}" escapeXml="true"/></td>
 
-					<td><a href="<c:url value="/edituser?id=${person.id}"/>">Edit</a></td>
+					<td><a href="<c:url value="/issueorder?id=${person.id}"/>">Issue</a></td>
+					<td><a id="deleteorder" href="#">Delete</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 	</div>
+	<div id="popup">
+		<span>Are you sure you want to delete order:</span>
+		<br>
+		<span id="name"></span>
+		<input type="submit" value="Delete" />
+		<input type="button" value="Cancel"	onclick="close_popup('#popup');" />
+	</div>
+				<div id="background"></div>
 </div>
 </div>
 <div id="leftcolumn">
