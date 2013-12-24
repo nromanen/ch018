@@ -114,7 +114,9 @@ $(document).ready(function()
 									<td class="shelf${book.id}">${book.shelf}</td>
 									<td><c:out value="${book.genre}" escapeXml="true" /><p class="genre${book.id}" hidden = "true">${book.genre.id}</p></td>
 
-									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a></td>
+									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a><br>
+										<a href="<c:url value="/orders?id=${book.id}"/>">Orders</a><br>
+									</td>
 									<td><a href="#" class="book${book.id}" onclick="open_andfill('#newbook',${book.id});">Edit</a></td>
 									<td><a href="<c:url value="/deletebook?id=${book.id}"/>">Delete</a></td>
 									

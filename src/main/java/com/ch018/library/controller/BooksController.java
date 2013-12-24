@@ -23,6 +23,7 @@ import com.ch018.library.DAO.BookDAOImpl;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.Orders;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -118,7 +119,10 @@ public class BooksController {
 				books.addAll(booksInUseService.getAllBooks());
 				break;
 			case "issuetd":
-				books.addAll(ordersService.getAllBooks());
+				books.addAll(ordersService.toIssueToday());
+				break;
+			case "issueph":
+				books.addAll(ordersService.toIssuePerHour());
 				break;
 
 			default:
@@ -137,13 +141,14 @@ public class BooksController {
 	 * @param model
 	 * @return
 	 */
+	/*
 	@RequestMapping(value = "/books/edit/{id}", method = RequestMethod.GET)
 	public String showEditBook(@PathVariable Integer id, Model model) {
 		model.addAttribute("book", bookService.getBooksById(id));
 		model.addAttribute("genre", genreService.getAllGenres());
 		return "books";
 	}
-
+*/
 	/**
 	 * Edited book to DB
 	 * 
@@ -174,5 +179,13 @@ public class BooksController {
 		model.addAttribute("booksinuse", booksInUses);
 
 		return "bookinuse";
+	}
+	
+	@RequestMapping(value = "/orders", method = RequestMethod.GET)
+	public String showOrders(@RequestParam("id") Integer id, Model model) {
+		List<Orders> orders = (List<Orders>) ordersService.getOrdersByBooksId(id);
+		model.addAttribute("orders", orders);
+
+		return "orders";
 	}
 }

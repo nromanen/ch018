@@ -23,7 +23,7 @@ public interface OrdersDAO {
         
 	public List<Book> getAllBooks(); 
   
-	public List<Orders> toIssueToday();
+	public List<Book> toIssueToday();
 	
-	public List<Orders> toIssuePerHour();
+	public List<Book> toIssuePerHour();
 }

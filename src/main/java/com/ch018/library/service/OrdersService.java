@@ -21,7 +21,7 @@ public interface OrdersService {
     public Collection getOrdersByPersonId(int id);
     public Collection getAllOrders(); 
     List<Book> getAllBooks();
-	public List<Orders> toIssueToday();
+	public List<Book> toIssueToday();
 	
-	public List<Orders> toIssuePerHour();
+	public List<Book> toIssuePerHour();
 }

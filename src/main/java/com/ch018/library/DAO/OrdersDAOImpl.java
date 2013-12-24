@@ -20,6 +20,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,10 +56,9 @@ public class OrdersDAOImpl implements OrdersDAO {
 	public Collection getOrdersByBooksId(int id) {
 		ArrayList<Orders> ordList = new ArrayList<Orders>();
 		try {
-			Query query = sessionFactory.getCurrentSession().createQuery(
-					"from orders where Books_id=:id");
-			query.setParameter("id", id);
-			ordList.addAll(query.list());
+			ordList.addAll(sessionFactory.getCurrentSession()
+						.createCriteria(Orders.class)
+						.add(Restrictions.eq("book.id", id)).list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -108,7 +108,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 	}
 
 	@Override
-	public List<Orders> toIssueToday() {
+	public List<Book> toIssueToday() {
 		Date startDate = new Date();
 		Date endDate = new Date();
 		
@@ -117,21 +117,43 @@ public class OrdersDAOImpl implements OrdersDAO {
 		endDate.setHours(23);
 		endDate.setMinutes(59);
 		
-		ArrayList<Orders> result = new ArrayList<Orders>();
+		List<Book> books = new ArrayList<Book>();
 		try {
-			result.addAll(sessionFactory.getCurrentSession()
-					.createCriteria(Orders.class).add(Expression.ge("date",startDate)).add(Expression.le("date",endDate)).list());
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(Orders.class)
+					.add(Expression.ge("issueDate",startDate))
+					.add(Expression.le("issueDate",endDate))
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
 
-		return result;
+		return books;
 	}
 
 	@Override
-	public List<Orders> toIssuePerHour() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> toIssuePerHour() {
+		Date startDate = new Date();
+		Date endDate = new Date();
+		
+		endDate.setHours(startDate.getHours()+1);
+		
+		List<Book> books = new ArrayList<Book>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(Orders.class)
+					.add(Expression.ge("issueDate",startDate))
+					.add(Expression.le("issueDate",endDate))
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+
+		return books;
 	}
 
 }

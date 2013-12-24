@@ -37,6 +37,15 @@ $(document).ready(function() {
     this.css('left', ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + 'px'); 
   } 
   
+  $("#deleteorder").click(function() {
+	  var tr = $(this).parent().parent().prop("tagName");;
+	  var id = $(tr + " td:first-child").text();
+	  var name = $(tr + " td:nth-child(2)").text() + " " + $(tr + " td:nth-child(3)").text();
+	  $("#background").show(); 
+	  $("#popup").centered_popup(); 
+	  $("#popup").delay(100).show(1); 
+	  $("#name").text(name);
+  })
  
  
 });
