@@ -75,13 +75,13 @@ public class Person implements Serializable {
 	@Column(name = "failedOrders")
 	private int failedOrders;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<WishList> wishList = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<Orders> orders = new HashSet<>();
 	
 	public Person() {
