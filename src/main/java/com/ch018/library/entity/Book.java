@@ -57,7 +57,7 @@ public class Book implements Serializable {
 		return this.id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "gid", nullable = false)
 	public Genre getGenre() {
 		return this.genre;
@@ -126,7 +126,7 @@ public class Book implements Serializable {
 		this.booksinuses = booksinuses;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
@@ -135,7 +135,7 @@ public class Book implements Serializable {
 		this.wishList = wishList;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<Orders> getOrders() {
 		return orders;
 	}

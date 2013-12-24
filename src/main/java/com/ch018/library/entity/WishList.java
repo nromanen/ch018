@@ -15,7 +15,7 @@ public class WishList {
 	private Person person;
 	private Book book;
 
-	public WishList() {
+	public WishList(){
 	}
 
 	public void setId(int id) {
@@ -37,13 +37,13 @@ public class WishList {
 		return this.id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Person_id")
 	public Person getPerson() {
 		return person;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Books_id")
 	public Book getBook() {
 		return book;

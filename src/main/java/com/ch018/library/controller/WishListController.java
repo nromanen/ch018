@@ -38,7 +38,7 @@ public class WishListController {
     
     @RequestMapping(value="/wishList")
     public ModelAndView getWisheByPersonId(){
-        return new ModelAndView("wishList","wishByPers",wish.getWishesByPerson(3));
+        return new ModelAndView("wishList","wishByPers",wish.getWishesByPerson(1));
     }
     
    /*@RequestMapping(value="/wishList", method = RequestMethod.POST)

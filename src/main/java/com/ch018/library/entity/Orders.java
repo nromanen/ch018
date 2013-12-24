@@ -17,6 +17,7 @@ public class Orders {
 	private Date issueDate;
 	private Person person;
 	private Book book;
+        private Date issueDate;
 
 	public Orders() {
 
@@ -29,13 +30,13 @@ public class Orders {
 		return this.id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Person_id")
 	public Person getPerson() {
 		return person;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Books_id")
 	public Book getBook() {
 		return book;
@@ -45,11 +46,13 @@ public class Orders {
 	public Date getOrderDate() {
 		return this.date;
 	}
+
 	
 	@Column(name = "issue_date")
 	public Date getIssueDate() {
 		return this.issueDate;
 	}
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -70,6 +73,7 @@ public class Orders {
 	public void setIssueDate(Date issueDate) {
 		this.issueDate = issueDate;
 	}
+
 
 	@Override
 	public String toString() {

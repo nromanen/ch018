@@ -6,7 +6,12 @@
 
 package com.ch018.library.controller;
 
+import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Orders;
+import com.ch018.library.entity.Person;
+import com.ch018.library.service.BookService;
 import com.ch018.library.service.OrdersService;
+import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +34,28 @@ public class OrderController {
     @Autowired
     WishListService wish;
     
+    @Autowired
+    PersonService pers;
+    
+    @Autowired
+    BookService book;
+    
     @RequestMapping(value="/order", method=RequestMethod.GET)
-    public ModelAndView createOrder(@RequestParam("id") int id, Model model){
+    
+    public ModelAndView createOrder(Model model, 
+                                    @RequestParam("book") int bookId, 
+                                    @RequestParam("pers") int personId){
         //model.addAllAttributes(wish.getWishesByPerson(id));
-        return new ModelAndView("order", "newOrder", wish.getWishesByPerson(id));
+        Book b = null;
+        Person p = null;
+        Orders o = new Orders();
+        b = book.getBooksById(bookId);
+        p = pers.getById(personId);
+        o.setPerson(p);
+        o.setBook(b);
+        o.setOrderDate(new java.util.Date());
+        order.addOrder(o);
+        return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }
     
 
