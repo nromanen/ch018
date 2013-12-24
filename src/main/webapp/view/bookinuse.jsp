@@ -8,7 +8,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/addbook.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 <title>Users</title>
 	<script type="text/javascript"></script>
 </head>

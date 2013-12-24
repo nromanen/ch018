@@ -9,14 +9,14 @@
 	rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/addbook.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 <title>Books</title>
 <script type="text/javascript">
 $(document).ready(function()
 		{ 
-	        $("table").tablesorter(); 
+	         
 	        $('#editbookdddddd').submit(function(event) {
 	              
 	              var title = $('#title').val();
@@ -117,7 +117,7 @@ $(document).ready(function()
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a><br>
 										<a href="<c:url value="/orders?id=${book.id}"/>">Orders</a><br>
 									</td>
-									<td><a href="#" class="book${book.id}" onclick="open_andfill('#newbook',${book.id});">Edit</a></td>
+									<td><a href="#" class="book${book.id}" onclick="open_andfill('#popup',${book.id});">Edit</a></td>
 									<td><a href="<c:url value="/deletebook?id=${book.id}"/>">Delete</a></td>
 									
 								</tr>
@@ -125,12 +125,12 @@ $(document).ready(function()
 						</tbody>
 					</table>
 				</div>
-				<a href="#" id="newbookbutton" onclick="open_popup('#newbook');">New
+				<a href="#" id="newbookbutton">New
 					Book</a>
 
-				<div id="newbook">
+				<div id="popup">
 					<form:form id="editbook" method="POST" commandName="book">
-						<form:label path="id" id="id"/>
+						<form:label path="id" class="id"/>
 						<table>
 							<tr>
 								<td>Title</td>
@@ -175,15 +175,12 @@ $(document).ready(function()
 							</tr>
 							<tr>
 								<td colspan="2"><input type="submit" value="Save" /></td>
-								<td colspan="2"><input type="button" value="Cancel"
-									onclick="close_popup('#newbook');" /></td>
+								<td colspan="2"><input id="cancel" type="button" value="Cancel" /></td>
 							</tr>
 						</table>
 					</form:form>
 				</div>
 				<div id="background"></div>
-
-				<!--  <a href="<c:url value="/addbook"/>">New Book</a> -->
 			</div>
 		</div>
 		<div id="leftcolumn">

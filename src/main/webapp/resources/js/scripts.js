@@ -10,7 +10,7 @@ function open_andfill(box, id) {
 	  $("#background").show(); 
 	  $(box).centered_popup(); 
 	  $(box).delay(100).show(1); 
-	  $("#id").text($(".id"+id).text());
+	  $(".id").val($(".id"+id).text());
 	  $("#title").val($(".title" + id).text());
 	  $("#authors").val($(".authors" + id).text());
 	  $("#year").val($(".year" + id).text());
@@ -30,7 +30,8 @@ function close_popup(box) {
 } 
  
 $(document).ready(function() { 
-  /* Позиционируем блочный элемент окна по центру страницы: */
+	$("table").tablesorter();
+	
   $.fn.centered_popup = function() { 
     this.css('position', 'absolute'); 
     this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop() + 'px'); 
@@ -45,6 +46,18 @@ $(document).ready(function() {
 	  $("#popup").centered_popup(); 
 	  $("#popup").delay(100).show(1); 
 	  $("#name").text(name);
+  })
+  
+  $("#newbookbutton").click(function() {
+	  
+	  $("#background").show() 
+	  $("#popup").centered_popup(); 
+	  $("#popup").delay(100).show(1);
+  })
+  
+  $("#cancel").click(function() {
+	  $("#popup").hide(); 
+	  $("#background").delay(100).hide(1); 
   })
  
  
