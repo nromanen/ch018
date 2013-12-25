@@ -30,7 +30,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/library" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="" />
 	</bean>
 
 	<bean id="sessionFactory"
@@ -47,7 +47,7 @@
 
 				<!-- Drop and re-create the database schema on startup -->
 
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 
 			</props>
 		</property>
