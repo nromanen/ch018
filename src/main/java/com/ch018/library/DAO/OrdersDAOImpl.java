@@ -71,7 +71,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		ArrayList<Orders> result = new ArrayList<Orders>();
 		try {
 			Query query = sessionFactory.getCurrentSession().createQuery(
-					"from orders where Person_id=:id");
+					"from orders where person.id=:id");
 			query.setParameter("id", id);
 			result.addAll(query.list());
 		} catch (Exception e) {

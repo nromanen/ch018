@@ -9,6 +9,8 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 <title>Users</title>
 	<script type="text/javascript"></script>
 </head>
@@ -35,7 +37,7 @@
 			</thead>
 			<tbody>
 			<c:forEach items="${orders}" var="order">
-				<tr>
+				<tr id="order${order.id}">
 					<td><c:out value="${order.id}" escapeXml="true"/></td>
 					<td><c:out value="${order.person.name}" escapeXml="true"/></td>
 					<td><c:out value="${order.person.surname}" escapeXml="true"/></td>
@@ -43,8 +45,8 @@
 					<td><c:out value="${order.person.cellphone}" escapeXml="true"/></td>
 					<td><c:out value="${order.issueDate}" escapeXml="true"/></td>
 
-					<td><a href="<c:url value="/issueorder?id=${person.id}"/>">Issue</a></td>
-					<td><a id="deleteorder" href="#">Delete</a></td>
+					<td><a id="issue" href="#">Issue</a></td>
+					<td><a id="deleteorder" href="#" onclick="delete_order(${order.id});">Delete</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
