@@ -16,7 +16,7 @@
 	<a href="<c:url value="/books"/>">Books</a>
 	<a href="<c:url value="/users"/>">Users</a>
 	<a href="<c:url value= "/wishList"/>">Wish lists</a>
-        <a href="<c:url value="authorizedUser"/>">Autorized User</a>
+        <a href="<c:url value="/authorizedUser"/>">Authorized User</a>
 </div>
 </body>
 </html>

@@ -18,6 +18,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,10 +68,8 @@ public class OrdersDAOImpl implements OrdersDAO {
 	public Collection getOrdersByPersonId(int id) {
 		ArrayList<Orders> result = new ArrayList<Orders>();
 		try {
-			Query query = sessionFactory.getCurrentSession().createQuery(
-					"from orders where Person_id=:id");
-			query.setParameter("id", id);
-			result.addAll(query.list());
+			result.addAll(sessionFactory.getCurrentSession().createCriteria(Orders.class)
+                                      .add(Restrictions.eq("person.id", id)).list());
 		} catch (Exception e) {
 			log.error(e);
 		}

@@ -41,7 +41,6 @@ public class OrderController {
     BookService book;
     
     @RequestMapping(value="/order", method=RequestMethod.GET)
-    
     public ModelAndView createOrder(Model model, 
                                     @RequestParam("book") int bookId, 
                                     @RequestParam("pers") int personId){
@@ -58,5 +57,9 @@ public class OrderController {
         return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }
     
+    @RequestMapping(value="/userOrder")
+    public ModelAndView showOrder(){
+        return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(1));
+    }
 
 }
