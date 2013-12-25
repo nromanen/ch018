@@ -79,13 +79,12 @@ $(document).ready(function()
 						href="<c:url value="/books?show=issuetd"/>">To issue today</a> <a
 						href="<c:url value="/books?show=issueph"/>">To issue per hour</a>
 					<a href="<c:url value="/books?show=return"/>">To return</a> <a
-						href="<c:url value="/books?show=returntd"/>">All</a>
+						href="<c:url value="/books?show=returntd"/>">To return today</a>
 				</div>
 				<div class="TableBooks">
 					<table>
 						<thead>
 							<tr>
-								<th>#<a href="<c:url value="/books?orderby=id"/>">^v</a></th>
 								<th>Title<a href="<c:url value="/books?orderby=title"/>">^v</a></th>
 								<th>Authors<a
 									href="<c:url value="/books?orderby=authors"/>">^v</a></th>
@@ -96,6 +95,7 @@ $(document).ready(function()
 								<th>Bookcase<a href="<c:url value="/books?orderby=bc"/>">^v</a></th>
 								<th>Shelf<a href="<c:url value="/books?orderby=shelf"/>">^v</a></th>
 								<th>Genre<a href="<c:url value="/books?orderby=genre"/>">^v</a></th>
+								<th>Term</th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -104,7 +104,7 @@ $(document).ready(function()
 						<tbody>
 							<c:forEach items="${books}" var="book">
 								<tr>
-									<td class="id${book.id}">${book.id}</td>
+									<td hidden="true" class="id${book.id}">${book.id}</td>
 									<td class="title${book.id}"><c:out value="${book.title}" escapeXml="true" /></td>
 									<td class="authors${book.id}"><c:out value="${book.authors}" escapeXml="true" /></td>
 									<td class="publication${book.id}"><c:out value="${book.publication}" escapeXml="true" /></td>
@@ -113,7 +113,9 @@ $(document).ready(function()
 									<td class="bookcase${book.id}">${book.bookcase}</td>
 									<td class="shelf${book.id}">${book.shelf}</td>
 									<td><c:out value="${book.genre}" escapeXml="true" /><p class="genre${book.id}" hidden = "true">${book.genre.id}</p></td>
-
+									<td class="term${book.id}">${book.term}</td>
+									<td class="desc${book.id}" hidden="true">${book.description}</td>
+									
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a><br>
 										<a href="<c:url value="/orders?id=${book.id}"/>">Orders</a><br>
 									</td>
@@ -130,8 +132,10 @@ $(document).ready(function()
 
 				<div id="popup">
 					<form:form id="editbook" method="POST" commandName="book">
-						<form:label path="id" class="id"/>
 						<table>
+							<tr>
+								<td><form:input path="id" id="id" hidden="true" /></td>
+							</tr>
 							<tr>
 								<td>Title</td>
 								<td><form:input path="title" id="title" /></td>

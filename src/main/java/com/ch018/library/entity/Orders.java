@@ -17,7 +17,7 @@ public class Orders {
 	private Date issueDate;
 	private Person person;
 	private Book book;
-        private Date issueDate;
+
 
 	public Orders() {
 

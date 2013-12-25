@@ -118,6 +118,9 @@ public class BooksController {
 			case "return":
 				books.addAll(booksInUseService.getAllBooks());
 				break;
+			case "returntd":
+				books.addAll(booksInUseService.getReturnBooksToday());
+				break;
 			case "issuetd":
 				books.addAll(ordersService.toIssueToday());
 				break;

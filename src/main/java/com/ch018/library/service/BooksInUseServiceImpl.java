@@ -80,4 +80,11 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		return booksInUseDAO.getAllBooks();
 	}
 
+	@Override
+	@Transactional
+	public List<Book> getReturnBooksToday() {
+		// TODO Auto-generated method stub
+		return booksInUseDAO.getReturnBooksToday();
+	}
+
 }

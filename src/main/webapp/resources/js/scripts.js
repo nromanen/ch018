@@ -10,7 +10,7 @@ function open_andfill(box, id) {
 	  $("#background").show(); 
 	  $(box).centered_popup(); 
 	  $(box).delay(100).show(1); 
-	  $(".id").val($(".id"+id).text());
+	  $("#id").val($(".id"+id).text());
 	  $("#title").val($(".title" + id).text());
 	  $("#authors").val($(".authors" + id).text());
 	  $("#year").val($(".year" + id).text());
@@ -21,6 +21,8 @@ function open_andfill(box, id) {
 	  $("#bookcase").val($(".bookcase" + id).text());
 	  $("#shelf").val($(".shelf" + id).text());
 	  $("#genre").val($(".genre" + id).text());
+	  $("#description").val($(".desc"+id).text());
+	  $("#term").val($(".term"+id).text());
 	}
  
 /* Закрываем модальное окно: */
