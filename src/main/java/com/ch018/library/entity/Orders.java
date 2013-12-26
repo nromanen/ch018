@@ -43,7 +43,7 @@ public class Orders {
 	}
 
 	@Column(name = "order_date")
-	public Date getOrderDate() {
+	public Date getDate() {
 		return this.date;
 	}
 
@@ -66,7 +66,7 @@ public class Orders {
 		this.book = book;
 	}
 
-	public void setOrderDate(Date date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	
@@ -77,7 +77,7 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return getId() + ": " + getPerson() + " ordered " + getBook() + ". Date: " + getOrderDate();
+		return getId() + ": " + getPerson() + " ordered " + getBook() + ". Date: " + getDate();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class Orders {
 		if (obj instanceof Orders) return true;
 		if (((Orders) obj).getBook().equals(this.getBook())
 				&& ((Orders) obj).getPerson().equals(this.getPerson())
-				&& ((Orders) obj).getOrderDate() == this.getOrderDate()) 
+				&& ((Orders) obj).getDate() == this.getDate()) 
 			return true;
 		return false;
 	}

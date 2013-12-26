@@ -70,10 +70,8 @@ public class OrdersDAOImpl implements OrdersDAO {
 	public Collection getOrdersByPersonId(int id) {
 		ArrayList<Orders> result = new ArrayList<Orders>();
 		try {
-			Query query = sessionFactory.getCurrentSession().createQuery(
-					"from orders where person.id=:id");
-			query.setParameter("id", id);
-			result.addAll(query.list());
+			result.addAll(sessionFactory.getCurrentSession().createCriteria(Orders.class)
+                                      .add(Restrictions.eq("person.id", id)).list());
 		} catch (Exception e) {
 			log.error(e);
 		}
