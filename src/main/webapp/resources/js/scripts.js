@@ -154,6 +154,11 @@ $(document).ready(function() {
                     success: function(data) {
                     	
                     	console.log("sdsdsdsdsdsdsd");
+					},
+					
+					error: function(data) {
+                    	
+                    	console.log("sdsdsdsdsdsdsd");
 					}
           });
 
