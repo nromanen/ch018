@@ -9,7 +9,9 @@ import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +57,9 @@ public class OrdersDAOImpl implements OrdersDAO {
 	public Collection getOrdersByBooksId(int id) {
 		ArrayList<Orders> ordList = new ArrayList<Orders>();
 		try {
-			Query query = sessionFactory.getCurrentSession().createQuery(
-					"from orders where Books_id=:id");
-			query.setParameter("id", id);
-			ordList.addAll(query.list());
+			ordList.addAll(sessionFactory.getCurrentSession()
+						.createCriteria(Orders.class)
+						.add(Restrictions.eq("book.id", id)).list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -101,6 +103,63 @@ public class OrdersDAOImpl implements OrdersDAO {
 		} catch (Exception e) {
 			log.error(e);
 		}
+		return books;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<Book> toIssueToday() {
+		//Date startDate = new Date();
+		//Date endDate = new Date();
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		endDate.set(Calendar.HOUR_OF_DAY, 23);
+		endDate.set(Calendar.MINUTE, 59);
+		endDate.set(Calendar.SECOND, 59);
+		
+		
+		
+		List<Book> books = new ArrayList<Book>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(Orders.class)
+					.add(Expression.ge("issueDate",startDate.getTime()))
+					.add(Expression.le("issueDate",endDate.getTime()))
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+
+		return books;
+	}
+
+	@Override
+	public List<Book> toIssuePerHour() {
+		Date startDate = new Date();
+		Date endDate = new Date();
+		
+		endDate.setHours(startDate.getHours()+1);
+		
+		List<Book> books = new ArrayList<Book>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(Orders.class)
+					.add(Expression.ge("issueDate",startDate))
+					.add(Expression.le("issueDate",endDate))
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+
 		return books;
 	}
 
