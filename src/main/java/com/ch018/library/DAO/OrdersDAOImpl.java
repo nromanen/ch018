@@ -163,4 +163,30 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return books;
 	}
 
+	@Override
+	public Orders getById(int id) {
+		Orders orders = null;
+		try {
+			orders = (Orders) sessionFactory.getCurrentSession()
+					.get(Orders.class, id);
+		} catch (Exception e) {
+			System.out.println(e);
+			log.error(e);
+		}
+		return orders;
+	}
+
+	@Override
+	public void deleteOrder(int id) {
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery("delete from Orders where id=:id")
+					.setInteger("id", id);
+			int g = query.executeUpdate();
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+
 }

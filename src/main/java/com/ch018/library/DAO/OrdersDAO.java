@@ -11,9 +11,13 @@ import java.util.Collection;
 import java.util.List;
 
 public interface OrdersDAO {
+	public Orders getById(int id);
+	
 	public void addOrder(Orders ord);
 
 	public void deleteOrder(Orders ord);
+	
+	public void deleteOrder(int id);
 
 	public Collection getOrdersByBooksId(int id);
 
