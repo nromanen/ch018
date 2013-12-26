@@ -54,7 +54,7 @@ p {
 }
 
 
-#newbook, #newuser {
+#newbook, #newuser, #popup, #action_popup {
 	z-index: 9999;
 	border: 1px solid #444;
 	width: 330px; 

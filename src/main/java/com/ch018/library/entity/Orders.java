@@ -14,9 +14,10 @@ public class Orders {
 
 	private int id;
 	private Date date;
+	private Date issueDate;
 	private Person person;
 	private Book book;
-        private Date issueDate;
+
 
 	public Orders() {
 
@@ -45,11 +46,14 @@ public class Orders {
 	public Date getDate() {
 		return this.date;
 	}
-        
-         @Column(name = "issue_date")
-         public Date getIssueDate() {
-         return this.issueDate;
-         }
+
+	
+	@Column(name = "issue_date")
+	public Date getIssueDate() {
+		return this.issueDate;
+	}
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -65,11 +69,12 @@ public class Orders {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-        
-        public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-        }
-        
+	
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
+
+
 	@Override
 	public String toString() {
 		return getId() + ": " + getPerson() + " ordered " + getBook() + ". Date: " + getDate();

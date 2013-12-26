@@ -1,12 +1,15 @@
 package com.ch018.library.DAO;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,20 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	@Override
 	public void removeBooksInUse(BooksInUse booksInUse) {
 		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	public void removeBooksInUse(int id) {
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery("delete from booksInUse where buid=:id")
+					.setInteger("id", id);
+			int g = query.executeUpdate();
+		} catch (Exception e) {
+			System.err.println(e);
+		}
 
 	}
 
@@ -139,9 +156,9 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	@Override
 	public List<Book> getAllBooks() {
 		// TODO Auto-generated method stub
-		List<Book> booksInUses = new ArrayList<>();
+		List<Book> books = new ArrayList<>();
 		try {
-			booksInUses.addAll(sessionFactory
+			books.addAll(sessionFactory
 					.getCurrentSession()
 					.createCriteria(BooksInUse.class)
 					.setProjection(
@@ -150,7 +167,36 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return booksInUses;
+		return books;
+	}
+	
+	@Override
+	public List<Book> getReturnBooksToday() {
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		endDate.set(Calendar.HOUR_OF_DAY, 23);
+		endDate.set(Calendar.MINUTE, 59);
+		endDate.set(Calendar.SECOND, 59);
+		
+		List<Book> books = new ArrayList<>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.add(Expression.ge("returnDate", startDate.getTime()))
+					.add(Expression.le("returnDate", endDate.getTime()))
+					.setProjection(
+							Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
 	}
 
 }
