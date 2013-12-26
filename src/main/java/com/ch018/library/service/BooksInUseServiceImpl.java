@@ -87,4 +87,11 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		return booksInUseDAO.getReturnBooksToday();
 	}
 
+	@Override
+	@Transactional
+	public void removeBooksInUse(int id) {
+		// TODO Auto-generated method stub
+		booksInUseDAO.removeBooksInUse(id);
+	}
+
 }

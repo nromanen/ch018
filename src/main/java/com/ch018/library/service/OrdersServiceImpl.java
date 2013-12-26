@@ -68,5 +68,17 @@ public class OrdersServiceImpl implements OrdersService{
 		// TODO Auto-generated method stub
 		return ordDAO.toIssuePerHour();
 	}
+
+	@Transactional
+	public Orders getById(int id) {
+		// TODO Auto-generated method stub
+		return ordDAO.getById(id);
+	}
+
+	@Transactional
+	public void deleteOrder(int id) {
+		ordDAO.deleteOrder(id);
+		
+	}
     
 }

@@ -14,57 +14,6 @@
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 <title>Books</title>
 <script type="text/javascript">
-$(document).ready(function()
-		{ 
-	         
-	        $('#editbookdddddd').submit(function(event) {
-	              
-	              var title = $('#title').val();
-	              var authors = $('#authors').val();
-	              var year = $('#year').val();
-	              var json = { "title" : title, "authors" : authors, "year": year};
-	              
-	        $.ajax({
-	                url: $("#editbook").attr( "action"),
-	                data: JSON.stringify(json),
-	                type: "PUT",
-	                
-	                beforeSend: function(xhr) {
-	                        xhr.setRequestHeader("Accept", "application/json");
-	                        xhr.setRequestHeader("Content-Type", "application/json");
-	                        $(".error").remove();
-	                },
-	                success: function(smartphone) {
-	                        var respContent = "";
-	                        
-	                                  respContent += "<span class='success'>Book was edited: [";
-	                                  respContent += smartphone.producer + " : ";
-	                                  respContent += smartphone.model + " : " ;
-	                                  respContent += smartphone.price + "]</span>";
-	                        
-	                        $("#sPhoneFromResponse").html(respContent);        
-	                },
-	                error: function(jqXHR, textStatus, errorThrown) {
-	                        var respBody = $.parseJSON(jqXHR.responseText);
-	                        var respContent = "";
-	                        
-	                        respContent += "<span class='error-main'>";
-	                        respContent += respBody.message;
-	                        respContent += "</span>";
-	                        
-	                        $("#sPhoneFromResponse").html(respContent);
-	                        
-	                        $.each(respBody.fieldErrors, function(index, errEntity) {
-	                                var tdEl = $("."+errEntity.fieldName+"-info");
-	                                tdEl.html("<span class=\"error\">"+errEntity.fieldError+"</span>");
-	                        });
-	                }
-	        });
-	        
-	        event.preventDefault();
-	      });
-	    }
-); 
 </script>
 </head>
 <body>
@@ -103,7 +52,7 @@ $(document).ready(function()
 						</thead>
 						<tbody>
 							<c:forEach items="${books}" var="book">
-								<tr>
+								<tr id="books${book.id}">
 									<td hidden="true" class="id${book.id}">${book.id}</td>
 									<td class="title${book.id}"><c:out value="${book.title}" escapeXml="true" /></td>
 									<td class="authors${book.id}"><c:out value="${book.authors}" escapeXml="true" /></td>
@@ -119,8 +68,8 @@ $(document).ready(function()
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>">Users</a><br>
 										<a href="<c:url value="/orders?id=${book.id}"/>">Orders</a><br>
 									</td>
-									<td><a href="#" class="book${book.id}" onclick="open_andfill('#popup',${book.id});">Edit</a></td>
-									<td><a href="<c:url value="/deletebook?id=${book.id}"/>">Delete</a></td>
+									<td><a href="#" id="editbook${book.id}" >Edit</a></td>
+									<td><a href="#" id = "deletebook${book.id}">Delete</a></td>
 									
 								</tr>
 							</c:forEach>
@@ -129,8 +78,15 @@ $(document).ready(function()
 				</div>
 				<a href="#" id="newbookbutton">New
 					Book</a>
-
 				<div id="popup">
+					<span>Are you sure you want to delete :</span>
+					<span id="name"></span>
+					<br>
+					<a id="deleteLink" href="${pageContext.request.contextPath}/booksinuse/delete/">Delete</a>
+					<a id="canceldelete" href="#">Cancel</a>
+				</div>
+
+				<div id="action_popup">
 					<form:form id="editbook" method="POST" commandName="book">
 						<table>
 							<tr>

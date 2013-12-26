@@ -9,6 +9,8 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 <title>Users</title>
 	<script type="text/javascript"></script>
 </head>
@@ -19,33 +21,52 @@
 	<div id="contentliquid">
 <div id = "content">
 	<div class = "TableBooks">
+	<p>${book}</p>
 		<table>
 			<thead>
 				<tr>
+					<th>#</th>
 					<th>First Name<a href="<c:url value="/persons?orderby=fname"/>">^v</a></th>
 					<th>Second Name<a href="<c:url value="/persons?orderby=sname"/>">^v</a></th>
 					<th>E-mail<a href="<c:url value="/persons?orderby=mail"/>">^v</a></th>
 					<th>Mobile<a href="<c:url value="/persons?orderby=mobile"/>">^v</a></th>
 					<th>Return Date</th>
 					<th></th>
-
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 			<c:forEach items="${booksinuse}" var="bookinuse">
-				<tr>
+				<tr id="bookinuse${bookinuse.buid}">
+					<td><c:out value="${bookinuse.buid}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.name}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.surname}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.email}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.cellphone}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.returnDate}" escapeXml="true"/></td>
 
-					<td><a href="<c:url value="/edituser?id=${person.id}"/>">Edit</a></td>
+					<td><a id = "returnbook${bookinuse.buid}" href="<c:url value="#"/>">Return</a></td>
+					<td><a id = "deletebiu${bookinuse.buid}" href="<c:url value="#"/>">Delete</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 	</div>
+	<div id="popup">
+			<span>Are you sure you want to delete :</span>
+			<span id="name"></span>
+			<br>
+			<a id="deleteLink" href="${pageContext.request.contextPath}/booksinuse/delete/">Delete</a>
+			<a id="canceldelete" href="#">Cancel</a>
+	</div>
+	<div id="action_popup">
+			<span>Return book?</span>
+			<span id="name"></span>
+			<br>
+			<a id="actionLink" href="${pageContext.request.contextPath}/booksinuse/return/">Return</a>
+			<a id="cancelaction" href="#">Cancel</a>
+	</div>
+				<div id="background"></div>
 </div>
 </div>
 <div id="leftcolumn">

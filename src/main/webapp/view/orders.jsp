@@ -21,6 +21,7 @@
 	<div id="contentliquid">
 <div id = "content">
 	<div class = "TableBooks">
+	<p>${book}</p>
 		<table>
 			<thead>
 				<tr>
@@ -45,19 +46,26 @@
 					<td><c:out value="${order.person.cellphone}" escapeXml="true"/></td>
 					<td><c:out value="${order.issueDate}" escapeXml="true"/></td>
 
-					<td><a id="issue" href="#">Issue</a></td>
-					<td><a id="deleteorder" href="#" onclick="delete_order(${order.id});">Delete</a></td>
+					<td><a id="issueorder${order.id}" href="#">Issue</a></td>
+					<td><a id="deleteorder${order.id}" href="#" >Delete</a></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
 	</div>
 	<div id="popup">
-		<span>Are you sure you want to delete order:</span>
-		<br>
-		<span id="name"></span>
-		<input type="submit" value="Delete" />
-		<input type="button" value="Cancel"	onclick="close_popup('#popup');" />
+			<span>Are you sure you want to delete order:</span>
+			<span id="name"></span>
+			<br>
+			<a id="deleteLink" href="${pageContext.request.contextPath}/orders/delete/">Delete</a>
+			<a id="canceldelete" href="#">Cancel</a>
+	</div>
+	<div id="action_popup">
+			<span>Issue book:</span>
+			<span id="name"></span>
+			<br>
+			<a id="actionLink" href="${pageContext.request.contextPath}/orders/issue/">Issue</a>
+			<a id="cancelaction" href="#">Cancel</a>
 	</div>
 				<div id="background"></div>
 </div>

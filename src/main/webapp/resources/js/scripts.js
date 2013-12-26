@@ -60,10 +60,131 @@ $(document).ready(function() {
 	  $("#popup").delay(100).show(1);
   })
   
-  $("#cancel").click(function() {
+  $("a[id^=cancel], input[id^=cancel]").click(function() {
 	  $("#popup").hide(); 
+	  $("#action_popup").hide(); 
 	  $("#background").delay(100).hide(1); 
   })
+  
+  /**
+   * Books scripts
+   */
+  $("a[id^=editbook]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  open_andfill("#action_popup", id)
+  })
+  
+  $("a[id^=deletebook]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  $("#name").text(id);
+	  $("#idtoremove").text(id);
+	  console.log(id);
+	  open_popup("#popup");
+  })
+  
+  
+  /**
+   * Orders scripts
+   */
+  
+  $("a[id^=deleteorder]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  $("#name").text(id);
+	  $("#idtoremove").text(id);
+	  console.log(id);
+	  open_popup("#popup");
+  })
+  
+  /**
+   * Return click
+   */
+  $("a[id^=issueorder]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  $("#name").text(id);
+	  console.log(id);
+	  open_popup("#action_popup");
+  })
+  
+  /**
+   * Books in use scripts
+   */
+  
+    $("a[id^=deletebiu]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  $("#name").text(id);
+	  console.log(id);
+	  open_popup("#popup");
+  })
+  
+  $("a[id^=returnbook]").click(function() {
+	  var tr = "#" + $(this).parent().parent().attr("id");
+	  var id = $(tr + " td:first-child").text();
+	  //var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
+	  $("#name").text(id);
+	  console.log(id);
+	  open_popup("#action_popup");
+  })
+
  
+  
+  //Delete 
+  $("#deleteLink").click(function(event) {
+	  var id = $("#name").text();
+	  var href = $(event.target).attr("href")+id;
+          $.ajax({
+        	  
+                  url: href,
+                    type: "DELETE",
+                    
+                    beforeSend: function(xhr) {
+                            xhr.setRequestHeader("Accept", "application/json");
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    
+                    success: function(data) {
+                    	
+                    	console.log("sdsdsdsdsdsdsd");
+					}
+          });
+
+          event.preventDefault();
+  });
+  
+  //Action
+  $("#actionLink").click(function(event) {
+	  var id = $("#name").text();
+	  var href = $(event.target).attr("href")+id;
+          $.ajax({
+        	  
+                  url: href,
+                    type: "GET",
+                    
+                    beforeSend: function(xhr) {
+                            xhr.setRequestHeader("Accept", "application/json");
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                    },
+                    
+                    success: function(data) {
+                    	
+                    	console.log("sdsdsdsdsdsdsd");
+					}
+          });
+
+          event.preventDefault();
+  });
+  
+
+  
+  
  
 });

@@ -28,4 +28,6 @@ public interface BooksInUseDAO {
 	List<Book> getAllBooks();
 
 	List<Book> getReturnBooksToday();
+
+	void removeBooksInUse(int id);
 }
