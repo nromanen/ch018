@@ -1,6 +1,7 @@
 package com.ch018.library.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -52,7 +53,7 @@ public class BooksController {
 
 	@Autowired
 	BooksInUseService booksInUseService;
-	
+
 	@Autowired
 	OrdersService ordersService;
 
@@ -80,18 +81,17 @@ public class BooksController {
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
 	public String addBook(@ModelAttribute("book") Book book,
 			BindingResult result) {
-		
-		
+
 		int genreId = book.getGenre().getId();
 		Genre genre = genreService.getGenreById(genreId);
-		
+
 		book.setGenre(genre);
-		if (book.getId()==0) {
+		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {
 			bookService.updateBook(book);
 		}
-		
+
 		return "redirect:/books";
 	}
 
@@ -118,6 +118,9 @@ public class BooksController {
 			case "return":
 				books.addAll(booksInUseService.getAllBooks());
 				break;
+			case "returntd":
+				books.addAll(booksInUseService.getReturnBooksToday());
+				break;
 			case "issuetd":
 				books.addAll(ordersService.toIssueToday());
 				break;
@@ -134,39 +137,40 @@ public class BooksController {
 		return "books";
 	}
 
-	/**
-	 * Show table edit book
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	/*
-	@RequestMapping(value = "/books/edit/{id}", method = RequestMethod.GET)
-	public String showEditBook(@PathVariable Integer id, Model model) {
+
+
+	@RequestMapping(value = "/orders", method = RequestMethod.GET)
+	public String showOrders(@RequestParam("id") Integer id, Model model) {
+		List<Orders> orders = (List<Orders>) ordersService
+				.getOrdersByBooksId(id);
+		model.addAttribute("orders", orders);
 		model.addAttribute("book", bookService.getBooksById(id));
-		model.addAttribute("genre", genreService.getAllGenres());
-		return "books";
+
+		return "orders";
 	}
-*/
-	/**
-	 * Edited book to DB
-	 * 
-	 * @param book
-	 * @param result
-	 * @return
-	 */
-	/*
-	@RequestMapping(value = "/books", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/orders/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String editBook(@RequestBody Book book) {
-		int genreId = book.getGenre().getId();
-		Genre genre = genreService.getGenreById(genreId);
-		book.setGenre(genre);
-		bookService.updateBook(book);
-		return "redirect:/books";
+	public String deleteOrder(@PathVariable int id) {
+		ordersService.deleteOrder(id);
+		return "orders";
 	}
-*/
+
+	@RequestMapping(value = "/orders/issue/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String issueOrder(@PathVariable int id) {
+		BooksInUse booksInUse = new BooksInUse();
+		Orders order = ordersService.getById(id);
+		booksInUse.setBook(order.getBook());
+		booksInUse.setPerson(order.getPerson());
+		booksInUse.setReturnDate(new Date());
+		booksInUse.setIssueDate(new Date());
+		booksInUse.setTerm(14);
+		booksInUseService.addBooksInUse(booksInUse);
+		ordersService.deleteOrder(id);
+		return "orders";
+	}
+	
 	/**
 	 * Show Book in users table
 	 * 
@@ -177,15 +181,21 @@ public class BooksController {
 	public String showBookInUse(@RequestParam("id") Integer id, Model model) {
 		List<BooksInUse> booksInUses = booksInUseService.getByBookId(id);
 		model.addAttribute("booksinuse", booksInUses);
-
+		model.addAttribute("book", bookService.getBooksById(id));
 		return "bookinuse";
 	}
 	
-	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String showOrders(@RequestParam("id") Integer id, Model model) {
-		List<Orders> orders = (List<Orders>) ordersService.getOrdersByBooksId(id);
-		model.addAttribute("orders", orders);
-
-		return "orders";
+	@RequestMapping(value = "/booksinuse/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String deleteInUse(@PathVariable int id) {
+		booksInUseService.removeBooksInUse(id);
+		return "bookinuse";
+	}
+	
+	@RequestMapping(value = "/booksinuse/return/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public String returnBook(@PathVariable int id) {
+		booksInUseService.removeBooksInUse(id);
+		return "bookinuse";
 	}
 }
