@@ -146,19 +146,18 @@ $(document).ready(function() {
                   url: href,
                     type: "DELETE",
                     
-                    beforeSend: function(xhr) {
-                            xhr.setRequestHeader("Accept", "application/json");
-                            xhr.setRequestHeader("Content-Type", "application/json");
-                    },
+                    dataType: "json",
+                    contentType: 'application/json',
+                    mimeType: 'application/json',
                     
                     success: function(data) {
                     	
-                    	console.log("sdsdsdsdsdsdsd");
+                    	console.log("success");
 					},
 					
 					error: function(data) {
                     	
-                    	console.log("sdsdsdsdsdsdsd");
+                    	console.log("error");
 					}
           });
 
@@ -182,6 +181,11 @@ $(document).ready(function() {
                     success: function(data) {
                     	
                     	console.log("sdsdsdsdsdsdsd");
+					},
+                    
+                    error: function(data) {
+                    	
+                    	console.log("error");
 					}
           });
 

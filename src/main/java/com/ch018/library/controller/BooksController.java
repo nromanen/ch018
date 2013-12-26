@@ -189,7 +189,8 @@ public class BooksController {
 	@ResponseBody
 	public String deleteInUse(@PathVariable int id) {
 		booksInUseService.removeBooksInUse(id);
-		return "bookinuse";
+		
+		return "booksinuse";
 	}
 	
 	@RequestMapping(value = "/booksinuse/return/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

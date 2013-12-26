@@ -91,6 +91,18 @@
     <dependent-module archiveName="jsp-api-2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/jsp/jsp-api/2.2/jsp-api-2.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="json-20131018.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20131018/json-20131018.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jackson-jaxrs-1.9.13.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-jaxrs/1.9.13/jackson-jaxrs-1.9.13.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jackson-core-asl-1.9.13.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-core-asl/1.9.13/jackson-core-asl-1.9.13.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jackson-mapper-asl-1.9.13.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-mapper-asl/1.9.13/jackson-mapper-asl-1.9.13.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
   </wb-module>
