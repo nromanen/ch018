@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 18 2013 г., 13:41
+-- Время создания: Дек 26 2013 г., 12:40
 -- Версия сервера: 5.6.11
 -- Версия PHP: 5.5.3
 
@@ -42,29 +42,19 @@ CREATE TABLE IF NOT EXISTS `books` (
   `gid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_k00r52dx96mgbrvv8i05saupq` (`gid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `books`
 --
 
 INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`) VALUES
-(1, '00ghn00', 1, 'new desc', 5, 'asfghmda', 1, 14, 'asssfghmss', 1999, 1),
-(2, '0fghm000', 1, 'asdsffghas', 5, 'asgfsdgda', 1, 14, 'assssgfsfgfgfss', 1999, 1);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `bookscount`
---
-
-CREATE TABLE IF NOT EXISTS `bookscount` (
-  `Books_id` int(10) unsigned NOT NULL,
-  `count` int(10) unsigned DEFAULT NULL,
-  `currentCount` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`Books_id`),
-  KEY `BooksCount_FKIndex1` (`Books_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(1, 'Gonsalves', 2, 'fgh', 800, 'Apress', 2, 14, 'Java EE', 2013, 1),
+(2, 'New author', 5, 'cool book', 200, 'Home', 15, 14, 'New book', 2009, 2),
+(3, 'Fain Y.', 2, 'Java train', 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 1),
+(4, 'Craig Walls', 2, 'Java spring', 401, 'Manning', 2, 14, 'Spring in action', 2011, 1),
+(5, 'K. Sierra, B. Bates', 2, 'Java', 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 1),
+(6, 'M. Deinum & K. Serneels', 2, 'Java spring', 590, 'Apress', 1, 14, 'Pro Spring MVC: with Web Flow', 2011, 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
 --
 
 INSERT INTO `booksinuse` (`buid`, `inUse`, `issue_date`, `return_date`, `term`, `Books_id`, `Person_id`) VALUES
-(1, 1, '2013-12-17 22:16:48', '2013-12-17 22:16:48', 14, 1, 1);
+(1, 0, '2013-12-26 01:46:12', '2013-12-26 01:46:12', 14, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -101,15 +91,17 @@ INSERT INTO `booksinuse` (`buid`, `inUse`, `issue_date`, `return_date`, `term`, 
 CREATE TABLE IF NOT EXISTS `genre` (
   `gid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`gid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`gid`),
+  UNIQUE KEY `UK_ctffrbu4484ft8dlsa5vmqdka` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `genre`
 --
 
 INSERT INTO `genre` (`gid`, `name`) VALUES
-(1, 'G6');
+(2, 'Math'),
+(1, 'Programming');
 
 -- --------------------------------------------------------
 
@@ -118,14 +110,28 @@ INSERT INTO `genre` (`gid`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `orders` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Books_id` int(10) unsigned NOT NULL,
-  `Person_id` int(10) unsigned NOT NULL,
-  `date` date DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `issue_date` datetime DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `Books_id` int(11) DEFAULT NULL,
+  `Person_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `orders_FKIndex1` (`Person_id`),
-  KEY `orders_FKIndex2` (`Books_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `FK_iwon2xdheg3wibjdl8rp7tsf3` (`Books_id`),
+  KEY `FK_fowd2x4g292tvs9sykevhxbos` (`Person_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `issue_date`, `order_date`, `Books_id`, `Person_id`) VALUES
+(2, '2013-12-25 22:42:00', '2013-12-24 00:00:00', 6, 1),
+(15, '2013-12-26 13:34:00', '2013-12-25 00:00:00', 6, 1),
+(16, '2013-12-26 14:00:00', '2013-12-25 00:00:00', 6, 2),
+(17, '2013-12-27 18:00:00', '2013-12-25 00:00:00', 1, 3),
+(18, '2013-12-26 16:00:00', '2013-12-25 00:00:00', 2, 2),
+(19, '2013-12-28 00:00:00', '2013-12-25 00:00:00', 4, 1),
+(20, '2013-12-26 18:06:00', '2013-12-25 00:00:00', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -142,37 +148,24 @@ CREATE TABLE IF NOT EXISTS `person` (
   `multibookAllowed` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `hash` varchar(255) DEFAULT NULL,
-  `prole` int(11) DEFAULT NULL,
+  `prole` varchar(255) DEFAULT NULL,
   `salt` varchar(255) DEFAULT NULL,
   `sms` tinyint(1) DEFAULT NULL,
   `surname` varchar(255) DEFAULT NULL,
   `timely_returns` int(11) DEFAULT NULL,
   `untimely_returns` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_jlau8tu7a0dxnfvl91wqxcwae` (`e_mail`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Дамп данных таблицы `person`
 --
 
 INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `failedOrders`, `multibookAllowed`, `name`, `hash`, `prole`, `salt`, `sms`, `surname`, `timely_returns`, `untimely_returns`) VALUES
-(1, '111111111', 1, 'asda', 0, 0, 'name', '014014', 0, 'dsd', 0, 'asddsas', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `ratings`
---
-
-CREATE TABLE IF NOT EXISTS `ratings` (
-  `personid` int(11) NOT NULL,
-  `booksallowed` int(11) DEFAULT NULL,
-  `failedorders` int(11) DEFAULT NULL,
-  `generalratio` float DEFAULT NULL,
-  `timelyreturn` int(11) DEFAULT NULL,
-  `untimelyreturn` int(11) DEFAULT NULL,
-  PRIMARY KEY (`personid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(1, '0992745624', 1, 'yurik.my@gmail.com', 0, 10, 'Yurik', NULL, NULL, NULL, 0, 'Mikhaletsky', 0, 0),
+(2, '052000000', 1, 'w@r.ney', 0, 10, 'Wane', NULL, NULL, NULL, 0, 'Rooney', 0, 0),
+(3, '052005445', 1, 'j@c.ole', 0, 10, 'Joe', NULL, NULL, NULL, 0, 'Cole', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -183,8 +176,10 @@ CREATE TABLE IF NOT EXISTS `ratings` (
 CREATE TABLE IF NOT EXISTS `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Books_id` int(11) DEFAULT NULL,
-  `person_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `Person_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_qc2mmx7r8ebvjkf4x67qv02hf` (`Books_id`),
+  KEY `FK_8fo1hianyjf9k9pcdh1jlcxdq` (`Person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -203,6 +198,20 @@ ALTER TABLE `books`
 ALTER TABLE `booksinuse`
   ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`),
   ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `FK_fowd2x4g292tvs9sykevhxbos` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
+  ADD CONSTRAINT `FK_iwon2xdheg3wibjdl8rp7tsf3` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `FK_8fo1hianyjf9k9pcdh1jlcxdq` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
+  ADD CONSTRAINT `FK_qc2mmx7r8ebvjkf4x67qv02hf` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

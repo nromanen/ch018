@@ -17,4 +17,6 @@ public interface BooksInUseService {
 	List<BooksInUse> getByReturnDate(Date returnDate);
 	List<BooksInUse> getInUse(boolean inUse);
 	List<Book> getAllBooks();
+	List<Book> getReturnBooksToday();
+	void removeBooksInUse(int id);
 }

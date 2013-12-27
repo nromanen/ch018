@@ -19,7 +19,8 @@
                     <input type="submit" value="Serch in Library" id="searchButton"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value="/wishList"/>">Wish List</a>&nbsp;&nbsp;&nbsp;
-                    <a href="<c:url value="/userOrder"/>">Orders</a>
+                    <a href="<c:url value="/userOrder"/>">Orders</a>&nbsp;&nbsp;&nbsp;
+                    <a href="<c:url value="/usersBooks"/>">My books</a>&nbsp;&nbsp;&nbsp;
                 </center>
             </div>
             <div class="leftcolumn"></div>
