@@ -52,7 +52,7 @@ public class OrderController {
         p = pers.getById(personId);
         o.setPerson(p);
         o.setBook(b);
-        o.setOrderDate(new java.util.Date());
+        o.setDate(new java.util.Date());
         order.addOrder(o);
         return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }

@@ -1,4 +1,5 @@
 .header{
+    float: left;
     background-color: grey;
     height: 200px;
     width: 100%;
@@ -6,7 +7,7 @@
 
 .leftcolumn{
     float: left;
-    background-color: black;
+    background-color: grey;
     margin-left: -100%;
     width: 250px;
     height: 600px;

@@ -22,8 +22,8 @@
                     <a href="<c:url value="/userOrder"/>">Orders</a>
                 </center>
             </div>
-            <div class="content"></div>
             <div class="leftcolumn"></div>
+            <div class="content"></div>
             <div class="rightcolumn"></div>
             <div class="footer"></div>
         </div>
