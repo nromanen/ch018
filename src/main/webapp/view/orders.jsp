@@ -38,7 +38,7 @@
 			</thead>
 			<tbody>
 			<c:forEach items="${orders}" var="order">
-				<tr id="order${order.id}">
+				<tr id="order${order.id}" class="table${order.id}">
 					<td><c:out value="${order.id}" escapeXml="true"/></td>
 					<td><c:out value="${order.person.name}" escapeXml="true"/></td>
 					<td><c:out value="${order.person.surname}" escapeXml="true"/></td>
@@ -57,14 +57,14 @@
 			<span>Are you sure you want to delete order:</span>
 			<span id="name"></span>
 			<br>
-			<a id="deleteLink" href="${pageContext.request.contextPath}/orders/delete/">Delete</a>
+			<a id="deleteLink" href="${pageContext.request.contextPath}/orders/delete">Delete</a>
 			<a id="canceldelete" href="#">Cancel</a>
 	</div>
 	<div id="action_popup">
 			<span>Issue book:</span>
 			<span id="name"></span>
 			<br>
-			<a id="actionLink" href="${pageContext.request.contextPath}/orders/issue/">Issue</a>
+			<a id="actionLink" href="${pageContext.request.contextPath}/orders/issue">Issue</a>
 			<a id="cancelaction" href="#">Cancel</a>
 	</div>
 				<div id="background"></div>

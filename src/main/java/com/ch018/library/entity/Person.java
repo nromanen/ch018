@@ -48,7 +48,7 @@ public class Person implements Serializable {
 	@Column(name = "cellphone")
 	private String cellphone;
 
-	@Column(name = "prole")
+	@Column(name = "role")
 	private String role;
 
 	@Column(name = "confirmed")
@@ -57,7 +57,7 @@ public class Person implements Serializable {
 	@Column(name = "sms")
 	private boolean sms;
 
-	@Column(name = "hash")
+	@Column(name = "password")
 	private String password;
 
 	@Column(name = "salt")

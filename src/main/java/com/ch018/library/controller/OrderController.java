@@ -6,19 +6,27 @@
 
 package com.ch018.library.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
+import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -39,6 +47,9 @@ public class OrderController {
     
     @Autowired
     BookService book;
+    
+    @Autowired
+    BooksInUseService booksInUseService;
     
     @RequestMapping(value="/order", method=RequestMethod.GET)
     public ModelAndView createOrder(Model model, 
@@ -61,5 +72,40 @@ public class OrderController {
     public ModelAndView showOrder(){
         return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(1));
     }
+    
+    /**
+     * Librarian
+     */
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+	public String showOrders(@RequestParam("id") Integer id, Model model) {
+		List<Orders> orders = (List<Orders>) order
+				.getOrdersByBooksId(id);
+		model.addAttribute("orders", orders);
+		model.addAttribute("book", book.getBooksById(id));
+
+		return "orders";
+	}
+
+	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public String deleteOrder(@PathVariable Integer id) {
+		order.deleteOrder(id);
+		return "order";
+	}
+
+	@RequestMapping(value = "/orders/issue{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String issueOrder(@PathVariable int id) {
+		BooksInUse booksInUse = new BooksInUse();
+		Orders orders = order.getById(id);
+		booksInUse.setBook(orders.getBook());
+		booksInUse.setPerson(orders.getPerson());
+		booksInUse.setReturnDate(new Date());
+		booksInUse.setIssueDate(new Date());
+		booksInUse.setTerm(14);
+		booksInUseService.addBooksInUse(booksInUse);
+		order.deleteOrder(id);
+		return "orders";
+	}
 
 }

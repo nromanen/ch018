@@ -35,6 +35,7 @@ public class Book implements Serializable {
 	private int shelf;
 	private int bookcase;
 	private int term;
+	private String image;
 
 	
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -57,7 +58,7 @@ public class Book implements Serializable {
 		return this.id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "gid", nullable = false)
 	public Genre getGenre() {
 		return this.genre;
@@ -107,6 +108,11 @@ public class Book implements Serializable {
 	public int getTerm() {
 		return term;
 	}
+	
+	@Column(name = "image")
+	public String getImage() {
+		return image;
+	}
 
 	/*
 	 * @ManyToOne
@@ -117,7 +123,7 @@ public class Book implements Serializable {
 	 */
 
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
@@ -189,6 +195,10 @@ public class Book implements Serializable {
 
 	public void setTerm(int term) {
 		this.term = term;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Override

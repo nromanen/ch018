@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http pattern="/css/**" security="none" />
+	
+	<http auto-config="true">
+		<intercept-url pattern="/secure/**" access="ROLE_USER" />
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<form-login login-processing-url="/static/j_spring_security_check"
+					login-page="/login"
+					authentication-failure-url="/login?error=true"/>
+	</http>	
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="libraryUserDetailsService"></authentication-provider>
+	</authentication-manager>
+</beans:beans>
