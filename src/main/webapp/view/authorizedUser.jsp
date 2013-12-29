@@ -19,13 +19,14 @@
                     <input type="submit" value="Serch in Library" id="searchButton"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value="/wishList"/>">Wish List</a>&nbsp;&nbsp;&nbsp;
-                    <a href="<c:url value="/userOrder"/>">Orders</a>
+                    <a href="<c:url value="/userOrder"/>">Orders</a>&nbsp;&nbsp;&nbsp;
+                    <a href="<c:url value="/usersBooks"/>">My books</a>&nbsp;&nbsp;&nbsp;
                 </center>
             </div>
-            <div class="content"></div>
-            <div class="leftcolumn"></div>
-            <div class="rightcolumn"></div>
-            <div class="footer"></div>
+            <div class="leftcolumn">leftcol</div>
+            <div class="content">content</div>
+            <div class="rightcolumn">right</div>
+            <div class="footer">footer</div>
         </div>
     </body>
 </html>

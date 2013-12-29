@@ -1,4 +1,5 @@
 .header{
+    float: left;
     background-color: grey;
     height: 200px;
     width: 100%;
@@ -6,18 +7,18 @@
 
 .leftcolumn{
     float: left;
-    background-color: black;
+    background-color: blueviolet;
     margin-left: -100%;
     width: 250px;
     height: 600px;
-    padding-top: 200px;
+    margin-top: 200px
 }
 
 .content{
    float: left;
    background-color: greenyellow;
    margin-left: 250px;
-   padding-top: 200px;
+   //padding-top: 200px;
    height: 600px;
    width: 1000px;
 }
