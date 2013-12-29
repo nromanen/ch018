@@ -68,4 +68,19 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.getBooksByPerson(person);
 	}
 
+	@Transactional
+	public void deleteBook(int id) {
+		bookDAO.deleteBook(id);
+	}
+
+	@Transactional
+	public List<Book> simpleSearch(String parametr) {
+		return bookDAO.simpleSearch(parametr);
+	}
+
+	@Transactional
+	public List<Book> paramSearch(String field, String parametr) {
+		return bookDAO.paramSearch(field, parametr);
+	}
+
 }

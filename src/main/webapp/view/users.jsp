@@ -1,33 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${pageContext.request.contextPath}/resources/css/style.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
 	rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<title>Books</title>
+<script
+	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<title>Users</title>
 <script type="text/javascript">
-	$(document).ready(function()
-			{ 
-		        $("table").tablesorter(); 
-		    }
-	); 
 </script>
 </head>
 <body>
-	<div id="wrapper">
-		<div id="header">
-			<%@ include file="/view/top.jsp"%>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<%@ include file="/view/top.jsp"%>
+			</div>
 		</div>
-		<div id="contentliquid">
-			<div id="content">
+
+		<div class="row-fluid">
+			<div class="span1">
+				<%@ include file="/view/left.jsp"%>
+			</div>
+			<div class="span11">
 				<div class="TableBooks">
 					<table id="utable">
 						<thead>
@@ -62,86 +68,147 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${persons}" var="person">
-								<tr>
-									<td><c:out value="${person.name}" escapeXml="true" /></td>
-									<td><c:out value="${person.surname}" escapeXml="true" /></td>
-									<td><c:out value="${person.email}" escapeXml="true" /></td>
-									<td><c:out value="${person.cellphone}" escapeXml="true" /></td>
-									<td>${person.multibookAllowed}</td>
-									<td>${person.untimelyReturns}</td>
-									<td>${person.timelyReturns}</td>
-									<td>${person.failedOrders}</td>
-									<td><input type="checkbox" name="confirm" value="confirm"
+								<tr id="person${person.id}" class="table${person.id}">
+									<td hidden="true" class="id${person.id}">${person.id}</td>
+									<td class="uname${person.id}"><c:out
+											value="${person.name}" escapeXml="true" /></td>
+									<td class="surname${person.id}"><c:out
+											value="${person.surname}" escapeXml="true" /></td>
+									<td class="email${person.id}"><c:out
+											value="${person.email}" escapeXml="true" /></td>
+									<td class="cellphone${person.id}"><c:out
+											value="${person.cellphone}" escapeXml="true" /></td>
+									<td class="multibookAllowed${person.id}">${person.multibookAllowed}</td>
+									<td class="untimelyReturns${person.id}">${person.untimelyReturns}</td>
+									<td class="timelyReturns${person.id}">${person.timelyReturns}</td>
+									<td class="failedOrders${person.id}">${person.failedOrders}</td>
+									<td><input class="confirm${person.id}" type="checkbox"
+										name="confirm" value="confirm"
 										${person.confirm == true ? 'checked' : ''}></td>
 
-									<td><a href="<c:url value="/edituser?id=${person.id}"/>">Edit</a></td>
-									<td><a href="<c:url value="/deleteuser?id=${person.id}"/>">Delete</a></td>
+									<td><a href="#" id="edituser${book.id}"
+										class="btn btn-warning">Edit</a></td>
+									<td><a href="#" id="deleteuser${book.id}"
+										class="btn btn-danger">Delete</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<a href="#" id="newuserbutton" onclick="open_popup('#newuser');">New
-					User</a>
 
-				<div id="newuser">
-					<form:form method="POST" commandName="person">
-						<form:label path="id" />
-						<table>
-							<tr>
-								<td>First Name</td>
-								<td><form:input path="name" /></td>
-							</tr>
-							<tr>
-								<td>Second Name</td>
-								<td><form:input path="surname" /></td>
-							</tr>
-							<tr>
-								<td>E-mail</td>
-								<td><form:input path="email" /></td>
-							</tr>
-							<tr>
-								<td>Mobile</td>
-								<td><form:input path="cellphone" /></td>
-							</tr>
-							<tr>
-								<td>Multibook Allowed</td>
-								<td><form:input path="multibookAllowed" /></td>
-							</tr>
-							<tr>
-								<td>Untimelly</td>
-								<td><form:input path="untimelyReturns" /></td>
-							</tr>
-							<tr>
-								<td>Timelly</td>
-								<td><form:input path="timelyReturns" /></td>
-							</tr>
-							<tr>
-								<td>Failed Orders</td>
-								<td><form:input path="failedOrders" /></td>
-							</tr>
-							<tr>
-								<td>Confirmed</td>
-								<td><form:checkbox path="confirm" /></td>
-							</tr>
-							<tr>
-								<td colspan="2"><input type="submit" value="Save" /></td>
-								<td colspan="2"><input type="button" value="Cancel"
-									onclick="close_popup('#newuser');" /></td>
-							</tr>
-						</table>
-					</form:form>
+				<!-- New user button -->
+				<a href="#" id="newuserbutton" class="btn">New User</a>
+
+				<!-- Delete user -->
+				<div id="popup" class="modal hide fade" role="dialog"
+					aria-labelledby="deleteLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 id="deleteLabel">Delete user</h3>
+					</div>
+					<div class="modal-body">
+						<span>Are you sure you want to delete :</span> <span id="name"></span>
+					</div>
+					<div class="modal-footer">
+						<a id="deleteLink" data-dismiss="modal"
+							href="${pageContext.request.contextPath}/user/delete"
+							class="btn btn-danger">Delete</a> <a id="canceldelete" href="#"
+							class="btn" data-dismiss="modal" aria-hidden="true"
+							value="Cancel">Cancel</a>
+					</div>
 				</div>
-				<div id="background"></div>
 
-				<!--  <a href="<c:url value="/addbook"/>">New Book</a> -->
+				<!-- Edit user -->
+				<div id="action_popup" class="modal hide fade" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Add user</h3>
+					</div>
+					<div class="modal-body">
+						<form:form id="edituser" class="form-horizontal" method="POST" commandName="person"
+							action="${pageContext.request.contextPath}/user/update">
+							<form:input path="id" id="id" class="hide" disabled="disabled" />
+							
+							<div class="control-group">
+    							<label class="control-label" for="uname">First Name</label>
+    							<div class="controls">
+      								<form:input path="name" type="text" id="uname" placeholder="Name" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="surname">Second Name</label>
+    							<div class="controls">
+      								<form:input path="surname" type="text" id="surname" placeholder="Second Name" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="email">E-mail</label>
+    							<div class="controls">
+      								<form:input path="email" type="email" id="email" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="cellphone">Mobile</label>
+    							<div class="controls">
+      								<form:input path="cellphone" type="text" id="cellphone" placeholder="Mobile" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="multibookAllowed">Multibook Allowed</label>
+    							<div class="controls">
+      								<form:input path="multibookAllowed" type="text" id="multibookAllowed" placeholder="10" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="untimelyReturns">Untimelly returns</label>
+    							<div class="controls">
+      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="timelyReturns">Timelly returns</label>
+    							<div class="controls">
+      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="failedOrders">Failed Orders</label>
+    							<div class="controls">
+      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
+    							</div>
+  							</div>
+  							
+  							<div class="control-group">
+    							<label class="control-label" for="confirm">Confirmed</label>
+    							<div class="controls">
+      								<form:checkbox path="confirm" id="confirm" />
+    							</div>
+  							</div>
+  							<div class="form-actions">
+							<input type="submit" value="Save"
+										class="btn btn-primary" />
+							<input id="cancel" type="button"
+										class="btn" data-dismiss="modal" aria-hidden="true"
+										value="Cancel" />
+							</div>
+						</form:form>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div id="leftcolumn">
-			<%@ include file="/view/left.jsp"%>
-		</div>
-		<div id="footer">
-			<p>This is the Footer</p>
+		<!-- footer -->
+		<div class="row-fluid">
+			<div class="span12" id="footer">Footer</div>
 		</div>
 	</div>
 </body>

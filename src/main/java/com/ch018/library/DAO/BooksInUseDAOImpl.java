@@ -47,7 +47,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
-					.createQuery("delete from booksInUse where buid=:id")
+					.createQuery("delete from BooksInUse where buid=:id")
 					.setInteger("id", id);
 			int g = query.executeUpdate();
 		} catch (Exception e) {

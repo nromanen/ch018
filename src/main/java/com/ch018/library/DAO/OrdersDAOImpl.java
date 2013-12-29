@@ -177,7 +177,8 @@ public class OrdersDAOImpl implements OrdersDAO {
 	}
 
 	@Override
-	public void deleteOrder(int id) {
+	public Orders deleteOrder(int id) {
+		Orders order = getById(id);
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
@@ -187,6 +188,8 @@ public class OrdersDAOImpl implements OrdersDAO {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+		
+		return order;
 	}
 
 }

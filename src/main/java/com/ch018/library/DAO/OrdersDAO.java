@@ -17,7 +17,7 @@ public interface OrdersDAO {
 
 	public void deleteOrder(Orders ord);
 	
-	public void deleteOrder(int id);
+	public Orders deleteOrder(int id);
 
 	public Collection getOrdersByBooksId(int id);
 

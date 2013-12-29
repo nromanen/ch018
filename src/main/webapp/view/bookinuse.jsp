@@ -37,7 +37,7 @@
 			</thead>
 			<tbody>
 			<c:forEach items="${booksinuse}" var="bookinuse">
-				<tr id="bookinuse${bookinuse.buid}">
+				<tr id="bookinuse${bookinuse.buid}" class="table${bookinuse.buid}">
 					<td><c:out value="${bookinuse.buid}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.name}" escapeXml="true"/></td>
 					<td><c:out value="${bookinuse.person.surname}" escapeXml="true"/></td>
@@ -56,14 +56,14 @@
 			<span>Are you sure you want to delete :</span>
 			<span id="name"></span>
 			<br>
-			<a id="deleteLink" href="${pageContext.request.contextPath}/booksinuse/delete/">Delete</a>
+			<a id="deleteLink" href="${pageContext.request.contextPath}/booksinuse/delete">Delete</a>
 			<a id="canceldelete" href="#">Cancel</a>
 	</div>
 	<div id="action_popup">
 			<span>Return book?</span>
 			<span id="name"></span>
 			<br>
-			<a id="actionLink" href="${pageContext.request.contextPath}/booksinuse/return/">Return</a>
+			<a id="actionLink" href="${pageContext.request.contextPath}/booksinuse/return">Return</a>
 			<a id="cancelaction" href="#">Cancel</a>
 	</div>
 				<div id="background"></div>

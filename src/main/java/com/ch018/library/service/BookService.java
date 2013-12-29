@@ -15,8 +15,11 @@ public interface BookService {
 	List<Book> getAllBooks();
 	Book getBooksById(int id);
 	void deleteBook(Book book);
+	void deleteBook(int id);
 	List<Book> getBooksByTitle(String title);
 	List<Book> getBooksByAuthors(String authors);
 	List<Book> getBooksByYear(int year);
 	List<Book> getBooksByPerson(Person person);
+	List<Book> simpleSearch(String parametr);
+	List<Book> paramSearch(String field, String parametr);
 }

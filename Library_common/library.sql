@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 26 2013 г., 12:40
+-- Время создания: Дек 29 2013 г., 11:27
 -- Версия сервера: 5.6.11
 -- Версия PHP: 5.5.3
 
@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `authors` varchar(255) DEFAULT NULL,
   `bookcase` int(11) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `pages` int(11) DEFAULT NULL,
   `publication` varchar(255) DEFAULT NULL,
   `shelf` int(11) DEFAULT NULL,
@@ -48,13 +49,13 @@ CREATE TABLE IF NOT EXISTS `books` (
 -- Дамп данных таблицы `books`
 --
 
-INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`) VALUES
-(1, 'Gonsalves', 2, 'fgh', 800, 'Apress', 2, 14, 'Java EE', 2013, 1),
-(2, 'New author', 5, 'cool book', 200, 'Home', 15, 14, 'New book', 2009, 2),
-(3, 'Fain Y.', 2, 'Java train', 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 1),
-(4, 'Craig Walls', 2, 'Java spring', 401, 'Manning', 2, 14, 'Spring in action', 2011, 1),
-(5, 'K. Sierra, B. Bates', 2, 'Java', 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 1),
-(6, 'M. Deinum & K. Serneels', 2, 'Java spring', 590, 'Apress', 1, 14, 'Pro Spring MVC: with Web Flow', 2011, 1);
+INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `image`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`) VALUES
+(1, 'Gonsalves', 2, 'fgh', NULL, 800, 'Apress', 2, 14, 'Java EE', 2013, 1),
+(2, 'New author', 5, 'cool book', NULL, 200, 'Home', 15, 14, 'New book', 2009, 2),
+(3, 'Fain Y.', 2, 'Java train', NULL, 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 1),
+(4, 'Craig Walls', 2, 'Java spring', NULL, 401, 'Manning', 2, 14, 'Spring in action', 2011, 1),
+(5, 'K. Sierra, B. Bates', 2, 'Java', NULL, 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 1),
+(6, 'M. Deinum & K. Serneels', 2, 'Java spring', NULL, 590, 'Apress', 1, 14, 'Pro Spring MVC: with Web Flow', 2011, 1);
 
 -- --------------------------------------------------------
 
@@ -73,14 +74,15 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
   PRIMARY KEY (`buid`),
   KEY `FK_2nkoqh845najnu1vfv20lkp6p` (`Books_id`),
   KEY `FK_rece9y8w4qeg63ksgcrecwn54` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `booksinuse`
 --
 
 INSERT INTO `booksinuse` (`buid`, `inUse`, `issue_date`, `return_date`, `term`, `Books_id`, `Person_id`) VALUES
-(1, 0, '2013-12-26 01:46:12', '2013-12-26 01:46:12', 14, 1, 3);
+(1, 0, '2013-12-26 01:46:12', '2013-12-26 01:46:12', 14, 1, 3),
+(2, 0, '2013-12-28 01:46:12', '2013-12-30 01:46:12', 14, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -111,8 +113,8 @@ INSERT INTO `genre` (`gid`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `issue_date` datetime DEFAULT NULL,
   `order_date` datetime DEFAULT NULL,
+  `issue_date` datetime DEFAULT NULL,
   `Books_id` int(11) DEFAULT NULL,
   `Person_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -124,14 +126,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `issue_date`, `order_date`, `Books_id`, `Person_id`) VALUES
-(2, '2013-12-25 22:42:00', '2013-12-24 00:00:00', 6, 1),
-(15, '2013-12-26 13:34:00', '2013-12-25 00:00:00', 6, 1),
-(16, '2013-12-26 14:00:00', '2013-12-25 00:00:00', 6, 2),
-(17, '2013-12-27 18:00:00', '2013-12-25 00:00:00', 1, 3),
-(18, '2013-12-26 16:00:00', '2013-12-25 00:00:00', 2, 2),
-(19, '2013-12-28 00:00:00', '2013-12-25 00:00:00', 4, 1),
-(20, '2013-12-26 18:06:00', '2013-12-25 00:00:00', 2, 1);
+INSERT INTO `orders` (`id`, `order_date`, `issue_date`, `Books_id`, `Person_id`) VALUES
+(2, '2013-12-24 00:00:00', '2013-12-25 22:42:00', 6, 1),
+(15, '2013-12-25 00:00:00', '2013-12-26 13:34:00', 6, 1),
+(16, '2013-12-25 00:00:00', '2013-12-26 14:00:00', 6, 2),
+(17, '2013-12-25 00:00:00', '2013-12-27 18:00:00', 1, 3),
+(18, '2013-12-25 00:00:00', '2013-12-26 16:00:00', 2, 2),
+(19, '2013-12-25 00:00:00', '2013-12-28 00:00:00', 4, 1),
+(20, '2013-12-25 00:00:00', '2013-12-26 18:06:00', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -147,8 +149,8 @@ CREATE TABLE IF NOT EXISTS `person` (
   `failedOrders` int(11) DEFAULT NULL,
   `multibookAllowed` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `hash` varchar(255) DEFAULT NULL,
-  `prole` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   `salt` varchar(255) DEFAULT NULL,
   `sms` tinyint(1) DEFAULT NULL,
   `surname` varchar(255) DEFAULT NULL,
@@ -162,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `person` (
 -- Дамп данных таблицы `person`
 --
 
-INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `failedOrders`, `multibookAllowed`, `name`, `hash`, `prole`, `salt`, `sms`, `surname`, `timely_returns`, `untimely_returns`) VALUES
+INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `failedOrders`, `multibookAllowed`, `name`, `password`, `role`, `salt`, `sms`, `surname`, `timely_returns`, `untimely_returns`) VALUES
 (1, '0992745624', 1, 'yurik.my@gmail.com', 0, 10, 'Yurik', NULL, NULL, NULL, 0, 'Mikhaletsky', 0, 0),
 (2, '052000000', 1, 'w@r.ney', 0, 10, 'Wane', NULL, NULL, NULL, 0, 'Rooney', 0, 0),
 (3, '052005445', 1, 'j@c.ole', 0, 10, 'Joe', NULL, NULL, NULL, 0, 'Cole', 0, 0);
@@ -196,8 +198,8 @@ ALTER TABLE `books`
 -- Ограничения внешнего ключа таблицы `booksinuse`
 --
 ALTER TABLE `booksinuse`
-  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`),
-  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`);
+  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
+  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `orders`

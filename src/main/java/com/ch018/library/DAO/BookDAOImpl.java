@@ -91,7 +91,7 @@ public class BookDAOImpl implements BookDAO {
 					.getCurrentSession()
 					.createQuery(
 							"select " + "B from Book B where lower(B.title) "
-									+ "LIKE lower(:title)")
+									+ "LIKE lower(%:title%)")
 					.setString("title", title);
 			books.addAll(query.list());
 		} catch (Exception e) {
@@ -109,7 +109,7 @@ public class BookDAOImpl implements BookDAO {
 					.getCurrentSession()
 					.createQuery(
 							"select " + "B from Book B where lower(B.authors) "
-									+ "LIKE lower(:authors)")
+									+ "LIKE lower(%:authors%)")
 					.setString("authors", authors);
 			books.addAll(query.list());
 		} catch (Exception e) {
@@ -137,8 +137,59 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getBooksByPerson(Person person) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void deleteBook(int id) {
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery("delete from Book where id=:id")
+					.setInteger("id", id);
+			int b = query.executeUpdate();
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
+
+	@Override
+	public List<Book> simpleSearch(String parametr) {
+		parametr = "%" + parametr + "%";
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select " + "B from Book B where (lower(B.title) "
+									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
+									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
+									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									+ "LIKE lower(:parametr))")
+					.setString("parametr", parametr);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+	}
+
+	@Override
+	public List<Book> paramSearch(String field, String parametr) {
+		parametr = "%" + parametr + "%";
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select " + "B from Book B where (lower(B."+field+") "
+									+ "LIKE lower(:parametr))")
+					.setString("parametr", parametr);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
 	}
 
 }

@@ -76,8 +76,8 @@ public class OrdersServiceImpl implements OrdersService{
 	}
 
 	@Transactional
-	public void deleteOrder(int id) {
-		ordDAO.deleteOrder(id);
+	public Orders deleteOrder(int id) {
+		return ordDAO.deleteOrder(id);
 		
 	}
     
