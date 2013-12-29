@@ -1,10 +1,7 @@
-<%-- 
-    Document   : usersBooks
-    Created on : Dec 26, 2013, 5:15:27 PM
-    Author     : okryvortc
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,20 +9,23 @@
         <title></title>
     </head>
     <body>
-        <table border="1">
+        <table>
             <thead>
-            <th>1</th>
-            <th>2</th>
+                <tr>
+                    <td>Book Title</td>
+                    <td>Issue Date</td>
+                    <td>Return Date</td>
+                    <td>term</td>
+                </tr>
             </thead>
-            <td>
-              <tr>12</tr>
-            </td>
-            <td>
-              <tr>14</tr>
-            </td>
-            <td>
-              <tr>13</tr>
-            </td>
+            <c:forEach items="${books}" var="book">
+                <tr>
+                    <td>${book.book.title}</td>
+                    <td>${book.issueDate}</td>
+                    <td>${book.returnDate}</td>
+                    <td>${book.term}</td>
+                </tr>
+            </c:forEach>
         </table>
     </body>
 </html>

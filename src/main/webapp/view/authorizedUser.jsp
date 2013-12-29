@@ -23,10 +23,10 @@
                     <a href="<c:url value="/usersBooks"/>">My books</a>&nbsp;&nbsp;&nbsp;
                 </center>
             </div>
-            <div class="leftcolumn"></div>
-            <div class="content"></div>
-            <div class="rightcolumn"></div>
-            <div class="footer"></div>
+            <div class="leftcolumn">leftcol</div>
+            <div class="content">content</div>
+            <div class="rightcolumn">right</div>
+            <div class="footer">footer</div>
         </div>
     </body>
 </html>

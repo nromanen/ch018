@@ -117,7 +117,7 @@ public class Book implements Serializable {
 	 */
 
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}

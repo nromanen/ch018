@@ -14,8 +14,8 @@
 	 <thead>
 		<tr>
                     <td>&nbsp;</td>
-			<td>booksID</td>
-			<td>personId</td>
+		    <td>booksID</td>
+		    <td>personId</td>
 		</tr>
 	 </thead>
             <c:forEach items="${wishByPers}" var="wishByPers">
@@ -27,7 +27,7 @@
                         <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>">Delete</a></td>
                         <td><a href="<c:url value="/order?book=${wishByPers.book.id}&pers=${wishByPers.person.id}"/>"><input type="submit" value="Create Order"/></a></td>
 		</tr>
-	</c:forEach>
+	  </c:forEach>
         </table>
     </body>
 </html>
