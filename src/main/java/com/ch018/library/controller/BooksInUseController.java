@@ -1,5 +1,6 @@
 package com.ch018.library.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.BooksInUse;
+import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
+import com.ch018.library.service.PersonService;
 
 @Controller
 public class BooksInUseController {
@@ -24,12 +27,15 @@ public class BooksInUseController {
 	@Autowired
 	BookService bookService;
 	
+	@Autowired
+	PersonService personService;
+	
 	@RequestMapping(value = "/bookusers", method = RequestMethod.GET)
 	public String showBookInUse(@RequestParam("id") Integer id, Model model) {
 		List<BooksInUse> booksInUses = booksInUseService.getByBookId(id);
 		model.addAttribute("booksinuse", booksInUses);
 		model.addAttribute("book", bookService.getBooksById(id));
-		return "bookinuse";
+		return "librarian/bookinuse";
 	}
 	
 	@RequestMapping(value = "/booksinuse/delete{id}", method = RequestMethod.DELETE)
@@ -41,6 +47,26 @@ public class BooksInUseController {
 	@RequestMapping(value = "/booksinuse/return{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public String returnBook(@PathVariable int id) {
+		BooksInUse booksInUse = booksInUseService.getById(id);
+		Person person = booksInUse.getPerson();
+		int timely = person.getTimelyReturns();
+		int untimely = person.getUntimelyReturns();
+		
+		Date now = new Date();
+		Date returnDate = booksInUse.getReturnDate();
+		
+		if (returnDate.getTime() < now.getTime()) {
+			untimely++;
+		}
+		else {
+			timely++;
+		}
+		
+		person.setTimelyReturns(timely);
+		person.setUntimelyReturns(untimely);
+				
+		personService.update(person);
+		
 		booksInUseService.removeBooksInUse(id);
 		return "bookinuse";
 	}

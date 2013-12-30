@@ -17,7 +17,7 @@ public interface PersonDao {
 
 	void save(Person person);
 
-	void delete(int id);
+	int delete(int id);
 
 	void update(Person person);
 

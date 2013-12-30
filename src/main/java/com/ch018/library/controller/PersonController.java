@@ -41,14 +41,13 @@ public class PersonController {
 		Person person = new Person();
 		model.addAttribute("persons", personService.getAll());
 		model.addAttribute("person", person);
-		return "users";
+		return "librarian/users";
 	}
 	
 	@RequestMapping(value = "/user/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteUser(@PathVariable Integer id) {
-		personService.delete(id);
-		return "user";
+	public int deleteUser(@PathVariable Integer id) {
+		return personService.delete(id);
 	}
 	
 	@RequestMapping(value="/user/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, 

@@ -141,16 +141,19 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void deleteBook(int id) {
+	public int deleteBook(int id) {
+		int deleted = 0;
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery("delete from Book where id=:id")
 					.setInteger("id", id);
-			int b = query.executeUpdate();
+			deleted = query.executeUpdate();
 		} catch (Exception e) {
 			System.err.println(e);
+			deleted = 0;
 		}
+		return deleted;
 	}
 
 	@Override

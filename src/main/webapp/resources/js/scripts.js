@@ -56,7 +56,9 @@ function reset_form() {
 
 $(document).ready(function() { 
 	$("table").tablesorter();
-	
+	$(".alert .close").click(function() {
+		$(".alert").hide();
+	})
 	/**
 	 * New book/user click
 	 */
@@ -87,23 +89,17 @@ $(document).ready(function() {
 		$('#popup').modal();
 	})
 	
-	
-	
-	
-	
-	
-	
-	
-
-    
-  
-  $("a[id^=returnbook], a[id^=issueorder]").click(function() {
-	  var tr = "#" + $(this).parent().parent().attr("id");
-	  var id = $(tr + " td:first-child").text();
-	  $("#name").text(id);
-	  console.log(id);
-	  open_popup("#action_popup");
-  })
+	/**
+	 * Return/issue click
+	 */  
+	$("a[id^=returnbook], a[id^=issueorder]").click(function() {
+		var tr = "#" + $(this).parent().parent().attr("id");
+		var id = $(tr + " td:first-child").text();
+		var pid= $(".pid" + id).text();
+		$("#aname").text(id);
+		console.log(id);
+		$('#action_popup').modal();
+	})
 
  
   
@@ -117,8 +113,14 @@ $(document).ready(function() {
 		  url: href,
           type: "DELETE",
           success: function(data) {
-        	  console.log("success");
-        	  $(".table" + id).remove();
+        	  if (data == 0) {
+        		  console.log("error delete");
+        		  $(".alert").show();
+        	  }
+        	  else {
+        		  console.log("success");
+        		  $(".table" + id).remove();
+        	  }
         	  $('#popup').modal("hide");
           },
           error: function(data) {
@@ -130,17 +132,18 @@ $(document).ready(function() {
 	  
   
   /**
-   * 
+   * Return book click
    */
-	/*
+	
   $("#actionLink").click(function(event) {
-	  var id = $("#name").text();
+	  var id = $("#aname").text();
 	  var href = $(event.target).attr("href")+id;
       $.ajax({
     	  url: href,
     	  type: "GET",
     	  success: function(data) {
     		  console.log("success");
+    		  $(".table" + id).remove();
     		  $('#action_popup').modal("hide");
     	  },
     	  error: function(data) {
@@ -148,7 +151,8 @@ $(document).ready(function() {
 		  }
       });
       event.preventDefault();
-  });*/
+  });
+  
   
   /**
    * Edit book action
@@ -205,13 +209,16 @@ $(document).ready(function() {
 	  var failedOrders = $("#failedOrders").val();
 	  var role = "USER";
 	  var sms = true;
-	  var hash = "";
+	  var password = "";
 	  var salt = "";
 	  var confirm = $("#confirm").val();
-	  var json = { "id" : id, "name" : uname, "surname": surname, "email" : email, "cellphone": cellphone, 
-			  "multibookAllowed" : multibookAllowed, "untimelyReturns": untimelyReturns, 
-			  "timelyReturns": timelyReturns, "failedOrders" : failedOrders, "confirm": confirm, "role": role, 
-			  "sms": sms, "hash" : hash, "salt": salt};
+	  var json = { "id" : id, "name" : uname, "surname": surname, 
+			  "email" : email, "cellphone": cellphone, "role": role, 
+			  "confirm": confirm, "sms": sms, "password" : password, 
+			  "salt": salt, "timelyReturns": timelyReturns,
+			  "untimelyReturns": untimelyReturns, "multibookAllowed" : multibookAllowed, 
+			  "failedOrders" : failedOrders
+			  };
 	  $.ajax({
 		  url: $("#edituser").attr( "action"),
 		  data: JSON.stringify(json),

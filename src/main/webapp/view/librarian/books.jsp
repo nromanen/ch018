@@ -16,6 +16,8 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
+	src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
+<script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
 <title>Books</title>
 <script type="text/javascript">
@@ -67,6 +69,12 @@
   				</form>
   				</div>
   				</div>
+				
+				<!-- Alert -->	
+				<div class="alert alert-error" style="display: none">
+					<button type="button" class="close" >&times;</button>
+  					<h4>ERROR!</h4> We cant delete this book
+				</div>
 				
 				<!-- Books table -->
 				<div class="TableBooks">
@@ -226,7 +234,8 @@
 						</div>
 					</form:form>
 					</div>
-				</div>				
+				</div>	
+				
 			</div>
 		</div>
 		<!-- footer -->

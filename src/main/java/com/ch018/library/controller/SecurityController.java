@@ -15,7 +15,7 @@ import com.ch018.library.service.PersonService;
  */
 
 @Controller
-public class SecurityNavigation {
+public class SecurityController {
 	
 	@Autowired
 	PersonService personService;
@@ -24,4 +24,18 @@ public class SecurityNavigation {
 	public ModelAndView loginForm() {
 		return new ModelAndView("login");
 	}
+	
+	@RequestMapping(value="/login-error", method=RequestMethod.GET)  
+    public ModelAndView invalidLogin() {  
+        ModelAndView modelAndView = new ModelAndView("login");  
+        modelAndView.addObject("error", true);  
+        return modelAndView;  
+    }  
+      /*
+    @RequestMapping(value="/success-login", method=RequestMethod.GET)  
+    public ModelAndView successLogin() {  
+        return new ModelAndView("success-login");  
+    }*/
+	
+	
 }

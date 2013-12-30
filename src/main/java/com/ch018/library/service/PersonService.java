@@ -6,7 +6,7 @@ import com.ch018.library.entity.Person;
 
 public interface PersonService {
 	void save(Person person);
-    void delete(int id);
+    int delete(int id);
     void update(Person person);
     List<Person> getAll();
     Person getById(int id);

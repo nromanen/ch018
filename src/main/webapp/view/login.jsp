@@ -26,7 +26,7 @@
 			</div>
 			<div class="span5">
 			<div class="well">
-				<form class="form-horizontal">
+				<form class="form-horizontal" action="j_spring_security_check" method="post">
 					<div class="control-group">
 						<label class="control-label" for="inputEmail">Email</label>
 						<div class="controls">

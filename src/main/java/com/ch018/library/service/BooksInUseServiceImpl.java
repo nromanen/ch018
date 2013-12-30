@@ -94,4 +94,10 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		booksInUseDAO.removeBooksInUse(id);
 	}
 
+	@Override
+	@Transactional
+	public BooksInUse getById(int id) {
+		return booksInUseDAO.getById(id);
+	}
+
 }

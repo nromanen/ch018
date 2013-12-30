@@ -16,19 +16,17 @@ import javax.persistence.Table;
 
 /**
  * 
- * @author Edd Arazian
+ * 
  */
-enum Role {
-	ADMINISTRATOR, LIBRARIAN, USER
-};
+
 
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
 
-	/**
-	 * 
-	 */
+	public enum Role {
+		ROLE_ADMINISTRATOR, ROLE_LIBRARIAN, ROLE_USER
+	};
 	private static final long serialVersionUID = 3607258059474732202L;
 
 	@Id
@@ -164,12 +162,12 @@ public class Person implements Serializable {
 		this.sms = sms;
 	}
 
-	public String getRole() {
-		return role;
+	public Role getRole() {
+		return Role.valueOf(role);
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRole(Role role) {
+		this.role = role.toString();
 	}
 
 	public int getTimelyReturns() {

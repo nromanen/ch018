@@ -83,7 +83,7 @@ public class OrderController {
 		model.addAttribute("orders", orders);
 		model.addAttribute("book", book.getBooksById(id));
 
-		return "orders";
+		return "librarian/orders";
 	}
 
 	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
@@ -105,7 +105,7 @@ public class OrderController {
 		booksInUse.setTerm(14);
 		booksInUseService.addBooksInUse(booksInUse);
 		order.deleteOrder(id);
-		return "orders";
+		return "librarian/orders";
 	}
 
 }

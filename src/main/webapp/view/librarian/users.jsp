@@ -34,6 +34,12 @@
 				<%@ include file="/view/left.jsp"%>
 			</div>
 			<div class="span11">
+				<!-- Alert -->	
+				<div class="alert alert-error" style="display: none">
+					<button type="button" class="close" >&times;</button>
+  					<h4>ERROR!</h4> We cant delete this book
+				</div>
+				
 				<div class="TableBooks">
 					<table id="utable">
 						<thead>
