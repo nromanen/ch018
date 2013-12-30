@@ -24,7 +24,9 @@ public interface WishListDAO {
 
 	public void deleteWish(WishList wish);
 
-	public Collection getAllWishes();
+	public void deleteWishById(int id);
+        
+        public Collection getAllWishes();
 
 	public WishList getWishById(int id);
         

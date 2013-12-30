@@ -46,8 +46,8 @@ public class WishListController {
     
     @RequestMapping(value="/delete", method = RequestMethod.GET)
     public String deleteWish(@RequestParam("del")Integer id){
-        WishList w = wish.getWishById(id);
-        wish.deleteWish(w);
+      //  WishList w = wish.getWishById(id);
+        wish.deleteWishById(id);
         return "redirect:/wishList";
     }
     

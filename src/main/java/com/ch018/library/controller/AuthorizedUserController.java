@@ -23,7 +23,7 @@ public class AuthorizedUserController {
     
     @RequestMapping(value="/authorizedUser")
     public ModelAndView welomePage(){
-       return new ModelAndView("authorizedUser","latest",book.latestArrivals()); 
+       return new ModelAndView("authorizedUser","latest",book.getBooksById(1)); 
     }
     
     

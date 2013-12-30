@@ -33,7 +33,7 @@
                    <p><label>${latest.title}</label>
                    <p><label>${latest.authors}</label>
                    <p><label>${latest.title}</label>-->
-                     <ul class="thumbnails">
+                    <!-- <ul class="thumbnails">
                         <li class="span2">
                            <div class="thumbnail">
                               <img src="${pageContext.request.contextPath}/resources/img/${latest.image}">
@@ -43,7 +43,7 @@
                                 <button class="btn-mini" >Add to Cart</button>
                            </div>
                         </li>
-           </ul>
+           </ul>-->
             </div>
            <div class="content">content</div>
             <div class="rightcolumn">right</div>
