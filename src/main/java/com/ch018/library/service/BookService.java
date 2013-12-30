@@ -22,4 +22,5 @@ public interface BookService {
 	List<Book> getBooksByPerson(Person person);
 	List<Book> simpleSearch(String parametr);
 	List<Book> paramSearch(String field, String parametr);
+        List<Book> latestArrivals();
 }

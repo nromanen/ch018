@@ -18,6 +18,7 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,15 +57,22 @@ public class OrderController {
                                     @RequestParam("book") int bookId, 
                                     @RequestParam("pers") int personId){
         //model.addAllAttributes(wish.getWishesByPerson(id));
+      //  List<Orders> uses = new ArrayList<Orders>();
         Book b = null;
         Person p = null;
+        int  uses = order.getOrdersByPersonId(personId).size();
         Orders o = new Orders();
         b = book.getBooksById(bookId);
         p = pers.getById(personId);
-        o.setPerson(p);
-        o.setBook(b);
-        o.setDate(new java.util.Date());
-        order.addOrder(o);
+        int j = p.getMultibookAllowed();
+        String fail = "You exceed your limit at the same time to take the book";
+        if (j==uses){
+             return new ModelAndView("wishList", "fail", fail);
+        }else {
+                o.setPerson(p);
+                o.setBook(b);
+                o.setDate(new java.util.Date());
+                order.addOrder(o);}
         return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }
     

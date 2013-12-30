@@ -6,18 +6,25 @@
 
 package com.ch018.library.controller;
 
+import com.ch018.library.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-/**
- *
- * @author win7
- */
+   
+ 
+
 @Controller
 public class AuthorizedUserController {
    
+    @Autowired
+    BookService book;
+    
     @RequestMapping(value="/authorizedUser")
-    public void welomePage(){
-       
+    public ModelAndView welomePage(){
+       return new ModelAndView("authorizedUser","latest",book.latestArrivals()); 
     }
+    
+    
 }
