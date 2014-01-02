@@ -18,6 +18,7 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -63,14 +64,20 @@ public class WishListController {
     
     @RequestMapping(value="/wishlist", method = RequestMethod.GET)
     public String addWish(@RequestParam("bookId") int bookId,
-                          @RequestParam("persId") int personId){
+                          @RequestParam("persId") int personId){   
       Person person = personService.getById(personId);
       Book book = bookService.getBooksById(bookId);
-      WishList newWish = new WishList();
-      newWish.setPerson(person);
-      newWish.setBook(book);
-      wish.addWish(newWish);
-      return "redirect:/wishList";      
+      
+      if(wish.bookExistInWishList(bookId, personId)){
+             return "redirect:/authorizedUser"; 
+      }else{
+             WishList newWish = new WishList();
+             newWish.setPerson(person);
+             newWish.setBook(book);
+             wish.addWish(newWish);
+             return "redirect:/wishList";
+      }
+            
     }
     
     

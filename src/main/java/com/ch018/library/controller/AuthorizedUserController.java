@@ -26,5 +26,8 @@ public class AuthorizedUserController {
        return new ModelAndView("authorizedUser","latest",book.getAllBooks()); 
     }
     
-    
+    @RequestMapping(value="/userAccount")
+    public void viewAccount(){
+        
+    }
 }

@@ -19,4 +19,5 @@ public interface WishListService {
     public Collection getAllWishes();
     public WishList getWishById(int id);
     public ArrayList<WishList> getWishesByPerson(int personId);
+    public boolean bookExistInWishList(int bookId, int personId);
 }
