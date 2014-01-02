@@ -64,6 +64,7 @@ public class PersonDaoImpl implements PersonDao {
 
 	@Override
 	public void update(Person person) {
+		String pasword = person.getPassword();
 		try {
 			sessionFactory.getCurrentSession().update(person);
 		} catch (Exception e) {

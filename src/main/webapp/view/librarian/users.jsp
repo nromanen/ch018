@@ -200,6 +200,11 @@
       								<form:checkbox path="confirm" id="confirm" />
     							</div>
   							</div>
+  							<div class="control-group"  style="display: none">
+    							<div class="controls">
+      								<form:input path="password" type="text"  id="password" />
+    							</div>
+  							</div>
   							<div class="form-actions">
 								<input type="submit" value="Save" class="btn btn-primary" />
 								<input id="cancel" type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />

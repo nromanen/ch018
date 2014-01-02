@@ -31,7 +31,10 @@ public class LibraryUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> roles = new ArrayList<>();
 		roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
 		
-		return new User(user.getEmail(), user.getPassword(), user.getConfirm(), true, true, true, roles);
+		User u = new User(user.getEmail(), user.getPassword(), user.getConfirm(), true, true, true, roles);
+		System.out.println(u.getPassword());
+		System.out.println(u.getAuthorities());
+		return u;
 	}
 
 }

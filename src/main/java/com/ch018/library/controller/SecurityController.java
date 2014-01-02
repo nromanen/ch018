@@ -8,6 +8,7 @@ import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,7 +71,8 @@ public class SecurityController {
 			person = new Person();
 			person.setEmail(registration.getEmail().trim());
 			person.setPassword(passwordEncoder.encode(registration.getPassword()));
-			person.setRole(Role.ROLE_USER.toString());
+			person.setRole(Role.ROLE_LIBRARIAN.toString());
+			person.setConfirm(false);
 			personService.save(person);
 		}
 		else return "registration";

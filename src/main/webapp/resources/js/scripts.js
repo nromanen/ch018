@@ -206,18 +206,18 @@ $(document).ready(function() {
 	  var untimelyReturns = $("#untimelyReturns").val();
 	  var timelyReturns = $("#timelyReturns").val();
 	  var failedOrders = $("#failedOrders").val();
-	  var role = "ROLE_USER";
-	  var sms = true;
-	  var password = "";
-	  var salt = "";
+	  var password = $("#password").val();
+
+
+
+
 	  var confirm = $("#confirm").prop('checked');
 
 	  var json = { "id" : id, "name" : uname, "surname": surname, 
-			  "email" : email, "cellphone": cellphone, "role": role, 
-			  "confirm": confirm, "sms": sms, "password" : password, 
-			  "salt": salt, "timelyReturns": timelyReturns,
+			  "email" : email, "cellphone": cellphone, 
+			  "confirm": confirm, "timelyReturns": timelyReturns,
 			  "untimelyReturns": untimelyReturns, "multibookAllowed" : multibookAllowed, 
-			  "failedOrders" : failedOrders
+			  "failedOrders" : failedOrders, "password" : password
 			  };
 	  $.ajax({
 		  url: $("#addedituser").attr( "action"),
