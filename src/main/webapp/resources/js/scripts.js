@@ -24,7 +24,7 @@ function fill_form(box, id) {
 	  $("#untimelyReturns").val($(".untimelyReturns" + id).text());
 	  $("#timelyReturns").val($(".timelyReturns" + id).text());
 	  $("#failedOrders").val($(".failedOrders" + id).text());
-	  $("#confirm").attr('checked', $("#confirm").attr('checked'));
+	  $("#confirm").prop('checked', $(".confirm" + id).prop('checked'));
 	}
 
 function reset_form() {
@@ -50,8 +50,7 @@ function reset_form() {
 	  $("#untimelyReturns").val(0);
 	  $("#timelyReturns").val(0);
 	  $("#failedOrders").val(0);
-	  $("#confirm").attr('checked', false);
-	  $("#confirm").val(false);
+	  $("#confirm").prop('checked', false);
 }
 
 $(document).ready(function() { 
@@ -196,7 +195,7 @@ $(document).ready(function() {
   /**
    * Edit user action
    */
-  $("#edituser").submit(function(event) {
+  $("#addedituser").submit(function(event) {
 	  console.log("begin");
 	  var id = $("#id").val();
 	  var uname = $("#uname").val();
@@ -207,11 +206,12 @@ $(document).ready(function() {
 	  var untimelyReturns = $("#untimelyReturns").val();
 	  var timelyReturns = $("#timelyReturns").val();
 	  var failedOrders = $("#failedOrders").val();
-	  var role = "USER";
+	  var role = "ROLE_USER";
 	  var sms = true;
 	  var password = "";
 	  var salt = "";
-	  var confirm = $("#confirm").val();
+	  var confirm = $("#confirm").prop('checked');
+
 	  var json = { "id" : id, "name" : uname, "surname": surname, 
 			  "email" : email, "cellphone": cellphone, "role": role, 
 			  "confirm": confirm, "sms": sms, "password" : password, 
@@ -220,7 +220,7 @@ $(document).ready(function() {
 			  "failedOrders" : failedOrders
 			  };
 	  $.ajax({
-		  url: $("#edituser").attr( "action"),
+		  url: $("#addedituser").attr( "action"),
 		  data: JSON.stringify(json),
 		  type: "POST",
 		  beforeSend: function(xhr) {  

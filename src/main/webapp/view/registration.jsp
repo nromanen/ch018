@@ -31,13 +31,12 @@
     					<h3 id="myModalLabel">Registration</h3>
   					</div>
   					<div class="modal-body">
-					<form:form id="register" class="form-horizontal" method="POST" commandName="registration"
-						action="${pageContext.request.contextPath}/registration">
+					<form:form id="register" class="form-horizontal" method="POST" commandName="registration" action="${pageContext.request.contextPath}/registration">
 						
 						<div class="control-group">
     						<label class="control-label" for="inputEmail">Email</label>
     						<div class="controls">
-      							<form:input path="email" type="text" id="inputEmail" required="true"/>
+      							<form:input path="email" type="text" id="inputEmail"  required="true" />
     						</div>
   						</div>
   						
@@ -51,7 +50,7 @@
   						<div class="control-group">
     						<label class="control-label" for="confirmPassword">Confirm Password</label>
     						<div class="controls">
-      							<form:input path="confirmpassword" type="password" id="confirmPassword" placeholder="Pass" required="true" />
+      							<form:input path="confirmPassword" type="password" id="confirmPassword" placeholder="Pass" required="true" />
     						</div>
   						</div>
 

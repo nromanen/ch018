@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -86,8 +85,8 @@ public class Person implements Serializable {
 
 	}
 
-	public Person(String email) {
-		this.email = email;
+	public Person(Person person) {
+		this.email = person.getEmail();
 	}
 
 	public int getId() {
@@ -162,12 +161,12 @@ public class Person implements Serializable {
 		this.sms = sms;
 	}
 
-	public Role getRole() {
-		return Role.valueOf(role);
+	public String getRole() {
+		return role;
 	}
 
-	public void setRole(Role role) {
-		this.role = role.toString();
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public int getTimelyReturns() {

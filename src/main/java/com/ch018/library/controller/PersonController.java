@@ -36,7 +36,7 @@ public class PersonController {
 	BooksInUseService booksInUseService;
 
 	
-	@RequestMapping(value = "/users")
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		Person person = new Person();
 		model.addAttribute("persons", personService.getAll());
@@ -50,8 +50,7 @@ public class PersonController {
 		return personService.delete(id);
 	}
 	
-	@RequestMapping(value="/user/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/person/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Person newPerson(@RequestBody Person person) {
 		
