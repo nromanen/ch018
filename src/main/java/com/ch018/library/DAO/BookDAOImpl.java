@@ -199,7 +199,8 @@ public class BookDAOImpl implements BookDAO {
             
             Query query = sessionFactory.getCurrentSession()
                            .createSQLQuery("Select * From books order by `id` DESC LIMIT 5;");
-            books.addAll(query.list());
+           // books.addAll(query.list());
+            books = (List<Book>)query.list();
         }catch(Exception e){
             log.error(e);
         }

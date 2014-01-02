@@ -29,23 +29,24 @@
                 </center>
             </div>
             <div class="leftcolumn">
-              <!--  <img src="${pageContext.request.contextPath}/resources/img/${latest.image}">
-                   <p><label>${latest.title}</label>
-                   <p><label>${latest.authors}</label>
-                   <p><label>${latest.title}</label>-->
-                    <!-- <ul class="thumbnails">
+             left col
+            </div>
+           <div class="content">
+               
+                    <ul class="thumbnails">
+                        <c:forEach items="${latest}" var="latest">
                         <li class="span2">
                            <div class="thumbnail">
-                              <img src="${pageContext.request.contextPath}/resources/img/${latest.image}">
                               <h3 class="span2"><small>${latest.title}</small></h3>
                               <p class="span2">${latest.authors}</p>
                               <p class="span2">${latest.description}</p>
-                                <button class="btn-mini" >Add to Cart</button>
+                              <!--  <button class="btn-mini" >Add to Cart</button>-->
+                               <a href="<c:url value="/wishlist?bookId=${latest.id}&persId=1"/>" class="btn-mini">Add to cart</a>
                            </div>
                         </li>
-           </ul>-->
-            </div>
-           <div class="content">content</div>
+                        </c:forEach>
+                    </ul>
+           </div>
             <div class="rightcolumn">right</div>
             <div class="footer">footer</div>
         </div>
