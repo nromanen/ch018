@@ -110,14 +110,13 @@ public class BooksController {
 			}
 		}
 		model.addAttribute("books", books);
-		return "books";
+		return "librarian/books";
 	}
 	
 	@RequestMapping(value = "/book/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteBook(@PathVariable Integer id) {
-		bookService.deleteBook(id);
-		return "book";
+	public int deleteBook(@PathVariable Integer id) {
+		return bookService.deleteBook(id);
 	}
 	
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
@@ -135,7 +134,7 @@ public class BooksController {
 			books.addAll(bookService.paramSearch(field, search));
 		}
 		model.addAttribute("books", books);
-		return "books";
+		return "librarian/books";
 	}
 	
 }

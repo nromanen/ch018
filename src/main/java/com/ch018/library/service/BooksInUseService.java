@@ -19,4 +19,5 @@ public interface BooksInUseService {
 	List<Book> getAllBooks();
 	List<Book> getReturnBooksToday();
 	void removeBooksInUse(int id);
+	BooksInUse getById(int id);
 }

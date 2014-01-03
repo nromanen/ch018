@@ -20,45 +20,46 @@ import com.ch018.library.service.PersonService;
 
 @Controller
 public class PersonController {
-	
+
 	static Logger log = LogManager.getLogger(BooksController.class);
-	
+
 	@Autowired
 	BookService bookService;
-	
+
 	@Autowired
 	GenreService genreService;
-	
+
 	@Autowired
 	PersonService personService;
-	 
+
 	@Autowired
 	BooksInUseService booksInUseService;
 
-	
-	@RequestMapping(value = "/users")
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		Person person = new Person();
 		model.addAttribute("persons", personService.getAll());
 		model.addAttribute("person", person);
-		return "users";
+		return "librarian/users";
 	}
-	
+
 	@RequestMapping(value = "/user/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public String deleteUser(@PathVariable Integer id) {
-		personService.delete(id);
-		return "user";
+	public int deleteUser(@PathVariable Integer id) {
+		return personService.delete(id);
 	}
-	
-	@RequestMapping(value="/user/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/person/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Person newPerson(@RequestBody Person person) {
-		
+
 		if (person.getId() == 0) {
 			personService.save(person);
 		} else {
+			Person p = new Person();
+			p = personService.getById(person.getId());
+			person.setPassword(p.getPassword());
+			person.setRole(p.getRole());
 			personService.update(person);
 		}
 		return person;

@@ -6,6 +6,7 @@
 
 package com.ch018.library.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * 
  * @author win7
  */
 @Controller
@@ -84,14 +85,13 @@ public class OrderController {
     /**
      * Librarian
      */
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String showOrders(@RequestParam("id") Integer id, Model model) {
-		List<Orders> orders = (List<Orders>) order
-				.getOrdersByBooksId(id);
+		List<Orders> orders = (List<Orders>) order.getOrdersByBooksId(id);
 		model.addAttribute("orders", orders);
 		model.addAttribute("book", book.getBooksById(id));
 
-		return "orders";
+		return "librarian/orders";
 	}
 
 	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
@@ -101,19 +101,23 @@ public class OrderController {
 		return "order";
 	}
 
-	@RequestMapping(value = "/orders/issue{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/orders/issue{id}/{days}", method = RequestMethod.GET)
 	@ResponseBody
-	public String issueOrder(@PathVariable int id) {
+	public String issueOrder(@PathVariable int id, @PathVariable int days) {
+		Calendar issueDate = Calendar.getInstance();
+		Calendar returnDate = Calendar.getInstance();
+		returnDate.add(Calendar.DATE, days);
+
 		BooksInUse booksInUse = new BooksInUse();
 		Orders orders = order.getById(id);
 		booksInUse.setBook(orders.getBook());
 		booksInUse.setPerson(orders.getPerson());
-		booksInUse.setReturnDate(new Date());
-		booksInUse.setIssueDate(new Date());
-		booksInUse.setTerm(14);
+		booksInUse.setReturnDate(returnDate.getTime());
+		booksInUse.setIssueDate(issueDate.getTime());
+		booksInUse.setTerm(days);
 		booksInUseService.addBooksInUse(booksInUse);
 		order.deleteOrder(id);
-		return "orders";
+		return "librarian/orders";
 	}
 
 }

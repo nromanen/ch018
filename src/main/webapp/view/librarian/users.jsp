@@ -34,6 +34,12 @@
 				<%@ include file="/view/left.jsp"%>
 			</div>
 			<div class="span11">
+				<!-- Alert -->	
+				<div class="alert alert-error" style="display: none">
+					<button type="button" class="close" >&times;</button>
+  					<h4>ERROR!</h4> We cant delete this book
+				</div>
+				
 				<div class="TableBooks">
 					<table id="utable">
 						<thead>
@@ -60,6 +66,7 @@
 									<div></div>
 								</th>
 								<th>Failed Orders</th>
+								<th>Rating</th>
 
 								<th>Confirmed</th>
 								<th></th>
@@ -82,6 +89,7 @@
 									<td class="untimelyReturns${person.id}">${person.untimelyReturns}</td>
 									<td class="timelyReturns${person.id}">${person.timelyReturns}</td>
 									<td class="failedOrders${person.id}">${person.failedOrders}</td>
+									<td class="rating${person.id}">${person.rating}</td>
 									<td><input class="confirm${person.id}" type="checkbox"
 										name="confirm" value="confirm"
 										${person.confirm == true ? 'checked' : ''}></td>
@@ -128,8 +136,8 @@
 						<h3 id="myModalLabel">Add user</h3>
 					</div>
 					<div class="modal-body">
-						<form:form id="edituser" class="form-horizontal" method="POST" commandName="person"
-							action="${pageContext.request.contextPath}/user/update">
+						<form:form id="addedituser" class="form-horizontal" method="POST" commandName="person"
+							action="${pageContext.request.contextPath}/person/update">
 							<form:input path="id" id="id" class="hide" disabled="disabled" />
 							
 							<div class="control-group">
@@ -194,12 +202,14 @@
       								<form:checkbox path="confirm" id="confirm" />
     							</div>
   							</div>
+  							<div class="control-group"  style="display: none">
+    							<div class="controls">
+      								<form:input path="password" type="text"  id="password" />
+    							</div>
+  							</div>
   							<div class="form-actions">
-							<input type="submit" value="Save"
-										class="btn btn-primary" />
-							<input id="cancel" type="button"
-										class="btn" data-dismiss="modal" aria-hidden="true"
-										value="Cancel" />
+								<input type="submit" value="Save" class="btn btn-primary" />
+								<input id="cancel" type="button" class="btn" data-dismiss="modal" aria-hidden="true" value="Cancel" />
 							</div>
 						</form:form>
 					</div>

@@ -69,8 +69,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Transactional
-	public void deleteBook(int id) {
-		bookDAO.deleteBook(id);
+	public int deleteBook(int id) {
+		return bookDAO.deleteBook(id);
 	}
 
 	@Transactional

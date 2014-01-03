@@ -47,20 +47,24 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public int delete(int id) {
+		int deleted = 0;
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery("delete from Person where id=:id")
 					.setInteger("id", id);
-			int b = query.executeUpdate();
+			deleted = query.executeUpdate();
 		} catch (Exception e) {
 			System.out.println(e);// log.error(e);
+			deleted = 0;
 		}
+		return deleted;
 	}
 
 	@Override
 	public void update(Person person) {
+		String pasword = person.getPassword();
 		try {
 			sessionFactory.getCurrentSession().update(person);
 		} catch (Exception e) {
@@ -86,7 +90,7 @@ public class PersonDaoImpl implements PersonDao {
 		try {
 			person = (Person) sessionFactory.getCurrentSession()
 					.createCriteria(Person.class)
-					.add(Restrictions.eq("e_mail", email));
+					.add(Restrictions.eq("email", email)).list().get(0);
 		} catch (Exception e) {
 			System.out.println(e);// log.error(e);
 		}
