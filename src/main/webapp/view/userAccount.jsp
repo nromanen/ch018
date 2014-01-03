@@ -18,16 +18,20 @@
         <form:form  method="POST" commandName="person">
             <table>
                 <tr>
-                    <td>Name: <form:input path="name"/></td>
+                    <td>Name: </td>
+                    <td><form:input path="name"/></td>
                 </tr>
                 <tr>
-                    <td>Surname: <form:input path="surname"/></td>
+                    <td>Surname: </td>
+                    <td><form:input path="surname"/></td>
                 </tr>
                 <tr>
-                    <td>Cellphone: <form:input path="cellphone"/></td>
+                    <td>Cellphone: </td>
+                    <td><form:input path="cellphone" value="${person.cellphone}"/></td>
                 </tr>
                 <tr>
-                    <td>Sms: <form:checkbox path="sms"/></td>
+                    <td>SMS: </td>
+                    <td><form:checkbox path="sms"/></td>
                 </tr>
                 <tr>
                     <td>

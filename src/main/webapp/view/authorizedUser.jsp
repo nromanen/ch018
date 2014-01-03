@@ -25,7 +25,7 @@
                         <a href="<c:url value="/wishList"/>" class="btn">Wish List</a>&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value="/userOrder"/>" class="btn">Orders</a>&nbsp;&nbsp;&nbsp;
                      <a href="<c:url value="/usersBooks"/>" class="btn">My books</a>&nbsp;&nbsp;&nbsp;
-                     <a href="<c:url value="/showAccount?id=1"/>" class="btn">Account</a>
+                     <a href="<c:url value="/userAccount?id=1"/>" class="btn">Account</a>
                     </div>
                 </center>
             </div>

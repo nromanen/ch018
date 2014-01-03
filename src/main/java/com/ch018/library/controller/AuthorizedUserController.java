@@ -36,14 +36,14 @@ public class AuthorizedUserController {
        return new ModelAndView("authorizedUser","latest",book.getAllBooks()); 
     }
     
-    @RequestMapping(value="/userAccount")
-    public void viewAccount(@ModelAttribute("person") Person person, BindingResult result){
-        
+    @RequestMapping(value="/userAccount", method = RequestMethod.GET)
+    public Model viewAccount(@RequestParam("id") int id, Model model){
+        model.addAttribute("person", persService.getById(id));
+        return model;
     }
     
     @RequestMapping(value="/showAccount", method=RequestMethod.GET)
-    public String editProfile(@RequestParam("id") int id, Model model){
-        model.addAttribute("person", persService.getById(id));
-        return "redirect:/userAccount";
+    public void editProfile(){
+        
     }
 }
