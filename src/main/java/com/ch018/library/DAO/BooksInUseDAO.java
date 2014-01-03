@@ -7,6 +7,7 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 
 public interface BooksInUseDAO {
+	
 	void addBooksInUse(BooksInUse booksInUse);
 
 	void removeBooksInUse(BooksInUse booksInUse);
@@ -30,4 +31,8 @@ public interface BooksInUseDAO {
 	List<Book> getReturnBooksToday();
 
 	void removeBooksInUse(int id);
+	
+	BooksInUse getById(int id);
+	
+ 
 }

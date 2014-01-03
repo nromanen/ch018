@@ -24,9 +24,9 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public void delete(int id) {
+	public int delete(int id) {
 		// TODO Auto-generated method stub
-		personDao.delete(id);
+		return personDao.delete(id);
 	}
 
 	@Override

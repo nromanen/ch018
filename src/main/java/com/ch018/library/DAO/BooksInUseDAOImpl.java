@@ -199,4 +199,17 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		return books;
 	}
 
+	@Override
+	public BooksInUse getById(int id) {
+		BooksInUse bookInUse = null;
+		try {
+			bookInUse = (BooksInUse) sessionFactory.getCurrentSession()
+					.get(BooksInUse.class, id);
+		} catch (Exception e) {
+			System.out.println(e);
+			log.error(e);
+		}
+		return bookInUse;
+	}
+
 }
