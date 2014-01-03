@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,21 +13,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.validation.annotation.Validated;
+
 /**
  * 
- * @author Edd Arazian
+ * 
  */
-enum Role {
-	ADMINISTRATOR, LIBRARIAN, USER
-};
+
 
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
 
-	/**
-	 * 
-	 */
+	public enum Role {
+		ROLE_ADMINISTRATOR, ROLE_LIBRARIAN, ROLE_USER
+	};
 	private static final long serialVersionUID = 3607258059474732202L;
 
 	@Id
@@ -42,13 +41,13 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
-	@Column(name = "e_mail", unique = true)
+	@Column(name = "e_mail", unique = true, nullable = false)
 	private String email;
 
 	@Column(name = "cellphone")
 	private String cellphone;
 
-	@Column(name = "role")
+	@Column(name = "role", nullable = false)
 	private String role;
 
 	@Column(name = "confirmed")
@@ -57,7 +56,7 @@ public class Person implements Serializable {
 	@Column(name = "sms")
 	private boolean sms;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "salt")
@@ -74,6 +73,9 @@ public class Person implements Serializable {
 
 	@Column(name = "failedOrders")
 	private int failedOrders;
+	
+	@Column(name = "rating")
+	private double rating;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -88,8 +90,8 @@ public class Person implements Serializable {
 
 	}
 
-	public Person(String email) {
-		this.email = email;
+	public Person(Person person) {
+		this.email = person.getEmail();
 	}
 
 	public int getId() {
@@ -203,6 +205,14 @@ public class Person implements Serializable {
 	public void setFailedOrders(int failedOrders) {
 		this.failedOrders = failedOrders;
 	}
+	
+	public double getRating() {
+		return rating;
+	}
+	
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -244,6 +254,11 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return this.id + " " + " " + email;
+	}
+	
+	@Override
+	public int hashCode() {
+		return email.hashCode();
 	}
 
 }

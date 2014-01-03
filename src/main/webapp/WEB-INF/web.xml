@@ -13,36 +13,40 @@
         </listener>
 
         <servlet>
-                <servlet-name>SpringDispatcher</servlet-name>
+                <servlet-name>appServlet</servlet-name>
                 <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+                <init-param>
+                	<param-name>contextConfigLocation</param-name>
+                	<param-value>/WEB-INF/servlet-context.xml</param-value>
+                </init-param>
                 <load-on-startup>1</load-on-startup>
         </servlet>
         <servlet-mapping>
-                <servlet-name>SpringDispatcher</servlet-name>
+                <servlet-name>appServlet</servlet-name>
                 <url-pattern>/</url-pattern>
         </servlet-mapping>
         <servlet-mapping>
-    		<servlet-name>SpringDispatcher</servlet-name>
+    		<servlet-name>appServlet</servlet-name>
     		<url-pattern>*.css</url-pattern>
 		</servlet-mapping>
 	 
 		<servlet-mapping>
-	    	<servlet-name>SpringDispatcher</servlet-name>
+	    	<servlet-name>appServlet</servlet-name>
 	    	<url-pattern>*.js</url-pattern>
 		</servlet-mapping>
 	 
 		<servlet-mapping>
-	    	<servlet-name>SpringDispatcher</servlet-name>
+	    	<servlet-name>appServlet</servlet-name>
 	    	<url-pattern>*.gif</url-pattern>
 		</servlet-mapping>
 	 
 		<servlet-mapping>
-	    	<servlet-name>SpringDispatcher</servlet-name>
+	    	<servlet-name>appServlet</servlet-name>
 	    	<url-pattern>*.jpg</url-pattern>
 		</servlet-mapping>
 	 
 		<servlet-mapping>
-	    	<servlet-name>SpringDispatcher</servlet-name>
+	    	<servlet-name>appServlet</servlet-name>
 	    	<url-pattern>*.png</url-pattern>
 		</servlet-mapping>
 
@@ -53,7 +57,7 @@
         <context-param>
    			<param-name>contextConfigLocation</param-name>
    			<param-value>
-   				/WEB-INF/SpringDispatcher-servlet.xml
+   				/WEB-INF/database.xml
    				/WEB-INF/application-security.xml
    				/WEB-INF/root-context.xml
    			</param-value>

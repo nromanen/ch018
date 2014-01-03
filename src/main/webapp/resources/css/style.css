@@ -9,7 +9,7 @@ p {
 }
 
 #head {
-    height: 60px;
+    height: auto;
     width: 100%;
     background: #FFFFAA;
     border:1px solid #000000;

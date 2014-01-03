@@ -142,10 +142,11 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 	@Override
 	public List<Book> toIssuePerHour() {
-		Date startDate = new Date();
-		Date endDate = new Date();
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
 		
-		endDate.setHours(startDate.getHours()+1);
+
+		endDate.add(Calendar.HOUR_OF_DAY, 1);
 		
 		List<Book> books = new ArrayList<Book>();
 		try {
