@@ -17,6 +17,7 @@ import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.CalculateRating;
 
 @Controller
 public class BooksInUseController {
@@ -33,8 +34,19 @@ public class BooksInUseController {
 	@RequestMapping(value = "/bookusers", method = RequestMethod.GET)
 	public String showBookInUse(@RequestParam("id") Integer id, Model model) {
 		List<BooksInUse> booksInUses = booksInUseService.getByBookId(id);
+		/*
+		long days[] = new long[booksInUses.size()];
+		int i = 0;
+		int ms = 1000;
+		Date now = new Date();
+		for (BooksInUse b : booksInUses) {
+			days[i]=(b.getReturnDate().getTime() - now.getTime())/ms;
+			i++;
+		}
+		*/
 		model.addAttribute("booksinuse", booksInUses);
 		model.addAttribute("book", bookService.getBooksById(id));
+		//model.addAttribute("days",days);
 		return "librarian/bookinuse";
 	}
 	
@@ -64,7 +76,8 @@ public class BooksInUseController {
 		
 		person.setTimelyReturns(timely);
 		person.setUntimelyReturns(untimely);
-				
+		person.setRating(CalculateRating.getRating(person.getFailedOrders(), person.getUntimelyReturns(), person.getTimelyReturns()));
+
 		personService.update(person);
 		
 		booksInUseService.removeBooksInUse(id);

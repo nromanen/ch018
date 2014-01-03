@@ -24,62 +24,66 @@ import com.ch018.library.entity.Person;
 import com.ch018.library.entity.Person.Role;
 import com.ch018.library.form.Registration;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.CalculateRating;
 
 /**
  * 
  * @author Yurik Mikhaletskiy
- *
+ * 
  */
 
 @Controller
 public class SecurityController {
-	
+
 	@Autowired
 	PersonService personService;
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
 		return new ModelAndView("login");
 	}
-	
-	@RequestMapping(value="/login-error", method=RequestMethod.GET)  
-    public ModelAndView invalidLogin() {  
-        ModelAndView modelAndView = new ModelAndView("login");  
-        modelAndView.addObject("error", true);  
-        return modelAndView;  
-    }  
-      /*
-    @RequestMapping(value="/success-login", method=RequestMethod.GET)  
-    public ModelAndView successLogin() {  
-        return new ModelAndView("success-login");  
-    }*/
-	
-	
+
+	@RequestMapping(value = "/login-error", method = RequestMethod.GET)
+	public ModelAndView invalidLogin() {
+		ModelAndView modelAndView = new ModelAndView("login");
+		modelAndView.addObject("error", true);
+		return modelAndView;
+	}
+
+	/*
+	 * @RequestMapping(value="/success-login", method=RequestMethod.GET) public
+	 * ModelAndView successLogin() { return new ModelAndView("success-login"); }
+	 */
+
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String regForm(Model model) {
 		model.addAttribute("registration", new Registration());
 		return "registration";
 	}
-	
+
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String processRegistration(@ModelAttribute Registration registration,
-                    BindingResult result) {
+	public String processRegistration(
+			@ModelAttribute Registration registration, BindingResult result) {
 
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		Person person = personService.getByEmail(registration.getEmail().trim());
-		if (person == null && registration.getPassword().equals(registration.getConfirmPassword())) {
+		Person person = personService
+				.getByEmail(registration.getEmail().trim());
+		if (person == null
+				&& registration.getPassword().equals(
+						registration.getConfirmPassword())) {
 			person = new Person();
 			person.setEmail(registration.getEmail().trim());
-			person.setPassword(passwordEncoder.encode(registration.getPassword()));
-			person.setRole(Role.ROLE_LIBRARIAN.toString());
+			person.setPassword(passwordEncoder.encode(registration
+					.getPassword()));
+			person.setRole(Role.ROLE_USER.toString());
 			person.setConfirm(false);
+			person.setRating(CalculateRating.getRating());
+			person.setMultibookAllowed(10);
 			personService.save(person);
-		}
-		else return "registration";
-            
+		} else
+			return "registration";
 
-            return "redirect:/";
-    }
-	
-	
+		return "redirect:/";
+	}
+
 }

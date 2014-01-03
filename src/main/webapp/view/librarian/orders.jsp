@@ -36,7 +36,7 @@
 
 			<!-- Content -->
 			<div class="span11">
-				<div class="alert alert-info">${book}</div>
+				<div class="alert alert-info" id="bookname">${book}</div>
 				<!-- Table -->
 				<div class="TableBooks">
 					<table>
@@ -105,10 +105,13 @@
 						<h3 id="returnLabel">Issue</h3>
 					</div>
 					<div class="modal-body">
-						<span>Issue book?</span> <span id="aname"></span>
+						<span>Issue book?</span> <span id="aname" style="display:none;"></span>
+						<p id="booknamemessage"></p>
+						<p id="usernamemessage"></p>
+						<span>Days to return: </span><input type="text" id="days"/>
 					</div>
 					<div class="modal-footer">
-						<a id="actionLink"
+						<a id="issueLink"
 							href="${pageContext.request.contextPath}/orders/issue"
 							data-dismiss="modal" class="btn btn-primary">Issue</a> <a
 							id="cancelaction" href="#" class="btn" data-dismiss="modal"

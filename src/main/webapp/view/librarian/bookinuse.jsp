@@ -71,6 +71,7 @@
 											escapeXml="true" /></td>
 									<td><c:out value="${bookinuse.returnDate}"
 											escapeXml="true" /></td>
+								
 
 									<td><a id="returnbook${bookinuse.buid}"
 										class="btn btn-primary" href="#">Return</a></td>

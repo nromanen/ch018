@@ -152,6 +152,25 @@ $(document).ready(function() {
       event.preventDefault();
   });
   
+  $("#issueLink").click(function(event) {
+	  var id = $("#aname").text();
+	  var days = $("#days").val();
+	  var href = $(event.target).attr("href")+id+"/"+days;
+      $.ajax({
+    	  url: href,
+    	  type: "GET",
+    	  success: function(data) {
+    		  console.log("success");
+    		  $(".table" + id).remove();
+    		  $('#action_popup').modal("hide");
+    	  },
+    	  error: function(data) {
+    		  console.log("error");
+		  }
+      });
+      event.preventDefault();
+  });
+  
   
   /**
    * Edit book action

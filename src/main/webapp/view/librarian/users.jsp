@@ -66,6 +66,7 @@
 									<div></div>
 								</th>
 								<th>Failed Orders</th>
+								<th>Rating</th>
 
 								<th>Confirmed</th>
 								<th></th>
@@ -88,6 +89,7 @@
 									<td class="untimelyReturns${person.id}">${person.untimelyReturns}</td>
 									<td class="timelyReturns${person.id}">${person.timelyReturns}</td>
 									<td class="failedOrders${person.id}">${person.failedOrders}</td>
+									<td class="rating${person.id}">${person.rating}</td>
 									<td><input class="confirm${person.id}" type="checkbox"
 										name="confirm" value="confirm"
 										${person.confirm == true ? 'checked' : ''}></td>

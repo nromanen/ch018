@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.validation.annotation.Validated;
+
 /**
  * 
  * 
@@ -39,13 +41,13 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
-	@Column(name = "e_mail", unique = true)
+	@Column(name = "e_mail", unique = true, nullable = false)
 	private String email;
 
 	@Column(name = "cellphone")
 	private String cellphone;
 
-	@Column(name = "role")
+	@Column(name = "role", nullable = false)
 	private String role;
 
 	@Column(name = "confirmed")
@@ -54,7 +56,7 @@ public class Person implements Serializable {
 	@Column(name = "sms")
 	private boolean sms;
 
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "salt")
@@ -71,6 +73,9 @@ public class Person implements Serializable {
 
 	@Column(name = "failedOrders")
 	private int failedOrders;
+	
+	@Column(name = "rating")
+	private double rating;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -200,6 +205,14 @@ public class Person implements Serializable {
 	public void setFailedOrders(int failedOrders) {
 		this.failedOrders = failedOrders;
 	}
+	
+	public double getRating() {
+		return rating;
+	}
+	
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -241,6 +254,11 @@ public class Person implements Serializable {
 	@Override
 	public String toString() {
 		return this.id + " " + " " + email;
+	}
+	
+	@Override
+	public int hashCode() {
+		return email.hashCode();
 	}
 
 }
