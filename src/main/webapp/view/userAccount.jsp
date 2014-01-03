@@ -15,12 +15,26 @@
     </head>
     <body>
         <h4>Account properties</h4>
-        <form>
-            <input type="text" id="name">
-            <input type="text" id="surname">
-            <input type="text" id="cellphone">
-            <input type="text" id="email">
-            <a
-        </form>
+        <form:form  method="POST" commandName="person">
+            <table>
+                <tr>
+                    <td>Name: <form:input path="name"/></td>
+                </tr>
+                <tr>
+                    <td>Surname: <form:input path="surname"/></td>
+                </tr>
+                <tr>
+                    <td>Cellphone: <form:input path="cellphone"/></td>
+                </tr>
+                <tr>
+                    <td>Sms: <form:checkbox path="sms"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Save Changes"/>
+                    </td>
+                </tr>
+            </table>
+        </form:form>
     </body>
 </html>
