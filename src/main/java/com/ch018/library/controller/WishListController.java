@@ -6,14 +6,19 @@
 
 package com.ch018.library.controller;
 
+import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.entity.WishList;
+import com.ch018.library.service.BookService;
 import com.ch018.library.service.OrdersService;
+import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,6 +31,12 @@ public class WishListController {
     
     @Autowired
     OrdersService orderService;
+    
+    @Autowired
+    BookService bookService;
+    
+    @Autowired
+    PersonService personService;
    /* @RequestMapping(value="/wishList")
     public ModelAndView wishlist(){
        return new ModelAndView("wishList","wish",wish.getAllWishes());
@@ -46,9 +57,28 @@ public class WishListController {
     
     @RequestMapping(value="/delete", method = RequestMethod.GET)
     public String deleteWish(@RequestParam("del")Integer id){
-        WishList w = wish.getWishById(id);
-        wish.deleteWish(w);
+      //  WishList w = wish.getWishById(id);
+        wish.deleteWishById(id);
         return "redirect:/wishList";
     }
+    
+    @RequestMapping(value="/wishlist", method = RequestMethod.GET)
+    public String addWish(@RequestParam("bookId") int bookId,
+                          @RequestParam("persId") int personId){   
+      Person person = personService.getById(personId);
+      Book book = bookService.getBooksById(bookId);
+      
+      if(wish.bookExistInWishList(bookId, personId)){
+             return "redirect:/authorizedUser"; 
+      }else{
+             WishList newWish = new WishList();
+             newWish.setPerson(person);
+             newWish.setBook(book);
+             wish.addWish(newWish);
+             return "redirect:/wishList";
+      }
+            
+    }
+    
     
 }

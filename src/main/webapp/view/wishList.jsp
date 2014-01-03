@@ -29,5 +29,6 @@
 		</tr>
 	  </c:forEach>
         </table>
+        ${fail}
     </body>
 </html>

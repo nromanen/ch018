@@ -52,5 +52,17 @@ public class WishListServiceImpl implements WishListService{
     public ArrayList<WishList> getWishesByPerson(int personId) {
         return wishlistDAO.getWishesByPerson(personId);
     }
+
+    @Override
+    @Transactional
+    public void deleteWishById(int id) {
+           wishlistDAO.deleteWishById(id);
+    }
+
+    @Override
+    @Transactional
+    public boolean bookExistInWishList(int bookId, int personId) {
+       return wishlistDAO.bookExistInWishList(bookId, personId);
+    }
     
 }

@@ -15,7 +15,9 @@ import java.util.Collection;
 public interface WishListService {
     public void addWish(WishList wish);
     public void deleteWish(WishList wish);
+    public void deleteWishById(int id);
     public Collection getAllWishes();
     public WishList getWishById(int id);
     public ArrayList<WishList> getWishesByPerson(int personId);
+    public boolean bookExistInWishList(int bookId, int personId);
 }

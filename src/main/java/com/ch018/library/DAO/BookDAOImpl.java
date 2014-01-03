@@ -177,7 +177,7 @@ public class BookDAOImpl implements BookDAO {
 		return books;
 	}
 
-	@Override
+	 @Override
 	public List<Book> paramSearch(String field, String parametr) {
 		parametr = "%" + parametr + "%";
 		List<Book> books = new ArrayList<Book>();
@@ -194,5 +194,20 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return books;
 	}
+
+    @Override
+    public List<Book> latestArrivals() {
+        List<Book> books = new ArrayList<Book>();
+        try{ 
+            
+            Query query = sessionFactory.getCurrentSession()
+                           .createSQLQuery("Select * From books order by `id` DESC LIMIT 5;");
+           // books.addAll(query.list());
+            books = (List<Book>)query.list();
+        }catch(Exception e){
+            log.error(e);
+        }
+        return books;
+    }
 
 }
