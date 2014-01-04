@@ -8,8 +8,8 @@ package com.ch018.library.service;
 
 import com.ch018.library.DAO.WishListDAO;
 import com.ch018.library.entity.WishList;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +64,12 @@ public class WishListServiceImpl implements WishListService{
     public boolean bookExistInWishList(int bookId, int personId) {
        return wishlistDAO.bookExistInWishList(bookId, personId);
     }
+
+	@Override
+	@Transactional
+	public ArrayList<WishList> getWishesByPerson(String personEmail) {
+		// TODO Auto-generated method stub
+		return wishlistDAO.getWishesByPerson(personEmail);
+	}
     
 }

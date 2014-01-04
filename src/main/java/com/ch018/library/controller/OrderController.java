@@ -6,6 +6,7 @@
 
 package com.ch018.library.controller;
 
+import java.security.Principal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +20,11 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,19 +55,22 @@ public class OrderController {
     
     @Autowired
     BooksInUseService booksInUseService;
+
+    @Autowired
+	PersonService personService;
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/order", method=RequestMethod.GET)
     public ModelAndView createOrder(Model model, 
-                                    @RequestParam("book") int bookId, 
-                                    @RequestParam("pers") int personId){
+                                    @RequestParam("book") int bookId, Principal principal){
         //model.addAllAttributes(wish.getWishesByPerson(id));
       //  List<Orders> uses = new ArrayList<Orders>();
-        Book b = null;
-        Person p = null;
+        Book b = book.getBooksById(bookId);
+        Person p = pers.getByEmail(principal.getName());
+        int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
         Orders o = new Orders();
-        b = book.getBooksById(bookId);
-        p = pers.getById(personId);
+        
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
         if (j==uses){
@@ -77,14 +83,16 @@ public class OrderController {
         return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/userOrder")
-    public ModelAndView showOrder(){
-        return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(1));
+    public ModelAndView showOrder(Principal principal){
+        return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     }
     
     /**
      * Librarian
      */
+    @Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String showOrders(@RequestParam("id") Integer id, Model model) {
 		List<Orders> orders = (List<Orders>) order.getOrdersByBooksId(id);
@@ -94,6 +102,7 @@ public class OrderController {
 		return "librarian/orders";
 	}
 
+	@Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteOrder(@PathVariable Integer id) {
@@ -101,6 +110,7 @@ public class OrderController {
 		return "order";
 	}
 
+	@Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/issue{id}/{days}", method = RequestMethod.GET)
 	@ResponseBody
 	public String issueOrder(@PathVariable int id, @PathVariable int days) {

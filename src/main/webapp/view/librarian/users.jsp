@@ -22,17 +22,17 @@
 </script>
 </head>
 <body>
+    <!-- Include header -->
+    <%@ include file="/view/top.jsp"%>
+    
 	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12">
-				<%@ include file="/view/top.jsp"%>
-			</div>
-		</div>
 
 		<div class="row-fluid">
+		
 			<div class="span1">
 				<%@ include file="/view/left.jsp"%>
 			</div>
+			
 			<div class="span11">
 				<!-- Alert -->	
 				<div class="alert alert-error" style="display: none">
@@ -216,10 +216,17 @@
 				</div>
 			</div>
 		</div>
-		<!-- footer -->
-		<div class="row-fluid">
-			<div class="span12" id="footer">Footer</div>
-		</div>
 	</div>
+	<!-- footer -->
+            
+            <footer class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="span12">
+							<p>This is FOOTER</p>
+						</div>
+					</div>
+				</div>
+			</footer>
 </body>
 </html>
