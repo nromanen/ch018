@@ -6,10 +6,14 @@
 
 package com.ch018.library.controller;
 
+import java.security.Principal;
+
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.PersonService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,17 +35,20 @@ public class AuthorizedUserController {
     @Autowired
     PersonService persService;
     
-    @RequestMapping(value="/authorizedUser")
-    public ModelAndView welomePage(){
-       return new ModelAndView("authorizedUser","latest",book.getAllBooks()); 
+    @RequestMapping("/")
+    public String welomePage(Model model){
+    	model.addAttribute("latest",book.getAllBooks());
+    	return "index"; 
     }
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/userAccount", method = RequestMethod.GET)
-    public Model viewAccount(@RequestParam("id") int id, Model model){
-        model.addAttribute("person", persService.getById(id));
+    public Model viewAccount(Model model, Principal principal){
+        model.addAttribute("person", persService.getByEmail(principal.getName()));
         return model;
     }
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/showAccount", method=RequestMethod.GET)
     public void editProfile(){
         

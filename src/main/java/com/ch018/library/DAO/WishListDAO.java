@@ -31,6 +31,7 @@ public interface WishListDAO {
 	public WishList getWishById(int id);
         
         public ArrayList<WishList> getWishesByPerson(int personId);
+        public ArrayList<WishList> getWishesByPerson(String personEmail);
         
         public boolean bookExistInWishList(int bookId, int personId);
 }

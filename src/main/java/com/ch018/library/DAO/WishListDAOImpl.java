@@ -13,12 +13,11 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -124,5 +123,22 @@ public class WishListDAOImpl implements WishListDAO {
         }
         return exist;
     }
+
+	@Override
+	public ArrayList<WishList> getWishesByPerson(String personEmail) {
+		ArrayList<WishList> wish = new ArrayList<WishList>();
+	       try{
+	           //Query query = );
+	           //query.setInteger("id", personId);
+	           
+	          wish.addAll(sessionFactory.getCurrentSession().createCriteria(WishList.class)
+	                                       .add(Restrictions.eq("person.email", personEmail)).list());
+	           
+	       }catch(Exception e){
+	           log.error(e);
+	           System.out.println(e);
+	       }
+	       return wish;
+	}
 
 }

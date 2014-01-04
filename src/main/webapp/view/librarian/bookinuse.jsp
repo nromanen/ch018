@@ -21,12 +21,11 @@
 <script type="text/javascript"></script>
 </head>
 <body>
+    <!-- Include header -->
+    <%@ include file="/view/top.jsp"%>
+    
 	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12">
-				<%@ include file="/view/top.jsp"%>
-			</div>
-		</div>
+	
 		<div class="row-fluid">
 
 			<!-- Left side -->
@@ -122,11 +121,19 @@
 							value="Cancel">Cancel</a>
 					</div>
 				</div>
-
 			</div>
 		</div>
-
-
 	</div>
+		<!-- footer -->
+            
+            <footer class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="span12">
+							<p>This is FOOTER</p>
+						</div>
+					</div>
+				</div>
+			</footer>
 </body>
 </html>

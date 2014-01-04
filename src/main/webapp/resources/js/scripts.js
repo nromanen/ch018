@@ -57,7 +57,14 @@ $(document).ready(function() {
 	$("table").tablesorter();
 	$(".alert .close").click(function() {
 		$(".alert").hide();
-	})
+	});
+	
+	$("[rel=tooltip]").tooltip({
+		html : true, 
+        content: function() {
+          return $('#tooltip_content_wrapper').html();
+        }
+	});
 	/**
 	 * New book/user click
 	 */
@@ -96,6 +103,7 @@ $(document).ready(function() {
 		var id = $(tr + " td:first-child").text();
 		var pid= $(".pid" + id).text();
 		$("#aname").text(id);
+		$("#booknamemessage").text("sdsdddddd");
 		console.log(id);
 		$('#action_popup').modal();
 	})
