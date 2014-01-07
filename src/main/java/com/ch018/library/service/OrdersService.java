@@ -25,4 +25,5 @@ public interface OrdersService {
 	public List<Book> toIssueToday();
 	public List<Book> toIssuePerHour();
 	public Orders getById(int id);
+        public boolean orderExist(int personId, int bookId);
 }

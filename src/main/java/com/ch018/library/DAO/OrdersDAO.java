@@ -30,4 +30,6 @@ public interface OrdersDAO {
 	public List<Book> toIssueToday();
 	
 	public List<Book> toIssuePerHour();
+        
+        public boolean orderExist(int personId, int bookId);
 }

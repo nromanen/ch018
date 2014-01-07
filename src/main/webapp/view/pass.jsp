@@ -1,15 +1,3 @@
-<!--
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        
-    </body>
-</html> -->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
@@ -50,29 +38,25 @@
 			</div>
 
 			<!-- Center -->
-			<div class="span10">
-<h3>wishList</h3>
- 
-         <table>
-	 <thead>
-		<tr>
-                    <td>&nbsp;</td>
-		    <td>booksID</td>
-		    <td>personId</td>
-		</tr>
-	 </thead>
-            <c:forEach items="${wishByPers}" var="wishByPers">
-		<tr>
-                        <td><input type="checkbox" name="maths" checked="checked" /></td>
-                        <!--<td>${wishByPers.id}</td>  -->
-			<td>${wishByPers.book.id}</td>
-			<td>${wishByPers.person.id}</td>
-                        <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>">Delete</a></td>
-                        <td><a href="<c:url value="/order?book=${wishByPers.book.id}&wish=${wishByPers.id}"/>"><input type="submit" value="Create Order"/></a></td>
-		</tr>
-	  </c:forEach>
-        </table>
-        ${fail}
+			<div class="span10">   
+                            <br><br><br><br>
+                            <form:form method="POST" commandName="password">
+                                       <table>
+                                           <tr>
+                                               <td>Old password:</td>
+                                               <td><form:password path="password"/></td>
+                                           </tr>
+                                           <tr>
+                                               <td>Enter new passord:</td>
+                                               <td><form:password path="newPassword"/></td>
+                                           </tr>
+                                           <tr>
+                                               <td>Repeat new password:</td>
+                                               <td><form:password path="confirmPassword"/></td>
+                                           </tr>
+                                           <tr><td><input type="submit" value="Change password" class="btn"/></td></tr>
+                                       </table>
+                                           </form:form>    
 			</div>
 
 			<!-- Right side -->
