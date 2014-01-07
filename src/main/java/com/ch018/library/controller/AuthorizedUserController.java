@@ -11,9 +11,13 @@ import java.security.Principal;
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.form.Password;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +38,7 @@ public class AuthorizedUserController {
     
     @Autowired
     PersonService persService;
+   
     
     @RequestMapping("/")
     public String welomePage(Model model){
@@ -49,8 +54,39 @@ public class AuthorizedUserController {
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/showAccount", method=RequestMethod.GET)
-    public void editProfile(){
-        
+    @RequestMapping(value="/userAccount", method=RequestMethod.POST)
+    public String editProfile(@ModelAttribute("person")Person updtPers, 
+                              @ModelAttribute("password")Object password, BindingResult result, Principal principal){
+        Person person = persService.getByEmail(principal.getName());
+        person = persService.updateAccProperties(person, updtPers);
+        persService.update(person);
+        return "redirect:/userAccount";
     }
+    
+    @Secured({"ROLE_USER","ROLE_LIBRARIAN"})
+    @RequestMapping(value="/pass", method = RequestMethod.POST)
+    public String passwordView(@ModelAttribute("password")Password password, BindingResult result, Principal principal) {
+       if(password==null)
+       return null; 
+       else{
+              PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	      Person person = persService.getByEmail(principal.getName());
+              /*password.setPassword(passwordEncoder.encode(password.getPassword()));
+              password.setConfirmPassword(passwordEncoder.encode(password.getConfirmPassword()));
+              password.setNewPassword(passwordEncoder.encode(password.getNewPassword()));*/
+              if(BCrypt.checkpw(password.getPassword(), person.getPassword()))
+                     if(password.getNewPassword().equals(password.getConfirmPassword()))
+                  {
+                      person.setPassword(passwordEncoder.encode(password.getNewPassword()));
+                      persService.update(person);
+                  }
+       return "redirect:/logout";
+       }
+    }
+    
+    @Secured({"ROLE_USER","ROLE_LIBRARIAN"})
+    @RequestMapping(value="/pass", method = RequestMethod.GET)
+    public void changePassword(@ModelAttribute("password")Password password, BindingResult result, Principal principal){
+     
+    } 
 }

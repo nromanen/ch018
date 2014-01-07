@@ -17,4 +17,5 @@ public interface PersonService {
     List<Person> getByRole(String role);
     List<Person> getConfirmed();
     List<Person> getSmsEnabled();
+    Person updateAccProperties(Person person, Person updatedPerson);
 }

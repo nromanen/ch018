@@ -80,5 +80,11 @@ public class OrdersServiceImpl implements OrdersService{
 		return ordDAO.deleteOrder(id);
 		
 	}
+
+    @Override
+    @Transactional
+    public boolean orderExist(int personId, int bookId) {
+        return ordDAO.orderExist(personId, bookId);
+    }
     
 }

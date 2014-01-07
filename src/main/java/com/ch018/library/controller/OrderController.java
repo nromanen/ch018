@@ -57,29 +57,32 @@ public class OrderController {
     BooksInUseService booksInUseService;
 
     @Autowired
-	PersonService personService;
+    PersonService personService;
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/order", method=RequestMethod.GET)
     public ModelAndView createOrder(Model model, 
-                                    @RequestParam("book") int bookId, Principal principal){
-        //model.addAllAttributes(wish.getWishesByPerson(id));
-      //  List<Orders> uses = new ArrayList<Orders>();
+                                    @RequestParam("book") int bookId, 
+                                    @RequestParam("wish") int wishId, Principal principal){
         Book b = book.getBooksById(bookId);
         Person p = pers.getByEmail(principal.getName());
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
         Orders o = new Orders();
-        
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
         if (j==uses){
              return new ModelAndView("wishList", "fail", fail);
-        }else {
+        } if(order.orderExist(personId, bookId)){
+            return null;
+          }
+            else{
                 o.setPerson(p);
                 o.setBook(b);
                 o.setDate(new java.util.Date());
-                order.addOrder(o);}
+                order.addOrder(o);
+                wish.deleteWishById(wishId);
+             }
         return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
     }
     
