@@ -13,3 +13,33 @@
     
     <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
     <property name="hbm2ddl.auto">update</property>
+    
+    
+    
+           
+        <listener>
+	        <listener-class>org.apache.logging.log4j.core.web.Log4jContextListener</listener-class>
+	    </listener> 
+    
+          <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+            
+        
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.0-beta9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.0-beta9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>2.0-beta7</version>
+		</dependency>

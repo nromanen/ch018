@@ -27,33 +27,35 @@
             <div class="row-fluid">
             
             <!-- Left side -->
-            	<div class="span1">
+            	<div class="span2">
 					<%@ include file="/view/left.jsp"%>
 				</div>
 				
 			<!-- Center -->
-				<div class="span10">
-				<div class="row-fluid multiple">
-					<c:forEach items="${latest}" var="latest">
-						
-							<div class="span3">
-								<div class="thumbnail">
+				<div class="span8">
+				
+
+					<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
+						<c:if test="${(rowCounter.count + 2) % 3 == 0}">
+							<div class="row-fluid">
+						</c:if>
+								<div class="thumbnail span4">
 									<h3><small>${latest.title}</small></h3>
 									<p>${latest.authors}</p>
 									<p>${latest.description}</p>
 									<sec:authorize access="isAuthenticated()">
 										<a href="<c:url value="/wishlist?bookId=${latest.id}"/>" class="btn-mini">Add to cart</a>
-	                            	</sec:authorize>
-                            	</div>
-                            </div>				
-                        
-                        
+		                           	</sec:authorize>
+	                           	</div>
+	                    <c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">  
+                            </div>
+                        </c:if>         
                         </c:forEach>
-                    </div>
+                    
 				</div>
 				
 			<!-- Right side -->
-            	<div class="span1">
+            	<div class="span2">
 					Right side
 				</div>
             </div>

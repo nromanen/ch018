@@ -19,7 +19,7 @@
 	src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<title>Books</title>
+<title><spring:message code="title.books"/></title>
 <script type="text/javascript">
 </script>
 </head>
@@ -40,15 +40,15 @@
 					<!-- Button group -->
 					<div class="span8">
 						<div class="btn-group">
-							<a href="<c:url value="/books"/>" class="btn btn-primary">All</a>
+							<a href="<c:url value="/books"/>" class="btn btn-primary"><spring:message code="book.all"/></a>
 							<a href="<c:url value="/books?show=issuetd"/>"
-								class="btn btn-primary">To issue today</a> <a
-								href="<c:url value="/books?show=issueph"/>"
-								class="btn btn-primary">To issue per hour</a> <a
-								href="<c:url value="/books?show=return"/>"
-								class="btn btn-primary">To return</a> <a
-								href="<c:url value="/books?show=returntd"/>"
-								class="btn btn-primary">To return today</a>
+								class="btn btn-primary"><spring:message code="book.issuetd"/></a> 
+								<a href="<c:url value="/books?show=issueph"/>"
+								class="btn btn-primary"><spring:message code="book.issueph"/></a> 
+								<a href="<c:url value="/books?show=return"/>"
+								class="btn btn-primary"><spring:message code="book.return"/></a> 
+								<a href="<c:url value="/books?show=returntd"/>"
+								class="btn btn-primary"><spring:message code="book.returntd"/></a>
 						</div>
 					</div>
 
@@ -57,15 +57,15 @@
 							action="${pageContext.request.contextPath}/books">
 							<div class="input-append">
 								<select name="field" class="input-small">
-									<option value="all">All</option>
-									<option value="title">Title</option>
-									<option value="author">Author</option>
-									<option value="publication">Publication</option>
-									<option value="year">Year</option>
-									<option value="genre.name">Genre</option>
+									<option value="all"><spring:message code="book.searchall"/></option>
+									<option value="title"><spring:message code="book.title"/></option>
+									<option value="author"><spring:message code="book.authors"/></option>
+									<option value="publication"><spring:message code="book.publication"/></option>
+									<option value="year"><spring:message code="book.year"/></option>
+									<option value="genre.name"><spring:message code="book.genre"/></option>
 								</select> <input name="search" type="text"
 									class="search-query input-medium">
-								<button type="submit" class="btn btn-primary">Search</button>
+								<button type="submit" class="btn btn-primary"><spring:message code="book.search"/></button>
 							</div>
 						</form>
 					</div>
@@ -74,8 +74,8 @@
 				<!-- Alert -->
 				<div class="alert alert-error" style="display: none">
 					<button type="button" class="close">&times;</button>
-					<h4>ERROR!</h4>
-					We cant delete this book
+					<h4><spring:message code="message.error"/></h4>
+					<spring:message code="book.errordel"/>
 				</div>
 
 				<!-- Books table -->
@@ -83,17 +83,15 @@
 					<table>
 						<thead>
 							<tr>
-								<th>Title<a href="<c:url value="/books?orderby=title"/>">^v</a></th>
-								<th>Authors<a
-									href="<c:url value="/books?orderby=authors"/>">^v</a></th>
-								<th>Publication<a
-									href="<c:url value="/books?orderby=publ"/>">^v</a></th>
-								<th>Year<a href="<c:url value="/books?orderby=year"/>">^v</a></th>
-								<th>Pages<a href="<c:url value="/books?orderby=pages"/>">^v</a></th>
-								<th>Bookcase<a href="<c:url value="/books?orderby=bc"/>">^v</a></th>
-								<th>Shelf<a href="<c:url value="/books?orderby=shelf"/>">^v</a></th>
-								<th>Genre<a href="<c:url value="/books?orderby=genre"/>">^v</a></th>
-								<th>Term</th>
+								<th><spring:message code="book.title"/></th>
+								<th><spring:message code="book.authors"/></th>
+								<th><spring:message code="book.publication"/></th>
+								<th><spring:message code="book.year"/></th>
+								<th><spring:message code="book.pages"/></th>
+								<th><spring:message code="book.bookcase"/></th>
+								<th><spring:message code="book.shelf"/></th>
+								<th><spring:message code="book.genre"/></th>
+								<th><spring:message code="book.term"/></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -119,13 +117,13 @@
 									<td class="desc${book.id}" hidden="true">${book.description}</td>
 
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>"
-										class="btn btn-info">Users</a><br> <a
+										class="btn btn-info"><spring:message code="book.users"/></a><br> <a
 										href="<c:url value="/orders?id=${book.id}"/>"
-										class="btn btn-primary">Orders</a><br></td>
+										class="btn btn-primary"><spring:message code="book.orders"/></a><br></td>
 									<td><a href="#" id="editbook${book.id}"
-										class="btn btn-warning">Edit</a></td>
+										class="btn btn-warning"><spring:message code="button.edit"/></a></td>
 									<td><a href="#" id="deletebook${book.id}"
-										class="btn btn-danger">Delete</a></td>
+										class="btn btn-danger"><spring:message code="button.delete"/></a></td>
 
 								</tr>
 							</c:forEach>
@@ -134,7 +132,7 @@
 				</div>
 
 				<!-- New book button -->
-				<a href="#" id="newbookbutton" class="btn">New Book</a>
+				<a href="#" id="newbookbutton" class="btn"><spring:message code="book.newbook"/></a>
 
 				<!-- Delete popup -->
 				<div id="popup" class="modal hide fade" role="dialog"
@@ -142,17 +140,17 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 id="deleteLabel">Delete user</h3>
+						<h3 id="deleteLabel"><spring:message code="book.deletebook"/></h3>
 					</div>
 					<div class="modal-body">
-						<span>Are you sure you want to delete :</span> <span id="name"></span>
+						<span><spring:message code="message.delete"/></span> <span id="name"></span>
 					</div>
 					<div class="modal-footer">
 						<a id="deleteLink" data-dismiss="modal"
 							href="${pageContext.request.contextPath}/book/delete"
-							class="btn btn-danger">Delete</a> <a id="canceldelete" href="#"
+							class="btn btn-danger"><spring:message code="button.delete"/></a> <a id="canceldelete" href="#"
 							class="btn" data-dismiss="modal" aria-hidden="true"
-							value="Cancel">Cancel</a>
+							value="Cancel"><spring:message code="button.cancel"/></a>
 					</div>
 				</div>
 
@@ -162,7 +160,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 id="myModalLabel">Add book</h3>
+						<h3 id="myModalLabel"><spring:message code="book.addedit"/></h3>
 					</div>
 					<div class="modal-body">
 						<form:form id="editbook" class="form-horizontal" method="POST"
@@ -171,7 +169,7 @@
 							<form:input path="id" id="id" class="hide" disabled="disabled" />
 
 							<div class="control-group">
-								<label class="control-label" for="title">Title</label>
+								<label class="control-label" for="title"><spring:message code="book.title"/></label>
 								<div class="controls">
 									<form:input path="title" type="text" id="title"
 										placeholder="Title" />
@@ -179,7 +177,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="authors">Authors</label>
+								<label class="control-label" for="authors"><spring:message code="book.authors"/></label>
 								<div class="controls">
 									<form:input path="authors" type="text" id="authors"
 										placeholder="Authors" />
@@ -187,7 +185,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="year">Year</label>
+								<label class="control-label" for="year"><spring:message code="book.year"/></label>
 								<div class="controls">
 									<form:input path="year" type="text" id="year"
 										placeholder="Year" />
@@ -195,7 +193,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="publication">Publication</label>
+								<label class="control-label" for="publication"><spring:message code="book.publication"/></label>
 								<div class="controls">
 									<form:input path="publication" type="text" id="publication"
 										placeholder="Publication" />
@@ -203,7 +201,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="pages">Pages</label>
+								<label class="control-label" for="pages"><spring:message code="book.pages"/></label>
 								<div class="controls">
 									<form:input path="pages" type="text" id="pages"
 										placeholder="Pages" />
@@ -211,7 +209,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="pages">Description</label>
+								<label class="control-label" for="pages"><spring:message code="book.description"/></label>
 								<div class="controls">
 									<form:input path="description" type="text" id="description"
 										placeholder="Description" />
@@ -219,7 +217,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="term">Term</label>
+								<label class="control-label" for="term"><spring:message code="book.term"/></label>
 								<div class="controls">
 									<form:input path="term" type="text" id="term"
 										placeholder="Term" />
@@ -227,7 +225,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="bookcase">Bookcase</label>
+								<label class="control-label" for="bookcase"><spring:message code="book.bookcase"/></label>
 								<div class="controls">
 									<form:input path="bookcase" type="text" id="bookcase"
 										placeholder="Bookcase" />
@@ -235,7 +233,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="shelf">Shelf</label>
+								<label class="control-label" for="shelf"><spring:message code="book.shelf"/></label>
 								<div class="controls">
 									<form:input path="shelf" type="text" id="shelf"
 										placeholder="Shelf" />
@@ -243,7 +241,7 @@
 							</div>
 
 							<div class="control-group">
-								<label class="control-label" for="shelf">Genre</label>
+								<label class="control-label" for="shelf"><spring:message code="book.genre"/></label>
 								<div class="controls">
 									<form:select path="genre" id="genre" items="${genre}"
 										itemValue="id" itemLabel="name" />
@@ -251,9 +249,8 @@
 							</div>
 
 							<div class="form-actions">
-								<input type="submit" value="Save" class="btn btn-primary" /> <input
-									id="cancel" type="button" class="btn" data-dismiss="modal"
-									aria-hidden="true" value="Cancel" />
+								<button type="submit" class="btn btn-primary" ><spring:message code="button.save"/></button> 
+								<button id="cancel" type="button" class="btn" data-dismiss="modal" aria-hidden="true" ><spring:message code="button.cancel"/></button>
 							</div>
 						</form:form>
 					</div>

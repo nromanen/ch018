@@ -13,17 +13,9 @@
 		http://www.springframework.org/schema/context/spring-context-3.2.xsd
 		http://www.springframework.org/schema/tx
      	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
-	
-	<tx:annotation-driven />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<mvc:annotation-driven/>
-
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/view/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-		
-	
-	<context:component-scan base-package="com.ch018.library" />
-			
+     	
+     	
+     	<context:annotation-config />
+     	<context:component-scan base-package="com.ch018.library" />
+     	
 </beans:beans>

@@ -37,38 +37,32 @@
 				<!-- Alert -->	
 				<div class="alert alert-error" style="display: none">
 					<button type="button" class="close" >&times;</button>
-  					<h4>ERROR!</h4> We cant delete this book
+  					<h4><spring:message code="message.error"/></h4><spring:message code="person.errordel"/>
 				</div>
 				
 				<div class="TableBooks">
 					<table id="utable">
 						<thead>
 							<tr>
-								<th>First Name
+								<th><spring:message code="person.firstname"/>
+								</th>
+								<th><spring:message code="person.lastname"/>
+								</th>
+								<th><spring:message code="person.mail"/>
+								</th>
+								<th><spring:message code="person.mobile"/>
+								</th>
+								<th><spring:message code="person.multibookallowed"/>
+								</th>
+								<th><spring:message code="person.untimelly"/>
+								</th>
+								<th><spring:message code="person.timelly"/>
 									<div></div>
 								</th>
-								<th>Second Name
-									<div></div>
-								</th>
-								<th>E-mail
-									<div></div>
-								</th>
-								<th>Mobile
-									<div></div>
-								</th>
-								<th>Multibook Allowed
-									<div></div>
-								</th>
-								<th>Untimelly
-									<div></div>
-								</th>
-								<th>Timelly
-									<div></div>
-								</th>
-								<th>Failed Orders</th>
-								<th>Rating</th>
+								<th><spring:message code="person.failed"/></th>
+								<th><spring:message code="person.rating"/></th>
 
-								<th>Confirmed</th>
+								<th><spring:message code="person.confirmed"/></th>
 								<th></th>
 								<th></th>
 							</tr>
@@ -95,9 +89,9 @@
 										${person.confirm == true ? 'checked' : ''}></td>
 
 									<td><a href="#" id="edituser${book.id}"
-										class="btn btn-warning">Edit</a></td>
+										class="btn btn-warning"><spring:message code="button.edit"/></a></td>
 									<td><a href="#" id="deleteuser${book.id}"
-										class="btn btn-danger">Delete</a></td>
+										class="btn btn-danger"><spring:message code="button.delete"/></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -105,7 +99,7 @@
 				</div>
 
 				<!-- New user button -->
-				<a href="#" id="newuserbutton" class="btn">New User</a>
+				<a href="#" id="newuserbutton" class="btn"><spring:message code="person.new"/></a>
 
 				<!-- Delete user -->
 				<div id="popup" class="modal hide fade" role="dialog"
@@ -113,17 +107,17 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 id="deleteLabel">Delete user</h3>
+						<h3 id="deleteLabel"><spring:message code="person.delete"/></h3>
 					</div>
 					<div class="modal-body">
-						<span>Are you sure you want to delete :</span> <span id="name"></span>
+						<span><spring:message code="message.delete"/></span> <span id="name"></span>
 					</div>
 					<div class="modal-footer">
 						<a id="deleteLink" data-dismiss="modal"
 							href="${pageContext.request.contextPath}/user/delete"
-							class="btn btn-danger">Delete</a> <a id="canceldelete" href="#"
+							class="btn btn-danger"><spring:message code="button.delete"/></a> <a id="canceldelete" href="#"
 							class="btn" data-dismiss="modal" aria-hidden="true"
-							value="Cancel">Cancel</a>
+							value="Cancel"><spring:message code="button.cancel"/></a>
 					</div>
 				</div>
 
@@ -133,7 +127,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 id="myModalLabel">Add user</h3>
+						<h3 id="myModalLabel"><spring:message code="person.add"/></h3>
 					</div>
 					<div class="modal-body">
 						<form:form id="addedituser" class="form-horizontal" method="POST" commandName="person"
@@ -141,63 +135,63 @@
 							<form:input path="id" id="id" class="hide" disabled="disabled" />
 							
 							<div class="control-group">
-    							<label class="control-label" for="uname">First Name</label>
+    							<label class="control-label" for="uname"><spring:message code="person.firstname"/></label>
     							<div class="controls">
       								<form:input path="name" type="text" id="uname" placeholder="Name" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="surname">Second Name</label>
+    							<label class="control-label" for="surname"><spring:message code="person.lastname"/></label>
     							<div class="controls">
       								<form:input path="surname" type="text" id="surname" placeholder="Second Name" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="email">E-mail</label>
+    							<label class="control-label" for="email"><spring:message code="person.mail"/></label>
     							<div class="controls">
       								<form:input path="email" type="email" id="email" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="cellphone">Mobile</label>
+    							<label class="control-label" for="cellphone"><spring:message code="person.mobile"/></label>
     							<div class="controls">
       								<form:input path="cellphone" type="text" id="cellphone" placeholder="Mobile" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="multibookAllowed">Multibook Allowed</label>
+    							<label class="control-label" for="multibookAllowed"><spring:message code="person.multibookallowed"/></label>
     							<div class="controls">
       								<form:input path="multibookAllowed" type="text" id="multibookAllowed" placeholder="10" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="untimelyReturns">Untimelly returns</label>
+    							<label class="control-label" for="untimelyReturns"><spring:message code="person.untimelly"/></label>
     							<div class="controls">
       								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="timelyReturns">Timelly returns</label>
+    							<label class="control-label" for="timelyReturns"><spring:message code="person.timelly"/></label>
     							<div class="controls">
       								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="failedOrders">Failed Orders</label>
+    							<label class="control-label" for="failedOrders"><spring:message code="person.failed"/></label>
     							<div class="controls">
       								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
     							</div>
   							</div>
   							
   							<div class="control-group">
-    							<label class="control-label" for="confirm">Confirmed</label>
+    							<label class="control-label" for="confirm"><spring:message code="person.confirmed"/></label>
     							<div class="controls">
       								<form:checkbox path="confirm" id="confirm" />
     							</div>

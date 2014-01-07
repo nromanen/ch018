@@ -17,7 +17,7 @@
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<title>Sign in page</title>
+<title><spring:message code="title.reg"/></title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -28,35 +28,35 @@
 
 				<div class="well" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-header">
-    					<h3 id="myModalLabel">Registration</h3>
+    					<h3 id="myModalLabel"><spring:message code="reg.registration"/></h3>
   					</div>
   					<div class="modal-body">
 					<form:form id="register" class="form-horizontal" method="POST" commandName="registration" action="${pageContext.request.contextPath}/registration">
 						
 						<div class="control-group">
-    						<label class="control-label" for="inputEmail">Email</label>
+    						<label class="control-label" for="inputEmail"><spring:message code="person.mail"/></label>
     						<div class="controls">
       							<form:input path="email" type="text" id="inputEmail"  required="true" />
     						</div>
   						</div>
   						
   						<div class="control-group">
-    						<label class="control-label" for="inputPassword" >Password</label>
+    						<label class="control-label" for="inputPassword" ><spring:message code="person.pass"/></label>
     						<div class="controls">
       							<form:input path="password" type="password" id="inputPassword" placeholder="Pass" required="true" />
     						</div>
   						</div>
   						
   						<div class="control-group">
-    						<label class="control-label" for="confirmPassword">Confirm Password</label>
+    						<label class="control-label" for="confirmPassword"><spring:message code="person.confirmpass"/></label>
     						<div class="controls">
       							<form:input path="confirmPassword" type="password" id="confirmPassword" placeholder="Pass" required="true" />
     						</div>
   						</div>
 
   						<div class="form-actions">
-							<input type="submit" value="Register" class="btn btn-primary"  />
-							<input id="cancel" type="button" class="btn" value="Cancel" />
+							<button type="submit" class="btn btn-primary" ><spring:message code="button.reg"/></button>
+							<button id="cancel" type="button" class="btn" ><spring:message code="button.cancel"/></button>
 						</div>
 					</form:form>
 					</div>
