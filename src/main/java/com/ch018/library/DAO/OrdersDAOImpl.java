@@ -193,4 +193,21 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return order;
 	}
 
+    @Override
+    public boolean orderExist(int personId, int bookId) {
+        boolean exist=true;
+        try{
+            Query query = sessionFactory.getCurrentSession()
+                          .createSQLQuery("SELECT * FROM orders WHERE Person_id=:person And Books_id=:book")
+                          .setParameter("person", personId)
+                          .setParameter("book", bookId);
+            if(query.list().isEmpty())
+                 exist=false;
+            
+        }catch(Exception e){
+            log.error(e);
+        }
+        return exist;
+    }
+
 }
