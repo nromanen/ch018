@@ -11,8 +11,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
+			<version>4.10</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -20,11 +19,39 @@
 			<version>6.8.7</version>
 			<scope>test</scope>
 		</dependency>
+            
+<!--          <dependency>
+            <groupId>org.apache.logging.log4j.osgi</groupId>
+            <artifactId>log4j-core-osgi-reduced</artifactId>
+            <version>2.0-beta9</version>
+        </dependency> -->
+
 		<dependency>
-			<groupId>org.apache.logging.log4j.osgi</groupId>
-			<artifactId>log4j-core-osgi-reduced</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
 			<version>2.0-beta9</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.0-beta9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>2.0-beta7</version>
+		</dependency>
+		
+		<!-- <dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>2.0-beta9</version>
+		</dependency> -->
+		            
+
+
+      
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -87,6 +114,7 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.2</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -107,8 +135,32 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.0.RELEASE</version>
 		</dependency>
-            
-            
+
+		<!-- <dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-api</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-template</artifactId>
+			<version>3.0.3</version>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.json</groupId>

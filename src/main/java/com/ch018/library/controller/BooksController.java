@@ -61,7 +61,7 @@ public class BooksController {
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Book newBook(@RequestBody Book book) {
-		
+		log.info("New book");
 		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {
@@ -81,6 +81,10 @@ public class BooksController {
 	public String showBooks(
 			@RequestParam(value = "show", required = false) String show,
 			Model model) {
+		log.info("info book");
+		log.debug("debug book");
+		log.error("error book");
+		log.trace("trace book");
 		ordersService.toIssueToday();
 		Book book = new Book();
 		model.addAttribute("book", book);
@@ -135,6 +139,11 @@ public class BooksController {
 		}
 		model.addAttribute("books", books);
 		return "librarian/books";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home() {
+		return "tilestest/home";
 	}
 	
 }

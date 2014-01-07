@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,11 +39,13 @@ public class SecurityController {
 	@Autowired
 	PersonService personService;
 
+	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
 		return new ModelAndView("login");
 	}
 
+	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login-error", method = RequestMethod.GET)
 	public ModelAndView invalidLogin() {
 		ModelAndView modelAndView = new ModelAndView("login");
@@ -55,12 +58,14 @@ public class SecurityController {
 	 * ModelAndView successLogin() { return new ModelAndView("success-login"); }
 	 */
 
+	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String regForm(Model model) {
 		model.addAttribute("registration", new Registration());
 		return "registration";
 	}
 
+	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String processRegistration(
 			@ModelAttribute Registration registration, BindingResult result) {

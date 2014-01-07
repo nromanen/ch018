@@ -30,10 +30,7 @@ public class LibraryUserDetailsService implements UserDetailsService {
 		Person user = personDao.getByEmail(login);
 		List<GrantedAuthority> roles = new ArrayList<>();
 		roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
-		
-		User u = new User(user.getEmail(), user.getPassword(), user.getConfirm(), true, true, true, roles);
-		System.out.println(u.getPassword());
-		System.out.println(u.getAuthorities());
+		User u = new User(user.getEmail(), user.getPassword(), true, true, true, true, roles); // temporary enabled
 		return u;
 	}
 

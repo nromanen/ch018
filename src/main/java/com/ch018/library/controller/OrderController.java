@@ -124,7 +124,9 @@ public class OrderController {
 		BooksInUse booksInUse = new BooksInUse();
 		Orders orders = order.getById(id);
 		booksInUse.setBook(orders.getBook());
-		booksInUse.setPerson(orders.getPerson());
+		Person person = orders.getPerson();
+		person.setConfirm(true);
+		booksInUse.setPerson(person);
 		booksInUse.setReturnDate(returnDate.getTime());
 		booksInUse.setIssueDate(issueDate.getTime());
 		booksInUse.setTerm(days);
