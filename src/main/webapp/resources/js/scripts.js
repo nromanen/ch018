@@ -102,8 +102,23 @@ $(document).ready(function() {
 		var tr = "#" + $(this).parent().parent().attr("id");
 		var id = $(tr + " td:first-child").text();
 		var pid= $(".pid" + id).text();
+		var confirmed = $(tr + " .tdconfirmed").prop('checked');
+		
 		$("#aname").text(id);
-		$("#booknamemessage").text("sdsdddddd");
+		$("#booknamemessage").text($("#bookname").text());
+		$("#usernamemessage").text($(tr + " .tdname").text() + " " + $(tr + " .tdsurname").text());
+		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());
+		
+		
+		$("#confimation").prop('checked', confirmed);
+		
+		if ($("#confimation").prop('checked') == false) {
+			$("#confirmuser").show();
+		}
+
+		
+		$("#days").val($(tr + " .tddays").text());
+		usernamemessage
 		console.log(id);
 		$('#action_popup').modal();
 	})
@@ -143,6 +158,7 @@ $(document).ready(function() {
    */
 	
   $("#actionLink").click(function(event) {
+	  $('#progress').show();
 	  var id = $("#aname").text();
 	  var href = $(event.target).attr("href")+id;
       $.ajax({
@@ -152,6 +168,7 @@ $(document).ready(function() {
     		  console.log("success");
     		  $(".table" + id).remove();
     		  $('#action_popup').modal("hide");
+    		  $('#progress').css("display", "none");
     	  },
     	  error: function(data) {
     		  console.log("error");
@@ -161,6 +178,9 @@ $(document).ready(function() {
   });
   
   $("#issueLink").click(function(event) {
+	  if ($("#confimation").prop('checked') == false) {
+		  return false;
+	  }
 	  var id = $("#aname").text();
 	  var days = $("#days").val();
 	  var href = $(event.target).attr("href")+id+"/"+days;

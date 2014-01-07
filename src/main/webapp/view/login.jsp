@@ -17,7 +17,7 @@
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<title>Sign in page</title>
+<title><spring:message code="title.login"/></title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -28,13 +28,13 @@
 			<div class="well">
 				<form class="form-horizontal" action="j_spring_security_check" method="post">
 					<div class="control-group">
-						<label class="control-label" for="inputEmail">Email</label>
+						<label class="control-label" for="inputEmail"><spring:message code="person.mail"/></label>
 						<div class="controls">
 							<input name="j_username" id="inputEmail" class="span8" type="email" required>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="inputPassword">Password</label>
+						<label class="control-label" for="inputPassword"><spring:message code="person.pass"/></label>
 						<div class="controls">
 							<input name="j_password" type="password" class="span8" id="inputPassword" placeholder="Pass">
 						</div>
@@ -42,9 +42,9 @@
 					<div class="control-group">
 						<div class="controls">
 							<label class="checkbox"> <input type="checkbox" name="_spring_security_remember_me">
-								remember me
+								<spring:message code="menu.remember"/>
 							</label>
-							<button type="submit" class="btn">Login</button>
+							<button type="submit" class="btn"><spring:message code="button.login"/></button>
 						</div>
 					</div>
 				</form>

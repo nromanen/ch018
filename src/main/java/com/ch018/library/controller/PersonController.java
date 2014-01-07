@@ -60,6 +60,7 @@ public class PersonController {
 			p = personService.getById(person.getId());
 			person.setPassword(p.getPassword());
 			person.setRole(p.getRole());
+			person.setRating(p.getRating());
 			personService.update(person);
 		}
 		return person;

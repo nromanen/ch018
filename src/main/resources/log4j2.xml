@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
   <Appenders>
-  
-    <File name="file" fileName="logs/errors.log" >
+    
+    <File name="file" fileName="/logs/errors.log" >
       <PatternLayout pattern="%d{ISO8601} [%5p] %m at %l%n"/>  
       <Filters>
       	<ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL" />
@@ -11,7 +11,7 @@
          
     </File>
     
-    <File name="filedebug" fileName="logs/debug.log">
+    <File name="filedebug" fileName="/logs/debug.log">
       <PatternLayout pattern="%d{ISO8601} [%5p] %m at %l%n"/>
       <Filters>
       	<ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL" />
@@ -22,7 +22,7 @@
       </Filters>
     </File>
     
-    <File name="fileinfo" fileName="logs/info.log">
+    <File name="fileinfo" fileName="/logs/info.log">
       <PatternLayout pattern="%d{ISO8601} [%5p] %m at %l%n"/>
       <Filters>
       	<ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL" />
@@ -39,16 +39,14 @@
     
   </Appenders>
   <Loggers>
-  
-  <!--org.hibernate.SQL logger-->
-    <logger name="org.hibernate">
-        <level value="info"/>
-    </logger>
+  	
+
 
     <Root level="TRACE">
       <AppenderRef ref="file"/>
       <AppenderRef ref="filedebug"/>
 	  <AppenderRef ref="fileinfo"/>
+	  <AppenderRef ref="STDOUT"/>
     </Root>
     
   </Loggers>
