@@ -32,7 +32,8 @@
     					<h3 id="myModalLabel"><spring:message code="reg.registration"/></h3>
   					</div>
   					<div class="modal-body">
-					<form:form id="register" class="form-horizontal" method="POST" commandName="registration" action="${pageContext.request.contextPath}/registration">
+  					
+					<form:form id="registration" class="form-horizontal" method="POST" commandName="registration" action="${pageContext.request.contextPath}/registration">
 						
 						<div class="control-group">
     						<label class="control-label" for="inputEmailReg"><spring:message code="person.mail"/></label>
