@@ -46,7 +46,7 @@
       <AppenderRef ref="file"/>
       <AppenderRef ref="filedebug"/>
 	  <AppenderRef ref="fileinfo"/>
-	  <AppenderRef ref="STDOUT"/>
+	  
     </Root>
     
   </Loggers>
