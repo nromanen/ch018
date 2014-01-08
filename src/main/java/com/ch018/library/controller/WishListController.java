@@ -77,13 +77,13 @@ public class WishListController {
       int personId = person.getId();
       
       if(wish.bookExistInWishList(bookId, personId)){
-             return "redirect:/authorizedUser"; 
+             return "redirect:/"; 
       }else{
              WishList newWish = new WishList();
              newWish.setPerson(person);
              newWish.setBook(book);
              wish.addWish(newWish);
-             return "redirect:/wishList";
+             return "redirect:/";
       }
             
     }
