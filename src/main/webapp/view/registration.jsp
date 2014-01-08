@@ -12,7 +12,8 @@
 	rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
@@ -34,23 +35,23 @@
 					<form:form id="register" class="form-horizontal" method="POST" commandName="registration" action="${pageContext.request.contextPath}/registration">
 						
 						<div class="control-group">
-    						<label class="control-label" for="inputEmail"><spring:message code="person.mail"/></label>
+    						<label class="control-label" for="inputEmailReg"><spring:message code="person.mail"/></label>
     						<div class="controls">
-      							<form:input path="email" type="text" id="inputEmail"  required="true" />
+      							<form:input path="email" type="text" id="inputEmailReg" />
     						</div>
   						</div>
   						
   						<div class="control-group">
-    						<label class="control-label" for="inputPassword" ><spring:message code="person.pass"/></label>
+    						<label class="control-label" for="inputPasswordReg" ><spring:message code="person.pass"/></label>
     						<div class="controls">
-      							<form:input path="password" type="password" id="inputPassword" placeholder="Pass" required="true" />
+      							<form:input path="password" type="password" id="inputPasswordReg" placeholder="Pass" />
     						</div>
   						</div>
   						
   						<div class="control-group">
-    						<label class="control-label" for="confirmPassword"><spring:message code="person.confirmpass"/></label>
+    						<label class="control-label" for="confirmPasswordReg"><spring:message code="person.confirmpass"/></label>
     						<div class="controls">
-      							<form:input path="confirmPassword" type="password" id="confirmPassword" placeholder="Pass" required="true" />
+      							<form:input path="confirmPassword" type="password" id="confirmPasswordReg" placeholder="Pass" />
     						</div>
   						</div>
 

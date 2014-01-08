@@ -50,7 +50,8 @@
 		            
 
 
-      
+
+		                  
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -173,7 +174,13 @@
 			<version>1.9.13</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>3.0.3</version>
+		</dependency>
 	</dependencies>
+	
 	<build>
 		<finalName>library</finalName>
 		<plugins>

@@ -12,7 +12,7 @@
 	  				
 	  				<div class="nav-collapse collapse">
 	  					<ul class="nav">
-	  						<li class="active">
+	  						<li>
 	  							<a href="<c:url value="/"/>"><spring:message code="menu.home"/></a>
 	  						</li>
 	  						<sec:authorize access="isAnonymous()">
