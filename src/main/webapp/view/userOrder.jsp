@@ -41,19 +41,20 @@
 			<div class="span10">
 
 				<h1>Current Orders</h1>
-				<table>
-					<thead>
-						<tr>
-							<td>&nbsp;</td>
-							<td>booksID</td>
-							<td>personId</td>
+                                <table class="table table-bordered">
+                                    <thead>
+						<tr class="info">
+							<td>Book title</td>
+							<td>Order date</td>
+							<td>Issue date</td>
 						</tr>
 					</thead>
 					<c:forEach items="${showOrders}" var="order">
 						<tr>
-							<!--	<td>${order.date}</td>-->
+							
 							<td>${order.book.title}</td>
-
+                                                        <td>${order.date}</td>
+                                                        <td>${order.issueDate}</td>
 
 
 						</tr>

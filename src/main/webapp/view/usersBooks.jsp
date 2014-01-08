@@ -33,7 +33,7 @@
 				
 			<!-- Center -->
 				<div class="span10">
-        <table>
+                                    <table class="table table-bordered">
             <thead>
                 <tr>
                     <td>Book Title</td>
