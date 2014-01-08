@@ -51,24 +51,27 @@
 
 			<!-- Center -->
 			<div class="span10">
-<h3>wishList</h3>
+                            <h3 class="text-info"><small>Wish list</small></h3>
  
-         <table>
+<table class="table table-bordered">
 	 <thead>
 		<tr>
-                    <td>&nbsp;</td>
-		    <td>booksID</td>
-		    <td>personId</td>
+                    <td>Title</td>
+		    <td>Genre</td>
+		    <td>Authors</td>
+                    <td>Publicated</td>
 		</tr>
 	 </thead>
             <c:forEach items="${wishByPers}" var="wishByPers">
-		<tr>
-                        <td><input type="checkbox" name="maths" checked="checked" /></td>
+                <tr class="info">
+                      <!--  <td><input type="checkbox" name="maths" checked="checked" /></td>-->
                         <!--<td>${wishByPers.id}</td>  -->
-			<td>${wishByPers.book.id}</td>
-			<td>${wishByPers.person.id}</td>
-                        <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>">Delete</a></td>
-                        <td><a href="<c:url value="/order?book=${wishByPers.book.id}&wish=${wishByPers.id}"/>"><input type="submit" value="Create Order"/></a></td>
+			<td>${wishByPers.book.title}</td>
+                        <td>${wishByPers.book.genre}</td>
+			<td>${wishByPers.book.authors}</td>
+                        <td>${wishByPers.book.year}</td>
+                        <td><a href="<c:url value="/delete?del=${wishByPers.id}"/>" class="btn btn-warning">Delete</a></td>
+                        <td><a href="<c:url value="/order?book=${wishByPers.book.id}&wish=${wishByPers.id}"/>"><input type="submit" class="btn btn-success" value="Create Order"/></a></td>
 		</tr>
 	  </c:forEach>
         </table>

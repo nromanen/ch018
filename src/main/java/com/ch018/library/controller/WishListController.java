@@ -83,7 +83,7 @@ public class WishListController {
              newWish.setPerson(person);
              newWish.setBook(book);
              wish.addWish(newWish);
-             return "redirect:/wishList";
+             return "redirect:/";
       }
             
     }
