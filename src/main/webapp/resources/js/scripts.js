@@ -54,6 +54,20 @@ function reset_form() {
 }
 
 $(document).ready(function() { 
+	
+	/**
+	 * Highlight nav
+	 */
+	var url = window.location.href;
+	// Will only work if string in href matches with location
+	$('li a[href="'+ url +'"]').parent().addClass('active');
+	// Will also work for relative and absolute hrefs
+	$('li a').filter(function() {
+	    return this.href == url;
+	}).parent().addClass('active');
+	
+	
+	
 	$("table").tablesorter();
 	$(".alert .close").click(function() {
 		$(".alert").hide();

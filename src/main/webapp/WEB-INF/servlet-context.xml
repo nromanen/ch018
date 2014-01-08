@@ -25,7 +25,7 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/view/" />
 		<property name="suffix" value=".jsp" />
-	</bean>
+	</bean> 
 	
 	<mvc:annotation-driven/>
 	
@@ -58,5 +58,18 @@
               <property name="paramName" value="lang"></property>
         </bean>
 	</mvc:interceptors>
+	
+	<!-- ******************************************************************* -->
+	<!-- 
+	
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<value>/WEB-INF/tiles.xml</value>
+		</property>
+	</bean> -->
 	     	
 </beans>

@@ -11,7 +11,7 @@ public class CalculateRating {
 			return rating;
 		}
 		rating = ((timellyReturns + 1)/(untimellyReturns + 1))/(failedOrders+1);
-		return new BigDecimal(rating).setScale(3, RoundingMode.HALF_UP).doubleValue();
+		return rating; //new BigDecimal(rating).setScale(3, RoundingMode.HALF_UP).doubleValue();
 	}
 	
 	public static double getRating() {

@@ -1,5 +1,5 @@
 <!-- <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> 
 <tiles-definitions>
 	<definition name="baseLayout" template="/tilestest/layout.jsp">
 		<put-attribute name="title" value="library" />
@@ -12,4 +12,4 @@
 		<put-attribute name="title" value="Home > library" />
 		<put-attribute name="body" value="/tilestest/home.jsp" />
 	</definition>
-</tiles-definitions> -->
+</tiles-definitions>  -->
