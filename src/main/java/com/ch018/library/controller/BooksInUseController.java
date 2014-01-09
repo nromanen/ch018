@@ -47,7 +47,7 @@ public class BooksInUseController {
 		model.addAttribute("booksinuse", booksInUses);
 		model.addAttribute("book", bookService.getBooksById(id));
 		//model.addAttribute("days",days);
-		return "librarian/bookinuse";
+		return "bookinuse";
 	}
 	
 	@RequestMapping(value = "/booksinuse/delete{id}", method = RequestMethod.DELETE)

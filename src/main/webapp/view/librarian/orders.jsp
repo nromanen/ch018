@@ -1,38 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<title>Users</title>
-<script type="text/javascript"></script>
-</head>
-<body>
-    <!-- Include header -->
-    <%@ include file="/view/top.jsp"%>
-
-	<div class="container-fluid">
-
-		<div class="row-fluid">
-
-			<!-- Left side -->
-			<div class="span1">
-				<%@ include file="/view/left.jsp"%>
-			</div>
-
 			<!-- Content -->
 			<div class="span11">
 				<div class="alert alert-info" id="bookname">${book}</div>
@@ -111,7 +79,7 @@
 					</div>
 					<div class="modal-body">
 					<p>
-						<span><spring:message code="message.issue"/></span> <span id="aname"  class = "hide"></span>
+						<%-- <span><spring:message code="message.issue"/></span> --%> <span id="aname"  class = "hide"></span>
 					</p>
 						<p><strong><spring:message code="message.book"/> </strong><span id="booknamemessage"></span></p>
 						<p><strong><spring:message code="message.user"/> </strong><span id="usernamemessage"></span></p>
@@ -131,18 +99,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- footer -->
-            
-            <footer class="footer">
-				<div class="container">
-					<div class="row">
-						<div class="span12">
-							<p>This is FOOTER</p>
-						</div>
-					</div>
-				</div>
-			</footer>	
-</body>
-</html>

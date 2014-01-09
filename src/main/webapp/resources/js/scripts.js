@@ -25,6 +25,7 @@ function fill_form(box, id) {
 	  $("#timelyReturns").val($(".timelyReturns" + id).text());
 	  $("#failedOrders").val($(".failedOrders" + id).text());
 	  $("#confirm").prop('checked', $(".confirm" + id).prop('checked'));
+	  $("#rating").text($(".rating" + id).text());
 	}
 
 function reset_form() {
