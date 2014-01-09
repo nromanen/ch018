@@ -40,7 +40,7 @@ public class PersonController {
 		Person person = new Person();
 		model.addAttribute("persons", personService.getAll());
 		model.addAttribute("person", person);
-		return "librarian/users";
+		return "users";
 	}
 
 	@RequestMapping(value = "/user/delete{id}", method = RequestMethod.DELETE)

@@ -109,19 +109,10 @@ public class Book implements Serializable {
 		return term;
 	}
 	
-	@Column(name = "image")
+	@Column(name = "image", columnDefinition="Varchar default 'http://placehold.it/120x150'")
 	public String getImage() {
 		return image;
 	}
-
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinTable(name="BooksInUse", joinColumns = @JoinColumn(name="Books_id"),
-	 * inverseJoinColumns = @JoinColumn(name="Person_id")) public Person
-	 * getPerson() { return person; }
-	 */
-
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<BooksInUse> getBooksinuses() {

@@ -1,38 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<title>Users</title>
-<script type="text/javascript">
-</script>
-</head>
-<body>
-    <!-- Include header -->
-    <%@ include file="/view/top.jsp"%>
-    
-	<div class="container-fluid">
-
-		<div class="row-fluid">
-		
-			<div class="span1">
-				<%@ include file="/view/left.jsp"%>
-			</div>
-			
 			<div class="span11">
 				<!-- Alert -->	
 				<div class="alert alert-error" style="display: none">
@@ -106,7 +72,7 @@
 					aria-labelledby="deleteLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">Ã—</button>
+							aria-hidden="true">×</button>
 						<h3 id="deleteLabel"><spring:message code="person.delete"/></h3>
 					</div>
 					<div class="modal-body">
@@ -116,8 +82,7 @@
 						<a id="deleteLink" data-dismiss="modal"
 							href="${pageContext.request.contextPath}/user/delete"
 							class="btn btn-danger"><spring:message code="button.delete"/></a> <a id="canceldelete" href="#"
-							class="btn" data-dismiss="modal" aria-hidden="true"
-							value="Cancel"><spring:message code="button.cancel"/></a>
+							class="btn" data-dismiss="modal" aria-hidden="true" ><spring:message code="button.cancel"/></a>
 					</div>
 				</div>
 
@@ -126,8 +91,8 @@
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">Ã—</button>
-						<h3 id="myModalLabel"><spring:message code="person.add"/></h3>
+							aria-hidden="true">×</button>
+						<h3 id="myModalLabel"><spring:message code="person.add"/>: <span id="rating"></span></h3>
 					</div>
 					<div class="modal-body">
 						<form:form id="addedituser" class="form-horizontal" method="POST" commandName="person"
@@ -151,7 +116,7 @@
   							<div class="control-group">
     							<label class="control-label" for="email"><spring:message code="person.mail"/></label>
     							<div class="controls">
-      								<form:input path="email" type="email" id="email" />
+      								<form:input path="email" type="email" id="email" disabled="disabled" />
     							</div>
   							</div>
   							
@@ -172,21 +137,21 @@
   							<div class="control-group">
     							<label class="control-label" for="untimelyReturns"><spring:message code="person.untimelly"/></label>
     							<div class="controls">
-      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
+      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="timelyReturns"><spring:message code="person.timelly"/></label>
     							<div class="controls">
-      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
+      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="failedOrders"><spring:message code="person.failed"/></label>
     							<div class="controls">
-      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
+      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
@@ -194,11 +159,6 @@
     							<label class="control-label" for="confirm"><spring:message code="person.confirmed"/></label>
     							<div class="controls">
       								<form:checkbox path="confirm" id="confirm" />
-    							</div>
-  							</div>
-  							<div class="control-group"  style="display: none">
-    							<div class="controls">
-      								<form:input path="password" type="text"  id="password" />
     							</div>
   							</div>
   							<div class="form-actions">
@@ -209,18 +169,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- footer -->
-            
-            <footer class="footer">
-				<div class="container">
-					<div class="row">
-						<div class="span12">
-							<p>This is FOOTER</p>
-						</div>
-					</div>
-				</div>
-			</footer>
-</body>
-</html>

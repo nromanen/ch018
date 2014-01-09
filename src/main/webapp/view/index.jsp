@@ -40,6 +40,7 @@
 							<div class="row-fluid">
 						</c:if>
 								<div class="thumbnail span4">
+								<img src="${latest.image}" class="img-rounded">
 									<h3><small>${latest.title}</small></h3>
 									<p>${latest.authors}</p>
 									<p>${latest.description}</p>

@@ -13,7 +13,7 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script> --%>
 <script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script
@@ -39,6 +39,7 @@
     						<label class="control-label" for="inputEmailReg"><spring:message code="person.mail"/></label>
     						<div class="controls">
       							<form:input path="email" type="text" id="inputEmailReg" />
+      							<form:errors path="email" cssClass="error"></form:errors>
     						</div>
   						</div>
   						
@@ -46,6 +47,7 @@
     						<label class="control-label" for="inputPasswordReg" ><spring:message code="person.pass"/></label>
     						<div class="controls">
       							<form:input path="password" type="password" id="inputPasswordReg" placeholder="Pass" />
+    							<form:errors path="password" cssClass="error"></form:errors>
     						</div>
   						</div>
   						
@@ -53,6 +55,7 @@
     						<label class="control-label" for="confirmPasswordReg"><spring:message code="person.confirmpass"/></label>
     						<div class="controls">
       							<form:input path="confirmPassword" type="password" id="confirmPasswordReg" placeholder="Pass" />
+    							<form:errors path="confirmPassword" cssClass="error"></form:errors>
     						</div>
   						</div>
 
