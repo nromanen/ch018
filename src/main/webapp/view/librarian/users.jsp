@@ -1,38 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${pageContext.request.contextPath}/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet" type="text/css" />
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<title>Users</title>
-<script type="text/javascript">
-</script>
-</head>
-<body>
-    <!-- Include header -->
-    <%@ include file="/view/top.jsp"%>
-    
-	<div class="container-fluid">
-
-		<div class="row-fluid">
-		
-			<div class="span1">
-				<%@ include file="/view/left.jsp"%>
-			</div>
-			
 			<div class="span11">
 				<!-- Alert -->	
 				<div class="alert alert-error" style="display: none">
@@ -106,7 +72,7 @@
 					aria-labelledby="deleteLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">Ã—</button>
+							aria-hidden="true">×</button>
 						<h3 id="deleteLabel"><spring:message code="person.delete"/></h3>
 					</div>
 					<div class="modal-body">
@@ -126,7 +92,7 @@
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">Ã—</button>
+							aria-hidden="true">×</button>
 						<h3 id="myModalLabel"><spring:message code="person.add"/></h3>
 					</div>
 					<div class="modal-body">
@@ -209,18 +175,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- footer -->
-            
-            <footer class="footer">
-				<div class="container">
-					<div class="row">
-						<div class="span12">
-							<p>This is FOOTER</p>
-						</div>
-					</div>
-				</div>
-			</footer>
-</body>
-</html>

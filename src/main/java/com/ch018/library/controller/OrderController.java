@@ -102,7 +102,7 @@ public class OrderController {
 		model.addAttribute("orders", orders);
 		model.addAttribute("book", book.getBooksById(id));
 
-		return "librarian/orders";
+		return "orders";
 	}
 
 	@Secured("ROLE_LIBRARIAN")
@@ -132,7 +132,7 @@ public class OrderController {
 		booksInUse.setTerm(days);
 		booksInUseService.addBooksInUse(booksInUse);
 		order.deleteOrder(id);
-		return "librarian/orders";
+		return "orders";
 	}
 
 }

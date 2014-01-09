@@ -33,13 +33,23 @@
  
     </File>
     
-    <Console name="STDOUT" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{ISO8601} [%5p] %m at %l%n"/>
+    <Console name="S_STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="SPRING %d{ISO8601} [%5p] %m at %l%n"/>
+    </Console>
+    
+    <Console name="H_STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="HIBERNATE %d{ISO8601} [%5p] %m at %l%n"/>
     </Console>
     
   </Appenders>
   <Loggers>
-  	
+  
+  	<logger name="org.springframework" level="DEBUG">
+        <appender-ref ref="S_STDOUT"/>
+    </logger>  	
+    <logger name="org.hibernate" level="DEBUG">
+        <appender-ref ref="H_STDOUT"/>
+    </logger>
 
 
     <Root level="TRACE">

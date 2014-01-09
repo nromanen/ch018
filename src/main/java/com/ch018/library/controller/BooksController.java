@@ -114,7 +114,7 @@ public class BooksController {
 			}
 		}
 		model.addAttribute("books", books);
-		return "librarian/books";
+		return "books";
 	}
 	
 	@RequestMapping(value = "/book/delete{id}", method = RequestMethod.DELETE)
@@ -138,12 +138,7 @@ public class BooksController {
 			books.addAll(bookService.paramSearch(field, search));
 		}
 		model.addAttribute("books", books);
-		return "librarian/books";
+		return "books";
 	}
-	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String home() {
-		return "tilestest/home";
-	}
-	
+		
 }
