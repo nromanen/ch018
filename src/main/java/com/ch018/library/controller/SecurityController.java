@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import com.ch018.library.entity.Person.Role;
 import com.ch018.library.form.Registration;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.util.CalculateRating;
+import com.ch018.library.validator.RegistrationValidation;
 
 /**
  * 
@@ -40,7 +43,8 @@ public class SecurityController {
 
 	@Autowired
 	PersonService personService;
-
+	
+	
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginForm() {

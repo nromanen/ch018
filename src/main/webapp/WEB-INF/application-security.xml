@@ -15,7 +15,9 @@
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/bookusers/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/orders/**" access="hasRole('ROLE_LIBRARIAN')" />
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" /> 
+		<intercept-url pattern="/registration/**" access="isAnonymous()" />
+		<intercept-url pattern="/login/**" access="isAnonymous()" />
 
 		<form-login login-page="/login"
 					authentication-failure-url="/login_error" default-target-url="/"/>

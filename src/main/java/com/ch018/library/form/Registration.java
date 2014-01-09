@@ -19,10 +19,8 @@ public class Registration {
 	@Email(message="Email is not valid!")
 	private String email;
 	
-	@NotNull(message="Input password!")
 	private String password;
 	
-	@NotNull(message="Confirm password!")
 	private String confirmPassword;
 	
 	public Registration() {

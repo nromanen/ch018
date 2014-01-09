@@ -52,6 +52,7 @@ function reset_form() {
 	  $("#timelyReturns").val(0);
 	  $("#failedOrders").val(0);
 	  $("#confirm").prop('checked', false);
+	  $("#rating").text("");
 }
 
 $(document).ready(function() { 
