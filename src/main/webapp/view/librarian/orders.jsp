@@ -79,7 +79,7 @@
 					</div>
 					<div class="modal-body">
 					<p>
-						<span><spring:message code="message.issue"/></span> <span id="aname"  class = "hide"></span>
+						<%-- <span><spring:message code="message.issue"/></span> --%> <span id="aname"  class = "hide"></span>
 					</p>
 						<p><strong><spring:message code="message.book"/> </strong><span id="booknamemessage"></span></p>
 						<p><strong><spring:message code="message.user"/> </strong><span id="usernamemessage"></span></p>

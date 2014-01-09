@@ -82,8 +82,7 @@
 						<a id="deleteLink" data-dismiss="modal"
 							href="${pageContext.request.contextPath}/user/delete"
 							class="btn btn-danger"><spring:message code="button.delete"/></a> <a id="canceldelete" href="#"
-							class="btn" data-dismiss="modal" aria-hidden="true"
-							value="Cancel"><spring:message code="button.cancel"/></a>
+							class="btn" data-dismiss="modal" aria-hidden="true" ><spring:message code="button.cancel"/></a>
 					</div>
 				</div>
 
@@ -93,7 +92,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 id="myModalLabel"><spring:message code="person.add"/></h3>
+						<h3 id="myModalLabel"><spring:message code="person.add"/>: <span id="rating"></span></h3>
 					</div>
 					<div class="modal-body">
 						<form:form id="addedituser" class="form-horizontal" method="POST" commandName="person"
@@ -117,7 +116,7 @@
   							<div class="control-group">
     							<label class="control-label" for="email"><spring:message code="person.mail"/></label>
     							<div class="controls">
-      								<form:input path="email" type="email" id="email" />
+      								<form:input path="email" type="email" id="email" disabled="disabled" />
     							</div>
   							</div>
   							
@@ -138,21 +137,21 @@
   							<div class="control-group">
     							<label class="control-label" for="untimelyReturns"><spring:message code="person.untimelly"/></label>
     							<div class="controls">
-      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
+      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="timelyReturns"><spring:message code="person.timelly"/></label>
     							<div class="controls">
-      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
+      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="failedOrders"><spring:message code="person.failed"/></label>
     							<div class="controls">
-      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
+      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" disabled="disabled" />
     							</div>
   							</div>
   							
@@ -160,11 +159,6 @@
     							<label class="control-label" for="confirm"><spring:message code="person.confirmed"/></label>
     							<div class="controls">
       								<form:checkbox path="confirm" id="confirm" />
-    							</div>
-  							</div>
-  							<div class="control-group"  style="display: none">
-    							<div class="controls">
-      								<form:input path="password" type="text"  id="password" />
     							</div>
   							</div>
   							<div class="form-actions">

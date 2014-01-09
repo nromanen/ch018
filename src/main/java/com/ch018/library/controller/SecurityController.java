@@ -3,6 +3,8 @@ package com.ch018.library.controller;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.authentication.PasswordEncoderParser;
@@ -67,8 +69,7 @@ public class SecurityController {
 
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String processRegistration(
-			@ModelAttribute Registration registration, BindingResult result) {
+	public String processRegistration(@Valid Registration registration, BindingResult result) {
 
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Person person = personService

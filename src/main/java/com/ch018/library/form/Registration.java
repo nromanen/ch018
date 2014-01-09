@@ -1,8 +1,28 @@
 package com.ch018.library.form;
 
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+/*import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+*/
 public class Registration {
+	
+	@NotNull(message="Input email!")
+	@NotEmpty(message="Input email!")
+	@Email(message="Email is not valid!")
 	private String email;
+	
+	@NotNull(message="Input password!")
 	private String password;
+	
+	@NotNull(message="Confirm password!")
 	private String confirmPassword;
 	
 	public Registration() {
