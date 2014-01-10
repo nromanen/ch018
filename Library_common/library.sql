@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 29 2013 г., 11:27
+-- Время создания: Янв 10 2014 г., 23:56
 -- Версия сервера: 5.6.11
 -- Версия PHP: 5.5.3
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `authors` varchar(255) DEFAULT NULL,
   `bookcase` int(11) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT 'http://placehold.it/120x150',
   `pages` int(11) DEFAULT NULL,
   `publication` varchar(255) DEFAULT NULL,
   `shelf` int(11) DEFAULT NULL,
@@ -43,19 +43,20 @@ CREATE TABLE IF NOT EXISTS `books` (
   `gid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_k00r52dx96mgbrvv8i05saupq` (`gid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Дамп данных таблицы `books`
 --
 
 INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `image`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`) VALUES
-(1, 'Gonsalves', 2, 'fgh', NULL, 800, 'Apress', 2, 14, 'Java EE', 2013, 1),
-(2, 'New author', 5, 'cool book', NULL, 200, 'Home', 15, 14, 'New book', 2009, 2),
-(3, 'Fain Y.', 2, 'Java train', NULL, 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 1),
-(4, 'Craig Walls', 2, 'Java spring', NULL, 401, 'Manning', 2, 14, 'Spring in action', 2011, 1),
-(5, 'K. Sierra, B. Bates', 2, 'Java', NULL, 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 1),
-(6, 'M. Deinum & K. Serneels', 2, 'Java spring', NULL, 590, 'Apress', 1, 14, 'Pro Spring MVC: with Web Flow', 2011, 1);
+(1, 'Gonsalves', 1, 'asdd', 'http://placehold.it/120x150', 803, 'Apress', 1, 14, 'Java EE', 2013, 1),
+(3, 'Fain Y.', 2, 'Java train', 'http://placehold.it/120x150', 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 1),
+(4, 'Craig Walls', 2, 'Java spring', 'http://placehold.it/120x150', 401, 'Manning', 2, 14, 'Spring in action', 2011, 1),
+(5, 'K. Sierra, B. Bates', 2, 'Java', 'http://placehold.it/120x150', 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 1),
+(6, 'M. Deinum & K. Serneels', 1, 'Java spring', 'http://placehold.it/120x150', 590, 'Apress', 0, 14, 'Pro Spring MVC: with Web Flow', 2011, 1),
+(8, 'New author', 1, 'asd', 'http://placehold.it/120x150', 154, 'Home', 1, 14, 'New book', 2012, 2),
+(9, 'New author', 0, '', 'http://placehold.it/120x150', 0, '', 0, 14, 'Java EE', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -74,15 +75,14 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
   PRIMARY KEY (`buid`),
   KEY `FK_2nkoqh845najnu1vfv20lkp6p` (`Books_id`),
   KEY `FK_rece9y8w4qeg63ksgcrecwn54` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Дамп данных таблицы `booksinuse`
 --
 
 INSERT INTO `booksinuse` (`buid`, `inUse`, `issue_date`, `return_date`, `term`, `Books_id`, `Person_id`) VALUES
-(1, 0, '2013-12-26 01:46:12', '2013-12-26 01:46:12', 14, 1, 3),
-(2, 0, '2013-12-28 01:46:12', '2013-12-30 01:46:12', 14, 1, 2);
+(3, 0, '2014-01-10 14:18:08', '2014-01-24 14:18:08', 14, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -120,20 +120,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`id`),
   KEY `FK_iwon2xdheg3wibjdl8rp7tsf3` (`Books_id`),
   KEY `FK_fowd2x4g292tvs9sykevhxbos` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
-
---
--- Дамп данных таблицы `orders`
---
-
-INSERT INTO `orders` (`id`, `order_date`, `issue_date`, `Books_id`, `Person_id`) VALUES
-(2, '2013-12-24 00:00:00', '2013-12-25 22:42:00', 6, 1),
-(15, '2013-12-25 00:00:00', '2013-12-26 13:34:00', 6, 1),
-(16, '2013-12-25 00:00:00', '2013-12-26 14:00:00', 6, 2),
-(17, '2013-12-25 00:00:00', '2013-12-27 18:00:00', 1, 3),
-(18, '2013-12-25 00:00:00', '2013-12-26 16:00:00', 2, 2),
-(19, '2013-12-25 00:00:00', '2013-12-28 00:00:00', 4, 1),
-(20, '2013-12-25 00:00:00', '2013-12-26 18:06:00', 2, 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
 -- --------------------------------------------------------
 
@@ -156,18 +143,21 @@ CREATE TABLE IF NOT EXISTS `person` (
   `surname` varchar(255) DEFAULT NULL,
   `timely_returns` int(11) DEFAULT NULL,
   `untimely_returns` int(11) DEFAULT NULL,
+  `rating` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_jlau8tu7a0dxnfvl91wqxcwae` (`e_mail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Дамп данных таблицы `person`
 --
 
-INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `failedOrders`, `multibookAllowed`, `name`, `password`, `role`, `salt`, `sms`, `surname`, `timely_returns`, `untimely_returns`) VALUES
-(1, '0992745624', 1, 'yurik.my@gmail.com', 0, 10, 'Yurik', NULL, NULL, NULL, 0, 'Mikhaletsky', 0, 0),
-(2, '052000000', 1, 'w@r.ney', 0, 10, 'Wane', NULL, NULL, NULL, 0, 'Rooney', 0, 0),
-(3, '052005445', 1, 'j@c.ole', 0, 10, 'Joe', NULL, NULL, NULL, 0, 'Cole', 0, 0);
+INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `failedOrders`, `multibookAllowed`, `name`, `password`, `role`, `salt`, `sms`, `surname`, `timely_returns`, `untimely_returns`, `rating`) VALUES
+(6, '0992745624', 1, 'yurik.my@gmail.com', 0, 20, 'Yurik', '$2a$10$sP1DUNkzqrtwmfNtox4GiuOyhwWF9EgsNzU1Gdk6I64N7SEYSCVpO', 'ROLE_LIBRARIAN', NULL, 1, 'Mikhaletsky', 12, 0, 13),
+(7, '', 1, 'user@test.com', 0, 10, '', '$2a$10$5/ZU51vZ3Q1tNFaGvhtlMukhJoL0GBv3E4HxTn83Kl2vBFPA9Ejf.', 'ROLE_USER', NULL, 0, '', 13, 2, 4),
+(8, '', 1, 'test@person.com', 0, 10, 'Fddd', '$2a$10$omA0M/VbeCjh05YM9v2bvuuWBBhTLnzh5ziirjt9t2qXZ3nmtvqw6', 'ROLE_USER', NULL, 0, '', 2, 0, 1),
+(9, NULL, 0, 'yurik@ygmail.com', 0, 10, NULL, '$2a$10$Nf9ypd6X2DxdC8GXF3KMi.v0nbLf0dfTFc/O4fTaoTlO04fsK/u9C', 'ROLE_USER', NULL, 0, NULL, 0, 0, 1),
+(10, NULL, 0, 'yurik@gmail.com', 0, 10, NULL, '$2a$10$k54/IW.fl/YbYEgJyrpdo.D5LwGZ.1CK2gjL1EWMVMcr0e.qVVw6i', 'ROLE_USER', NULL, 0, NULL, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -182,7 +172,20 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   PRIMARY KEY (`id`),
   KEY `FK_qc2mmx7r8ebvjkf4x67qv02hf` (`Books_id`),
   KEY `FK_8fo1hianyjf9k9pcdh1jlcxdq` (`Person_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Дамп данных таблицы `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `Books_id`, `Person_id`) VALUES
+(1, 3, NULL),
+(2, 5, NULL),
+(3, 4, NULL),
+(6, 3, 8),
+(7, 1, 8),
+(10, 1, 6),
+(11, 3, 6);
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -198,8 +201,8 @@ ALTER TABLE `books`
 -- Ограничения внешнего ключа таблицы `booksinuse`
 --
 ALTER TABLE `booksinuse`
-  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
-  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
+  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `orders`

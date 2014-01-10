@@ -27,10 +27,9 @@
 	<tiles:insertAttribute name="header" />
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span2">
-					<tiles:insertAttribute name="left" /> 
-				</div>
+				<tiles:insertAttribute name="left" /> 
 				<tiles:insertAttribute name="body" /> 
+				<tiles:insertAttribute name="right" />
 			</div>
 		</div> 
 	<tiles:insertAttribute name="footer" />  

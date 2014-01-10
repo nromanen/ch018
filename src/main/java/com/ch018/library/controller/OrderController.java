@@ -86,10 +86,10 @@ public class OrderController {
                 //order.setDate(new java.util.Date());
                 if(wishId>0)
                    wish.deleteWishById(wishId);
-                if(wish.bookExistInWishList(bookId, personId)){
+              /*  if(wish.bookExistInWishList(bookId, personId)){
                       int id=wish.getWishWithoutId(bookId, personId).getId();
                       wish.deleteWishById(id);
-                 }
+                 }*/
                 model.addAttribute("order", order);
                 //order.addOrder(o);
                 //wish.deleteWishById(wishId);*/
