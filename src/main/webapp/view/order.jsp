@@ -41,18 +41,7 @@
         <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy"); %>
       <!--  <input type="text" name="orderDate" value="<%= df.format(new java.util.Date()) %>"/> -->
         <br><br>
-             <!--  <table>
-                   
-                    <tr><td>You wish to order </td>
-                        <td>${book.title}, ${book.authors}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Choose Issue Date:</td>
-                        <td><input class="datetimepicker" type="text"/></td>
-                    </tr>                  
-               </table> -->
-                        <form:form method="POST" modelAttribute="order">
+                       <form:form method="POST" modelAttribute="order">
                             <table>
                                 <tr><td>Choose issue date:</td> 
                                     <td><form:input path="issueDate" class="datetimepicker"/></td></tr>

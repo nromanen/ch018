@@ -5,8 +5,6 @@
 package com.ch018.library.controller;
 
 import com.ch018.library.entity.BooksInUse;
-import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.PersonService;
@@ -16,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import java.security.Principal;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *
@@ -26,19 +29,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class BookInUseController {
     
     @Autowired
-    BooksInUseService inUse;
+    private BooksInUseService inUse;
     
     @Autowired
-    PersonService pers;
+    private PersonService persService;
     
     @Autowired 
-    BookService book;
+    private BookService book;
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/usersBooks")
-    public ModelAndView showMyBooks(){
+    public ModelAndView showMyBooks(Principal principal) {
         List<BooksInUse> books = new ArrayList<BooksInUse>();
-        books = inUse.getByPersonId(1);
-       return new ModelAndView("usersBooks","books",books);
+        books = inUse.getByPersonId(persService.getByEmail(principal.getName()).getId());
+        return new ModelAndView("usersBooks", "books", books);
     }
     
 }

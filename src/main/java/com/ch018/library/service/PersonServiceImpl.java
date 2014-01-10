@@ -122,23 +122,23 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person updateAccProperties(Person person, Person updatedPerson) {
-        if(!updatedPerson.getName().isEmpty())
-                         if((person.getName()==null)||(!person.getName().equals(updatedPerson.getName()))){
+        if (!updatedPerson.getName().isEmpty())
+                         if ((person.getName() == null) || (!person.getName().equals(updatedPerson.getName()))) {
                              person.setName(updatedPerson.getName());
                          } 
-        if(!updatedPerson.getSurname().isEmpty())
-                         if((person.getSurname()==null)||(!person.getSurname().equals(updatedPerson.getSurname()))){
+        if (!updatedPerson.getSurname().isEmpty())
+                         if ((person.getSurname() == null) || (!person.getSurname().equals(updatedPerson.getSurname()))) {
                              person.setSurname(updatedPerson.getSurname());
                          } 
-        if(!updatedPerson.getCellphone().isEmpty())
-                         if((person.getCellphone()==null)||(!person.getCellphone().equals(updatedPerson.getCellphone()))){
+        if (!updatedPerson.getCellphone().isEmpty())
+                         if ((person.getCellphone() == null) || (!person.getCellphone().equals(updatedPerson.getCellphone()))) {
                              person.setCellphone(updatedPerson.getCellphone());
                          }
-        if(!updatedPerson.getEmail().isEmpty())
-                         if(!person.getEmail().equals(updatedPerson)){
+        if (!updatedPerson.getEmail().isEmpty())
+                         if (!person.getEmail().equals(updatedPerson.getEmail())) {
                              person.setEmail(updatedPerson.getEmail());
                          }
-        if(person.getSms()!=updatedPerson.getSms()){
+        if (person.getSms() != updatedPerson.getSms()) {
             person.setSms(updatedPerson.getSms());
         }
         return person;
@@ -154,12 +154,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void librarianUpdatePerson(Person person) {
-    	// TODO Auto-generated method stub
     	Person p = new Person();
-		p = personDao.getById(person.getId());
-		person.setPassword(p.getPassword());
-		person.setRole(p.getRole());
-		person.setRating(p.getRating());
+	p = personDao.getById(person.getId());
+	person.setPassword(p.getPassword());
+	person.setRole(p.getRole());
+	person.setRating(p.getRating());
     }
 
 }

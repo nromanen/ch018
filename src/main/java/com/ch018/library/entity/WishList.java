@@ -15,7 +15,7 @@ public class WishList {
 	private Person person;
 	private Book book;
 
-	public WishList(){
+	public WishList() {
 	}
 
 	public void setId(int id) {

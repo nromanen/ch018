@@ -7,12 +7,10 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
-
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.form.Password;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -32,45 +30,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthorizedUserController {
    
     @Autowired
-    BookService book;
+    private BookService book;
     
     @Autowired
-    PersonService persService;
+    private PersonService persService;
    
     
     @RequestMapping("/")
-    public String welomePage(Model model){
-    	model.addAttribute("latest",book.getAllBooks());
+    public String welomePage(Model model) {
+    	model.addAttribute("latest", book.getAllBooks());
     	return "index"; 
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/userAccount", method = RequestMethod.GET)
-    public Model viewAccount(Model model, Principal principal){
-        model.addAttribute("person", persService.getByEmail(principal.getName()));
-        return model;
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/userAccount", method = RequestMethod.GET)
+    public Model viewAccount(Model model, Principal principal) {
+     model.addAttribute("person", persService.getByEmail(principal.getName()));
+     return model;
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/userAccount", method=RequestMethod.POST)
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person")Person updtPers, 
-                              @ModelAttribute("password")Object password, BindingResult result, Principal principal){
+                              @ModelAttribute("password")Object password, 
+                              BindingResult result, Principal principal) {
         Person person = persService.getByEmail(principal.getName());
         person = persService.updateAccProperties(person, updtPers);
         persService.update(person);
         return "redirect:/userAccount";
     }
     
-    @Secured({"ROLE_USER","ROLE_LIBRARIAN"})
-    @RequestMapping(value="/pass", method = RequestMethod.POST)
-    public String passwordView(@ModelAttribute("password")Password password, BindingResult result, Principal principal) {
-       if(password==null)
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/pass", method = RequestMethod.POST)
+    public String passwordView(@ModelAttribute("password") Password password, 
+                               BindingResult result, Principal principal) {
+       if (password == null)
        return null; 
-       else{
+       else {
               PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	      Person person = persService.getByEmail(principal.getName());
-              if(BCrypt.checkpw(password.getPassword(), person.getPassword()))
-                     if(password.getNewPassword().equals(password.getConfirmPassword()))
+              if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
+                     if (password.getNewPassword().equals(password.getConfirmPassword()))
                   {
                       person.setPassword(passwordEncoder.encode(password.getNewPassword()));
                       persService.update(person);
@@ -79,9 +79,11 @@ public class AuthorizedUserController {
        }
     }
     
-    @Secured({"ROLE_USER","ROLE_LIBRARIAN"})
-    @RequestMapping(value="/pass", method = RequestMethod.GET)
-    public void changePassword(@ModelAttribute("password")Password password, BindingResult result, Principal principal){
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/pass", method = RequestMethod.GET)
+    public void changePassword(@ModelAttribute("password")Password password, 
+                               BindingResult result, 
+                               Principal principal) {
      
     } 
 }
