@@ -48,6 +48,8 @@
 									<p>${latest.description}</p>
 									<sec:authorize access="isAuthenticated()">
 										<a href="<c:url value="/wishlist?bookId=${latest.id}"/>" class="btn-mini">Add to cart</a>
+                                                                                <br/>
+                                                                                <a href="<c:url value="/order?book=${latest.id}&wish=0"/>" class="btn-mini">Order now</a>
 		                           	</sec:authorize>
 	                           	</div>
 	                    <c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">  
