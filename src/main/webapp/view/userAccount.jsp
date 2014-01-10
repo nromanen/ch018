@@ -14,6 +14,7 @@
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
 	rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/account.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 <script
@@ -65,11 +66,12 @@
                                        
                                        <tr>
                                           <td>
-                                              <input type="submit" value="Save Changes" class="btn"/>
+                                              <input type="submit" value="Save Changes" class="btn" id="refreshResult"/>
                                           </td>
                                        </tr>
                                  </table>
                              </form:form>
+                               
                             <a href="<c:url value="/pass"/>" class="btn">Change password</a>
 			</div>
 

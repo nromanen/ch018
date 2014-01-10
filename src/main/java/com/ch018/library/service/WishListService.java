@@ -22,4 +22,5 @@ public interface WishListService {
     public ArrayList<WishList> getWishesByPerson(int personId);
     public ArrayList<WishList> getWishesByPerson(String personEmail);
     public boolean bookExistInWishList(int bookId, int personId);
+    public WishList getWishWithoutId(int bookId, int personId);
 }
