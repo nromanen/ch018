@@ -7,10 +7,12 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
+
 import com.ch018.library.entity.Person;
+import com.ch018.library.form.Password;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.PersonService;
-import com.ch018.library.form.Password;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCrypt;

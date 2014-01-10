@@ -37,7 +37,7 @@ public class Password {
          this.confirmPassword = pass;
      }
      
-     public void setNewPassword(String pass){
+     public void setNewPassword(String pass) {
          this.newPassword = pass;
      }
 }
