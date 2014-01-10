@@ -12,6 +12,12 @@
 	
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/books/**" access="hasRole('ROLE_LIBRARIAN')" />
+		<intercept-url pattern="/book/**" access="hasRole('ROLE_LIBRARIAN')" />
+		<intercept-url pattern="/user/**" access="hasRole('ROLE_LIBRARIAN')" />
+		<intercept-url pattern="/wishList/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
+		<intercept-url pattern="/userOrder/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
+		<intercept-url pattern="/usersBooks/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
+		<intercept-url pattern="/userAccount/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/bookusers/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/orders/**" access="hasRole('ROLE_LIBRARIAN')" />
@@ -20,7 +26,7 @@
 		<intercept-url pattern="/login/**" access="isAnonymous()" />
 
 		<form-login login-page="/login"
-					authentication-failure-url="/login_error" default-target-url="/"/>
+					authentication-failure-url="/login?error" default-target-url="/"/>
 		<logout logout-url="/logout"/>
 		
 		<remember-me key="libraryKey" token-validity-seconds="2419200"/>

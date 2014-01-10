@@ -24,8 +24,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
    
  
@@ -71,9 +69,6 @@ public class AuthorizedUserController {
        else{
               PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	      Person person = persService.getByEmail(principal.getName());
-              /*password.setPassword(passwordEncoder.encode(password.getPassword()));
-              password.setConfirmPassword(passwordEncoder.encode(password.getConfirmPassword()));
-              password.setNewPassword(passwordEncoder.encode(password.getNewPassword()));*/
               if(BCrypt.checkpw(password.getPassword(), person.getPassword()))
                      if(password.getNewPassword().equals(password.getConfirmPassword()))
                   {

@@ -12,15 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Person;
 
 @Component
 public class BookDAOImpl implements BookDAO {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-	static Logger log = LogManager.getLogger(BookDAOImpl.class);
+	private static Logger log = LogManager.getLogger(BookDAOImpl.class);
 
 	@Override
 	public void addBook(Book book) {
@@ -65,21 +64,9 @@ public class BookDAOImpl implements BookDAO {
 			book = (Book) sessionFactory.getCurrentSession()
 					.get(Book.class, id);
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return book;
-	}
-
-	@Override
-	public void deleteBook(Book book) {
-		// TODO Auto-generated method stub
-		try {
-			sessionFactory.getCurrentSession().delete(book);
-			log.info("Deleted book: " + book);
-		} catch (Exception e) {
-			log.error(e);
-		}
 	}
 
 	@Override
@@ -136,11 +123,6 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<Book> getBooksByPerson(Person person) {
-		return null;
-	}
-
-	@Override
 	public int deleteBook(int id) {
 		int deleted = 0;
 		try {
@@ -150,7 +132,7 @@ public class BookDAOImpl implements BookDAO {
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {
-			System.err.println(e);
+			log.error(e);
 			deleted = 0;
 		}
 		return deleted;
@@ -198,13 +180,13 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<Book> latestArrivals() {
         List<Book> books = new ArrayList<Book>();
-        try{ 
+        try { 
             
             Query query = sessionFactory.getCurrentSession()
                            .createSQLQuery("Select * From books order by `id` DESC LIMIT 5;");
            // books.addAll(query.list());
             books = (List<Book>)query.list();
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error(e);
         }
         return books;

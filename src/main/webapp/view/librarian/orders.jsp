@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
 			<!-- Content -->
-			<div class="span11">
+			<div class="span10">
 				<div class="alert alert-info" id="bookname">${book}</div>
 				<!-- Table -->
 				<div class="TableBooks">

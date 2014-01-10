@@ -42,7 +42,10 @@ import com.ch018.library.validator.RegistrationValidation;
 public class SecurityController {
 
 	@Autowired
-	PersonService personService;
+	private PersonService personService;
+	
+	@Autowired
+	private RegistrationValidation registrationValidation;
 	
 	
 	@Secured("ROLE_ANONYMOUS")
@@ -50,19 +53,6 @@ public class SecurityController {
 	public ModelAndView loginForm() {
 		return new ModelAndView("login");
 	}
-
-	@Secured("ROLE_ANONYMOUS")
-	@RequestMapping(value = "/login-error", method = RequestMethod.GET)
-	public ModelAndView invalidLogin() {
-		ModelAndView modelAndView = new ModelAndView("login");
-		modelAndView.addObject("error", true);
-		return modelAndView;
-	}
-
-	/*
-	 * @RequestMapping(value="/success-login", method=RequestMethod.GET) public
-	 * ModelAndView successLogin() { return new ModelAndView("success-login"); }
-	 */
 
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -74,25 +64,11 @@ public class SecurityController {
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String processRegistration(@Valid Registration registration, BindingResult result) {
-
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		Person person = personService
-				.getByEmail(registration.getEmail().trim());
-		if (person == null
-				&& registration.getPassword().equals(
-						registration.getConfirmPassword())) {
-			person = new Person();
-			person.setEmail(registration.getEmail().trim());
-			person.setPassword(passwordEncoder.encode(registration
-					.getPassword()));
-			person.setRole(Role.ROLE_USER.toString());
-			person.setConfirm(false);
-			person.setRating(CalculateRating.getRating());
-			person.setMultibookAllowed(10);
-			personService.save(person);
-		} else
+		registrationValidation.validate(registration, result);
+		if (result.hasErrors()) {
 			return "registration";
-
+		}
+		personService.registrate(registration);
 		return "redirect:/";
 	}
 

@@ -5,19 +5,16 @@
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
@@ -33,10 +30,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrdersDAOImpl implements OrdersDAO {
 
-	static Logger log = LogManager.getLogger(GenreDAOImpl.class);
+	private static Logger log = LogManager.getLogger(GenreDAOImpl.class);
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	public void addOrder(Orders ord) {
 		try {
@@ -189,22 +186,20 @@ public class OrdersDAOImpl implements OrdersDAO {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
-		
 		return order;
 	}
 
     @Override
     public boolean orderExist(int personId, int bookId) {
-        boolean exist=true;
-        try{
+        boolean exist = true;
+        try {
             Query query = sessionFactory.getCurrentSession()
                           .createSQLQuery("SELECT * FROM orders WHERE Person_id=:person And Books_id=:book")
                           .setParameter("person", personId)
                           .setParameter("book", bookId);
-            if(query.list().isEmpty())
-                 exist=false;
-            
-        }catch(Exception e){
+            if (query.list().isEmpty())
+                 exist = false;
+        } catch (Exception e) {
             log.error(e);
         }
         return exist;

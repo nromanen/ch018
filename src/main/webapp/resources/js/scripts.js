@@ -68,6 +68,15 @@ $(document).ready(function() {
 	    return this.href == url;
 	}).parent().addClass('active');
 	
+
+    $("#signtoggle").popover({
+    	html:true,
+    	placement: "bottom",
+    	content: function() {
+    	      return $('#popover_content_wrapper').html();
+        }
+    });
+
 	
 	
 	$("table").tablesorter();

@@ -1,7 +1,10 @@
 <%@ include file="/view/includes.jsp"%>
-<ul class="nav nav-list">
-  <li class="nav-header">Menu</li>
-  <li><a href="<c:url value="/books"/>">Books</a></li>
-  <li><a href="<c:url value="/users"/>">Users</a></li>
-  <li><a href="<c:url value="/settings"/>">Settings</a></li>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
+<tilesx:useAttribute name="genres" /> 
+<ul class="nav nav-pills nav-stacked">
+  <li class="nav-header">Genres</li>
+  <c:forEach var="genre" items="${genres}">
+  	<li><a href="<c:url value="/genre/${genre.id}"/>">${genre.name}</a></li>
+  </c:forEach>
 </ul>

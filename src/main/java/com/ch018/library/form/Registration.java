@@ -1,24 +1,22 @@
 package com.ch018.library.form;
 
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-/*import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-*/
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+
+
 public class Registration {
+	@Autowired 
+	private MessageSource messageSource;
 	
-	@NotNull(message="Input email!")
-	@NotEmpty(message="Input email!")
-	@Email(message="Email is not valid!")
+	@NotEmpty(message = "{NotEmpty.registration.email}")
+	@Email(message = "{Email.registration.email}")
 	private String email;
 	
+	@Size(min = 4, max = 20, message="{Size.registration.password}")
 	private String password;
 	
 	private String confirmPassword;
@@ -34,7 +32,7 @@ public class Registration {
 		return password;
 	}
 	
-	public String getConfirmPassword(){
+	public String getConfirmPassword() {
 		return confirmPassword;
 	}
 	
@@ -46,7 +44,7 @@ public class Registration {
 		this.password = password;
 	}
 	
-	public void setConfirmPassword(String confirmPassword){
+	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
 
