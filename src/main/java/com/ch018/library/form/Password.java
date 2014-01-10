@@ -13,31 +13,31 @@ public class Password {
      private String confirmPassword;
      private String newPassword;
      
-     public Password(){
+     public Password() {
          
      }
      
-     public String getPassword(){
+     public String getPassword() {
          return this.password;
      }
      
-     public String getConfirmPassword(){
+     public String getConfirmPassword() {
          return this.confirmPassword;
      }
      
-     public String getNewPassword(){
+     public String getNewPassword() {
          return this.newPassword;
      }
      
-     public void setPassword(String pass){
-         this.password=pass;
+     public void setPassword(String pass) {
+         this.password = pass;
      }
      
-     public void setConfirmPassword(String pass){
-         this.confirmPassword=pass;
+     public void setConfirmPassword(String pass) {
+         this.confirmPassword = pass;
      }
      
      public void setNewPassword(String pass){
-         this.newPassword=pass;
+         this.newPassword = pass;
      }
 }

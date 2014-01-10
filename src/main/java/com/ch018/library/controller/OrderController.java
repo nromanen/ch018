@@ -12,7 +12,7 @@ import java.util.List;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
-import com.ch018.library.entity.WishList;
+
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
@@ -57,50 +57,43 @@ public class OrderController {
     @Autowired
     private PersonService personService;
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/order", method=RequestMethod.GET)
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
                                     @RequestParam("book") int bookId, 
-                                    @RequestParam("wish") int wishId, Principal principal){
+                                    @RequestParam("wish") int wishId, 
+                                    Principal principal) {
         Person p = pers.getByEmail(principal.getName());
         
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
         int j = p.getMultibookAllowed();
-     //   model.addAttribute("book", b);
-       // model.addAttribute("order", o);
         String fail = "You exceed your limit at the same time to take the book";
-        if (j==uses) 
-        {            
-                      return "redirect:/userOrder";
-        } 
-        if(order.orderExist(personId, bookId))
-          {
+        if (j == uses) {            
             return "redirect:/userOrder";
-          }
-            else{
+        } 
+        if (order.orderExist(personId, bookId)) {
+              return "redirect:/userOrder";
+          } else {
                 Orders order = new Orders();
                 Book b = book.getBooksById(bookId);
                 order.setPerson(p);
                 order.setBook(b);
-                //order.setDate(new java.util.Date());
-                if(wishId>0)
-                   wish.deleteWishById(wishId);
-              /*  if(wish.bookExistInWishList(bookId, personId)){
-                      int id=wish.getWishWithoutId(bookId, personId).getId();
-                      wish.deleteWishById(id);
-                 }*/
+                if (wishId > 0)
+					wish.deleteWishById(wishId);
+                if (wish.bookExistInWishList(bookId, personId)) {
+                    int id = wish.getWishWithoutId(bookId, personId).getId();
+					wish.deleteWishById(wishId);
+				}
                 model.addAttribute("order", order);
-                //order.addOrder(o);
-                //wish.deleteWishById(wishId);*/
+                return "order";
              }
-        //return new ModelAndView("order", "newOrder", wish.getWishById(wishId));
-        return "redirect:/userOrder";
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/order", method=RequestMethod.POST)
-    public String createOrder(@ModelAttribute("order") Orders newOrder, BindingResult result){
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    public String createOrder(@ModelAttribute("order") Orders newOrder, 
+                              BindingResult result) {
         newOrder.setBook(book.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
         newOrder.setDate(new java.util.Date());
@@ -108,9 +101,9 @@ public class OrderController {
         return "redirect:/userOrder";
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
-    @RequestMapping(value="/userOrder")
-    public ModelAndView showOrder(Principal principal){
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/userOrder")
+    public ModelAndView showOrder(Principal principal) {
         return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     }
     

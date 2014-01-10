@@ -91,7 +91,9 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return getId() + ": " + getPerson() + " ordered " + getBook() + ". Date: " + getDate();
+		return getId() + ": " + getPerson() 
+                        + " ordered " + getBook() 
+                        + ". Date: " + getDate();
 	}
 
 	@Override
