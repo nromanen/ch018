@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%> 
-<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>    
 <%@ include file="/view/includes.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +14,7 @@
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 	<script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script
@@ -25,11 +25,8 @@
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span2">
-					<tiles:insertAttribute name="left" /> 
-				</div>
+		<div class="container">
+			<div class="row">
 				<tiles:insertAttribute name="body" /> 
 			</div>
 		</div> 

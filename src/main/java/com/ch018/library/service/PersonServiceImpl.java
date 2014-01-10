@@ -3,11 +3,16 @@ package com.ch018.library.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.PersonDao;
 import com.ch018.library.entity.Person;
+import com.ch018.library.entity.Person.Role;
+import com.ch018.library.form.Registration;
+import com.ch018.library.util.CalculateRating;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -19,6 +24,22 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	public void save(Person person) {
 		// TODO Auto-generated method stub
+		personDao.save(person);
+	}
+	
+	@Override
+	@Transactional
+	public void registrate(Registration registration) {
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Person person = new Person();
+
+		person.setEmail(registration.getEmail().trim());
+		person.setPassword(passwordEncoder.encode(registration
+					.getPassword()));
+		person.setRole(Role.ROLE_USER.toString());
+		person.setConfirm(false);
+		person.setRating(CalculateRating.getRating());
+		person.setMultibookAllowed(10);
 		personDao.save(person);
 	}
 
@@ -122,7 +143,23 @@ public class PersonServiceImpl implements PersonService {
         }
         return person;
     }
+    
+    @Override
+    @Transactional
+    public long isExist(String email) {
+    	// TODO Auto-generated method stub
+    	return personDao.isExist(email);
+    }
 
-      
+    @Override
+    @Transactional
+    public void librarianUpdatePerson(Person person) {
+    	// TODO Auto-generated method stub
+    	Person p = new Person();
+		p = personDao.getById(person.getId());
+		person.setPassword(p.getPassword());
+		person.setRole(p.getRole());
+		person.setRating(p.getRating());
+    }
 
 }

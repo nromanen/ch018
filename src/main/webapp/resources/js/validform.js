@@ -1,10 +1,6 @@
 $(document).ready(function() {
-	console.log("start");
-	var field = new Array("inputEmailReg", "inputPasswordReg", "confirmPasswordReg"); //required fields 
-	console.log("start");
-		
-				
-		$("#registration").submit(function(e) {
+	var field = new Array("inputEmailReg", "inputPasswordReg", "confirmPasswordReg"); //required fields 				
+		$("#inputEmailReg, #inputPasswordReg, #confirmPasswordReg").change(function(e) {
 			console.log("submit");
 			var error=0; // errors
 			$("form #register").find(":input").each(function() {// every input
@@ -17,7 +13,7 @@ $(document).ready(function() {
 														
 						}
 						else{
-							$(this).css('border', 'gray 1px solid');// else gray border
+							$(this).css('border', '#CCCCCC 1px solid');// else gray border
 						}
 						
 					}						
@@ -33,7 +29,7 @@ $(document).ready(function() {
 				$("#inputEmailReg").css('border', 'red 1px solid');// if not valid - red border
 			}
 		   	else{
-				$("#inputEmailReg").css('border', 'gray 1px solid');// else gray border
+				$("#inputEmailReg").css('border', '#CCCCCC 1px solid');// else gray border
 			}
 			
 			//password
@@ -44,10 +40,14 @@ $(document).ready(function() {
 				$("#inputPasswordReg").css('border', 'red 1px solid');// red border
 				$("#confirmPasswordReg").css('border', 'red 1px solid');// red
 			}
+		   	else {
+		   		$("#inputPasswordReg").css('border', '#CCCCCC 1px solid');
+		   		$("#confirmPasswordReg").css('border', '#CCCCCC 1px solid');
+		   	}
 			
 			if(error==0){ // if no errors all good :)
 				console.log("sdsdsdsdsdsdsd");
-				return true;
+				//return true;
 			}
 			else{
 				console.log("sssssssssssssss");
@@ -58,7 +58,7 @@ $(document).ready(function() {
 			
 			$("#messenger").html(err_text);	
 			$("#messenger").fadeIn("slow");	
-			return false; //
+			//return false; //
 			}
 
 

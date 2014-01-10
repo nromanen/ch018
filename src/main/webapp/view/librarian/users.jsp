@@ -1,5 +1,5 @@
 <%@ include file="/view/includes.jsp"%>
-			<div class="span11">
+			<div class="span10">
 				<!-- Alert -->	
 				<div class="alert alert-error" style="display: none">
 					<button type="button" class="close" >&times;</button>
@@ -96,7 +96,7 @@
 					</div>
 					<div class="modal-body">
 						<form:form id="addedituser" class="form-horizontal" method="POST" commandName="person"
-							action="${pageContext.request.contextPath}/person/update">
+							action="${pageContext.request.contextPath}/user/update">
 							<form:input path="id" id="id" class="hide" disabled="disabled" />
 							
 							<div class="control-group">
@@ -116,7 +116,7 @@
   							<div class="control-group">
     							<label class="control-label" for="email"><spring:message code="person.mail"/></label>
     							<div class="controls">
-      								<form:input path="email" type="email" id="email" disabled="disabled" />
+      								<form:input path="email" type="email" id="email" />
     							</div>
   							</div>
   							
@@ -137,21 +137,21 @@
   							<div class="control-group">
     							<label class="control-label" for="untimelyReturns"><spring:message code="person.untimelly"/></label>
     							<div class="controls">
-      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" disabled="disabled" />
+      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="timelyReturns"><spring:message code="person.timelly"/></label>
     							<div class="controls">
-      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" disabled="disabled" />
+      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
   							<div class="control-group">
     							<label class="control-label" for="failedOrders"><spring:message code="person.failed"/></label>
     							<div class="controls">
-      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" disabled="disabled" />
+      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
     							</div>
   							</div>
   							

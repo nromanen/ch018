@@ -22,9 +22,9 @@ import com.ch018.library.entity.BooksInUse;
 public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-	static Logger log = LogManager.getLogger(BooksInUseDAOImpl.class);
+	private static Logger log = LogManager.getLogger(BooksInUseDAOImpl.class);
 
 	@Override
 	public void addBooksInUse(BooksInUse booksInUse) {
@@ -36,11 +36,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		}
 	}
 
-	@Override
-	public void removeBooksInUse(BooksInUse booksInUse) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	@Override
 	public void removeBooksInUse(int id) {
@@ -51,7 +46,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.setInteger("id", id);
 			int g = query.executeUpdate();
 		} catch (Exception e) {
-			System.err.println(e);
+			log.error(e);
 		}
 
 	}
@@ -78,7 +73,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("person.id", personId)).list());
 		} catch (Exception e) {
-			System.out.println(e);// log.error(e);
+			log.error(e);
 		}
 		return booksInUses;
 	}
@@ -92,7 +87,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("book.id", bookId)).list());
 		} catch (Exception e) {
-			System.out.println(e);// log.error(e);
+			log.error(e);
 		}
 		return booksInUses;
 	}
@@ -106,7 +101,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("issue_date", issueDate)).list());
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return booksInUses;
@@ -121,7 +115,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("return_date", returnDate)).list());
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return booksInUses;
@@ -136,21 +129,9 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("inUse", inUse)).list());
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return booksInUses;
-	}
-
-	@Override
-	public void updateBooksInUse(int id, BooksInUse booksInUse) {
-		// TODO Auto-generated method stub
-		try {
-			sessionFactory.getCurrentSession().update(booksInUse);
-			log.info("Updated booksInUse: " + booksInUse);
-		} catch (Exception e) {
-			log.error("Error insert " + e);
-		}
 	}
 
 	@Override
@@ -172,6 +153,9 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	
 	@Override
 	public List<Book> getReturnBooksToday() {
+		final int HOURS_PER_DAY = 23;
+		final int MINUTES_PER_HOUR = 59;
+		final int SECONDS_PER_MINUTE = 23;
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
 		
@@ -179,9 +163,9 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		startDate.set(Calendar.MINUTE, 0);
 		startDate.set(Calendar.SECOND, 0);
 		
-		endDate.set(Calendar.HOUR_OF_DAY, 23);
-		endDate.set(Calendar.MINUTE, 59);
-		endDate.set(Calendar.SECOND, 59);
+		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
+		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
+		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
 		
 		List<Book> books = new ArrayList<>();
 		try {
@@ -206,7 +190,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 			bookInUse = (BooksInUse) sessionFactory.getCurrentSession()
 					.get(BooksInUse.class, id);
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return bookInUse;

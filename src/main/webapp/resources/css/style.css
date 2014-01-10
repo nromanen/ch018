@@ -43,10 +43,7 @@ p {
     clear: both;
 }
 
-.mybrand {
-	margin-right: 120px;
-	margin-left: 20px;
-}
+
 
 header {
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -100,6 +97,10 @@ body > .navbar {
 
 .btn-my {
 	padding: 2px 12px;
+}
+
+.error {
+	color: red;
 }
 
 .TableBooks a {

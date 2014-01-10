@@ -1,5 +1,5 @@
 <%@ include file="/view/includes.jsp"%>
-		<div class="span11">
+		<div class="span10">
 				<div class="row-fluid">
 					<!-- Button group -->
 					<div class="span8">

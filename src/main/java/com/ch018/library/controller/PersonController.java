@@ -1,9 +1,6 @@
 package com.ch018.library.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,23 +14,25 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
-
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 @Controller
 public class PersonController {
 
-	static Logger log = LogManager.getLogger(BooksController.class);
+	@Autowired
+	private BookService bookService;
 
 	@Autowired
-	BookService bookService;
+	private GenreService genreService;
 
 	@Autowired
-	GenreService genreService;
+	private PersonService personService;
 
 	@Autowired
-	PersonService personService;
-
-	@Autowired
-	BooksInUseService booksInUseService;
+	private BooksInUseService booksInUseService;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
@@ -49,19 +48,14 @@ public class PersonController {
 		return personService.delete(id);
 	}
 
-	@RequestMapping(value = "/person/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Person newPerson(@RequestBody Person person) {
 
 		if (person.getId() == 0) {
 			personService.save(person);
 		} else {
-			Person p = new Person();
-			p = personService.getById(person.getId());
-			person.setPassword(p.getPassword());
-			person.setRole(p.getRole());
-			person.setRating(p.getRating());
-			personService.update(person);
+			personService.librarianUpdatePerson(person);
 		}
 		return person;
 	}

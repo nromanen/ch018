@@ -52,6 +52,7 @@ function reset_form() {
 	  $("#timelyReturns").val(0);
 	  $("#failedOrders").val(0);
 	  $("#confirm").prop('checked', false);
+	  $("#rating").text("");
 }
 
 $(document).ready(function() { 
@@ -67,6 +68,15 @@ $(document).ready(function() {
 	    return this.href == url;
 	}).parent().addClass('active');
 	
+
+    $("#signtoggle").popover({
+    	html:true,
+    	placement: "bottom",
+    	content: function() {
+    	      return $('#popover_content_wrapper').html();
+        }
+    });
+
 	
 	
 	$("table").tablesorter();

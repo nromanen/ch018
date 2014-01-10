@@ -23,13 +23,6 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	@Transactional
-	public void updateGenre(int id, Genre genre) {
-		// TODO Auto-generated method stub
-		genreDAO.updateGenre(id, genre);
-	}
-
-	@Override
-	@Transactional
 	public List<Genre> getAllGenres() {
 		// TODO Auto-generated method stub
 		return genreDAO.getAllGenres();
@@ -40,20 +33,6 @@ public class GenreServiceImpl implements GenreService {
 	public Genre getGenreById(int id) {
 		// TODO Auto-generated method stub
 		return genreDAO.getGenreById(id);
-	}
-
-	@Override
-	@Transactional
-	public void deleteGenre(Genre genre) {
-		// TODO Auto-generated method stub
-		genreDAO.deleteGenre(genre);
-	}
-
-	@Override
-	@Transactional
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return genreDAO.getCount();
 	}
 
 	@Override
