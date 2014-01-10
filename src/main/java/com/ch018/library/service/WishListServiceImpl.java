@@ -71,5 +71,11 @@ public class WishListServiceImpl implements WishListService{
 		// TODO Auto-generated method stub
 		return wishlistDAO.getWishesByPerson(personEmail);
 	}
+
+    @Override
+    @Transactional
+    public WishList getWishWithoutId(int bookId, int personId) {
+        return wishlistDAO.getWishWithoutId(bookId, personId);
+    }
     
 }

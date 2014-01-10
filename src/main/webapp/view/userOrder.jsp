@@ -58,8 +58,7 @@
 							
 							<td>${order.book.title}</td>
                                                         <td>${order.date}</td>
-                                                        <td><input class="datetimepicker" type="text" value="${order.issueDate}"/>
-                                                        </td>
+                                                        <td>${order.issueDate}</td>
 
 
 						</tr>

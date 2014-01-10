@@ -15,6 +15,7 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
+import com.ch018.library.entity.WishList;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
@@ -27,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,29 +64,53 @@ public class OrderController {
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/order", method=RequestMethod.GET)
-    public ModelAndView createOrder(Model model, 
+    public String order(Model model, 
                                     @RequestParam("book") int bookId, 
                                     @RequestParam("wish") int wishId, Principal principal){
-        Book b = book.getBooksById(bookId);
         Person p = pers.getByEmail(principal.getName());
+        
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
-        Orders o = new Orders();
         int j = p.getMultibookAllowed();
+     //   model.addAttribute("book", b);
+       // model.addAttribute("order", o);
         String fail = "You exceed your limit at the same time to take the book";
-        if (j==uses){
-             return new ModelAndView("wishList", "fail", fail);
-        } if(order.orderExist(personId, bookId)){
-            return null;
+        if (j==uses) 
+        {            
+                      return "redirect:/userOrder";
+        } 
+        if(order.orderExist(personId, bookId))
+          {
+            return "redirect:/userOrder";
           }
             else{
-                o.setPerson(p);
-                o.setBook(b);
-                o.setDate(new java.util.Date());
-                order.addOrder(o);
-                wish.deleteWishById(wishId);
+                Orders order = new Orders();
+                Book b = book.getBooksById(bookId);
+                order.setPerson(p);
+                order.setBook(b);
+                //order.setDate(new java.util.Date());
+                if(wishId>0)
+                   wish.deleteWishById(wishId);
+                if(wish.bookExistInWishList(bookId, personId)){
+                      int id=wish.getWishWithoutId(bookId, personId).getId();
+                      wish.deleteWishById(id);
+                 }
+                model.addAttribute("order", order);
+                //order.addOrder(o);
+                //wish.deleteWishById(wishId);*/
              }
-        return new ModelAndView("order", "newOrder", wish.getWishesByPerson(personId));
+        //return new ModelAndView("order", "newOrder", wish.getWishById(wishId));
+        return "redirect:/userOrder";
+    }
+    
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
+    @RequestMapping(value="/order", method=RequestMethod.POST)
+    public String createOrder(@ModelAttribute("order") Orders newOrder, BindingResult result){
+        newOrder.setBook(book.getBooksById(newOrder.getBook().getId()));
+        newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
+        newOrder.setDate(new java.util.Date());
+        order.addOrder(newOrder);
+        return "redirect:/userOrder";
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})

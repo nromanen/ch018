@@ -71,9 +71,6 @@ public class AuthorizedUserController {
        else{
               PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	      Person person = persService.getByEmail(principal.getName());
-              /*password.setPassword(passwordEncoder.encode(password.getPassword()));
-              password.setConfirmPassword(passwordEncoder.encode(password.getConfirmPassword()));
-              password.setNewPassword(passwordEncoder.encode(password.getNewPassword()));*/
               if(BCrypt.checkpw(password.getPassword(), person.getPassword()))
                      if(password.getNewPassword().equals(password.getConfirmPassword()))
                   {

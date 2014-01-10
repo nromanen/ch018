@@ -10,10 +10,6 @@ import com.ch018.library.entity.WishList;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
@@ -67,8 +63,8 @@ public class WishListDAOImpl implements WishListDAO {
 	@Override
 	public WishList getWishById(int id) {
 		WishList wish = null;
-		try {
-			wish = (WishList) sessionFactory.getCurrentSession().get(WishList.class,id);
+                try {
+			wish = (WishList) sessionFactory.getCurrentSession().get(WishList.class, id);
                         
 		} catch (Exception e) {
 			log.error(e);
@@ -79,15 +75,12 @@ public class WishListDAOImpl implements WishListDAO {
     @Override
     public ArrayList<WishList> getWishesByPerson(int personId) {
        ArrayList<WishList> wish = new ArrayList<WishList>();
-       try{
-           //Query query = );
-           //query.setInteger("id", personId);
-           
-          wish.addAll(sessionFactory.getCurrentSession().createCriteria(WishList.class)
-                                       .add(Restrictions.eq("person.id", personId)).list());
-           
-       }catch(Exception e){
-           log.error(e);
+       try {
+              wish.addAll(sessionFactory.getCurrentSession()
+                  .createCriteria(WishList.class)
+                  .add(Restrictions.eq("person.id", personId)).list());
+       } catch (Exception e) {
+               log.error(e);
            System.out.println(e);
        }
        return wish;
@@ -109,16 +102,16 @@ public class WishListDAOImpl implements WishListDAO {
     @Override
     public boolean bookExistInWishList(int bookId, int personId) {
         boolean exist=true;
-        try{
+        try {
              Query query = sessionFactory.getCurrentSession()
                           .createSQLQuery("SELECT * FROM wishlist WHERE Person_id=:person And Books_id=:book")
                           .setParameter("person", personId)
                           .setParameter("book", bookId);
            
-                 if(query.list().isEmpty()){
-                        exist=false;
-                 }
-        }catch(Exception e){
+                 if (query.list().isEmpty()) 
+                        exist = false;
+                 
+        } catch (Exception e){
             log.error(e);
         }
         return exist;
@@ -127,18 +120,35 @@ public class WishListDAOImpl implements WishListDAO {
 	@Override
 	public ArrayList<WishList> getWishesByPerson(String personEmail) {
 		ArrayList<WishList> wish = new ArrayList<WishList>();
-	       try{
-	           //Query query = );
-	           //query.setInteger("id", personId);
+	        try {
+	             wish.addAll(sessionFactory.getCurrentSession()
+                         .createCriteria(WishList.class)
+	                 .add(Restrictions.eq("person.email", personEmail)).list());
 	           
-	          wish.addAll(sessionFactory.getCurrentSession().createCriteria(WishList.class)
-	                                       .add(Restrictions.eq("person.email", personEmail)).list());
-	           
-	       }catch(Exception e){
+	       } catch (Exception e) {
 	           log.error(e);
 	           System.out.println(e);
 	       }
 	       return wish;
 	}
 
+    @Override
+    public WishList getWishWithoutId(int bookId, int personId) {
+        WishList wish = new WishList();
+        try {
+             /*wish = (WishList) sessionFactory.getCurrentSession().createCriteria(WishList.class)
+                    .add(Restrictions.eq("book.id", bookId))
+                    .add(Restrictions.eq("person.id", personId));  */
+                        Query query = sessionFactory.getCurrentSession()
+                        .createSQLQuery("SELECT * FROM wishlist WHERE Books_id=:bookId AND Person_id=:personId")
+                        .setInteger("bookId", bookId)
+                        .setInteger("personId", personId);
+                        
+           } catch(Exception e) {
+               log.error(e);
+           }
+        return wish;
+    }
+
+    
 }
