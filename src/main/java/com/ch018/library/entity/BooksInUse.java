@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 @Entity
 @Table(name = "booksinuse")
 public class BooksInUse {

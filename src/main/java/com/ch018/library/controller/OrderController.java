@@ -7,12 +7,9 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.entity.WishList;
@@ -21,8 +18,6 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
-
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -45,22 +40,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderController {
     
     @Autowired
-    OrdersService order;
+    private OrdersService order;
     
     @Autowired
-    WishListService wish;
+    private WishListService wish;
     
     @Autowired
-    PersonService pers;
+    private PersonService pers;
     
     @Autowired
-    BookService book;
+    private BookService book;
     
     @Autowired
-    BooksInUseService booksInUseService;
+    private BooksInUseService booksInUseService;
 
     @Autowired
-    PersonService personService;
+    private PersonService personService;
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN"})
     @RequestMapping(value="/order", method=RequestMethod.GET)
@@ -128,7 +123,6 @@ public class OrderController {
 		List<Orders> orders = (List<Orders>) order.getOrdersByBooksId(id);
 		model.addAttribute("orders", orders);
 		model.addAttribute("book", book.getBooksById(id));
-
 		return "orders";
 	}
 
@@ -144,21 +138,7 @@ public class OrderController {
 	@RequestMapping(value = "/orders/issue{id}/{days}", method = RequestMethod.GET)
 	@ResponseBody
 	public String issueOrder(@PathVariable int id, @PathVariable int days) {
-		Calendar issueDate = Calendar.getInstance();
-		Calendar returnDate = Calendar.getInstance();
-		returnDate.add(Calendar.DATE, days);
-
-		BooksInUse booksInUse = new BooksInUse();
-		Orders orders = order.getById(id);
-		booksInUse.setBook(orders.getBook());
-		Person person = orders.getPerson();
-		person.setConfirm(true);
-		booksInUse.setPerson(person);
-		booksInUse.setReturnDate(returnDate.getTime());
-		booksInUse.setIssueDate(issueDate.getTime());
-		booksInUse.setTerm(days);
-		booksInUseService.addBooksInUse(booksInUse);
-		order.deleteOrder(id);
+		booksInUseService.addBooksInUse(days, id);
 		return "orders";
 	}
 

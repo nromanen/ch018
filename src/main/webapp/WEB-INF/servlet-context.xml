@@ -76,8 +76,13 @@
 			<list>  
 				<value>/WEB-INF/tiles.xml</value>
 			</list>  
-		</property>  
+		</property>
+		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SimpleSpringPreparerFactory" />
 	</bean>  
-
+	
+	<!-- ********************************************************************* -->
+	
+ 
+	
 	     	
 </beans>

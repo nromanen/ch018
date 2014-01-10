@@ -16,13 +16,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
+
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
 	private Genre genre;
@@ -140,9 +143,6 @@ public class Book implements Serializable {
 	public void setOrders(Set<Orders> orders) {
 		this.orders = orders;
 	}
-
-	
-
 
 	public void setId(int id) {
 		this.id = id;

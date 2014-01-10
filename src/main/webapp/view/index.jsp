@@ -14,6 +14,8 @@
         <script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
         <script	src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
+        <script
+			src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
         <title>Library</title>
     </head>
     <body>

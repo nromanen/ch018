@@ -44,10 +44,10 @@
   </Appenders>
   <Loggers>
   
-  	<logger name="org.springframework" level="DEBUG">
+  	<logger name="org.springframework" level="WARN">
         <appender-ref ref="S_STDOUT"/>
     </logger>  	
-    <logger name="org.hibernate" level="DEBUG">
+    <logger name="org.hibernate" level="WARN">
         <appender-ref ref="H_STDOUT"/>
     </logger>
 

@@ -3,10 +3,9 @@ package com.ch018.library.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,25 +28,24 @@ import com.ch018.library.service.PersonService;
  * 
  */
 
+@Secured("ROLE_LIBRARIAN")
 @Controller
 public class BooksController {
 
-	static Logger log = LogManager.getLogger(BooksController.class);
+	@Autowired
+	private BookService bookService;
 
 	@Autowired
-	BookService bookService;
+	private GenreService genreService;
 
 	@Autowired
-	GenreService genreService;
+	private PersonService personService;
 
 	@Autowired
-	PersonService personService;
+	private BooksInUseService booksInUseService;
 
 	@Autowired
-	BooksInUseService booksInUseService;
-
-	@Autowired
-	OrdersService ordersService;
+	private OrdersService ordersService;
 
 	/**
 	 * Add new book
@@ -56,12 +54,10 @@ public class BooksController {
 	 * @param result
 	 * @return
 	 */
-	
-	@RequestMapping(value="/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Book newBook(@RequestBody Book book) {
-		log.info("New book");
 		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {
@@ -81,11 +77,6 @@ public class BooksController {
 	public String showBooks(
 			@RequestParam(value = "show", required = false) String show,
 			Model model) {
-		log.info("info book");
-		log.debug("debug book");
-		log.error("error book");
-		log.trace("trace book");
-		ordersService.toIssueToday();
 		Book book = new Book();
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
@@ -105,9 +96,7 @@ public class BooksController {
 				break;
 			case "issueph":
 				books.addAll(ordersService.toIssuePerHour());
-				//books.addAll(bookService.simpleSearch("Programming"));
 				break;
-
 			default:
 				books.addAll(bookService.getAllBooks());
 				break;
@@ -116,29 +105,26 @@ public class BooksController {
 		model.addAttribute("books", books);
 		return "books";
 	}
-	
+
 	@RequestMapping(value = "/book/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public int deleteBook(@PathVariable Integer id) {
 		return bookService.deleteBook(id);
 	}
-	
+
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
-	public String search(@RequestParam String search, 
-			@RequestParam String field, 
-			Model model)
-	{
+	public String search(@RequestParam String search,
+			@RequestParam String field, Model model) {
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		model.addAttribute("book", book);
 		if (field.equals("all")) {
 			books.addAll(bookService.simpleSearch(search));
-		}
-		else {
+		} else {
 			books.addAll(bookService.paramSearch(field, search));
 		}
 		model.addAttribute("books", books);
 		return "books";
 	}
-		
+
 }

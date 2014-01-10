@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import com.ch018.library.entity.Person.Role;
 import com.ch018.library.form.Registration;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.util.CalculateRating;
+import com.ch018.library.validator.RegistrationValidation;
 
 /**
  * 
@@ -39,26 +42,17 @@ import com.ch018.library.util.CalculateRating;
 public class SecurityController {
 
 	@Autowired
-	PersonService personService;
-
+	private PersonService personService;
+	
+	@Autowired
+	private RegistrationValidation registrationValidation;
+	
+	
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginForm() {
 		return new ModelAndView("login");
 	}
-
-	@Secured("ROLE_ANONYMOUS")
-	@RequestMapping(value = "/login-error", method = RequestMethod.GET)
-	public ModelAndView invalidLogin() {
-		ModelAndView modelAndView = new ModelAndView("login");
-		modelAndView.addObject("error", true);
-		return modelAndView;
-	}
-
-	/*
-	 * @RequestMapping(value="/success-login", method=RequestMethod.GET) public
-	 * ModelAndView successLogin() { return new ModelAndView("success-login"); }
-	 */
 
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -70,25 +64,11 @@ public class SecurityController {
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String processRegistration(@Valid Registration registration, BindingResult result) {
-
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		Person person = personService
-				.getByEmail(registration.getEmail().trim());
-		if (person == null
-				&& registration.getPassword().equals(
-						registration.getConfirmPassword())) {
-			person = new Person();
-			person.setEmail(registration.getEmail().trim());
-			person.setPassword(passwordEncoder.encode(registration
-					.getPassword()));
-			person.setRole(Role.ROLE_USER.toString());
-			person.setConfirm(false);
-			person.setRating(CalculateRating.getRating());
-			person.setMultibookAllowed(10);
-			personService.save(person);
-		} else
+		registrationValidation.validate(registration, result);
+		if (result.hasErrors()) {
 			return "registration";
-
+		}
+		personService.registrate(registration);
 		return "redirect:/";
 	}
 

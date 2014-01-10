@@ -40,12 +40,6 @@ public class BookServiceImpl implements BookService {
 
 
 	@Transactional
-	public void deleteBook(Book book) {
-		bookDAO.deleteBook(book);
-	}
-
-
-	@Transactional
 	public List<Book> getBooksByTitle(String title) {
 		return bookDAO.getBooksByTitle(title);
 	}
@@ -60,12 +54,6 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> getBooksByYear(int year) {
 		return bookDAO.getBooksByYear(year);
-	}
-
-
-	@Transactional
-	public List<Book> getBooksByPerson(Person person) {
-		return bookDAO.getBooksByPerson(person);
 	}
 
 	@Transactional

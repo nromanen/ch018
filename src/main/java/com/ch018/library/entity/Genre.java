@@ -12,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 @Entity
 @Table(name = "genre")
 public class Genre implements Serializable {

@@ -25,10 +25,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class WishListDAOImpl implements WishListDAO {
 
-	static Logger log = LogManager.getLogger(WishListDAOImpl.class);
+	private static Logger log = LogManager.getLogger(WishListDAOImpl.class);
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void addWish(WishList wish) {

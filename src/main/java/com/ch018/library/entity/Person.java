@@ -13,14 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.validation.annotation.Validated;
 
 /**
  * 
- * 
+ * @author Yurik Mikhaletskiy
+ *
  */
-
-
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {

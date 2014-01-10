@@ -15,10 +15,10 @@ import com.ch018.library.entity.Genre;
 @Component
 public class GenreDAOImpl implements GenreDAO {
 
-	static Logger log = LogManager.getLogger(GenreDAOImpl.class);
+	private static Logger log = LogManager.getLogger(GenreDAOImpl.class);
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void addGenre(Genre genre) {
@@ -31,12 +31,6 @@ public class GenreDAOImpl implements GenreDAO {
 	}
 
 	@Override
-	public void updateGenre(int id, Genre genre) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<Genre> getAllGenres() {
 		// TODO Auto-generated method stub
 		List<Genre> bookcase = new ArrayList<>();
@@ -45,7 +39,6 @@ public class GenreDAOImpl implements GenreDAO {
 					.createCriteria(Genre.class).list());
 		} catch (Exception e) {
 			log.error(e);
-			System.out.println(e);
 		}
 		return bookcase;
 	}
@@ -58,7 +51,6 @@ public class GenreDAOImpl implements GenreDAO {
 			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
 					id);
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return genre;
@@ -77,22 +69,9 @@ public class GenreDAOImpl implements GenreDAO {
 					.setString("name", name);
 			genre = (Genre) query;
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
 		return genre;
-	}
-
-	@Override
-	public void deleteGenre(Genre genre) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

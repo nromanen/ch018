@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
+	<definition name="left" preparer="com.ch018.library.controller.GenreController" template="/view/layout/left.jsp" />
+	
 	<definition name="baseLayout" template="/view/layout/layout.jsp">
 		<put-attribute name="title" value="Sample Title" />
 		<put-attribute name="includes" value="/view/layout/includes.jsp" />
 		<put-attribute name="header" value="/view/layout/header.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="left" value="/view/layout/left.jsp" />
+		<put-attribute name="left" value="left" />
+		<put-attribute name="footer" value="/view/layout/footer.jsp" />
+	</definition>
+	
+	<definition name="signLayout" template="/view/layout/signlayout.jsp">
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="includes" value="/view/layout/includes.jsp" />
+		<put-attribute name="header" value="/view/layout/header.jsp" />
+		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/view/layout/footer.jsp" />
 	</definition>
 	
@@ -28,6 +38,16 @@
 	<definition name="bookinuse" extends="baseLayout">
 		<put-attribute name="title" value="Librarian > Book In Use" />
 		<put-attribute name="body" value="/view/librarian/bookinuse.jsp" />
+	</definition>
+	
+	<definition name="login" extends="signLayout">
+		<put-attribute name="title" value="Librarian > login" />
+		<put-attribute name="body" value="/view/login.jsp" />
+	</definition>
+	
+	<definition name="registration" extends="signLayout">
+		<put-attribute name="title" value="Librarian > registration" />
+		<put-attribute name="body" value="/view/registration.jsp" />
 	</definition>
 
 </tiles-definitions>    
