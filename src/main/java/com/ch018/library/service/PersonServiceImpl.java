@@ -20,6 +20,8 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private PersonDao personDao;
 	
+	private static final int MULTIBOOK_DEFAULT = 10;
+	
 	@Override
 	@Transactional
 	public void save(Person person) {
@@ -39,7 +41,7 @@ public class PersonServiceImpl implements PersonService {
 		person.setRole(Role.ROLE_USER.toString());
 		person.setConfirm(false);
 		person.setRating(CalculateRating.getRating());
-		person.setMultibookAllowed(10);
+		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
 		personDao.save(person);
 	}
 
@@ -123,23 +125,23 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person updateAccProperties(Person person, Person updatedPerson) {
         if (!updatedPerson.getName().isEmpty())
-                         if ((person.getName() == null) || (!person.getName().equals(updatedPerson.getName()))) {
-                             person.setName(updatedPerson.getName());
-                         } 
+        	if ((person.getName() == null) || (!person.getName().equals(updatedPerson.getName()))) {
+        		person.setName(updatedPerson.getName());
+        	} 
         if (!updatedPerson.getSurname().isEmpty())
-                         if ((person.getSurname() == null) || (!person.getSurname().equals(updatedPerson.getSurname()))) {
-                             person.setSurname(updatedPerson.getSurname());
-                         } 
+        	if ((person.getSurname() == null) || (!person.getSurname().equals(updatedPerson.getSurname()))) {
+                person.setSurname(updatedPerson.getSurname());
+        } 
         if (!updatedPerson.getCellphone().isEmpty())
-                         if ((person.getCellphone() == null) || (!person.getCellphone().equals(updatedPerson.getCellphone()))) {
-                             person.setCellphone(updatedPerson.getCellphone());
-                         }
+            if ((person.getCellphone() == null) || (!person.getCellphone().equals(updatedPerson.getCellphone()))) {
+                person.setCellphone(updatedPerson.getCellphone());
+        }
         if (!updatedPerson.getEmail().isEmpty())
-                         if (!person.getEmail().equals(updatedPerson.getEmail())) {
-                             person.setEmail(updatedPerson.getEmail());
-                         }
+            if (!person.getEmail().equals(updatedPerson.getEmail())) {
+                person.setEmail(updatedPerson.getEmail());
+        }
         if (person.getSms() != updatedPerson.getSms()) {
-            person.setSms(updatedPerson.getSms());
+        	person.setSms(updatedPerson.getSms());
         }
         return person;
     }
