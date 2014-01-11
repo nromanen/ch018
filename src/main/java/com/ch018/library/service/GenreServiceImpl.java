@@ -34,6 +34,16 @@ public class GenreServiceImpl implements GenreService {
 		// TODO Auto-generated method stub
 		return genreDAO.getGenreById(id);
 	}
+	
+	/**
+	 * Lazy initialization
+	 */
+	@Override
+	@Transactional
+	public Genre getGenreByIdWithBooks(int id) {
+		// TODO Auto-generated method stub
+		return genreDAO.getGenreByIdWithBooks(id);
+	}
 
 	@Override
 	@Transactional

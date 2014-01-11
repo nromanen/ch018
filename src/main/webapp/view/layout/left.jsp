@@ -6,8 +6,9 @@
 <div class="span2">
 	<ul class="nav nav-pills nav-stacked">
 		<li class="nav-header">Genres</li>
+		<li><a href="<c:url value="/"/>">All</a></li>
 		<c:forEach var="genre" items="${genres}">
-			<li><a href="<c:url value="/genre/${genre.id}"/>">${genre.name}</a></li>
+			<li><a href="<c:url value="/?genre=${genre.id}"/>">${genre.name}</a></li>
 		</c:forEach>
 	</ul>
 </div>
