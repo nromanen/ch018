@@ -3,11 +3,14 @@ package com.ch018.library.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +60,10 @@ public class BooksController {
 
 	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Book newBook(@RequestBody Book book) {
+	public Book newOrUpdateBook(@RequestBody @Valid Book book, BindingResult result) {
+		if (result.hasErrors()) {
+			return book;
+		}
 		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {

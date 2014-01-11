@@ -51,11 +51,11 @@ public class PersonController {
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Person newPerson(@RequestBody Person person) {
-
 		if (person.getId() == 0) {
 			personService.save(person);
 		} else {
-			personService.librarianUpdatePerson(person);
+			Person person2 = personService.getById(person.getId());
+			personService.librarianUpdatePerson(person, person2);
 		}
 		return person;
 	}

@@ -1,6 +1,7 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 
@@ -26,6 +32,14 @@ import javax.persistence.Table;
 @Table(name = "books")
 public class Book implements Serializable {
 
+	private static final int MIN_YEAR = 1800;
+	private static final int MAX_LENGTH_TITLE = 200;
+	private static final int MAX_LENGTH_AUTHORS = 200;
+	private static final int MAX_LENGTH_PUBLICATION = 50;
+	private static final int MAX_SHELF = 200;
+	private static final int MAX_BOOKCASE = 200;
+	private static final int MAX_YEAR = 2014;
+	
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
 	private Genre genre;
@@ -56,7 +70,7 @@ public class Book implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
+	@Column(name = "id")
 	public int getId() {
 		return this.id;
 	}
@@ -67,26 +81,35 @@ public class Book implements Serializable {
 		return this.genre;
 	}
 
+	@Size(min = 0, max = MAX_LENGTH_TITLE)
+	@NotEmpty
 	@Column(name = "title")
 	public String getTitle() {
 		return title;
 	}
 
+	@Size(min = 0, max = MAX_LENGTH_AUTHORS)
+	@NotEmpty
 	@Column(name = "authors")
 	public String getAuthors() {
 		return authors;
 	}
 
+	@Min(value = MIN_YEAR)
+	@Max(value = MAX_YEAR)
 	@Column(name = "year_public")
 	public int getYear() {
 		return year;
 	}
 
+	@Size(min = 0, max = MAX_LENGTH_PUBLICATION)
+	@NotEmpty
 	@Column(name = "publication")
 	public String getPublication() {
 		return publication;
 	}
 
+	@Min(0)
 	@Column(name = "pages")
 	public int getPages() {
 		return pages;
@@ -97,22 +120,27 @@ public class Book implements Serializable {
 		return description;
 	}
 
+	@Min(0)
+	@Max(MAX_SHELF)
 	@Column(name = "shelf")
 	public int getShelf() {
 		return shelf;
 	}
 
+	@Min(0)
+	@Max(MAX_BOOKCASE)
 	@Column(name = "bookcase")
 	public int getBookcase() {
 		return bookcase;
 	}
 
-	@Column(name = "term")
+	@Min(0)
+	@Column(name = "term", columnDefinition = "int(11) default '14'")
 	public int getTerm() {
 		return term;
 	}
 	
-	@Column(name = "image", columnDefinition="varchar(255) default 'http://placehold.it/120x150'")
+	@Column(name = "image", columnDefinition = "varchar(255) default 'http://placehold.it/120x150'")
 	public String getImage() {
 		return image;
 	}

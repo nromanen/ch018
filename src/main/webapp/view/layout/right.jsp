@@ -3,5 +3,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
 	prefix="tilesx"%>
 <div class="span2">
-	Right side
+	<ul class="nav nav-pills nav-stacked">
+		<li class="nav-header">Top 5</li>
+	</ul>
 </div>
