@@ -8,5 +8,6 @@ public interface GenreDAO {
 	void addGenre(Genre genre);
 	List<Genre> getAllGenres();
 	Genre getGenreById(int id);
+	Genre getGenreByIdWithBooks(int id);
 	Genre getGenreByName(String name);
 }

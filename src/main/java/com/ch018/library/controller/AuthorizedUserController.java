@@ -8,11 +8,6 @@ package com.ch018.library.controller;
 
 import java.security.Principal;
 
-import com.ch018.library.entity.Person;
-import com.ch018.library.form.Password;
-import com.ch018.library.service.BookService;
-import com.ch018.library.service.PersonService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -24,6 +19,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.Person;
+import com.ch018.library.form.Password;
+import com.ch018.library.service.BookService;
+import com.ch018.library.service.GenreService;
+import com.ch018.library.service.PersonService;
+
+
 
    
  
@@ -36,13 +41,23 @@ public class AuthorizedUserController {
     
     @Autowired
     private PersonService persService;
+    
+    @Autowired
+    private GenreService genreService;
    
     
-    @RequestMapping("/")
-    public String welomePage(Model model) {
-    	model.addAttribute("latest", book.getAllBooks());
-    	return "index"; 
-    }
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String welomePage(
+			@RequestParam(value = "genre", required = false) Integer id,
+			Model model) {
+		if (id == null) {
+			model.addAttribute("latest", book.getAllBooks());
+		} else {
+			Genre genre = genreService.getGenreByIdWithBooks(id);
+			model.addAttribute("latest", genre.getBooks());
+		}
+		return "index";
+	}
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userAccount", method = RequestMethod.GET)
@@ -62,24 +77,25 @@ public class AuthorizedUserController {
         return "redirect:/userAccount";
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/pass", method = RequestMethod.POST)
-    public String passwordView(@ModelAttribute("password") Password password, 
-                               BindingResult result, Principal principal) {
-       if (password == null)
-       return null; 
-       else {
-              PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	      Person person = persService.getByEmail(principal.getName());
-              if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
-                     if (password.getNewPassword().equals(password.getConfirmPassword()))
-                  {
-                      person.setPassword(passwordEncoder.encode(password.getNewPassword()));
-                      persService.update(person);
-                  }
-       return "redirect:/logout";
-       }
-    }
+	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })
+	@RequestMapping(value = "/pass", method = RequestMethod.POST)
+	public String passwordView(@ModelAttribute("password") Password password,
+			BindingResult result, Principal principal) {
+		if (password == null)
+			return null;
+		else {
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			Person person = persService.getByEmail(principal.getName());
+			if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
+				if (password.getNewPassword().equals(
+						password.getConfirmPassword())) {
+					person.setPassword(passwordEncoder.encode(password
+							.getNewPassword()));
+					persService.update(person);
+				}
+			return "redirect:/logout";
+		}
+	}
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/pass", method = RequestMethod.GET)
@@ -88,4 +104,5 @@ public class AuthorizedUserController {
                                Principal principal) {
      
     } 
+    
 }
