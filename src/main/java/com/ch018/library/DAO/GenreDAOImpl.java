@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,30 @@ public class GenreDAOImpl implements GenreDAO {
 	@Override
 	public List<Genre> getAllGenres() {
 		// TODO Auto-generated method stub
-		List<Genre> bookcase = new ArrayList<>();
+		List<Genre> genres = new ArrayList<>();
 		try {
-			bookcase.addAll(sessionFactory.getCurrentSession()
+			genres.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(Genre.class).list());
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return bookcase;
+		return genres;
+	}
+	
+	/**
+	 * Lazy initialization
+	 */
+	@Override
+	public Genre getGenreByIdWithBooks(int id) {
+		Genre genre = null;
+		try {
+			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
+					id);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		Hibernate.initialize(genre.getBooks());
+		return genre;
 	}
 
 	@Override

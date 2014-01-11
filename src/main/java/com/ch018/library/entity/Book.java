@@ -112,7 +112,7 @@ public class Book implements Serializable {
 		return term;
 	}
 	
-	@Column(name = "image", columnDefinition="Varchar default 'http://placehold.it/120x150'")
+	@Column(name = "image", columnDefinition="varchar(255) default 'http://placehold.it/120x150'")
 	public String getImage() {
 		return image;
 	}
