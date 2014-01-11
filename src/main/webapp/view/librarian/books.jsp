@@ -135,8 +135,8 @@
 							<div class="control-group">
 								<label class="control-label" for="title"><spring:message code="book.title"/></label>
 								<div class="controls">
-									<form:input path="title" type="text" id="title"
-										placeholder="Title" />
+									<form:input path="title" type="text" id="title" placeholder="Title" />
+									<form:errors path="title" cssClass="error" />
 								</div>
 							</div>
 
@@ -145,6 +145,7 @@
 								<div class="controls">
 									<form:input path="authors" type="text" id="authors"
 										placeholder="Authors" />
+									<form:errors path="authors" cssClass="error" />
 								</div>
 							</div>
 
@@ -153,6 +154,7 @@
 								<div class="controls">
 									<form:input path="year" type="text" id="year"
 										placeholder="Year" />
+									<form:errors path="year" cssClass="error" />
 								</div>
 							</div>
 

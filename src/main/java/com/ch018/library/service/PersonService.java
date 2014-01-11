@@ -21,5 +21,5 @@ public interface PersonService {
     List<Person> getSmsEnabled();
     Person updateAccProperties(Person person, Person updatedPerson);
     long isExist(String email);
-    void librarianUpdatePerson(Person person);
+    void librarianUpdatePerson(Person person, Person person2);
 }

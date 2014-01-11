@@ -155,12 +155,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void librarianUpdatePerson(Person person) {
-    	Person p = new Person();
-	p = personDao.getById(person.getId());
-	person.setPassword(p.getPassword());
-	person.setRole(p.getRole());
-	person.setRating(p.getRating());
+    public void librarianUpdatePerson(Person person, Person person2) {
+		person.setPassword(person2.getPassword());
+		person.setRole(person2.getRole());
+		person.setRating(person2.getRating());
+		personDao.update(person);
     }
 
 }

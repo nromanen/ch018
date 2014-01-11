@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Person;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -18,11 +17,15 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public void addBook(Book book) {
+		if (book.getImage() == null)
+			book.setImage("http://placehold.it/120x150");
 		bookDAO.addBook(book);
 	}
 
 	@Transactional
 	public void updateBook(Book book) {
+		if (book.getImage() == null)
+			book.setImage("http://placehold.it/120x150");
 		bookDAO.updateBook(book);
 	}
 

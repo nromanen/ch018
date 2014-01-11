@@ -254,6 +254,9 @@ $(document).ready(function() {
 	      success: function(data) {
 			console.log("success");
 			$('#action_popup').modal("hide");
+			//$(".TableBooks").hide().fadeIn('fast');
+			location.reload();
+			
 		  },
 		  error: function() {
 			console.log("error");
@@ -261,7 +264,8 @@ $(document).ready(function() {
 		}
 		  
 	  });
-	  event.preventDefault();	  
+	  event.preventDefault();	
+	  
 });
   
   /**
@@ -302,6 +306,7 @@ $(document).ready(function() {
 	      success: function(data) {
 			console.log("success");
 			$('#action_popup').modal("hide");
+			location.reload();
 		  },
 		  error: function() {
 			console.log("error");
