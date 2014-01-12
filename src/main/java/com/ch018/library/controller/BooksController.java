@@ -60,7 +60,8 @@ public class BooksController {
 
 	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Book newOrUpdateBook(@RequestBody @Valid Book book, BindingResult result) {
+	public Book newOrUpdateBook(@RequestBody @Valid Book book,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			return book;
 		}

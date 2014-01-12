@@ -30,7 +30,7 @@
 	
 	<mvc:annotation-driven/>
 	
-	<!-- **************************************************** -->
+	<!-- *********************** L10n ***************************** -->
 	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -60,7 +60,7 @@
         </bean>
 	</mvc:interceptors>
 	
-	<!-- ******************************************************************* -->
+	<!-- ******************************* Tiles ************************************ -->
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
 		<property name="viewClass">  
@@ -79,10 +79,7 @@
 		</property>
 		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SimpleSpringPreparerFactory" />
 	</bean>  
-	
-	<!-- ********************************************************************* -->
-	
- 
+	 
 	
 	     	
 </beans>
