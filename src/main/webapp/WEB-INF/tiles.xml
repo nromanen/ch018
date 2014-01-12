@@ -68,5 +68,34 @@
 		<put-attribute name="title" value="Librarian > registration" />
 		<put-attribute name="body" value="/view/registration.jsp" />
 	</definition>
-
+        
+        <definition name="wishList" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/wishList.jsp" />
+	</definition>
+        
+        <definition name="userAccount" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/userAccount.jsp" />
+	</definition>
+        
+        <definition name="usersBooks" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/usersBooks.jsp" />
+	</definition>
+        
+        <definition name="userOrder" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/userOrder.jsp" />
+	</definition>
+        
+        <definition name="order" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/order.jsp" />
+	</definition>
+        
+        <definition name="pass" extends="baseLayout">
+		<put-attribute name="title" value="Library" />
+		<put-attribute name="body" value="/view/pass.jsp" />
+	</definition>
 </tiles-definitions>    
