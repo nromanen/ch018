@@ -81,6 +81,7 @@
 							<button type="submit" class="btn btn-primary">
 								<spring:message code="button.login" />
 							</button>
+							<a href="<c:url value="/remind"/>">Forgot your password?</a>
 						</div>
 					</div>
 				</form>

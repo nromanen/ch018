@@ -20,6 +20,7 @@ public interface PersonDao {
 	List<Person> getAll();
 	Person getById(int id);
 	Person getByEmail(String email);
+	Person getByKey(String key);
 	List<Person> getByName(String name);
 	List<Person> getBySurname(String surname);
 	Person getByCellPhone(String cellphone);
