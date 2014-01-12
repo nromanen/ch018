@@ -13,7 +13,7 @@ import com.ch018.library.service.PersonService;
 public class RegistrationValidation implements Validator {
 	
 	@Autowired
-	PersonService personService;
+	private PersonService personService;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -24,18 +24,21 @@ public class RegistrationValidation implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.password", "Field password is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required.confirmPassword", "Field password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
+				"required.password", "Field password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
+				"required.confirmPassword", "Field password is required.");
 		Registration registration = (Registration) target;
-		
-		if (!(registration.getPassword().equals(registration.getConfirmPassword()))) {
+
+		if (!(registration.getPassword().equals(registration
+				.getConfirmPassword()))) {
 			errors.rejectValue("password", "notmatch.password");
 		}
-		
+
 		if (personService.isExist(registration.getEmail()) > 0) {
 			errors.rejectValue("email", "exist.email");
 		}
-		
+
 	}
 
 }

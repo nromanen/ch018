@@ -55,6 +55,15 @@
 		<put-attribute name="body" value="/view/login.jsp" />
 	</definition>
 	
+	<definition name="remind" extends="signLayout">
+		<put-attribute name="title" value="Librarian > Remind" />
+		<put-attribute name="body" value="/view/remind.jsp" />
+	</definition>
+	<definition name="restore" extends="signLayout">
+		<put-attribute name="title" value="Librarian > Restore" />
+		<put-attribute name="body" value="/view/restore.jsp" />
+	</definition>
+	
 	<definition name="registration" extends="signLayout">
 		<put-attribute name="title" value="Librarian > registration" />
 		<put-attribute name="body" value="/view/registration.jsp" />
