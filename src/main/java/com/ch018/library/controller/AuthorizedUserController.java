@@ -1,3 +1,5 @@
+// TODO: License, WHAT?
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -29,7 +31,7 @@ import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 
 
-
+// TODO: use only spaces or only tabs, remove trailing spaces, unnecessary double carriage returns in all files
    
  
 
@@ -40,12 +42,13 @@ public class AuthorizedUserController {
     private BookService book;
     
     @Autowired
-    private PersonService persService;
+    private PersonService persService; //TODO: replace with meaningful and consistent variable name - book, persService, genreService. Check other files too.
     
     @Autowired
     private GenreService genreService;
    
     
+    // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(
 			@RequestParam(value = "genre", required = false) Integer id,
@@ -59,7 +62,7 @@ public class AuthorizedUserController {
 		return "index";
 	}
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" }) // TODO: these strings are good as constants somewhere
     @RequestMapping(value = "/userAccount", method = RequestMethod.GET)
     public Model viewAccount(Model model, Principal principal) {
      model.addAttribute("person", persService.getByEmail(principal.getName()));

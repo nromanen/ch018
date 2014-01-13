@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ include file="/view/includes.jsp"%>
+<!-- TODO: too much indentation -->
 			<!-- Center -->
 <div class="span8">   
                             <br><br><br><br>

@@ -53,8 +53,8 @@ public class Book implements Serializable {
 	private int bookcase;
 	private int term;
 	private String image;
-        private int count;
-        private int available;
+	private int count;
+	private int available;
 
 	
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -146,17 +146,17 @@ public class Book implements Serializable {
 	public String getImage() {
 		return image;
 	}
-        
-        @Column(name = "count")
-        public int getCount(){
-            return this.count;
-        }
-        
-        @Column(name = "available")
-        public int getAvailable(){
-            return this.available;
-        }
-        
+	
+	@Column(name = "count")
+	public int getCount() {
+		return count;
+	}
+	
+	@Column(name = "available")
+	public int getAvailable() {
+		return available;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -231,14 +231,14 @@ public class Book implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
-        
-        public void setCount(int count){
-            this.count=count;
-        }
-        
-        public void setAvailable(int available){
-            this.available=available;
-        }
+	
+	public void setCount(int count) {
+		this.count = count;
+	}
+	
+	public void setAvailable(int available) {
+		this.available = available;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -264,6 +264,8 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
+		// TODO: toString should contain entity name at least, format: Book[id: 1, title: [The Lone Island], Authors: [One, Two], Year: 1998]
+		// TODO: other entities should have meaningful toString too.
 		return getId() + " " + getTitle() + " " + getAuthors() + " "
 				+ getYear();
 	}

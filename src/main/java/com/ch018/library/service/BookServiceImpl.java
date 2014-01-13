@@ -17,6 +17,7 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public void addBook(Book book) {
+		// TODO: isn't this string default for image url string?
 		if (book.getImage() == null)
 			book.setImage("http://placehold.it/120x150");
 		bookDAO.addBook(book);

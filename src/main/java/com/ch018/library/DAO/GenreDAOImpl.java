@@ -80,7 +80,7 @@ public class GenreDAOImpl implements GenreDAO {
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
-					.createQuery(
+					.createQuery( // TODO: unnecessary '+'
 							"select " + "G from Genre G where lower(G.name) "
 									+ "LIKE lower(:name)")
 					.setString("name", name);

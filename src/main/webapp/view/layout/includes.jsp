@@ -5,3 +5,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ page session="true"%>
+<!-- TODO: page.session=true is default -->
+<!-- TODO: taglib directive should have consistent order: prefix, space, uri -->
+<!-- TODO: taglib directives should not be extracted to separate file - define in each file -->
