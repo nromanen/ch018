@@ -53,6 +53,8 @@ public class Book implements Serializable {
 	private int bookcase;
 	private int term;
 	private String image;
+        private int count;
+        private int available;
 
 	
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -144,7 +146,17 @@ public class Book implements Serializable {
 	public String getImage() {
 		return image;
 	}
-
+        
+        @Column(name = "count")
+        public int getCount(){
+            return this.count;
+        }
+        
+        @Column(name = "available")
+        public int getAvailable(){
+            return this.available;
+        }
+        
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -219,6 +231,14 @@ public class Book implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
+        
+        public void setCount(int count){
+            this.count=count;
+        }
+        
+        public void setAvailable(int available){
+            this.available=available;
+        }
 
 	@Override
 	public boolean equals(Object obj) {
