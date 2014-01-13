@@ -68,7 +68,6 @@ public class WishListServiceImpl implements WishListService{
 	@Override
 	@Transactional
 	public ArrayList<WishList> getWishesByPerson(String personEmail) {
-		// TODO Auto-generated method stub
 		return wishlistDAO.getWishesByPerson(personEmail);
 	}
 

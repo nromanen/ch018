@@ -137,15 +137,7 @@ public class WishListDAOImpl implements WishListDAO {
         WishList w = new WishList();
         ArrayList<WishList> wish = new ArrayList<WishList>();
         try {
-                   // wish = (WishList) sessionFactory.getCurrentSession().createCriteria(WishList.class)
-                  //  .add(Restrictions.eq("book.id", bookId))
-                 //   .add(Restrictions.eq("person.id", personId)); 
-                        //Query query
-                     /*   wish = (WishList) sessionFactory.getCurrentSession()
-                        .createSQLQuery("SELECT * FROM wishlist WHERE Books_id=:bookId AND Person_id=:personId")
-                        .setParameter("bookId", bookId)
-                        .setParameter("personId", personId);*/
-                    wish.addAll(sessionFactory.getCurrentSession()
+                  wish.addAll(sessionFactory.getCurrentSession()
                   .createCriteria(WishList.class)
                   .add(Restrictions.eq("person.id", personId))
                   .add(Restrictions.eq("book.id", bookId)).list());
