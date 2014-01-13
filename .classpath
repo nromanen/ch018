@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/jsp/jsp-api/2.2/jsp-api-2.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4.7/mail-1.4.7.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.10/junit-4.10.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/testng/testng/6.8.7/testng-6.8.7.jar"/>
@@ -40,6 +43,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.2.5.RELEASE/spring-tx-3.2.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.2.5.RELEASE/spring-orm-3.2.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.2.5.RELEASE/spring-jdbc-3.2.5.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/3.2.5.RELEASE/spring-context-support-3.2.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-dbcp/7.0.47/tomcat-dbcp-7.0.47.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar"/>

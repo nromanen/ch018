@@ -50,6 +50,9 @@ public class Person implements Serializable {
 
 	@Column(name = "confirmed")
 	private boolean confirm;
+	
+	@Column(name = "emailConfirmed")
+	private boolean emailConfirmed;
 
 	@Column(name = "sms")
 	private boolean sms;
@@ -57,8 +60,8 @@ public class Person implements Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "salt")
-	private String salt;
+	@Column(name = "verificationkey")
+	private String verificationKey;
 
 	@Column(name = "timely_returns")
 	private int timelyReturns;
@@ -132,12 +135,12 @@ public class Person implements Serializable {
 		this.password = password;
 	}
 
-	public String getSalt() {
-		return salt;
+	public String getVerificationKey() {
+		return verificationKey;
 	}
 
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setVerificationKey(String verificationKey) {
+		this.verificationKey = verificationKey;
 	}
 
 	public String getCellphone() {
@@ -155,6 +158,15 @@ public class Person implements Serializable {
 	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
+	
+	public boolean getEmailConfirmed() {
+		return emailConfirmed;
+	}
+
+	public void setEmailConfirmed(boolean emailConfirmed) {
+		this.emailConfirmed = emailConfirmed;
+	}
+	
 
 	public boolean getSms() {
 		return sms;

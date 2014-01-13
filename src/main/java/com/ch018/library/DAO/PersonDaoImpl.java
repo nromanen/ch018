@@ -100,6 +100,19 @@ public class PersonDaoImpl implements PersonDao {
 		return person;
 
 	}
+	
+	@Override
+	public Person getByKey(String key) {
+		Person person = null;
+		try {
+			person = (Person) sessionFactory.getCurrentSession()
+					.createCriteria(Person.class)
+					.add(Restrictions.eq("verificationKey", key)).list().get(0);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return person;
+	}
 
 	@Override
 	public List<Person> getByName(String name) {
