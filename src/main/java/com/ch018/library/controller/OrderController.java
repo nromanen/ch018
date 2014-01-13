@@ -68,6 +68,7 @@ public class OrderController {
         
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
+        uses+=booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
         if (j == uses) {            
@@ -84,7 +85,7 @@ public class OrderController {
 					wish.deleteWishById(wishId);
                 if (wish.bookExistInWishList(bookId, personId)) {
                     int id = wish.getWishWithoutId(bookId, personId).getId();
-					wish.deleteWishById(wishId);
+					wish.deleteWishById(id);
 				}
                 model.addAttribute("order", order);
                 return "order";
