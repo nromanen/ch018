@@ -10,7 +10,7 @@
                     <td><spring:message code="book.title"/></td>
                     <td><spring:message code="person.issuedate"/></td>
                     <td><spring:message code="person.returndate"/></td>
-                    <td>term</td>
+                    <td><spring:message code="message.term"/></td>
                 </tr>
             </thead>
             <c:forEach items="${books}" var="book">

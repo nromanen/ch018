@@ -134,21 +134,19 @@ public class WishListDAOImpl implements WishListDAO {
 
     @Override
     public WishList getWishWithoutId(int bookId, int personId) {
-        WishList wish = new WishList();
+        WishList w = new WishList();
+        ArrayList<WishList> wish = new ArrayList<WishList>();
         try {
-            // TODO: does anyone need the comment below?
-             /*wish = (WishList) sessionFactory.getCurrentSession().createCriteria(WishList.class)
-                    .add(Restrictions.eq("book.id", bookId))
-                    .add(Restrictions.eq("person.id", personId));  */
-                        Query query = sessionFactory.getCurrentSession()
-                        .createSQLQuery("SELECT * FROM wishlist WHERE Books_id=:bookId AND Person_id=:personId")
-                        .setInteger("bookId", bookId)
-                        .setInteger("personId", personId);
+                  wish.addAll(sessionFactory.getCurrentSession()
+                  .createCriteria(WishList.class)
+                  .add(Restrictions.eq("person.id", personId))
+                  .add(Restrictions.eq("book.id", bookId)).list());
+                  w=wish.get(0);
                         
            } catch(Exception e) {
                log.error(e);
            }
-        return wish;
+        return w;
     }
 
     
