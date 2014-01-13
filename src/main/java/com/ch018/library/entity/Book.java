@@ -264,6 +264,8 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
+		// TODO: toString should contain entity name at least, format: Book[id: 1, title: [The Lone Island], Authors: [One, Two], Year: 1998]
+		// TODO: other entities should have meaningful toString too.
 		return getId() + " " + getTitle() + " " + getAuthors() + " "
 				+ getYear();
 	}

@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- TODO: remove eclipse-generated files and add possibility to generate them with mvn eclipse:eclipse -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ch018.library</groupId>
 	<artifactId>library</artifactId>
