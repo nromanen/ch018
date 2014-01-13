@@ -136,6 +136,7 @@ public class WishListDAOImpl implements WishListDAO {
     public WishList getWishWithoutId(int bookId, int personId) {
         WishList wish = new WishList();
         try {
+            // TODO: does anyone need the comment below?
              /*wish = (WishList) sessionFactory.getCurrentSession().createCriteria(WishList.class)
                     .add(Restrictions.eq("book.id", bookId))
                     .add(Restrictions.eq("person.id", personId));  */

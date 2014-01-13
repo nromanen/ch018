@@ -12,6 +12,7 @@ public class Registration {
 	@Autowired 
 	private MessageSource messageSource;
 	
+	// TODO: message placeholder should not start with capiltal letter
 	@NotEmpty(message = "{NotEmpty.registration.email}")
 	@Email(message = "{Email.registration.email}")
 	private String email;

@@ -26,7 +26,7 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void sendMail(String to, String subject, String body) {
 		final SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("J Library <springch018@gmail.com>");
+		message.setFrom("J Library <springch018@gmail.com>"); // TODO: should be configurable somewhere
 		message.setTo(to);
 		message.setSubject(subject);
 		message.setText(body);

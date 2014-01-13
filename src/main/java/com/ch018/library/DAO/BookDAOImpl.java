@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
 
+// TODO: remove comments if not necessary: TODO Auto-generated method stub
+// TODO: use NamedQuery somewhere
+// TODO: change line length limit to 120 or 150 characters to avoid poor formatting
 @Component
 public class BookDAOImpl implements BookDAO {
 
@@ -27,6 +30,7 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			sessionFactory.getCurrentSession().save(book);
 		} catch (Exception e) {
+			// TODO: add meaningful error message to log - check other files too
 			log.error(e);
 		}
 	}
@@ -182,6 +186,7 @@ public class BookDAOImpl implements BookDAO {
         List<Book> books = new ArrayList<Book>();
         try { 
             
+            // TODO: bad practice to use SQL query, add comment or replace with HQL
             Query query = sessionFactory.getCurrentSession()
                            .createSQLQuery("Select * From books order by `id` DESC LIMIT 5;");
            // books.addAll(query.list());
