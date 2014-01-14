@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.Registration;
-import com.ch018.library.service.MailService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.validator.RegistrationValidation;
 

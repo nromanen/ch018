@@ -56,6 +56,7 @@
 								<th><spring:message code="book.shelf"/></th>
 								<th><spring:message code="book.genre"/></th>
 								<th><spring:message code="book.term"/></th>
+								<th><spring:message code="book.count"/></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -79,6 +80,7 @@
 										<p class="genre${book.id}" hidden="true">${book.genre.id}</p></td>
 									<td class="term${book.id}">${book.term}</td>
 									<td class="desc${book.id}" hidden="true">${book.description}</td>
+									<td class="count${book.id}">${book.available}/${book.count}</td>
 
 									<td><a href="<c:url value="/bookusers?id=${book.id}"/>"
 										class="btn btn-info"><spring:message code="book.users"/></a><br> <a
@@ -128,9 +130,9 @@
 					</div>
 					<div class="modal-body">
 						<form:form id="editbook" class="form-horizontal" method="POST"
-							commandName="book"
+							commandName="book" enctype="multipart/form-data"
 							action="${pageContext.request.contextPath}/book/update">
-							<form:input path="id" id="id" class="hide" disabled="disabled" />
+							<form:hidden path="id" id="id" disabled="disabled" />
 
 							<div class="control-group">
 								<label class="control-label" for="title"><spring:message code="book.title"/></label>
@@ -211,6 +213,27 @@
 								<div class="controls">
 									<form:select path="genre" id="genre" items="${genre}"
 										itemValue="id" itemLabel="name" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="count"><spring:message code="book.count"/></label>
+								<div class="controls">
+									<form:input path="count" type="text" id="count"
+										placeholder="count" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="available"><spring:message code="book.available"/></label>
+								<div class="controls">
+									<form:input path="available" type="text" id="available"
+										placeholder="available" />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="image"><spring:message code="book.available"/></label>
+								<div class="controls">
+									<form:input path="image" type="file" id="image"
+										placeholder="image" />
 								</div>
 							</div>
 

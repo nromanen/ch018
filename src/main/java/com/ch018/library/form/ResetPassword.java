@@ -5,17 +5,16 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
+import com.ch018.library.util.IConstants;
+
 public class ResetPassword {
-	
-	private static final int MIN = 4;
-	private static final int MAX = 20;
 	
 	@Autowired 
 	private MessageSource messageSource;
 	
 	private String key;
 
-	@Size(min = MIN, max = MAX, message = "{Size.registration.password}")
+	@Size(min = IConstants.PASS_MIN, max = IConstants.PASS_MAX, message = "{Size.registration.password}")
 	private String password;
 
 	private String confirm;

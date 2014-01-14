@@ -1,7 +1,6 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +21,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.ch018.library.util.IConstants;
+
 /**
  * 
  * @author Yurik Mikhaletskiy
@@ -31,14 +32,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
-
-	private static final int MIN_YEAR = 1800;
-	private static final int MAX_LENGTH_TITLE = 200;
-	private static final int MAX_LENGTH_AUTHORS = 200;
-	private static final int MAX_LENGTH_PUBLICATION = 50;
-	private static final int MAX_SHELF = 200;
-	private static final int MAX_BOOKCASE = 200;
-	private static final int MAX_YEAR = 2014;
 	
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
@@ -83,28 +76,28 @@ public class Book implements Serializable {
 		return this.genre;
 	}
 
-	@Size(min = 0, max = MAX_LENGTH_TITLE)
+	@Size(min = 0, max = IConstants.MAX_LENGTH_TITLE)
 	@NotEmpty
 	@Column(name = "title")
 	public String getTitle() {
 		return title;
 	}
 
-	@Size(min = 0, max = MAX_LENGTH_AUTHORS)
+	@Size(min = 0, max = IConstants.MAX_LENGTH_AUTHORS)
 	@NotEmpty
 	@Column(name = "authors")
 	public String getAuthors() {
 		return authors;
 	}
 
-	@Min(value = MIN_YEAR)
-	@Max(value = MAX_YEAR)
+	@Min(value = IConstants.MIN_YEAR)
+	@Max(value = IConstants.MAX_YEAR)
 	@Column(name = "year_public")
 	public int getYear() {
 		return year;
 	}
 
-	@Size(min = 0, max = MAX_LENGTH_PUBLICATION)
+	@Size(min = 0, max = IConstants.MAX_LENGTH_PUBLICATION)
 	@NotEmpty
 	@Column(name = "publication")
 	public String getPublication() {
@@ -123,14 +116,14 @@ public class Book implements Serializable {
 	}
 
 	@Min(0)
-	@Max(MAX_SHELF)
+	@Max(IConstants.MAX_SHELF)
 	@Column(name = "shelf")
 	public int getShelf() {
 		return shelf;
 	}
 
 	@Min(0)
-	@Max(MAX_BOOKCASE)
+	@Max(IConstants.MAX_BOOKCASE)
 	@Column(name = "bookcase")
 	public int getBookcase() {
 		return bookcase;

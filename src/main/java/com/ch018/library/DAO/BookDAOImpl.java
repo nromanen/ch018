@@ -26,18 +26,15 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public void addBook(Book book) {
-		// TODO Auto-generated method stub
 		try {
 			sessionFactory.getCurrentSession().save(book);
 		} catch (Exception e) {
-			// TODO: add meaningful error message to log - check other files too
-			log.error(e);
+			log.error("Error insert book: " + e);
 		}
 	}
 
 	@Override
 	public void updateBook(Book book) {
-		// TODO Auto-generated method stub
 		try {
 			sessionFactory.getCurrentSession().update(book);
 			log.info("Updated book: " + book);
@@ -48,34 +45,31 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getAllBooks() {
-		// TODO Auto-generated method stub
 		List<Book> books = new ArrayList<>();
 		try {
 			books.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(Book.class).addOrder(Order.asc("id"))
 					.list());
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error getting all books: " + e);
 		}
 		return books;
 	}
 
 	@Override
 	public Book getBooksById(int id) {
-		// TODO Auto-generated method stub
 		Book book = null;
 		try {
 			book = (Book) sessionFactory.getCurrentSession()
 					.get(Book.class, id);
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error get book: " + e);
 		}
 		return book;
 	}
 
 	@Override
 	public List<Book> getBooksByTitle(String title) {
-		// TODO Auto-generated method stub
 		List<Book> books = new ArrayList<Book>();
 		try {
 			Query query = sessionFactory
@@ -86,14 +80,13 @@ public class BookDAOImpl implements BookDAO {
 					.setString("title", title);
 			books.addAll(query.list());
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error get Books By Title: " + e);
 		}
 		return books;
 	}
 
 	@Override
 	public List<Book> getBooksByAuthors(String authors) {
-		// TODO Auto-generated method stub
 		List<Book> books = new ArrayList<Book>();
 		try {
 			Query query = sessionFactory
@@ -104,14 +97,13 @@ public class BookDAOImpl implements BookDAO {
 					.setString("authors", authors);
 			books.addAll(query.list());
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error get Books By Author: " + e);
 		}
 		return books;
 	}
 
 	@Override
 	public List<Book> getBooksByYear(int year) {
-		// TODO Auto-generated method stub
 		List<Book> books = new ArrayList<Book>();
 		try {
 			Query query = sessionFactory
@@ -121,7 +113,7 @@ public class BookDAOImpl implements BookDAO {
 									+ "= (:year)").setInteger("year", year);
 			books.addAll(query.list());
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error get Books By year: " + e);
 		}
 		return books;
 	}
@@ -136,7 +128,7 @@ public class BookDAOImpl implements BookDAO {
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {
-			log.error(e);
+			log.error("Error delete Book: " + e);
 			deleted = 0;
 		}
 		return deleted;

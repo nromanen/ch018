@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="2.0">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
   <wb-module deploy-name="library">
     <property name="context-root" value="library"/>
     <wb-resource deploy-path="/" source-path="src/main/webapp"/>
@@ -169,6 +168,12 @@
     <dependent-module archiveName="tiles-request-jsp-1.0.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/apache/tiles/tiles-request-jsp/1.0.3/tiles-request-jsp-1.0.3.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="commons-fileupload-1.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-fileupload/commons-fileupload/1.3/commons-fileupload-1.3.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="commons-io-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="json-20131018.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20131018/json-20131018.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -180,5 +185,6 @@
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
   </wb-module>
 </project-modules>
