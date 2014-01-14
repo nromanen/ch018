@@ -72,7 +72,7 @@
 					aria-labelledby="deleteLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
+							aria-hidden="true">ï¿½</button>
 						<h3 id="deleteLabel"><spring:message code="person.delete"/></h3>
 					</div>
 					<div class="modal-body">
@@ -91,7 +91,7 @@
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
+							aria-hidden="true">&times;</button>
 						<h3 id="myModalLabel"><spring:message code="person.add"/>: <span id="rating"></span></h3>
 					</div>
 					<div class="modal-body">
@@ -134,24 +134,24 @@
     							</div>
   							</div>
   							
-  							<div class="control-group">
+  							<div class="control-group hide">
     							<label class="control-label" for="untimelyReturns"><spring:message code="person.untimelly"/></label>
     							<div class="controls">
-      								<form:input path="untimelyReturns" type="text" id="untimelyReturns" placeholder="0" />
+      								<form:hidden path="untimelyReturns"  id="untimelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
-  							<div class="control-group">
+  							<div class="control-group hide">
     							<label class="control-label" for="timelyReturns"><spring:message code="person.timelly"/></label>
     							<div class="controls">
-      								<form:input path="timelyReturns" type="text" id="timelyReturns" placeholder="0" />
+      								<form:hidden path="timelyReturns"  id="timelyReturns" placeholder="0" />
     							</div>
   							</div>
   							
-  							<div class="control-group">
+  							<div class="control-group hide">
     							<label class="control-label" for="failedOrders"><spring:message code="person.failed"/></label>
     							<div class="controls">
-      								<form:input path="failedOrders" type="text" id="failedOrders" placeholder="0" />
+      								<form:hidden path="failedOrders"  id="failedOrders" placeholder="0" />
     							</div>
   							</div>
   							

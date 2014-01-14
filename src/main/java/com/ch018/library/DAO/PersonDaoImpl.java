@@ -4,8 +4,6 @@
  */
 package com.ch018.library.DAO;
 
-import com.ch018.library.entity.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.ch018.library.entity.Person;
 
 /**
  * 

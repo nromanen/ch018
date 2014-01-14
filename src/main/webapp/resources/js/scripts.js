@@ -15,6 +15,9 @@ function fill_form(box, id) {
 	  $("#genre").val($(".genre" + id).text());
 	  $("#description").val($(".desc"+id).text());
 	  $("#term").val($(".term"+id).text());
+	  $count = $(".count"+id).text().split('/');
+	  $("#count").val($count[0]);
+	  $("#available").val($count[1]);
 	  
 	  $("#uname").val($(".uname" + id).text());
 	  $("#surname").val($(".surname" + id).text());
@@ -240,9 +243,11 @@ $(document).ready(function() {
 	  var bookcase = $("#bookcase").val();
 	  var shelf = $("#shelf").val();
 	  var genre = $("#genre").val();
+	  var count = $("#count").val();
+	  var available = $("#available").val();
 	  var json = { "id" : id, "title" : title, "authors": authors, "year" : year, "publication": publication, 
 			  "pages" : pages, "description": description, "term" : term, "bookcase": bookcase,
-			  "shelf" : shelf, "genre": genre};
+			  "shelf" : shelf, "genre": genre, "count": count, "available": available};
 	  $.ajax({
 		  url: $("#editbook").attr( "action"),
 		  data: JSON.stringify(json),
@@ -256,16 +261,13 @@ $(document).ready(function() {
 			$('#action_popup').modal("hide");
 			//$(".TableBooks").hide().fadeIn('fast');
 			location.reload();
-			
 		  },
 		  error: function() {
 			console.log("error");
-			
+			$('#action_popup').modal("show");
 		}
-		  
 	  });
 	  event.preventDefault();	
-	  
 });
   
   /**

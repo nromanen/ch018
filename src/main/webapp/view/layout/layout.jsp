@@ -31,7 +31,7 @@
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
-		<div class="container-fluid">
+		<div class="container-fluid body-content">
 			<div class="row-fluid">
 				<tiles:insertAttribute name="left" /> 
 				<tiles:insertAttribute name="body" /> 

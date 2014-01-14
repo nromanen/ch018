@@ -4,7 +4,7 @@
 <%@ page import="java.util.*" %>
 			<!-- Center -->
 <div class="span8">
-<!-- TODO: use <fmt:formatDate instead -->
+<!-- TODO: use <fmt:formatDate instead />-->
         <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy"); %>
       <!--  <input type="text" name="orderDate" value="<%= df.format(new java.util.Date()) %>"/> -->
         <br><br>
