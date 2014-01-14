@@ -210,8 +210,7 @@ public class OrdersDAOImpl implements OrdersDAO {
     public Date minReturnDateOf(int bookId) {
         Date minReturnDate = new Date();
         try {
-              String hql="SELCT B.returnDate BookInUse B where B.buid:=bookId";
-              Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("bookId", bookId);
+               
         } catch(Exception e) {
             log.error(e);
         }
