@@ -10,6 +10,7 @@ import com.ch018.library.entity.Orders;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -203,6 +204,23 @@ public class OrdersDAOImpl implements OrdersDAO {
             log.error(e);
         }
         return exist;
+    }
+
+    @Override
+    public Date minReturnDateOf(int bookId) {
+        Date minReturnDate = new Date();
+        try {
+              String hql="SELCT B.returnDate BookInUse B where B.buid:=bookId";
+              Query query = sessionFactory.getCurrentSession().createQuery(hql).setParameter("bookId", bookId);
+        } catch(Exception e) {
+            log.error(e);
+        }
+        return minReturnDate;
+    }
+
+    @Override
+    public Date minOrderDateOf(int bookId) {
+        return null;
     }
 
 }

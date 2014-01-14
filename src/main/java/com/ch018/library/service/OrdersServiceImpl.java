@@ -9,6 +9,7 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,18 @@ public class OrdersServiceImpl implements OrdersService{
     @Transactional
     public boolean orderExist(int personId, int bookId) {
         return ordDAO.orderExist(personId, bookId);
+    }
+
+    @Override
+    @Transactional
+    public Date minReturnDateOf(int bookid) {
+        return ordDAO.minReturnDateOf(bookid);
+    }
+
+    @Override
+    @Transactional
+    public Date minOrderDateOf(int bookId) {
+        return ordDAO.minOrderDateOf(bookId);
     }
     
 }

@@ -9,6 +9,7 @@
       <!--  <input type="text" name="orderDate" value="<%= df.format(new java.util.Date()) %>"/> -->
         <br><br>
                        <form:form method="POST" modelAttribute="order">
+                           <p>You may took this book for: ${term}</p>
                             <table>
                                 <tr><td>Choose issue date:</td> 
                                     <td><form:input path="issueDate" class="datetimepicker"/></td></tr>

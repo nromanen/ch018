@@ -12,6 +12,10 @@
 					</h3>
 					<p>${latest.authors}</p>
 					<p>${latest.description}</p>
+                                        <p><c:choose>
+                                                <c:when test="${latest.available==0}">Not Available</c:when>
+                                                <c:otherwise>Available</c:otherwise>
+                                            </c:choose></p>
 					<sec:authorize access="isAuthenticated()">
 						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
 							class="btn-mini"><spring:message code="message.cart" /></a>
