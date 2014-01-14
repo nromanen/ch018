@@ -8,6 +8,7 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,15 +16,17 @@ import java.util.List;
  * @author okryvortc
  */
 public interface OrdersService {
-    public void addOrder(Orders ord);
-    public void deleteOrder(Orders ord);
-    public Orders deleteOrder(int id);
-    public Collection getOrdersByBooksId(int id);
-    public Collection getOrdersByPersonId(int id);
-    public Collection getAllOrders(); 
-    List<Book> getAllBooks();
-	public List<Book> toIssueToday();
-	public List<Book> toIssuePerHour();
-	public Orders getById(int id);
-        public boolean orderExist(int personId, int bookId);
+     void addOrder(Orders ord);
+     void deleteOrder(Orders ord);
+     Orders deleteOrder(int id);
+     Collection getOrdersByBooksId(int id);
+     Collection getOrdersByPersonId(int id);
+     Collection getAllOrders(); 
+     List<Book> getAllBooks();
+     List<Book> toIssueToday();
+     List<Book> toIssuePerHour();
+     Orders getById(int id);
+     boolean orderExist(int personId, int bookId);
+     Date minReturnDateOf(int bookid);
+     Date minOrderDateOf(int bookId);
 }

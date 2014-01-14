@@ -18,6 +18,7 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -65,10 +66,11 @@ public class OrderController {
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = pers.getByEmail(principal.getName());
-        
+        int term=0;
+        Date date = new Date();
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
-        uses+=booksInUseService.getByPersonId(personId).size();
+        uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
         if (j == uses) {            
@@ -77,17 +79,27 @@ public class OrderController {
         if (order.orderExist(personId, bookId)) {
               return "redirect:/userOrder";
           } else {
-                Orders order = new Orders();
+                Orders newOrder = new Orders();
                 Book b = book.getBooksById(bookId);
-                order.setPerson(p);
-                order.setBook(b);
+                int available = b.getAvailable();
+                if (available == 0) {
+                    date = order.minReturnDateOf(bookId);
+                }
+                if (available == 1) {
+                    
+                }
+                if (available > 1) {
+                    term = 14;
+                }
+                newOrder.setPerson(p);
+                newOrder.setBook(b);
                 if (wishId > 0)
 					wish.deleteWishById(wishId);
                 if (wish.bookExistInWishList(bookId, personId)) {
                     int id = wish.getWishWithoutId(bookId, personId).getId();
 					wish.deleteWishById(id);
 				}
-                model.addAttribute("order", order);
+                model.addAttribute("order", newOrder);
                 return "order";
              }
     }
