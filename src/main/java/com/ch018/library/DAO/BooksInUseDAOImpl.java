@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
@@ -114,6 +115,22 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.eq("return_date", returnDate)).list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return booksInUses;
+	}
+	
+	@Override
+	public BooksInUse getMinByReturnDate(int bid) {
+		// TODO Auto-generated method stub
+		BooksInUse booksInUses = new BooksInUse();
+		try {
+			Criteria criteria = sessionFactory.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.add(Restrictions.eq("book_id", bid));
+			criteria.setProjection(Projections.min("return_date"));
+			booksInUses = (BooksInUse) criteria;
 		} catch (Exception e) {
 			log.error(e);
 		}

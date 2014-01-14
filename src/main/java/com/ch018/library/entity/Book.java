@@ -56,7 +56,7 @@ public class Book implements Serializable {
 
 
 	public Book() {
-
+		
 	}
 
 	public Book(Book b) {
@@ -140,11 +140,13 @@ public class Book implements Serializable {
 		return image;
 	}
 	
+	@Min(0)
 	@Column(name = "count")
 	public int getCount() {
 		return count;
 	}
 	
+	@Min(0)
 	@Column(name = "available")
 	public int getAvailable() {
 		return available;
