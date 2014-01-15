@@ -8,8 +8,11 @@ package com.ch018.library.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 
@@ -18,7 +21,6 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -66,10 +68,10 @@ public class OrderController {
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = pers.getByEmail(principal.getName());
-        int term=0;
-        Date date = new Date();
+        //BooksInUse inUse = new BooksInUse();
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
+        int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
@@ -83,13 +85,21 @@ public class OrderController {
                 Book b = book.getBooksById(bookId);
                 int available = b.getAvailable();
                 if (available == 0) {
-                    date = order.minReturnDateOf(bookId);
+                    Date date;
+                    date = booksInUseService.getMinByReturnDate(bookId);
+                    model.addAttribute("date", date);
                 }
                 if (available == 1) {
-                    
+                    Date date = order.minOrderDateOf(bookId);
+                    if(date == null){
+                       available++;
+                       } else {
+                        date.setDate(date.getDate() - 1);
+                        model.addAttribute("orderDate", date);
+                    }
                 }
                 if (available > 1) {
-                    term = 14;
+                    model.addAttribute("term", term);
                 }
                 newOrder.setPerson(p);
                 newOrder.setBook(b);

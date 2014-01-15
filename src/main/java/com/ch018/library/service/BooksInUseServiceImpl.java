@@ -138,4 +138,10 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		return booksInUseDAO.getById(id);
 	}
 
+    @Override
+    @Transactional
+    public Date getMinByReturnDate(int bid) {
+        return booksInUseDAO.getMinByReturnDate(bid); 
+    }
+
 }
