@@ -30,4 +30,5 @@ public interface PersonService {
 	void registrate(Registration registration, HttpServletRequest request);
 	void remindPasswoed(Person person, HttpServletRequest request);
 	void restorePassword(Person person, ResetPassword password);
+	void librarianSavePerson(Person person, HttpServletRequest request);
 }

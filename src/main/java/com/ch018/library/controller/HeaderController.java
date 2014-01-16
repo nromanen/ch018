@@ -1,7 +1,5 @@
 package com.ch018.library.controller;
 
-import java.security.Principal;
-
 import org.apache.tiles.Attribute;
 import org.apache.tiles.AttributeContext;
 import org.apache.tiles.preparer.ViewPreparer;
@@ -31,9 +29,15 @@ public class HeaderController implements ViewPreparer {
 	public void execute(Request tilesRequest, AttributeContext attributeContext) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
-		long countWish = wishListService.getCountByPerson(name);
-		long countOrders = 0;
+	    long countOrders = 0;
 		long countBooks = 0;
+		long countWish = 0;
+	    
+	    if (!name.equals("anonymousUser")) {
+	    	countWish = wishListService.getCountByPerson(name);
+	    }
+		
+		
 		
 		attributeContext.putAttribute("countWish", new Attribute(countWish));
 		attributeContext.putAttribute("countOrders", new Attribute(countOrders));
