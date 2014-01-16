@@ -16,6 +16,7 @@ import com.ch018.library.entity.Person.Role;
 import com.ch018.library.form.Registration;
 import com.ch018.library.form.ResetPassword;
 import com.ch018.library.util.CalculateRating;
+import com.ch018.library.util.PasswordGen;
 import com.ch018.library.util.VerificationKey;
 
 @Service
@@ -78,6 +79,7 @@ public class PersonServiceImpl implements PersonService {
 			ResetPassword password) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		person.setPassword(passwordEncoder.encode(password.getPassword()));
+		person.setEmailConfirmed(true);
 		personDao.update(person);
 	}
 
@@ -103,6 +105,18 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	public Person getById(int id) {
 		return personDao.getById(id);
+	}
+	
+	@Override
+	@Transactional
+	public Person getByIdWithBooks(int id) {
+		return personDao.getByIdWithBooks(id);
+	}
+	
+	@Override
+	@Transactional
+	public Person getByIdWithOrders(int id) {
+		return personDao.getByIdWithOrders(id);
 	}
 
 	@Override
@@ -196,6 +210,28 @@ public class PersonServiceImpl implements PersonService {
 		person.setEmailConfirmed(person2.getEmailConfirmed());
 		person.setVerificationKey(person2.getVerificationKey());
 		personDao.update(person);
+    }
+    
+    @Override
+    @Transactional
+    public void librarianSavePerson(Person person, HttpServletRequest request) {
+    	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		person.setPassword(passwordEncoder.encode(PasswordGen.generateString(6)));
+		person.setRole(Person.Role.ROLE_USER.toString());
+		person.setEmailConfirmed(false);
+		person.setVerificationKey(VerificationKey.generate(person.getEmail()));
+		person.setConfirm(false);
+		person.setRating(CalculateRating.getRating());
+		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
+		String url = "http://localhost:8080/library/remind";
+		String message = "Thank you for joining our JLibrary. Change your password by clicking next link: "
+		+ url + "/pass?key="                
+		+ person.getVerificationKey();
+		
+		mailService.sendMail(person.getEmail(),
+				"Library email confirmation", message);
+
+		personDao.save(person);
     }
 
 }

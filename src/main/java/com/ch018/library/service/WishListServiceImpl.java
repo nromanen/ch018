@@ -77,4 +77,10 @@ public class WishListServiceImpl implements WishListService{
         return wishlistDAO.getWishWithoutId(bookId, personId);
     }
     
+    @Override
+    @Transactional
+    public long getCountByPerson(String name) {
+    	return wishlistDAO.getCountByPerson(name);
+    }
+    
 }

@@ -10,10 +10,10 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.ch018.library.util.IConstants;
+
 @Service("mailService")
 public class MailServiceImpl implements MailService {
-	
-	private static final int MAX_ALLOWED_THREADS = 5;
 
 	private static Logger log = LogManager.getLogger(MailServiceImpl.class);
 	
@@ -21,12 +21,12 @@ public class MailServiceImpl implements MailService {
 	private MailSender mailSender;
 	
 	private ExecutorService executorService = Executors
-			.newFixedThreadPool(MAX_ALLOWED_THREADS);
+			.newFixedThreadPool(IConstants.MAX_ALLOWED_THREADS);
 	
 	@Override
 	public void sendMail(String to, String subject, String body) {
 		final SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("J Library <springch018@gmail.com>"); // TODO: should be configurable somewhere
+		message.setFrom(IConstants.MAIL_FROM);
 		message.setTo(to);
 		message.setSubject(subject);
 		message.setText(body);
@@ -37,7 +37,6 @@ public class MailServiceImpl implements MailService {
 					mailSender.send(message);
 				}
 			});
-			
 		} catch (Exception e) {
 			log.error(e);
 		}

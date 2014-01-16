@@ -6,11 +6,13 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +51,9 @@ public class BooksController {
 
 	@Autowired
 	private OrdersService ordersService;
+	
+	@Autowired 
+	private MessageSource messageSource;
 
 	/**
 	 * Add new book
@@ -60,17 +65,19 @@ public class BooksController {
 
 	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Book newOrUpdateBook(@RequestBody @Valid Book book,
+	public ArrayList<FieldError> newOrUpdateBook(@RequestBody @Valid Book book,
 			BindingResult result) {
+		ArrayList<FieldError> errors = new ArrayList<>();
 		if (result.hasErrors()) {
-			return book;
+			errors.addAll(result.getFieldErrors());
+			return errors;
 		}
 		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {
 			bookService.updateBook(book);
 		}
-		return book;
+		return null;
 	}
 
 	/**

@@ -1,23 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.ch018.library.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
-
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +47,7 @@ public class OrderController {
     private PersonService pers;
     
     @Autowired
-    private BookService book;
+    private BookService bookService;
     
     @Autowired
     private BooksInUseService booksInUseService;
@@ -80,7 +76,7 @@ public class OrderController {
               return "redirect:/userOrder";
           } else {
                 Orders newOrder = new Orders();
-                Book b = book.getBooksById(bookId);
+                Book b = bookService.getBooksById(bookId);
                 int available = b.getAvailable();
                 if (available == 0) {
                     date = order.minReturnDateOf(bookId);
@@ -108,7 +104,7 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result) {
-        newOrder.setBook(book.getBooksById(newOrder.getBook().getId()));
+        newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
         newOrder.setDate(new java.util.Date());
         order.addOrder(newOrder);
@@ -125,12 +121,23 @@ public class OrderController {
      * Librarian
      */
     @Secured("ROLE_LIBRARIAN")
-	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String showOrders(@RequestParam("id") Integer id, Model model) {
-		List<Orders> orders = (List<Orders>) order.getOrdersByBooksId(id);
-		model.addAttribute("orders", orders);
-		model.addAttribute("book", book.getBooksById(id));
-		return "orders";
+	@RequestMapping(value = "/orders/{query}/{id}", method = RequestMethod.GET)
+	public String showOrders(@PathVariable("id") Integer id,
+			@PathVariable("query") String query, Model model) {
+    	if (query.equals("book")) {
+			Book book = bookService.getBooksByIdWithOrders(id);
+			Set<Orders> orders = book.getOrders();
+			model.addAttribute("orders", orders);
+			model.addAttribute("book", book);
+			return "orders";
+		} else if (query.equals("user")) {
+			Person person = personService.getByIdWithOrders(id);
+			Set<Orders> orders = person.getOrders();
+			model.addAttribute("orders", orders);
+			model.addAttribute("person", person);
+			return "orders";
+		}
+		return "404";
 	}
 
 	@Secured("ROLE_LIBRARIAN")

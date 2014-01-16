@@ -69,6 +69,7 @@ html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+  background-color: #475770;
 }
 
 a:focus {
@@ -290,6 +291,10 @@ a:focus {
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 940px;
+}
+
+.navbar-fixed-top .container {
+  width: 1024px;
 }
 
 .span12 {

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ch018.library.entity.Person;
-import com.ch018.library.form.Password;
 import com.ch018.library.form.Registration;
 import com.ch018.library.form.ResetPassword;
 
@@ -15,6 +14,8 @@ public interface PersonService {
     void update(Person person);
     List<Person> getAll();
     Person getById(int id);
+    Person getByIdWithBooks(int id);
+    Person getByIdWithOrders(int id);
     Person getByEmail(String email);
     Person getByKey(String key);
     List<Person> getByName(String name);
@@ -29,4 +30,5 @@ public interface PersonService {
 	void registrate(Registration registration, HttpServletRequest request);
 	void remindPasswoed(Person person, HttpServletRequest request);
 	void restorePassword(Person person, ResetPassword password);
+	void librarianSavePerson(Person person, HttpServletRequest request);
 }

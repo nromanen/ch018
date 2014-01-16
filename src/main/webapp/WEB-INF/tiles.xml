@@ -2,11 +2,12 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 	<definition name="left" preparer="com.ch018.library.controller.GenreController" template="/view/layout/left.jsp" />
+	<definition name="header" preparer="com.ch018.library.controller.HeaderController" template="/view/layout/header.jsp" />
 	
 	<definition name="baseLayout" template="/view/layout/layout.jsp">
 		<put-attribute name="title" value="Sample Title" />
 		<put-attribute name="includes" value="/view/layout/includes.jsp" />
-		<put-attribute name="header" value="/view/layout/header.jsp" />
+		<put-attribute name="header" value="header" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="left" value="left" />
 		<put-attribute name="right" value="/view/layout/right.jsp" />
@@ -16,7 +17,7 @@
 	<definition name="signLayout" template="/view/layout/signlayout.jsp">
 		<put-attribute name="title" value="Sample Title" />
 		<put-attribute name="includes" value="/view/layout/includes.jsp" />
-		<put-attribute name="header" value="/view/layout/header.jsp" />
+		<put-attribute name="header" value="header" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/view/layout/footer.jsp" />
 	</definition>
@@ -24,6 +25,11 @@
 	<definition name="index" extends="baseLayout">
 		<put-attribute name="title" value="Library" />
 		<put-attribute name="body" value="/view/index.jsp" />
+	</definition>
+	
+	<definition name="book" extends="baseLayout">
+		<put-attribute name="title" value="Book" />
+		<put-attribute name="body" value="/view/book.jsp" />
 	</definition>
 	
 	<definition name="books" extends="baseLayout">

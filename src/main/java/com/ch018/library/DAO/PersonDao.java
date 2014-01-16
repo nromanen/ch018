@@ -19,6 +19,8 @@ public interface PersonDao {
 	void update(Person person);
 	List<Person> getAll();
 	Person getById(int id);
+	Person getByIdWithBooks(int id);
+	Person getByIdWithOrders(int id);
 	Person getByEmail(String email);
 	Person getByKey(String key);
 	List<Person> getByName(String name);

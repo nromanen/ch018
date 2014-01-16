@@ -6,10 +6,13 @@
 
 package com.ch018.library.DAO;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.WishList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
@@ -126,8 +129,7 @@ public class WishListDAOImpl implements WishListDAO {
 	                 .add(Restrictions.eq("person.email", personEmail)).list());
 	           
 	       } catch (Exception e) {
-	           log.error(e);
-	           System.out.println(e);
+	           log.error(e.getMessage());
 	       }
 	       return wish;
 	}
@@ -144,10 +146,25 @@ public class WishListDAOImpl implements WishListDAO {
                   w=wish.get(0);
                         
            } catch(Exception e) {
-               log.error(e);
+               log.error(e.getMessage());
            }
         return w;
     }
-
     
+    @Override
+    public long getCountByPerson(String name) {
+    	long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(*) from WishList W where W.person.email=:name")
+					.setString("name", name);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return count;
+    }
+
 }

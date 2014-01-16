@@ -41,7 +41,16 @@ public class BookServiceImpl implements BookService {
 	public Book getBooksById(int id) {
 		return bookDAO.getBooksById(id);
 	}
-
+	
+	@Transactional
+	public Book getBooksByIdWithUses(int id) {
+		return bookDAO.getBooksByIdWithUses(id);
+	}
+	
+	@Transactional
+	public Book getBooksByIdWithOrders(int id) {
+		return bookDAO.getBooksByIdWithOrders(id);
+	}
 
 	@Transactional
 	public List<Book> getBooksByTitle(String title) {
