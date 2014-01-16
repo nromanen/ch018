@@ -20,4 +20,5 @@ public interface BooksInUseService {
 	void removeBooksInUse(int id);
 	BooksInUse getById(int id);
         Date getMinByReturnDate(int bid);
+        boolean alreadyInUse(int bookId, int personId);
 }

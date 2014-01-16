@@ -68,6 +68,9 @@ public class OrderController {
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = pers.getByEmail(principal.getName());
+        if(booksInUseService.alreadyInUse(bookId, p.getId())){
+            return "redirect:/usersBooks";
+        }
         //BooksInUse inUse = new BooksInUse();
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();

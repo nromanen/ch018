@@ -20,5 +20,5 @@ public interface BookService {
 	List<Book> getBooksByYear(int year);
 	List<Book> simpleSearch(String parametr);
 	List<Book> paramSearch(String field, String parametr);
-    List<Book> latestArrivals();
+        List<Book> latestArrivals();
 }

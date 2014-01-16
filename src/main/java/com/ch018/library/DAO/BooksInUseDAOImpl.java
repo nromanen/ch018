@@ -213,4 +213,19 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		return bookInUse;
 	}
 
+    @Override
+    public boolean alreadyInUse(int bookId, int personId) {
+         boolean exist = true;
+        try {
+              Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BooksInUse.class)
+                                .add(Restrictions.eq("book.id", bookId))
+                                .add(Restrictions.eq("person.id", personId));
+            if (criteria.list().isEmpty())
+                 exist = false;
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return exist;
+    }
+
 }
