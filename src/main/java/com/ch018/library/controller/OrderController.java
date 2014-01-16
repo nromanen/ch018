@@ -2,7 +2,12 @@ package com.ch018.library.controller;
 
 import java.security.Principal;
 import java.util.List;
+
+import java.util.Calendar;
+
+
 import java.util.Set;
+
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
@@ -14,7 +19,9 @@ import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 
+
 import java.util.Date;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -62,10 +69,12 @@ public class OrderController {
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = pers.getByEmail(principal.getName());
-        int term=0;
-        Date date = new Date();
+        if (booksInUseService.alreadyInUse(bookId, p.getId())) {
+            return "redirect:/usersBooks";
+        }
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
+        int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         String fail = "You exceed your limit at the same time to take the book";
@@ -79,22 +88,30 @@ public class OrderController {
                 Book b = bookService.getBooksById(bookId);
                 int available = b.getAvailable();
                 if (available == 0) {
-                    date = order.minReturnDateOf(bookId);
+                    Date date;
+                    date = booksInUseService.getMinByReturnDate(bookId);
+                    model.addAttribute("date", date);
                 }
                 if (available == 1) {
-                    
+                    Date date = order.minOrderDateOf(bookId);
+                    if(date == null){
+                       available++;
+                       } else {
+                        date.setDate(date.getDate() - 1);
+                        model.addAttribute("orderDate", date);
+                    }
                 }
                 if (available > 1) {
-                    term = 14;
+                    model.addAttribute("term", term);
                 }
                 newOrder.setPerson(p);
                 newOrder.setBook(b);
-                if (wishId > 0)
-					wish.deleteWishById(wishId);
+               /* if (wishId > 0)
+			  wish.deleteWishById(wishId);
                 if (wish.bookExistInWishList(bookId, personId)) {
                     int id = wish.getWishWithoutId(bookId, personId).getId();
 					wish.deleteWishById(id);
-				}
+				}      */
                 model.addAttribute("order", newOrder);
                 return "order";
              }
@@ -104,10 +121,18 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result) {
+        int bookId = newOrder.getBook().getId();
+        int personId = newOrder.getPerson().getId();
+        //------------------------------------------
+
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
         newOrder.setDate(new java.util.Date());
         order.addOrder(newOrder);
+        if (wish.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
+                    int id = wish.getWishWithoutId(bookId, personId).getId();
+					wish.deleteWishById(id);
+				}
         return "redirect:/userOrder";
     }
     

@@ -88,12 +88,7 @@ public class OrdersServiceImpl implements OrdersService{
         return ordDAO.orderExist(personId, bookId);
     }
 
-    @Override
-    @Transactional
-    public Date minReturnDateOf(int bookid) {
-        return ordDAO.minReturnDateOf(bookid);
-    }
-
+ 
     @Override
     @Transactional
     public Date minOrderDateOf(int bookId) {

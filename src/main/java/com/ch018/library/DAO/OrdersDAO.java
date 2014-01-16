@@ -22,6 +22,5 @@ public interface OrdersDAO {
 	 List<Book> toIssueToday();
 	 List<Book> toIssuePerHour(); 
          boolean orderExist(int personId, int bookId);
-         Date minReturnDateOf(int bookid);
          Date minOrderDateOf(int bookId);
 }

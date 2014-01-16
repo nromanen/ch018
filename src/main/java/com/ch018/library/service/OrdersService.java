@@ -27,6 +27,5 @@ public interface OrdersService {
      List<Book> toIssuePerHour();
      Orders getById(int id);
      boolean orderExist(int personId, int bookId);
-     Date minReturnDateOf(int bookid);
      Date minOrderDateOf(int bookId);
 }

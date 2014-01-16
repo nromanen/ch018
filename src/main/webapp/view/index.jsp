@@ -26,7 +26,7 @@
 							class="btn-mini"><spring:message code="message.cart" /></a>
 						<br />
 						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
-							class="btn-mini"><spring:message code="message.ordernow" /></a>
+							class="btn-link"><spring:message code="message.ordernow" /></a>
 					</sec:authorize>
 				</div>
 		<c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">

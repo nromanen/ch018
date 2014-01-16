@@ -122,19 +122,20 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	}
 	
 	@Override
-	public BooksInUse getMinByReturnDate(int bid) {
-		// TODO Auto-generated method stub
-		BooksInUse booksInUses = new BooksInUse();
+	public Date getMinByReturnDate(int bid) {        
+                List<Date> dates = new ArrayList<>();
+                Date date = new Date();
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.add(Restrictions.eq("book_id", bid));
-			criteria.setProjection(Projections.min("return_date"));
-			booksInUses = (BooksInUse) criteria;
+					.add(Restrictions.eq("book.id", bid));
+                        criteria.setProjection(Projections.min("returnDate"));
+                        dates.addAll(criteria.list());
+                        date = dates.get(0);
 		} catch (Exception e) {
 			log.error(e);
 		}
-		return booksInUses;
+		return date;
 	}
 
 	@Override
@@ -211,5 +212,20 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		}
 		return bookInUse;
 	}
+
+    @Override
+    public boolean alreadyInUse(int bookId, int personId) {
+         boolean exist = true;
+        try {
+              Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BooksInUse.class)
+                                .add(Restrictions.eq("book.id", bookId))
+                                .add(Restrictions.eq("person.id", personId));
+            if (criteria.list().isEmpty())
+                 exist = false;
+        } catch (Exception e) {
+            log.error(e);
+        }
+        return exist;
+    }
 
 }
