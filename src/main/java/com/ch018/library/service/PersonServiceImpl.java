@@ -104,6 +104,18 @@ public class PersonServiceImpl implements PersonService {
 	public Person getById(int id) {
 		return personDao.getById(id);
 	}
+	
+	@Override
+	@Transactional
+	public Person getByIdWithBooks(int id) {
+		return personDao.getByIdWithBooks(id);
+	}
+	
+	@Override
+	@Transactional
+	public Person getByIdWithOrders(int id) {
+		return personDao.getByIdWithOrders(id);
+	}
 
 	@Override
 	@Transactional

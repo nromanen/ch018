@@ -16,8 +16,8 @@ function fill_form(box, id) {
 	  $("#description").val($(".desc"+id).text());
 	  $("#term").val($(".term"+id).text());
 	  $count = $(".count"+id).text().split('/');
-	  $("#count").val($count[0]);
-	  $("#available").val($count[1]);
+	  $("#count").val($count[1]);
+	  $("#available").val($count[0]);
 	  
 	  $("#uname").val($(".uname" + id).text());
 	  $("#surname").val($(".surname" + id).text());
@@ -99,6 +99,8 @@ $(document).ready(function() {
 	$("#newbookbutton, #newuserbutton").click(function() {
 		reset_form();
 		$('#action_popup').modal();
+		$('.myModalLabelNew').show();
+		$(".myModalLabelEdit").hide();
 	})
 	
 	/**
@@ -110,6 +112,8 @@ $(document).ready(function() {
 		//var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
 		fill_form("#action_popup", id)
 		$('#action_popup').modal();
+		$(".myModalLabelEdit").show();
+		$('.myModalLabelNew').hide();
 	})
 	
 	/**
@@ -124,30 +128,54 @@ $(document).ready(function() {
 	})
 	
 	/**
-	 * Return/issue click
+	 * Return/issue click for books
 	 */  
 	$("a[id^=returnbook], a[id^=issueorder]").click(function() {
 		var tr = "#" + $(this).parent().parent().attr("id");
 		var id = $(tr + " td:first-child").text();
-		var pid= $(".pid" + id).text();
-		var confirmed = $(tr + " .tdconfirmed").prop('checked');
-		
+		var pid= $(".pid" + id).text(); //get person id from table
+		var confirmed = $(tr + " .tdconfirmed").prop('checked'); 	
 		$("#aname").text(id);
 		$("#booknamemessage").text($("#bookname").text());
 		$("#usernamemessage").text($(tr + " .tdname").text() + " " + $(tr + " .tdsurname").text());
-		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());
-		
-		
-		$("#confimation").prop('checked', confirmed);
-		
+		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());	
+		$("#confimation").prop('checked', confirmed);		
 		if ($("#confimation").prop('checked') == false) {
 			$("#confirmuser").show();
 		}
-
-		
 		$("#days").val($(tr + " .tddays").text());
-		usernamemessage
-		console.log(id);
+		$('#action_popup').modal();
+	})
+	
+	/**
+	 * Return click for user
+	 */  
+	$("a[id^=returnuserbook]").click(function() {
+		var tr = "#" + $(this).parent().parent().attr("id");
+		var id = $(tr + " td:first-child").text();
+		var pid= $(".pid" + id).text(); //get book id from table
+		$("#aname").text(id);
+		$("#booknamemessage").text($(tr + " .tdtitle").text() + " " + $(tr + " .tdauthors").text());
+		$("#usernamemessage").text($("#username").text());
+		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());
+		$('#action_popup').modal();
+	})
+	
+	$("a[id^=issueuserorder]").click(function() {
+		var tr = "#" + $(this).parent().parent().attr("id");
+		var id = $(tr + " td:first-child").text();
+		
+		var confirmed = $(tr + " .tdconfirmed").prop('checked'); 
+		
+		$("#aname").text(id);
+		$("#booknamemessage").text($(tr + " .tdtitle").text() + " " + $(tr + " .tdauthors").text());
+		$("#usernamemessage").text($("#username").text());
+		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());	
+		$("#confimation").prop('checked', confirmed);		
+		if ($("#confimation").prop('checked') == false) {
+			$("#confirmuser").show();
+		}
+		$("#days").val($(tr + " .tddays").text());
 		$('#action_popup').modal();
 	})
 
@@ -258,12 +286,17 @@ $(document).ready(function() {
 	      },
 	      success: function(data) {
 			console.log("success");
-			$('#action_popup').modal("hide");
-			//$(".TableBooks").hide().fadeIn('fast');
-			location.reload();
+			if (data != "") {
+				$.each(data, function(i, val) {
+					$("#error" + val.field).text(val.defaultMessage);
+			    });
+			} else {
+				$('#action_popup').modal("hide");
+				location.reload();
+			}			
 		  },
-		  error: function() {
-			console.log("error");
+		  error: function(data) {
+			console.log(data);
 			$('#action_popup').modal("show");
 		}
 	  });
@@ -285,12 +318,7 @@ $(document).ready(function() {
 	  var timelyReturns = $("#timelyReturns").val();
 	  var failedOrders = $("#failedOrders").val();
 	  var password = $("#password").val();
-
-
-
-
 	  var confirm = $("#confirm").prop('checked');
-
 	  var json = { "id" : id, "name" : uname, "surname": surname, 
 			  "email" : email, "cellphone": cellphone, 
 			  "confirm": confirm, "timelyReturns": timelyReturns,
@@ -313,7 +341,6 @@ $(document).ready(function() {
 		  error: function() {
 			console.log("error");
 		}
-		  
 	  });
 	  event.preventDefault();	  
 });

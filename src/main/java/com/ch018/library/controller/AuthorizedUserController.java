@@ -9,9 +9,13 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,16 +23,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.Password;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.service.WishListService;
 
 
 // TODO: use only spaces or only tabs, remove trailing spaces, unnecessary double carriage returns in all files
@@ -46,12 +53,13 @@ public class AuthorizedUserController {
     
     @Autowired
     private GenreService genreService;
+    
+    @Autowired WishListService wishListService;
    
     
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String welomePage(
-			@RequestParam(value = "genre", required = false) Integer id,
+	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
 			Model model) {
 		if (id == null) {
 			model.addAttribute("latest", book.getAllBooks());
@@ -60,6 +68,22 @@ public class AuthorizedUserController {
 			model.addAttribute("latest", genre.getBooks());
 		}
 		return "index";
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public String search(@RequestParam String search, Model model) {
+		List<Book> books = new ArrayList<>();
+		books.addAll(book.simpleSearch(search));
+		model.addAttribute("latest", books);
+		return "index";
+	}
+	
+	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
+	public String bookPage(@PathVariable(value = "id") Integer id,
+			Model model) {
+		Book books = book.getBooksById(id);
+		model.addAttribute("book", books);
+		return "book";
 	}
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" }) // TODO: these strings are good as constants somewhere

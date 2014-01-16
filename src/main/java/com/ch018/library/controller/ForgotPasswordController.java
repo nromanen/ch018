@@ -35,7 +35,6 @@ public class ForgotPasswordController {
 			return "remind";
 		}
 		model.addAttribute("message", "");
-
 		return "remind";
 	}
 

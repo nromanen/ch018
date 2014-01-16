@@ -20,6 +20,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 
 import com.ch018.library.util.IConstants;
 
@@ -32,6 +34,9 @@ import com.ch018.library.util.IConstants;
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
+	
+	@Autowired 
+	private MessageSource messageSource;
 	
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;

@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span12">
-				<p>This is FOOTER</p>
+				&copy; 2014 SoftServe IT-academy, ch-018
 			</div>
 		</div>
 	</div>

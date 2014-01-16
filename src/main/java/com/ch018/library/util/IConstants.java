@@ -11,4 +11,9 @@ public interface IConstants {
 	
 	int PASS_MIN = 4;
 	int PASS_MAX = 20;
+	
+	String MAIL_FROM = "J Library <springch018@gmail.com>";
+	int MAX_ALLOWED_THREADS = 5;
+	
+	int MIN_ORDERS_FOR_RATING = 3;
 }

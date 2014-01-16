@@ -1,4 +1,14 @@
-<%@ include file="/view/includes.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
+<%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+<tilesx:useAttribute name="countWish" />
+<tilesx:useAttribute name="countOrders" />
+<tilesx:useAttribute name="countBooks" />
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		
@@ -9,11 +19,14 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-
-
 			<div class="nav-collapse collapse">
-
 				<ul class="nav">
+					<sec:authorize access="hasRole('ROLE_LIBRARIAN')">
+						<li><a href="<c:url value="/books"/>"><spring:message
+									code="menu.books" /></a></li>
+						<li><a href="<c:url value="/users"/>"><spring:message
+									code="menu.users" /></a></li>
+					</sec:authorize>
 					<li><a href="<c:url value="/"/>"><spring:message
 								code="menu.home" /></a></li>
 					<sec:authorize access="isAnonymous()">
@@ -24,18 +37,13 @@
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<li><a href="<c:url value="/wishList"/>"><spring:message
-									code="menu.wish" /></a></li>
+									code="menu.wish" /> (${countWish})</a></li>
 						<li><a href="<c:url value="/userOrder"/>"><spring:message
-									code="menu.orders" /></a></li>
+									code="menu.orders" /> (${countOrders})</a></li>
 						<li><a href="<c:url value="/usersBooks"/>"><spring:message
-									code="menu.mbooks" /></a></li>
+									code="menu.mbooks" /> (${countBooks})</a></li>
 					</sec:authorize>
-					<sec:authorize access="hasRole('ROLE_LIBRARIAN')">
-						<li><a href="<c:url value="/books"/>"><spring:message
-									code="menu.books" /></a></li>
-						<li><a href="<c:url value="/users"/>"><spring:message
-									code="menu.users" /></a></li>
-					</sec:authorize>
+					
 					<sec:authorize access="isAuthenticated()">
 						<li><a href="<c:url value="/userAccount"/>" rel="tooltip"
 							data-placement="bottom" data-original-title="Account"> <sec:authentication
