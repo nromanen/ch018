@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//src/main/resources/messages_ru.properties=UTF-8
 encoding//src/main/resources/messages_uk.properties=UTF-8
 encoding//src/main/webapp/resources/js/scripts.js=UTF-8
+encoding//src/main/webapp/view/book.jsp=UTF-8
 encoding//src/main/webapp/view/layout/footer.jsp=UTF-8
 encoding//src/main/webapp/view/layout/header.jsp=UTF-8
 encoding//src/main/webapp/view/librarian/books.jsp=UTF-8

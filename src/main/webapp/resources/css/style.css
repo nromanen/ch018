@@ -102,12 +102,28 @@ body > .navbar {
 	color: red;
 }
 
+.sp {
+	min-width: 130px;
+}
+
+.my {
+	min-height: 30px;
+}
+
+.rf {
+	min-width: 650px;
+}
+
+#rating {
+	margin-right: 5px;
+}
+
 .TableBooks a {
 	text-decoration: none;
 }
 
 .TableBooks {
-	margin:0px;
+	margin:10px 0px;
 	padding:0px;
 	width:100%;
 	box-shadow: 10px 10px 5px #888888;

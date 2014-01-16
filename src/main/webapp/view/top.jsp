@@ -1,9 +1,14 @@
-<%@ include file="/view/includes.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		
+
 		<div class="container">
-		<a class="brand mybrand" href="<c:url value="/"/>">jLibrary</a>
+			<a class="brand mybrand" href="<c:url value="/"/>">jLibrary</a>
 			<button type="button" class="btn btn-navbar" data-toggle="collapse"
 				data-target=".nav-collapse">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span

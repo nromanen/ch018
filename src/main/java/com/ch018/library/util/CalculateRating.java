@@ -7,11 +7,11 @@ public class CalculateRating {
 	public static double getRating(int failedOrders, int untimellyReturns, int timellyReturns) {
 		int orders = timellyReturns + untimellyReturns;
 		double rating = 1;
-		if (orders < 5) {
+		if (orders < IConstants.MIN_ORDERS_FOR_RATING) {
 			return rating;
 		}
-		rating = ((timellyReturns + 1)/(untimellyReturns + 1))/(failedOrders+1);
-		return rating; //new BigDecimal(rating).setScale(3, RoundingMode.HALF_UP).doubleValue();
+		rating = ((timellyReturns + 1) / (untimellyReturns + 1)) / (failedOrders+1);
+		return new BigDecimal(rating).setScale(3, RoundingMode.HALF_UP).doubleValue();
 	}
 	
 	public static double getRating() {

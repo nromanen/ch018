@@ -1,18 +1,22 @@
-<%@ include file="/view/includes.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span7 offset2">
 	<div class="well">
 		<div class="modal-header">
 			<h3 id="myModalLabel">
 				<spring:message code="message.remind" />
 			</h3>
-			<h5 id="myModalLabel">
-				Input new password
-			</h5>
+			<h5 id="myModalLabel">Input new password</h5>
 		</div>
 		<div class="modal-body">
-			<form:form id="restore" class="form-horizontal" method="POST" commandName="resetPassword" 
-			action="${pageContext.request.contextPath}/remind/pass" >
-				<form:hidden path="key"/>
+			<form:form id="restore" class="form-horizontal" method="POST"
+				commandName="resetPassword"
+				action="${pageContext.request.contextPath}/remind/pass">
+				<form:hidden path="key" />
 				<div class="control-group">
 					<label class="control-label" for="inputPasswordReg"><spring:message
 							code="person.pass" /></label>
@@ -21,7 +25,7 @@
 						<form:errors path="password" cssClass="error"></form:errors>
 					</div>
 				</div>
-				
+
 				<div class="control-group">
 					<label class="control-label" for="confirmPasswordReg"><spring:message
 							code="person.confirmpass" /></label>

@@ -1,5 +1,7 @@
 package com.ch018.library.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,9 +52,9 @@ public class PersonController {
 
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Person newPerson(@RequestBody Person person) {
+	public Person newPerson(@RequestBody Person person, HttpServletRequest request) {
 		if (person.getId() == 0) {
-			personService.save(person);
+			personService.librarianSavePerson(person, request);
 		} else {
 			Person person2 = personService.getById(person.getId());
 			personService.librarianUpdatePerson(person, person2);

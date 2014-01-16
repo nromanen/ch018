@@ -23,7 +23,6 @@ public class GenreDAOImpl implements GenreDAO {
 
 	@Override
 	public void addGenre(Genre genre) {
-		// TODO Auto-generated method stub
 		try {
 			sessionFactory.getCurrentSession().save(genre);
 		} catch (Exception e) {
@@ -33,7 +32,6 @@ public class GenreDAOImpl implements GenreDAO {
 
 	@Override
 	public List<Genre> getAllGenres() {
-		// TODO Auto-generated method stub
 		List<Genre> genres = new ArrayList<>();
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
@@ -62,7 +60,6 @@ public class GenreDAOImpl implements GenreDAO {
 
 	@Override
 	public Genre getGenreById(int id) {
-		// TODO Auto-generated method stub
 		Genre genre = null;
 		try {
 			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
@@ -75,7 +72,6 @@ public class GenreDAOImpl implements GenreDAO {
 
 	@Override
 	public Genre getGenreByName(String name) {
-		// TODO Auto-generated method stub
 		Genre genre = null;
 		try {
 			Query query = sessionFactory

@@ -1,4 +1,9 @@
-<%@ include file="/view/includes.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"  isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span7 offset2">
 
 	<div class="well" role="dialog" aria-labelledby="myModalLabel"
@@ -47,9 +52,9 @@
 					<button type="submit" class="btn btn-primary">
 						<spring:message code="button.reg" />
 					</button>
-					<button id="cancel" type="button" class="btn">
+					<a href="<c:url value="/"/>" id="cancel" type="button" class="btn">
 						<spring:message code="button.cancel" />
-					</button>
+					</a>
 				</div>
 			</form:form>
 		</div>

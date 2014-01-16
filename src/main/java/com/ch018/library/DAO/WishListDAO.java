@@ -35,4 +35,6 @@ public interface WishListDAO {
         
         public boolean bookExistInWishList(int bookId, int personId);
         public WishList getWishWithoutId(int bookId, int personId);
+        
+    long getCountByPerson(String name);
 }

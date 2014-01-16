@@ -13,7 +13,7 @@
 	<http auto-config="true" use-expressions="true">
 	<!-- TODO: so why two places to define security roles - in code and here? leave only one place -->
 		<intercept-url pattern="/books/**" access="hasRole('ROLE_LIBRARIAN')" />
-		<intercept-url pattern="/book/**" access="hasRole('ROLE_LIBRARIAN')" />
+		<!-- <intercept-url pattern="/book/**" access="hasRole('ROLE_LIBRARIAN')" /> -->
 		<intercept-url pattern="/user/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/wishList/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/userOrder/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
@@ -27,7 +27,7 @@
 		<intercept-url pattern="/login/**" access="isAnonymous()" />
 
 		<form-login login-page="/login"
-					authentication-failure-url="/login?error" default-target-url="/"/>
+					authentication-failure-url="/login?error" default-target-url="/" />
 		<logout logout-url="/logout"/>
 		
 		<remember-me key="libraryKey" token-validity-seconds="2419200"/>

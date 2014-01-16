@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -84,6 +85,32 @@ public class PersonDaoImpl implements PersonDao {
 		} catch (Exception e) {
 			log.error(e);
 		}
+		return person;
+	}
+	
+	@Override
+	public Person getByIdWithBooks(int id) {
+		Person person = null;
+		try {
+			person = (Person) sessionFactory.getCurrentSession().get(
+					Person.class, id);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		Hibernate.initialize(person.getBooksinuses());
+		return person;
+	}
+	
+	@Override
+	public Person getByIdWithOrders(int id) {
+		Person person = null;
+		try {
+			person = (Person) sessionFactory.getCurrentSession().get(
+					Person.class, id);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		Hibernate.initialize(person.getOrders());
 		return person;
 	}
 
