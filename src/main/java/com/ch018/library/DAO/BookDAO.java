@@ -17,5 +17,5 @@ public interface BookDAO {
 	void updateBook(Book book);
 	List<Book> simpleSearch(String parametr);
 	List<Book> paramSearch(String field, String parametr);
-    List<Book> latestArrivals();
+        List<Book> latestArrivals();
 }
