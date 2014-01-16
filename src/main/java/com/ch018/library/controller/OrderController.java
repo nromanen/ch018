@@ -68,10 +68,9 @@ public class OrderController {
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = pers.getByEmail(principal.getName());
-        if(booksInUseService.alreadyInUse(bookId, p.getId())){
+        if (booksInUseService.alreadyInUse(bookId, p.getId())) {
             return "redirect:/usersBooks";
         }
-        //BooksInUse inUse = new BooksInUse();
         int personId = p.getId();
         int  uses = order.getOrdersByPersonId(personId).size();
         int term = 14;
@@ -106,12 +105,12 @@ public class OrderController {
                 }
                 newOrder.setPerson(p);
                 newOrder.setBook(b);
-                if (wishId > 0)
-					wish.deleteWishById(wishId);
+               /* if (wishId > 0)
+			  wish.deleteWishById(wishId);
                 if (wish.bookExistInWishList(bookId, personId)) {
                     int id = wish.getWishWithoutId(bookId, personId).getId();
 					wish.deleteWishById(id);
-				}
+				}      */
                 model.addAttribute("order", newOrder);
                 return "order";
              }
@@ -121,10 +120,17 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result) {
+        int bookId = newOrder.getBook().getId();
+        int personId = newOrder.getPerson().getId();
+        //------------------------------------------
         newOrder.setBook(book.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
         newOrder.setDate(new java.util.Date());
         order.addOrder(newOrder);
+        if (wish.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
+                    int id = wish.getWishWithoutId(bookId, personId).getId();
+					wish.deleteWishById(id);
+				}
         return "redirect:/userOrder";
     }
     

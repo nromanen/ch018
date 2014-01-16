@@ -13,7 +13,7 @@
                                    <br> This book will be available after ${date}
                                </c:when>
                                <c:when test="${order.book.available==1}">
-                                   <c:if test="${orderDate!=null}">You may order this book, but must return it till ${orderDate} </c:if> 
+                                   <c:if test="${orderDate!=null}">You may order this book, but you must return it till ${orderDate} </c:if> 
                                    <c:if test="${orderDate==null}">You may took this book for : ${term} days</c:if>    
                                           
                                    <table>
@@ -49,20 +49,7 @@
                                    </table>
                                </c:otherwise>
                            </c:choose>
-                     <!--      <table>
-                                <tr><td>Choose issue date:</td> 
-                                    <td><form:input path="issueDate" class="datetimepicker"/></td></tr>
-                                <tr><td></td>
-                                    <td><form:input path="book.title" type="hidden"/></td>
-                                </tr>
-                                <tr><td></td>
-                                    <td><form:input path="book.id" type="hidden"/></td>
-                                </tr>
-                                <tr><td></td>
-                                    <td><form:input path="person.id" type="hidden"/></td>
-                                </tr>
-                                <tr><td><input type="submit" class="btn" value="Order"/></td></tr> 
-                             </table> -->
+                  
                         </form:form>
 </div> 
           
