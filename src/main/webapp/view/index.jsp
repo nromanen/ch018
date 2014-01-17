@@ -14,13 +14,13 @@
 				<div class="media">
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
-						
+						<div class=pull-right>
 						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
-							class="btn btn-success pull-right"><spring:message code="message.cart" /></a>
+							class="btn btn-success"><spring:message code="message.cart" /></a>
 							<br/>
 						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
-							class="btn btn-warning pull-right">  <spring:message code="message.ordernow" />  </a>
-						
+							class="btn btn-warning">  <spring:message code="message.ordernow" />  </a>
+						</div>
 					</sec:authorize>
 				</div>
 					<h3>
