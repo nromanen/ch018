@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * 
@@ -39,9 +42,12 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
+	@NotEmpty(message = "{NotEmpty.registration.email}")
+	@Email(message = "{Email.registration.email}")
 	@Column(name = "e_mail", unique = true, nullable = false)
 	private String email;
 
+	@NotEmpty
 	@Column(name = "cellphone")
 	private String cellphone;
 

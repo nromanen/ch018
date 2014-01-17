@@ -1,6 +1,7 @@
 package com.ch018.library.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +53,7 @@ public class PersonController {
 
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Person newPerson(@RequestBody Person person, HttpServletRequest request) {
+	public Person newPerson(@RequestBody @Valid Person person, HttpServletRequest request) {
 		if (person.getId() == 0) {
 			personService.librarianSavePerson(person, request);
 		} else {

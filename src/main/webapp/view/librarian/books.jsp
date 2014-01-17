@@ -100,7 +100,7 @@
 						<td>
 						<div class="btn-group">
 							<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-								Action
+								<spring:message code="button.action" />
     							<span class="caret"></span>
     						</button>
     						<ul class="dropdown-menu">
@@ -289,7 +289,7 @@
 						<form:label id="erroravailable" path="available" cssClass="error" />
 					</div>
 				</div>
-				<div class="control-group">
+				<div class="control-group hide">
 					<label class="control-label" for="image"><spring:message
 							code="book.available" /></label>
 					<div class="controls">
