@@ -62,7 +62,7 @@
 						<td>
 							<div class="btn-group">
 								<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-									Action
+									<spring:message code="button.action" />
 	    							<span class="caret"></span>
 	    						</button>
 	    						<ul class="dropdown-menu">

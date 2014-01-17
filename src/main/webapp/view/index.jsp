@@ -11,23 +11,28 @@
 			<div class="row-fluid">
 		</c:if>
 				<div class="thumbnail span4 sp">
-					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded"></a>
+				<div class="media">
+					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded pull-left"></a>
+					<sec:authorize access="isAuthenticated()">
+						
+						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
+							class="btn btn-success pull-right"><spring:message code="message.cart" /></a>
+							<br/>
+						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
+							class="btn btn-warning pull-right">  <spring:message code="message.ordernow" />  </a>
+						
+					</sec:authorize>
+				</div>
 					<h3>
 						<small>${latest.title}</small>
 					</h3>
 					<p>${latest.authors}</p>
 					<p>${latest.description}</p>
                     <p><c:choose>
-                    	<c:when test="${latest.available==0}">Not Available</c:when>
-                        <c:otherwise>Available</c:otherwise>
+                    	<c:when test="${latest.available==0}"><span class="label label-important">Not Available</span></c:when>
+                        <c:otherwise><span class="label label-success">Available</span></c:otherwise>
                        </c:choose></p>
-					<sec:authorize access="isAuthenticated()">
-						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
-							class="btn-mini"><spring:message code="message.cart" /></a>
-						<br />
-						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
-							class="btn-link"><spring:message code="message.ordernow" /></a>
-					</sec:authorize>
+					
 				</div>
 		<c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">
 			</div>
