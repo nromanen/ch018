@@ -66,6 +66,9 @@ public class BooksInUseController {
 	@ResponseBody
 	public String returnBook(@PathVariable int id) {
 		BooksInUse booksInUse = booksInUseService.getById(id);
+		Book book = booksInUse.getBook();
+		book.setAvailable(book.getAvailable() + 1);
+		bookService.updateBook(book);
 		booksInUseService.returnBook(booksInUse);
 		return "bookinuse";
 	}

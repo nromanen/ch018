@@ -75,6 +75,7 @@ public class BooksController {
 		if (book.getId() == 0) {
 			bookService.addBook(book);
 		} else {
+			book.setImage(bookService.getBooksById(book.getId()).getImage());
 			bookService.updateBook(book);
 		}
 		return null;

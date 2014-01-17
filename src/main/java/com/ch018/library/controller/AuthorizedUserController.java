@@ -72,7 +72,7 @@ public class AuthorizedUserController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String search(@RequestParam String search, Model model) {
-		List<Book> books = new ArrayList<>();
+		List<Book> books = new ArrayList<Book>();
 		books.addAll(book.simpleSearch(search));
 		model.addAttribute("latest", books);
 		return "index";

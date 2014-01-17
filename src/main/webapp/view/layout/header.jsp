@@ -38,13 +38,13 @@
 					<sec:authorize access="isAuthenticated()">
 						<li><a href="<c:url value="/wishList"/>"><spring:message
 									code="menu.wish" />
-									<c:if test="${countWish > 0}"> (${countWish})</c:if></a></li>
+									<c:if test="${countWish > 0}"> <span class="badge badge-info">${countWish}</span></c:if></a></li>
 						<li><a href="<c:url value="/userOrder"/>"><spring:message
 									code="menu.orders" />
-									<c:if test="${countOrders > 0}"> (${countOrders})</c:if></a></li>
+									<c:if test="${countOrders > 0}"> <span class="badge badge-info">${countOrders}</span></c:if></a></li>
 						<li><a href="<c:url value="/usersBooks"/>"><spring:message
 									code="menu.mbooks" />
-									<c:if test="${countBooks > 0}"> (${countBooks})</c:if></a></li>
+									<c:if test="${countBooks > 0}"> <span class="badge badge-info">${countBooks}</span></c:if></a></li>
 					</sec:authorize>
 					
 					<sec:authorize access="isAuthenticated()">

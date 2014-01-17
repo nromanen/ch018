@@ -9,7 +9,6 @@
 	<div class="row-fluid">
 		<div class="thumbnail media">
 			<img src="${book.image}" class="img-rounded pull-left">
-			
 				<h4 class="media-heading">${book.title}</h4>
 				<p><strong><spring:message code="book.authors" />: </strong>${book.authors}</p>
 				<p><strong><spring:message code="book.year" />: </strong>${book.year}</p>
@@ -17,16 +16,16 @@
 				<p><strong><spring:message code="book.description" />: </strong>${book.description}</p>
 				<p> 
 					<c:choose>
-						<c:when test="${book.available==0}">Not Available</c:when>
-						<c:otherwise>Available</c:otherwise>
+						<c:when test="${book.available==0}"><span class="label label-important">Not Available</span></c:when>
+						<c:otherwise><span class="label label-success">Available</span></c:otherwise>
 					</c:choose>
 				</p>
 				<sec:authorize access="isAuthenticated()">
 					<a href="<c:url value="/wishlist?bookId=${book.id}"/>"
-						class="btn-mini"><spring:message code="message.cart" /></a>
+						class="btn btn-success"><spring:message code="message.cart" /></a>
 					<br />
 					<a href="<c:url value="/order?book=${book.id}&wish=0"/>"
-						class="btn-mini"><spring:message code="message.ordernow" /></a>
+						class="btn btn-warning"><spring:message code="message.ordernow" /></a>
 				</sec:authorize>
 		
 		</div>

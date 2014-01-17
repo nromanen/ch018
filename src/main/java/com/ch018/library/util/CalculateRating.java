@@ -10,8 +10,9 @@ public class CalculateRating {
 		if (orders < IConstants.MIN_ORDERS_FOR_RATING) {
 			return rating;
 		}
-		rating = ((timellyReturns + 1) / (untimellyReturns + 1)) / (failedOrders+1);
-		return new BigDecimal(rating).setScale(3, RoundingMode.HALF_UP).doubleValue();
+		rating = (((double)timellyReturns + 1) / ((double)untimellyReturns + 1)) / ((double)failedOrders+1);
+		return new BigDecimal(rating).setScale(3, 
+				RoundingMode.HALF_UP).doubleValue();
 	}
 	
 	public static double getRating() {
