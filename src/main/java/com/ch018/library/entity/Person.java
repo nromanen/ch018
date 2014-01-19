@@ -12,9 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 
 /**
@@ -42,7 +48,7 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
-	@NotEmpty(message = "{NotEmpty.registration.email}")
+	@NotEmpty(message = "{NotEmpty.person.email}")
 	@Email(message = "{Email.registration.email}")
 	@Column(name = "e_mail", unique = true, nullable = false)
 	private String email;
@@ -74,7 +80,9 @@ public class Person implements Serializable {
 
 	@Column(name = "untimely_returns")
 	private int untimelyReturns;
-
+	
+	@NotNull
+	@Min(0)
 	@Column(name = "multibookAllowed")
 	private int multibookAllowed;
 

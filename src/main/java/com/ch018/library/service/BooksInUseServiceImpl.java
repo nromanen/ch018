@@ -17,6 +17,7 @@ import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.util.CalculateRating;
+import com.ch018.library.util.IConstants;
 
 @Service
 public class BooksInUseServiceImpl implements BooksInUseService {
@@ -62,6 +63,7 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		Person person = booksInUse.getPerson();
 		int timely = person.getTimelyReturns();
 		int untimely = person.getUntimelyReturns();
+		double rating;
 		Date now = new Date();
 		Date returnDate = booksInUse.getReturnDate();
 		if (returnDate.getTime() < now.getTime()) {
@@ -72,7 +74,9 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		}
 		person.setTimelyReturns(timely);
 		person.setUntimelyReturns(untimely);
-		person.setRating(CalculateRating.getRating(person.getFailedOrders(), person.getUntimelyReturns(), person.getTimelyReturns()));
+		rating = CalculateRating.getRating(person.getFailedOrders(), person.getUntimelyReturns(), person.getTimelyReturns());
+		person.setRating(rating);
+		person.setMultibookAllowed((int) (IConstants.MAX_MULTIBOOK_ALLOWED * rating));
 		personDao.update(person);
 		booksInUseDAO.removeBooksInUse(booksInUse.getBuid());
 	}

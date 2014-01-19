@@ -56,9 +56,9 @@
 		<spring:message code="book.errordel" />
 	</div>
 
-	<!-- Books table -->
-	<div class="TableBooks">
-		<table>
+	<!-- Books table class="TableBooks"-->
+	<div style="overflow-y: scroll">
+		<table class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
 					<th hidden="true"></th>
@@ -99,7 +99,7 @@
 
 						<td>
 						<div class="btn-group">
-							<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+							<button class="btn btn-primary dropdown-toggle btn-small" data-toggle="dropdown">
 								<spring:message code="button.action" />
     							<span class="caret"></span>
     						</button>
@@ -119,9 +119,9 @@
 						</td>
 							
 						<td><a href="#" id="editbook${book.id}"
-							class="btn btn-warning"><spring:message code="button.edit" /></a></td>
+							class="btn btn-warning btn-small"><spring:message code="button.edit" /></a></td>
 						<td><a href="#" id="deletebook${book.id}"
-							class="btn btn-danger"><spring:message code="button.delete" /></a></td>
+							class="btn btn-danger btn-small"><spring:message code="button.delete" /></a></td>
 
 					</tr>
 				</c:forEach>
@@ -168,6 +168,7 @@
 			<h3 class="myModalLabelNew hide">
 				<spring:message code="book.newbook" />
 			</h3>
+			<span id="errorbook" class="error"></span>
 		</div>
 		<div class="modal-body">
 			<form:form id="editbook" class="form-horizontal" method="POST"
@@ -199,7 +200,7 @@
 					<label class="control-label" for="year"><spring:message
 							code="book.year" /></label>
 					<div class="controls">
-						<form:input path="year" type="text" id="year" placeholder="Year" />
+						<form:input path="year" type="number" id="year" placeholder="Year" />
 						<form:label id="erroryear" path="year" cssClass="error" />
 					</div>
 				</div>
@@ -218,7 +219,7 @@
 					<label class="control-label" for="pages"><spring:message
 							code="book.pages" /></label>
 					<div class="controls">
-						<form:input path="pages" type="text" id="pages"
+						<form:input path="pages" type="number" id="pages"
 							placeholder="Pages" />
 						<form:label id="errorpages" path="pages" cssClass="error" />
 					</div>
@@ -238,7 +239,7 @@
 					<label class="control-label" for="term"><spring:message
 							code="book.term" /></label>
 					<div class="controls">
-						<form:input path="term" type="text" id="term" placeholder="Term" />
+						<form:input path="term" type="number" id="term" placeholder="Term" />
 						<form:label id="errorterm" path="term" cssClass="error" />
 					</div>
 				</div>
@@ -247,7 +248,7 @@
 					<label class="control-label" for="bookcase"><spring:message
 							code="book.bookcase" /></label>
 					<div class="controls">
-						<form:input path="bookcase" type="text" id="bookcase"
+						<form:input path="bookcase" type="number" id="bookcase"
 							placeholder="Bookcase" />
 						<form:label id="errorbookcase" path="bookcase" cssClass="error" />
 					</div>
@@ -257,7 +258,7 @@
 					<label class="control-label" for="shelf"><spring:message
 							code="book.shelf" /></label>
 					<div class="controls">
-						<form:input path="shelf" type="text" id="shelf"
+						<form:input path="shelf" type="number" id="shelf"
 							placeholder="Shelf" />
 						<form:label id="errorshelf" path="shelf" cssClass="error" />
 					</div>
@@ -275,7 +276,7 @@
 					<label class="control-label" for="count"><spring:message
 							code="book.count" /></label>
 					<div class="controls">
-						<form:input path="count" type="text" id="count"
+						<form:input path="count" type="number" id="count"
 							placeholder="count" />
 						<form:label id="errorcount" path="count" cssClass="error" />
 					</div>
@@ -284,7 +285,7 @@
 					<label class="control-label" for="available"><spring:message
 							code="book.available" /></label>
 					<div class="controls">
-						<form:input path="available" type="text" id="available"
+						<form:input path="available" type="number" id="available"
 							placeholder="available" />
 						<form:label id="erroravailable" path="available" cssClass="error" />
 					</div>

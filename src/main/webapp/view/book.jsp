@@ -21,11 +21,12 @@
 					</c:choose>
 				</p>
 				<sec:authorize access="isAuthenticated()">
+				<div class="btn-group btn-group-vertical">
 					<a href="<c:url value="/wishlist?bookId=${book.id}"/>"
 						class="btn btn-success"><spring:message code="message.cart" /></a>
-					<br />
 					<a href="<c:url value="/order?book=${book.id}&wish=0"/>"
 						class="btn btn-warning"><spring:message code="message.ordernow" /></a>
+				</div>
 				</sec:authorize>
 		
 		</div>

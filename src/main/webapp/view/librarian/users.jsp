@@ -16,8 +16,8 @@
 		<spring:message code="person.errordel" />
 	</div>
 
-	<div class="TableBooks">
-		<table id="utable">
+	<div style="overflow-y: scroll">
+		<table id="utable" class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
 					<th hidden="true"></th>
@@ -27,8 +27,7 @@
 					<th><spring:message code="person.mobile" /></th>
 					<th><spring:message code="person.multibookallowed" /></th>
 					<th><spring:message code="person.untimelly" /></th>
-					<th><spring:message code="person.timelly" />
-						<div></div></th>
+					<th><spring:message code="person.timelly" /></th>
 					<th><spring:message code="person.failed" /></th>
 					<th><spring:message code="person.rating" /></th>
 
@@ -133,6 +132,7 @@
 			<h3 class="myModalLabelNew hide">
 				<spring:message code="person.new" />
 			</h3>
+			<span id="errorperson" class="error"></span>
 		</div>
 		<div class="modal-body">
 			<form:form id="addedituser" class="form-horizontal" method="POST"
@@ -145,7 +145,7 @@
 							code="person.firstname" /></label>
 					<div class="controls">
 						<form:input path="name" type="text" id="uname" placeholder="Name" />
-						<form:errors path="name" cssClass="error"></form:errors>
+						<form:label id="erroruname" path="name" cssClass="error" />
 					</div>
 				</div>
 
@@ -155,7 +155,7 @@
 					<div class="controls">
 						<form:input path="surname" type="text" id="surname"
 							placeholder="Second Name" />
-						<form:errors path="surname" cssClass="error"></form:errors>
+						<form:label id="erroruname" path="surname" cssClass="error" />
 					</div>
 				</div>
 
@@ -164,7 +164,7 @@
 							code="person.mail" /></label>
 					<div class="controls">
 						<form:input path="email" type="email" id="email" />
-						<form:errors path="email" cssClass="error"></form:errors>
+						<form:label id="erroremail" path="email" cssClass="error" />
 					</div>
 				</div>
 
@@ -174,7 +174,7 @@
 					<div class="controls">
 						<form:input path="cellphone" type="text" id="cellphone"
 							placeholder="Mobile" />
-						<form:errors path="cellphone" cssClass="error"></form:errors>
+						<form:label id="errorcellphone" path="cellphone" cssClass="error" />
 					</div>
 				</div>
 
@@ -184,7 +184,7 @@
 					<div class="controls">
 						<form:input path="multibookAllowed" type="number"
 							id="multibookAllowed"  />
-						<form:errors path="multibookAllowed" cssClass="error"></form:errors>
+						<form:label id="errormultibookAllowed" path="multibookAllowed" cssClass="error" />
 					</div>
 				</div>
 
