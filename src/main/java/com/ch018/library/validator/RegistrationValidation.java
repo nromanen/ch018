@@ -22,10 +22,8 @@ public class RegistrationValidation implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
-				"required.password", "Field password is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword",
-				"required.confirmPassword", "Field password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.password", "Field password is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required.confirmPassword", "Field password is required.");
 		Registration registration = (Registration) target;
 
 		if (!(registration.getPassword().equals(registration
