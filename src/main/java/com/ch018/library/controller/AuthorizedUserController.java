@@ -36,6 +36,7 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import javax.servlet.http.HttpServletRequest;
 
 
 // TODO: use only spaces or only tabs, remove trailing spaces, unnecessary double carriage returns in all files
@@ -97,11 +98,11 @@ public class AuthorizedUserController {
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person")Person updtPers, 
                               @ModelAttribute("password")Object password, 
-                              BindingResult result, Principal principal) {
+                              BindingResult result, Principal principal, HttpServletRequest request) {
         Person person = persService.getByEmail(principal.getName());
-        person = persService.updateAccProperties(person, updtPers);
+        person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
-        return "redirect:/userAccount";
+        return "redirect:/logout";
     }
     
 	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })

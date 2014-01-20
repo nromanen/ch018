@@ -24,7 +24,7 @@ public interface PersonService {
     List<Person> getByRole(String role);
     List<Person> getConfirmed();
     List<Person> getSmsEnabled();
-    Person updateAccProperties(Person person, Person updatedPerson);
+    Person updateAccProperties(Person person, Person updatedPerson, HttpServletRequest request);
     long isExist(String email);
     void librarianUpdatePerson(Person person, Person person2);
 	void registrate(Registration registration, HttpServletRequest request);

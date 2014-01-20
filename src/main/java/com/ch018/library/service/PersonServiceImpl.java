@@ -168,7 +168,7 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person updateAccProperties(Person person, Person updatedPerson) {
+	public Person updateAccProperties(Person person, Person updatedPerson, HttpServletRequest request) {
 		if (!updatedPerson.getName().isEmpty())
 			if ((person.getName() == null)
 					|| (!person.getName().equals(updatedPerson.getName()))) {
@@ -188,6 +188,13 @@ public class PersonServiceImpl implements PersonService {
 		if (!updatedPerson.getEmail().isEmpty())
 			if (!person.getEmail().equals(updatedPerson.getEmail())) {
 				person.setEmail(updatedPerson.getEmail());
+                                String url = request.getRequestURL().toString();
+		                String message = "You have change your e-mail address on account in J Library"
+				+ " Please confirm your new email by clicking next link: "
+				+ url + "/confirm?key="                
+				+ person.getVerificationKey();
+		                mailService.sendMail(person.getEmail(),
+				"Library email confirmation", message);
 			}
 		if (person.getSms() != updatedPerson.getSms()) {
 			person.setSms(updatedPerson.getSms());
