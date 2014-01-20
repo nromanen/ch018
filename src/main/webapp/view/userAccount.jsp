@@ -6,35 +6,49 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span8">
     <h3><spring:message code="message.accprop"/></h3>
-                            <form:form   method="POST"  commandName="person">
-                                 <table>
-                                       <tr>
-                                           <td><spring:message code="person.firstname"/>: </td>
-                                          <td><form:input path="name"/></td>
-                                       </tr>
-                                       <tr>
-                                          <td><spring:message code="person.lastname"/>: </td>
-                                          <td><form:input path="surname"/></td>
-                                       </tr>
-                                       <tr>
-                                          <td><spring:message code="person.mobile"/>: </td>
-                                          <td><form:input path="cellphone" value="${person.cellphone}"/></td>
-                                       </tr>
-                                       <tr>
-                                          <td>SMS: </td>
-                                          <td><form:checkbox path="sms"/></td>
-                                       </tr>
-                                       <tr>
-                                           <td><spring:message code="person.mail"/></td>
-                                           <td><form:input path="email"/></td>
-                                       </tr>
-                                       
-                                       <tr>
-                                          <td>
-                                              <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
-                                          </td>
-                                       </tr>
-                                 </table>
+                            <form:form   method="POST"  commandName="person" class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label" for="name"><spring:message code="person.firstname"/>:</label>
+                                    <div class="controls"> 
+                                        <form:input id="name" path="name"/>
+                                        <form:errors path="name" cssClass="error"/>
+                                    </div>
+                                </div>
+                                    
+                                <div class="control-group">
+                                        <label class="control-label" for="surname"><spring:message code="person.lastname"/>:</label>
+                                        <div class="controls">
+                                            <form:input id="surname" path="surname"/>
+                                            <form:errors path="surname" cssClass="error"/>
+                                        </div> 
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label class="control-label" for="cellphone"><spring:message code="person.mobile"/>:</label>
+                                             <div class="controls">
+                                                  <form:input path="cellphone" id="cellphone" value="${person.cellphone}"/>
+                                                  <form:errors path="cellphone" cssClass="error"/>
+                                             </div>
+                                </div>
+                                
+                                <div class="control-group">  
+                                    <label class="control-label" for="sms">SMS:</label>
+                                    <div class="controls"> 
+                                        <form:checkbox path="sms" id="sms"/>
+                                        <form:errors path="sms" cssClass="error"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label class="control-label" for="email"><spring:message code="person.mail"/>:</label>
+                                    <div class="controls"> 
+                                        <form:input path="email" id="email"/>
+                                        <form:errors path="email" cssClass="error"/>
+                                    </div>
+                                </div>
+                                
+                                <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
+                                   
                              </form:form>
                                
                             <a href="<c:url value="/pass"/>" class="btn"><spring:message code="button.changepass"/></a>
