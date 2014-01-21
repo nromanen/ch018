@@ -46,6 +46,7 @@ public class PersonController {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		Person person = new Person();
+		person.setEmail("");
 		model.addAttribute("persons", personService.getAll());
 		model.addAttribute("person", person);
 		return "users";

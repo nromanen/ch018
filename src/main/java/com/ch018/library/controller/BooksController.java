@@ -136,6 +136,7 @@ public class BooksController {
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		model.addAttribute("book", book);
+		model.addAttribute("genre", genreService.getAllGenres());
 		if (field.equals("all")) {
 			books.addAll(bookService.simpleSearch(search));
 		} else {

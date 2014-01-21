@@ -34,10 +34,7 @@ import com.ch018.library.util.IConstants;
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
-	
-	@Autowired 
-	private MessageSource messageSource;
-	
+		
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
 	private Genre genre;
