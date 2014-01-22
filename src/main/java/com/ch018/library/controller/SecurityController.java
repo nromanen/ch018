@@ -36,8 +36,13 @@ public class SecurityController {
 	
 	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView loginForm() {
-		return new ModelAndView("login");
+	public String loginForm(@RequestParam(required = false) String error, Model model) {
+		if (error != null) {
+			model.addAttribute("error", "person.loginerror");
+		} else {
+			model.addAttribute("error", "person.loginnull");
+		}
+		return "login";
 	}
 
 	@Secured("ROLE_ANONYMOUS")

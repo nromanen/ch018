@@ -11,15 +11,20 @@
 <tilesx:useAttribute name="countBooks" />
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
-		
+
 		<div class="container">
-		<a class="brand mybrand" href="<c:url value="/"/>">jLibrary</a>
-			<button type="button" class="btn btn-navbar" data-toggle="collapse"
-				data-target=".nav-collapse">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+			<button type="button" class="btn btn-navbar" data-toggle="collapse"	data-target=".nav-collapse">
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 			</button>
-			<div class="nav-collapse collapse">
+			<a class="brand mybrand" href="<c:url value="/"/>">jLibrary</a>
+			<form class="navbar-search pull-right" method="POST"
+				action="${pageContext.request.contextPath}/">
+				<input name="search" type="text" class="search-query input-small"
+					placeholder="Search">
+			</form>
+			<div class="nav-collapse collapse" style="height: 0px;">
 				<ul class="nav">
 					<sec:authorize access="hasRole('ROLE_LIBRARIAN')">
 						<li><a href="<c:url value="/books"/>"><spring:message
@@ -27,8 +32,8 @@
 						<li><a href="<c:url value="/users"/>"><spring:message
 									code="menu.users" /></a></li>
 					</sec:authorize>
-					<li><a href="<c:url value="/"/>"><spring:message
-								code="menu.home" /></a></li>
+						<li><a href="<c:url value="/"/>"><spring:message
+									code="menu.home" /></a></li>
 					<sec:authorize access="isAnonymous()">
 						<li><a href="<c:url value="#"/>" id="signtoggle"
 							rel="popover"><spring:message code="menu.sign" /></a></li>
@@ -55,15 +60,10 @@
 						<li><a href="<c:url value="/logout"/>"><spring:message
 									code="menu.logout" /></a></li>
 					</sec:authorize>
-
 				</ul>
-
 			</div>
-			<form class="navbar-search pull-right" method="POST"
-				action="${pageContext.request.contextPath}/">
-				<input name="search" type="text" class="search-query input-small"
-					placeholder="Search">
-			</form>
+			
+			
 
 
 			<div id="popover_content_wrapper" style="display: none">

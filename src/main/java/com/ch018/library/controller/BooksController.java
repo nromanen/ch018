@@ -12,7 +12,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Book;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
@@ -65,20 +65,23 @@ public class BooksController {
 
 	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ArrayList<FieldError> newOrUpdateBook(@RequestBody @Valid Book book,
+	public JsonResponse newOrUpdateBook(@RequestBody @Valid Book book,
 			BindingResult result) {
-		ArrayList<FieldError> errors = new ArrayList<>();
-		if (result.hasErrors()) {
-			errors.addAll(result.getFieldErrors());
-			return errors;
-		}
-		if (book.getId() == 0) {
-			bookService.addBook(book);
+		JsonResponse resp = new JsonResponse();
+		if (!result.hasErrors()) {
+			resp.setStatus("SUCCESS");
+			if (book.getId() == 0) {
+				bookService.addBook(book);
+			} else {
+				book.setImage(bookService.getBooksById(book.getId()).getImage());
+				bookService.updateBook(book);
+			}
+			resp.setResult(book);
 		} else {
-			book.setImage(bookService.getBooksById(book.getId()).getImage());
-			bookService.updateBook(book);
+			resp.setStatus("FAIL");
+			resp.setResult(result.getAllErrors());
 		}
-		return null;
+		return resp;
 	}
 
 	/**
@@ -133,6 +136,7 @@ public class BooksController {
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		model.addAttribute("book", book);
+		model.addAttribute("genre", genreService.getAllGenres());
 		if (field.equals("all")) {
 			books.addAll(bookService.simpleSearch(search));
 		} else {

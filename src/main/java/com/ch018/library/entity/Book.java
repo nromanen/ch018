@@ -34,10 +34,7 @@ import com.ch018.library.util.IConstants;
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
-	
-	@Autowired 
-	private MessageSource messageSource;
-	
+		
 	private static final long serialVersionUID = 8488328581221067484L;
 	private int id;
 	private Genre genre;
@@ -53,6 +50,7 @@ public class Book implements Serializable {
 	private String image;
 	private int count;
 	private int available;
+	private float rating;
 
 	
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -97,7 +95,7 @@ public class Book implements Serializable {
 
 	@Min(value = IConstants.MIN_YEAR)
 	@Max(value = IConstants.MAX_YEAR)
-	@Column(name = "year_public")
+	@Column(name = "year_public", columnDefinition = "int default 0")
 	public int getYear() {
 		return year;
 	}
@@ -110,7 +108,7 @@ public class Book implements Serializable {
 	}
 
 	@Min(0)
-	@Column(name = "pages")
+	@Column(name = "pages", columnDefinition = "int default 0")
 	public int getPages() {
 		return pages;
 	}
@@ -122,14 +120,14 @@ public class Book implements Serializable {
 
 	@Min(0)
 	@Max(IConstants.MAX_SHELF)
-	@Column(name = "shelf")
+	@Column(name = "shelf", columnDefinition = "int default 0")
 	public int getShelf() {
 		return shelf;
 	}
 
 	@Min(0)
 	@Max(IConstants.MAX_BOOKCASE)
-	@Column(name = "bookcase")
+	@Column(name = "bookcase", columnDefinition = "int default 0")
 	public int getBookcase() {
 		return bookcase;
 	}
@@ -146,13 +144,13 @@ public class Book implements Serializable {
 	}
 	
 	@Min(0)
-	@Column(name = "count")
+	@Column(name = "count", columnDefinition = "int default 0")
 	public int getCount() {
 		return count;
 	}
 	
 	@Min(0)
-	@Column(name = "available")
+	@Column(name = "available", columnDefinition = "int default 0")
 	public int getAvailable() {
 		return available;
 	}
@@ -178,6 +176,11 @@ public class Book implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
 	public Set<Orders> getOrders() {
 		return orders;
+	}
+	
+	@Column(name = "rating", scale = 5, columnDefinition = "float(6) default 0")
+	public float getRating() {
+		return rating;
 	}
 
 	public void setOrders(Set<Orders> orders) {
@@ -239,6 +242,10 @@ public class Book implements Serializable {
 	public void setAvailable(int available) {
 		this.available = available;
 	}
+	
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -264,10 +271,7 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO: toString should contain entity name at least, format: Book[id: 1, title: [The Lone Island], Authors: [One, Two], Year: 1998]
-		// TODO: other entities should have meaningful toString too.
-		return getId() + " " + getTitle() + " " + getAuthors() + " "
-				+ getYear();
+		return "Book[id: " + getId() + ", title: [" + getTitle() + "], Authors: [" + getAuthors() + "], Year: " + getYear() + "]";
 	}
 
 }

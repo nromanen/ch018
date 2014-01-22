@@ -16,4 +16,5 @@ public interface IConstants {
 	int MAX_ALLOWED_THREADS = 5;
 	
 	int MIN_ORDERS_FOR_RATING = 3;
+	int MAX_MULTIBOOK_ALLOWED = 10;
 }

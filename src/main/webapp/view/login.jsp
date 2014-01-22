@@ -10,6 +10,7 @@
 			<h3 id="myModalLabel">
 				<spring:message code="menu.sign" />
 			</h3>
+			<span class = "error"><spring:message code="${error}" /></span>
 		</div>
 		<div class="modal-body">
 			<form class="form-horizontal" action="j_spring_security_check"

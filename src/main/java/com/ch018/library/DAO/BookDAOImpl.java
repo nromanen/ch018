@@ -52,7 +52,18 @@ public class BookDAOImpl implements BookDAO {
 					.createCriteria(Book.class).addOrder(Order.asc("id"))
 					.list());
 		} catch (Exception e) {
-			log.error("Error getting all books: " + e);
+			log.error("Error getting all books: " + e.getMessage());
+		}
+		return books;
+	}
+	
+	@Override
+	public List<Book> getAllBooks(int currentPos, int pageSize) {
+		List<Book> books = new ArrayList<>();
+		try {
+			books.addAll(sessionFactory.getCurrentSession().createQuery("from Book").setMaxResults(pageSize).setFirstResult(currentPos).list());
+		} catch (Exception e) {
+			log.error("Error getting all books: " + e.getMessage());
 		}
 		return books;
 	}
