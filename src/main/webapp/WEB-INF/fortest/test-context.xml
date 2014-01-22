@@ -82,4 +82,12 @@
 	<bean id="registrationValidation" name="registrationValidation" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.validator.RegistrationValidation"/>
 	</bean>
+        
+        <bean id="accountValidation" name="accountValidation" class="org.mockito.Mockito" factory-method="mock">
+                <constructor-arg value="com.ch018.library.validator.AccountValidation"/>
+        </bean>
+        
+        <bean id="changePass" name="changePass" class="org.mockito.Mockito" factory-method="mock">
+                <constructor-arg value="com.ch018.library.validator.ChangePasswordValid"/>
+        </bean>
 </beans>

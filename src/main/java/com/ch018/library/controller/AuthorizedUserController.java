@@ -106,12 +106,18 @@ public class AuthorizedUserController {
                               BindingResult result, Principal principal, HttpServletRequest request) {
         accountValidation.validate(updtPers, result);
         Person person = persService.getByEmail(principal.getName());
-        person = persService.updateAccProperties(person, updtPers, request);
         if (result.hasErrors()){
             return "userAccount";
         }
+        
+        if(!person.getEmail().equals(updtPers.getEmail())) { 
+            person = persService.updateAccProperties(person, updtPers, request);
+            persService.update(person);
+            return "redirect:/logout"; 
+        }
+        person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
-        return "redirect:/logout";
+        return "userAccount";
     }
     
 	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })
