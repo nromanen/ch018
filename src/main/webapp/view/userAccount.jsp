@@ -42,14 +42,16 @@
                                 <div class="control-group">
                                     <label class="control-label" for="email"><spring:message code="person.mail"/>:</label>
                                     <div class="controls"> 
-                                        <form:input path="email" id="email"/>
+                                        <form:input path="email" id="email" onchange="validate()"/>
                                         <form:errors path="email" cssClass="error"/>
+                                       <h4 id="result">1111</h4>
                                     </div>
+                                   
                                 </div>
                                 
                                 <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
                                    
                              </form:form>
                                
-                            <a href="<c:url value="/pass"/>" class="btn"><spring:message code="button.changepass"/></a>
+                                <a href="<c:url value="/pass"/>" class="btn" id="submit"><spring:message code="button.changepass"/></a>
 </div>

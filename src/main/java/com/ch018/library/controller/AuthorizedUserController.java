@@ -37,6 +37,7 @@ import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.validator.AccountValidation;
+import com.ch018.library.validator.ChangePasswordValid;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -60,6 +61,8 @@ public class AuthorizedUserController {
     @Autowired WishListService wishListService;
    
     @Autowired AccountValidation accountValidation;
+    
+    @Autowired ChangePasswordValid changePass;
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
@@ -115,9 +118,13 @@ public class AuthorizedUserController {
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	public String passwordView(@ModelAttribute("password") Password password,
 			BindingResult result, Principal principal) {
-		if (password == null)
-			return null;
-		else {
+		//if (password == null)
+		//	return null;
+		//else {
+               changePass.validate(password, result);
+               if(result.hasErrors()){
+                     return "pass";
+               } else {
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			Person person = persService.getByEmail(principal.getName());
 			if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
