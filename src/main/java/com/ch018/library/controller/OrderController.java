@@ -106,12 +106,6 @@ public class OrderController {
                 }
                 newOrder.setPerson(p);
                 newOrder.setBook(b);
-               /* if (wishId > 0)
-			  wish.deleteWishById(wishId);
-                if (wish.bookExistInWishList(bookId, personId)) {
-                    int id = wish.getWishWithoutId(bookId, personId).getId();
-					wish.deleteWishById(id);
-				}      */
                 model.addAttribute("order", newOrder);
                 return "order";
              }
@@ -145,7 +139,7 @@ public class OrderController {
     /**
      * Librarian
      */
-    @Secured("ROLE_LIBRARIAN")
+        @Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/{query}/{id}", method = RequestMethod.GET)
 	public String showOrders(@PathVariable("id") Integer id,
 			@PathVariable("query") String query, Model model) {
