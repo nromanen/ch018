@@ -6,17 +6,20 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.validator.PersonValidation;
 /**
  * 
  * @author Yurik Mikhaletskiy
@@ -36,10 +39,14 @@ public class PersonController {
 
 	@Autowired
 	private BooksInUseService booksInUseService;
+	
+	@Autowired
+	private PersonValidation personValidation;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
 		Person person = new Person();
+		person.setEmail("");
 		model.addAttribute("persons", personService.getAll());
 		model.addAttribute("person", person);
 		return "users";
@@ -53,14 +60,25 @@ public class PersonController {
 
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Person newPerson(@RequestBody @Valid Person person, HttpServletRequest request) {
-		if (person.getId() == 0) {
-			personService.librarianSavePerson(person, request);
+	public JsonResponse newPerson(@RequestBody @Valid Person person,
+			BindingResult result, HttpServletRequest request) {
+		personValidation.validate(person, result);
+		JsonResponse resp = new JsonResponse();
+		if (!result.hasErrors()) {
+			resp.setStatus("SUCCESS");
+			if (person.getId() == 0) {
+				personService.librarianSavePerson(person, request);
+			} else {
+				Person person2 = personService.getById(person.getId());
+				personService.librarianUpdatePerson(person, person2);
+			}
+			resp.setResult(person);
 		} else {
-			Person person2 = personService.getById(person.getId());
-			personService.librarianUpdatePerson(person, person2);
+			resp.setStatus("FAIL");
+			resp.setResult(result.getAllErrors());
 		}
-		return person;
+
+		return resp;
 	}
 
 }

@@ -14,15 +14,15 @@
 				<div class="media">
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
-						<div class=pull-right>
+						<div class="btn-group btn-group-vertical  pull-right">
 						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
-							class="btn btn-success"><spring:message code="message.cart" /></a>
-							<br/>
+							class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
 						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
-							class="btn btn-warning">  <spring:message code="message.ordernow" />  </a>
+							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  </a>
 						</div>
 					</sec:authorize>
 				</div>
+				<div class="caption">
 					<h3>
 						<small>${latest.title}</small>
 					</h3>
@@ -32,6 +32,7 @@
                     	<c:when test="${latest.available==0}"><span class="label label-important">Not Available</span></c:when>
                         <c:otherwise><span class="label label-success">Available</span></c:otherwise>
                        </c:choose></p>
+                </div>
 					
 				</div>
 		<c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">

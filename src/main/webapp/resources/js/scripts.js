@@ -29,6 +29,8 @@ function fill_form(box, id) {
 	  $("#failedOrders").val($(".failedOrders" + id).text());
 	  $("#confirm").prop('checked', $(".confirm" + id).prop('checked'));
 	  $("#rating").text($(".rating" + id).text());
+	  $("label[id^=error]").text("");
+	  $("#errorperson").text("");
 	}
 
 function reset_form() {
@@ -56,6 +58,8 @@ function reset_form() {
 	  $("#failedOrders").val(0);
 	  $("#confirm").prop('checked', false);
 	  $("#rating").text("");
+	  $("label[id^=error]").text("");
+	  $("#errorperson").text("");
 }
 
 $(document).ready(function() { 
@@ -80,7 +84,7 @@ $(document).ready(function() {
         }
     });
 
-	
+    $("#cellphone").mask("(999) 999-9999");
 	
 	$("table").tablesorter();
 	$(".alert .close").click(function() {
@@ -253,98 +257,5 @@ $(document).ready(function() {
 		  }
       });
       event.preventDefault();
-  });
-  
-  
-  /**
-   * Edit book action
-   */
-  $("#editbook").submit(function(event) {
-	  var id = $("#id").val();
-	  var title = $("#title").val();
-	  var authors = $("#authors").val();
-	  var year = $("#year").val();
-	  var publication = $("#publication").val();
-	  var pages = $("#pages").val();
-	  var description = $("#description").val();
-	  var term = $("#term").val();
-	  var bookcase = $("#bookcase").val();
-	  var shelf = $("#shelf").val();
-	  var genre = $("#genre").val();
-	  var count = $("#count").val();
-	  var available = $("#available").val();
-	  var json = { "id" : id, "title" : title, "authors": authors, "year" : year, "publication": publication, 
-			  "pages" : pages, "description": description, "term" : term, "bookcase": bookcase,
-			  "shelf" : shelf, "genre": genre, "count": count, "available": available};
-	  $.ajax({
-		  url: $("#editbook").attr( "action"),
-		  data: JSON.stringify(json),
-		  type: "POST",
-		  beforeSend: function(xhr) {  
-	            xhr.setRequestHeader("Accept", "application/json");  
-	            xhr.setRequestHeader("Content-Type", "application/json");  
-	      },
-	      success: function(data) {
-			console.log("success");
-			if (data != "") {
-				$.each(data, function(i, val) {
-					$("#error" + val.field).text(val.defaultMessage);
-			    });
-			} else {
-				$('#action_popup').modal("hide");
-				location.reload();
-			}			
-		  },
-		  error: function(data) {
-			console.log(data);
-			$('#action_popup').modal("show");
-		}
-	  });
-	  event.preventDefault();	
-});
-  
-  /**
-   * Edit user action
-   */
-  $("#addedituser").submit(function(event) {
-	  console.log("begin");
-	  var id = $("#id").val();
-	  var uname = $("#uname").val();
-	  var surname = $("#surname").val();
-	  var email = $("#email").val();
-	  var cellphone = $("#cellphone").val();
-	  var multibookAllowed = $("#multibookAllowed").val();
-	  var untimelyReturns = $("#untimelyReturns").val();
-	  var timelyReturns = $("#timelyReturns").val();
-	  var failedOrders = $("#failedOrders").val();
-	  var password = $("#password").val();
-	  var confirm = $("#confirm").prop('checked');
-	  var json = { "id" : id, "name" : uname, "surname": surname, 
-			  "email" : email, "cellphone": cellphone, 
-			  "confirm": confirm, "timelyReturns": timelyReturns,
-			  "untimelyReturns": untimelyReturns, "multibookAllowed" : multibookAllowed, 
-			  "failedOrders" : failedOrders, "password" : password
-			  };
-	  $.ajax({
-		  url: $("#addedituser").attr( "action"),
-		  data: JSON.stringify(json),
-		  type: "POST",
-		  beforeSend: function(xhr) {  
-	            xhr.setRequestHeader("Accept", "application/json");  
-	            xhr.setRequestHeader("Content-Type", "application/json");  
-	      },
-	      success: function(data) {
-			console.log("success");
-			$('#action_popup').modal("hide");
-			location.reload();
-		  },
-		  error: function() {
-			console.log("error");
-		}
-	  });
-	  event.preventDefault();	  
-});
-
-  
-  
+  });  
 });

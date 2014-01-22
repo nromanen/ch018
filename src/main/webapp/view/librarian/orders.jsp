@@ -14,9 +14,9 @@
 	<c:if test="${person != null}">
 		<div class="alert alert-info" id="username">${person.name}, ${person.surname}, ${person.email}</div>
 	</c:if> 
-	<!-- Table -->
-	<div class="TableBooks">
-		<table>
+	<!-- Table class="TableBooks"-->
+	<div style="overflow-y: scroll">
+		<table class="table table-striped table-condensed table-hover">
 		<c:if test="${book != null}">
 			<thead>
 				<tr>
