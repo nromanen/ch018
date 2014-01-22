@@ -25,6 +25,7 @@
 	src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
 	<script
 	src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js"></script>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>
