@@ -36,6 +36,10 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import com.ch018.library.validator.AccountValidation;
+import com.ch018.library.validator.ChangePasswordValid;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 
 // TODO: use only spaces or only tabs, remove trailing spaces, unnecessary double carriage returns in all files
@@ -56,7 +60,9 @@ public class AuthorizedUserController {
     
     @Autowired WishListService wishListService;
    
+    @Autowired AccountValidation accountValidation;
     
+    @Autowired ChangePasswordValid changePass;
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
@@ -95,22 +101,30 @@ public class AuthorizedUserController {
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
-    public String editProfile(@ModelAttribute("person")Person updtPers, 
-                              @ModelAttribute("password")Object password, 
-                              BindingResult result, Principal principal) {
+    public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
+                              //@ModelAttribute("password")Object password, 
+                              BindingResult result, Principal principal, HttpServletRequest request) {
+        accountValidation.validate(updtPers, result);
         Person person = persService.getByEmail(principal.getName());
-        person = persService.updateAccProperties(person, updtPers);
+        person = persService.updateAccProperties(person, updtPers, request);
+        if (result.hasErrors()){
+            return "userAccount";
+        }
         persService.update(person);
-        return "redirect:/userAccount";
+        return "redirect:/logout";
     }
     
 	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	public String passwordView(@ModelAttribute("password") Password password,
 			BindingResult result, Principal principal) {
-		if (password == null)
-			return null;
-		else {
+		//if (password == null)
+		//	return null;
+		//else {
+               changePass.validate(password, result);
+               if(result.hasErrors()){
+                     return "pass";
+               } else {
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			Person person = persService.getByEmail(principal.getName());
 			if (BCrypt.checkpw(password.getPassword(), person.getPassword()))

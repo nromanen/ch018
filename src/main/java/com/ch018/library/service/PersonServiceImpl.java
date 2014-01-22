@@ -168,30 +168,37 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person updateAccProperties(Person person, Person updatedPerson) {
-		if (!updatedPerson.getName().isEmpty())
+	public Person updateAccProperties(Person person, Person updatedPerson, HttpServletRequest request) {
+		/*if (!updatedPerson.getName().isEmpty())
 			if ((person.getName() == null)
-					|| (!person.getName().equals(updatedPerson.getName()))) {
+					|| (!person.getName().equals(updatedPerson.getName()))) {  */
 				person.setName(updatedPerson.getName());
-			}
-		if (!updatedPerson.getSurname().isEmpty())
+			//}
+		/*if (!updatedPerson.getSurname().isEmpty())
 			if ((person.getSurname() == null)
-					|| (!person.getSurname().equals(updatedPerson.getSurname()))) {
+					|| (!person.getSurname().equals(updatedPerson.getSurname()))) { */
 				person.setSurname(updatedPerson.getSurname());
-			}
-		if (!updatedPerson.getCellphone().isEmpty())
+			//}
+	/*	if (!updatedPerson.getCellphone().isEmpty())
 			if ((person.getCellphone() == null)
 					|| (!person.getCellphone().equals(
-							updatedPerson.getCellphone()))) {
+							updatedPerson.getCellphone()))) {*/
 				person.setCellphone(updatedPerson.getCellphone());
-			}
-		if (!updatedPerson.getEmail().isEmpty())
+			//}
+		//if (!updatedPerson.getEmail().isEmpty())
 			if (!person.getEmail().equals(updatedPerson.getEmail())) {
 				person.setEmail(updatedPerson.getEmail());
+                                String url = request.getRequestURL().toString();
+		                String message = "You have change your e-mail address on account in J Library"
+				+ " Please confirm your new email by clicking next link: "
+				+ url + "/confirm?key="                
+				+ person.getVerificationKey();
+		                mailService.sendMail(person.getEmail(),
+				"Library email confirmation", message);
 			}
-		if (person.getSms() != updatedPerson.getSms()) {
+		//if (person.getSms() != updatedPerson.getSms()) {
 			person.setSms(updatedPerson.getSms());
-		}
+            	//	}
 		return person;
 	}
     

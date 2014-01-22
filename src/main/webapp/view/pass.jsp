@@ -10,24 +10,31 @@
 	<br>
 	<br>
 	<br>
-	<form:form method="POST" commandName="password">
-		<table>
-			<tr>
-				<td><spring:message code="pass.old" /></td>
-				<td><form:password path="password" /></td>
-			</tr>
-			<tr>
-				<td><spring:message code="pass.new" /></td>
-				<td><form:password path="newPassword" /></td>
-			</tr>
-			<tr>
-				<td><spring:message code="pass.confirm" /></td>
-				<td><form:password path="confirmPassword" /></td>
-			</tr>
-			<tr>
-				<td><input type="submit"
-					value="<spring:message code="button.changepass"/>" class="btn" /></td>
-			</tr>
-		</table>
+	<form:form method="POST" commandName="password" class="form-horizontal">
+            <div class="control-group">	
+                <label class="control-label" for="pass"><spring:message code="pass.old" /></label>
+                <div class="controls">
+                    <form:password path="password" id="pass"/>
+                    <form:errors path="password" cssClass="error"/>
+                </div>		
+            </div>  
+            <div class="control-group">	
+                <label class="control-label" for="newpass"><spring:message code="pass.new" /></label>
+                <div class="controls">
+                    <form:password path="newPassword" id="newpass"/>
+                    <form:errors path="newPassword" cssClass="error"/>
+                </div>		
+            </div>            
+                
+                <div class="control-group">			
+                    <label class="control-label" for="confpass"><spring:message code="pass.confirm" /></label>
+                    <div class="controls">		
+                        <form:password path="confirmPassword" id="confpass"/>
+                        <form:errors path="confirmPassword" cssClass="error"/>
+                    </div>
+		</div>	
+		<input type="submit"
+				value="<spring:message code="button.changepass"/>" class="btn" />
+		
 	</form:form>
 </div>
