@@ -22,5 +22,17 @@ $(document).ready(function() {
   $('.datetimepicker').datetimepicker();
   console.log("kkkk");  
   //$("#email1").change(validate());
+  
+  $("input[id^=editIssueDate]").click(function(){
+	  $id = $(this).next().val();
+	  $("#oldIssue" + $id).hide();
+	  $("#newIssue" +$id).val($("#oldIssue"+ $id).val());
+	  $("#saveNewIssue" + $id).show();
+	  $("#cancelIssueEdit" + $id).show();
+	  $("#newIssue" + $id).show();
+  })
+  
+  ${("a[id=]")}
+  
 })
 

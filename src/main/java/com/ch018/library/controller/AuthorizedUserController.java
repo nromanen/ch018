@@ -58,11 +58,14 @@ public class AuthorizedUserController {
     @Autowired
     private GenreService genreService;
     
-    @Autowired WishListService wishListService;
+    @Autowired 
+    private WishListService wishListService;
    
-    @Autowired AccountValidation accountValidation;
+    @Autowired 
+    private AccountValidation accountValidation;
     
-    @Autowired ChangePasswordValid changePass;
+    @Autowired 
+    private ChangePasswordValid changePass;
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
@@ -124,10 +127,7 @@ public class AuthorizedUserController {
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	public String passwordView(@ModelAttribute("password") Password password,
 			BindingResult result, Principal principal) {
-		//if (password == null)
-		//	return null;
-		//else {
-               changePass.validate(password, result);
+	       changePass.validate(password, result);
                if(result.hasErrors()){
                      return "pass";
                } else {
