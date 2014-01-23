@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.domain.JsonResponse;
@@ -19,6 +20,7 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.IConstants;
 import com.ch018.library.validator.PersonValidation;
 /**
  * 
@@ -44,10 +46,16 @@ public class PersonController {
 	private PersonValidation personValidation;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
-	public String showUsers(Model model) {
+	public String showUsers(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			Model model) {
 		Person person = new Person();
+		long count = personService.getCount();
+		long pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", page);
 		person.setEmail("");
-		model.addAttribute("persons", personService.getAll());
+		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE));
 		model.addAttribute("person", person);
 		return "users";
 	}

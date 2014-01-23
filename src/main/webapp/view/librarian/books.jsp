@@ -1,24 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
+	<%@ page session="true"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras"%>
+
 <div class="span10">
 	<div class="row-fluid">
 		<!-- Button group -->
 		<div class="span8">
 			<div class="btn-group">
 				<a href="<c:url value="/books"/>" class="btn btn-primary"><spring:message
-						code="book.all" /></a> <a href="<c:url value="/books?show=issuetd"/>"
+						code="book.all" /></a> <a href="<c:url value="/books/issuetd"/>"
 					class="btn btn-primary"><spring:message code="book.issuetd" /></a>
-				<a href="<c:url value="/books?show=issueph"/>"
+				<a href="<c:url value="/books/issueph"/>"
 					class="btn btn-primary"><spring:message code="book.issueph" /></a>
-				<a href="<c:url value="/books?show=return"/>"
+				<a href="<c:url value="/books/return"/>"
 					class="btn btn-primary"><spring:message code="book.return" /></a> <a
-					href="<c:url value="/books?show=returntd"/>"
+					href="<c:url value="/books/returntd"/>"
 					class="btn btn-primary"><spring:message code="book.returntd" /></a>
 			</div>
 		</div>
@@ -58,20 +60,21 @@
 
 	<!-- Books table class="TableBooks"-->
 	<div style="overflow-y: scroll">
+	<span>Sorted by: </span><c:out value="${sort}"></c:out>
 		<table class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="book.title" /></th>
-					<th><spring:message code="book.authors" /></th>
-					<th><spring:message code="book.publication" /></th>
-					<th><spring:message code="book.year" /></th>
-					<th><spring:message code="book.pages" /></th>
-					<th><spring:message code="book.bookcase" /></th>
-					<th><spring:message code="book.shelf" /></th>
-					<th><spring:message code="book.genre" /></th>
-					<th><spring:message code="book.term" /></th>
-					<th><spring:message code="book.count" /></th>
+					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>">1</a></th>
+					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>">1</a></th>
+					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>">1</a></th>
+					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>">1</a></th>
+					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>">1</a></th>
+					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>">1</a></th>
+					<th><spring:message code="book.genre" /><a href="<c:url value="?sort=genre.name"/>">1</a></th>
+					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>">1</a></th>
+					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>">1</a></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -132,6 +135,39 @@
 	<!-- New book button -->
 	<a href="#" id="newbookbutton" class="btn"><spring:message
 			code="book.newbook" /></a>
+			
+	<!-- Pagination -->
+	<div class="pagination pagination-centered">
+		<ul>
+			<c:if test="${page == 1}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">«</a>
+				</li>
+			</c:if>
+			<c:if test="${page > 1}">
+				<li>
+					<a href="<c:url value="?page=${page-1}"/>">«</a>
+				</li>
+			</c:if>
+			<c:forEach var="i" begin="1" end="${pages}">
+   				<li>
+   					<a href="?page=${i}"><c:out value="${i}"/></a>
+				</li>
+			</c:forEach>
+			<c:if test="${page == pages}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">»</a>
+				</li>
+			</c:if>
+			<c:if test="${page < pages}">
+				<li>
+					<a href="<c:url value="?page=${page+1}"/>">»</a>
+				</li>
+			</c:if>
+		</ul>
+	</div>
+	
+	
 
 	<!-- Delete popup -->
 	<div id="popup" class="modal hide fade" role="dialog"

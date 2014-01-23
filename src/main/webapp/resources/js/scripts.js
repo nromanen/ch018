@@ -86,7 +86,7 @@ $(document).ready(function() {
 
     $("#cellphone").mask("(999) 999-9999");
 	
-	$("table").tablesorter();
+	//$("table").tablesorter();
 	$(".alert .close").click(function() {
 		$(".alert").hide();
 	});

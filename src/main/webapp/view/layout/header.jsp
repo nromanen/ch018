@@ -101,6 +101,7 @@
 		</div>
 	</div>
 </div>
+<article itemscope="" itemtype="http://schema.org/Article">
 <header>
 	<span style="float: right"> <a href="?lang=en"><img
 			src="${pageContext.request.contextPath}/resources/img/lang/GB.png"

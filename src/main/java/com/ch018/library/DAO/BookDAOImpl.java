@@ -9,6 +9,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -58,14 +59,25 @@ public class BookDAOImpl implements BookDAO {
 	}
 	
 	@Override
-	public List<Book> getAllBooks(int currentPos, int pageSize) {
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		List<Book> books = new ArrayList<>();
 		try {
-			books.addAll(sessionFactory.getCurrentSession().createQuery("from Book").setMaxResults(pageSize).setFirstResult(currentPos).list());
+			books.addAll(sessionFactory.getCurrentSession().createQuery("from Book B order by B."+ sort +" asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
 		} catch (Exception e) {
 			log.error("Error getting all books: " + e.getMessage());
 		}
 		return books;
+	}
+	
+	@Override
+	public long countBooks() {
+		long count = 0;
+		try {
+			count = (long) sessionFactory.getCurrentSession().createCriteria(Book.class).setProjection(Projections.rowCount()).uniqueResult();
+		} catch (Exception e) {
+			log.error("Error getting count of books: " + e.getMessage());
+		}
+		return count;
 	}
 
 	@Override
@@ -171,7 +183,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return deleted;
 	}
-
+	
 	@Override
 	public List<Book> simpleSearch(String parametr) {
 		parametr = "%" + parametr + "%";

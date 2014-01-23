@@ -96,7 +96,70 @@
 	<!-- New user button -->
 	<a href="#" id="newuserbutton" class="btn"><spring:message
 			code="person.new" /></a>
-
+			
+		<!-- Pagination -->
+	<div class="pagination pagination-centered">
+		<ul>
+			<c:if test="${page == 1}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">«</a>
+				</li>
+			</c:if>
+			<c:if test="${page > 1}">
+				<li>
+					<a href="<c:url value="/users?page=${page-1}"/>">«</a>
+				</li>
+			</c:if>
+			
+			<c:forEach var="i" begin="1" end="${pages}">
+   				<li>
+					<a href="<c:url value="/users?page=${i}"/>"><c:out value="${i}"/></a>
+				</li>
+			</c:forEach>
+			<c:if test="${page == pages}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">»</a>
+				</li>
+			</c:if>
+			<c:if test="${page < pages}">
+				<li>
+					<a href="<c:url value="/users?page=${page+1}"/>">»</a>
+				</li>
+			</c:if>
+		</ul>
+	</div>
+	
+	<!-- Pagination -->
+	<div class="pagination pagination-centered">
+		<ul>
+			<c:if test="${page == 1}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">«</a>
+				</li>
+			</c:if>
+			<c:if test="${page > 1}">
+				<li>
+					<a href="<c:url value="?page=${page-1}"/>">«</a>
+				</li>
+			</c:if>
+			<c:forEach var="i" begin="1" end="${pages}">
+   				<li>
+   					<a href="?page=${i}"><c:out value="${i}"/></a>
+				</li>
+			</c:forEach>
+			<c:if test="${page == pages}">
+				<li class = "disabled">
+					<a href="<c:url value="#"/>">»</a>
+				</li>
+			</c:if>
+			<c:if test="${page < pages}">
+				<li>
+					<a href="<c:url value="?page=${page+1}"/>">»</a>
+				</li>
+			</c:if>
+		</ul>
+	</div>
+	
 	<!-- Delete user -->
 	<div id="popup" class="modal hide fade" role="dialog"
 		aria-labelledby="deleteLabel" aria-hidden="true">

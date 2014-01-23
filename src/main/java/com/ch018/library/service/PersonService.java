@@ -31,4 +31,6 @@ public interface PersonService {
 	void remindPasswoed(Person person, HttpServletRequest request);
 	void restorePassword(Person person, ResetPassword password);
 	void librarianSavePerson(Person person, HttpServletRequest request);
+	List<Person> getAll(int currentPos, int pageSize);
+	long getCount();
 }

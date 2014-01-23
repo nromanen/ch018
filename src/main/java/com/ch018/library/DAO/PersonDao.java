@@ -30,4 +30,6 @@ public interface PersonDao {
 	List<Person> getConfirmed();
 	List<Person> getSmsEnabled();
 	long isExist(String email);
+	long count();
+	List<Person> getAll(int currentPos, int pageSize);
 }
