@@ -26,13 +26,18 @@ $(document).ready(function() {
   $("input[id^=editIssueDate]").click(function(){
 	  $id = $(this).next().val();
 	  $("#oldIssue" + $id).hide();
-	  $("#newIssue" +$id).val($("#oldIssue"+ $id).val());
 	  $("#saveNewIssue" + $id).show();
 	  $("#cancelIssueEdit" + $id).show();
 	  $("#newIssue" + $id).show();
+  
   })
   
-  ${("a[id=]")}
-  
+  $("input[id^=cancelIssueEdit]").click(function(){
+	  $id = $(this).next().val();
+	  $("#oldIssue" + $id).show();
+	  $("#saveNewIssue" + $id).hide();
+	  $("#cancelIssueEdit" + $id).hide();
+  })
+ 
 })
 

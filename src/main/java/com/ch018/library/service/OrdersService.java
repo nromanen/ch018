@@ -18,6 +18,7 @@ import java.util.List;
 public interface OrdersService {
      void addOrder(Orders ord);
      void deleteOrder(Orders ord);
+     void updateOrder(Orders ord);
      Orders deleteOrder(int id);
      Collection getOrdersByBooksId(int id);
      Collection getOrdersByPersonId(int id);

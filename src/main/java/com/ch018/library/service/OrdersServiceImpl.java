@@ -94,5 +94,12 @@ public class OrdersServiceImpl implements OrdersService{
     public Date minOrderDateOf(int bookId) {
         return ordDAO.minOrderDateOf(bookId);
     }
+
+	@Override
+	@Transactional
+	public void updateOrder(Orders ord) {
+		   ordDAO.updateOrder(ord);
+		
+	}
     
 }

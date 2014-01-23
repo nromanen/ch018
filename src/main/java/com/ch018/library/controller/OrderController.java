@@ -119,8 +119,8 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result) {
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm");
-        int bookId = newOrder.getBook().getId();
+    	
+    	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
         Calendar calendar = Calendar.getInstance();
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
@@ -135,18 +135,21 @@ public class OrderController {
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/userOrder")
-    public ModelAndView showOrder(Principal principal) {
+    @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
+    public ModelAndView showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue) {
         return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/editIssue", method = RequestMethod.GET)
+    @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     public String editIssueDate(Model model, Principal principal,
-    		                    @RequestParam("idOrder")int id,
-    		                    @RequestParam("date") String issueDate) {
-    	
-    	return "userOrder";
+    		                    @ModelAttribute("editIssue") Orders editIssue,
+    		                    BindingResult result) {
+    	Orders updateOrder = order.getById(editIssue.getId());
+    	Date aaa = new Date();
+       	updateOrder.setIssueDate(editIssue.getIssueDate());
+        order.updateOrder(updateOrder);
+    	return "redirect:/userOrder";
     }
     
     /**

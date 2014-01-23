@@ -225,4 +225,15 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return date;
     }
 
+	@Override
+	public void updateOrder(Orders ord) {
+		try {
+			sessionFactory.getCurrentSession().update(ord);		
+			log.info("Updated order: " + ord);
+		} catch(Exception e){
+		    log.error("Error insert " + e);
+		}
+		
+	}
+
 }

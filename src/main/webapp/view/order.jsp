@@ -22,8 +22,7 @@
                                           
                                    <table>
                                        <tr><td>Choose issue date:</td> 
-                                           <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.issueDate}" var="formattedDate"/>
-                                           <form:input path="issueDate" class="datetimepicker" value="formattedDate"/></td></tr>
+                                           <form:input path="issueDate" class="datetimepicker"/></td></tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>

@@ -14,6 +14,7 @@ public interface OrdersDAO {
 	 Orders getById(int id);
 	 void addOrder(Orders ord);
 	 void deleteOrder(Orders ord);
+	 void updateOrder(Orders ord);
 	 Orders deleteOrder(int id);
 	 Collection getOrdersByBooksId(int id);
 	 Collection getOrdersByPersonId(int id);

@@ -66,6 +66,7 @@ public class AuthorizedUserController {
     
     @Autowired 
     private ChangePasswordValid changePass;
+    
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
