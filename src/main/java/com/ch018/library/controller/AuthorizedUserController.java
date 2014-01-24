@@ -60,11 +60,15 @@ public class AuthorizedUserController {
     @Autowired
     private GenreService genreService;
     
-    @Autowired WishListService wishListService;
+    @Autowired 
+    private WishListService wishListService;
    
-    @Autowired AccountValidation accountValidation;
+    @Autowired 
+    private AccountValidation accountValidation;
     
-    @Autowired ChangePasswordValid changePass;
+    @Autowired 
+    private ChangePasswordValid changePass;
+    
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -113,22 +117,25 @@ public class AuthorizedUserController {
                               BindingResult result, Principal principal, HttpServletRequest request) {
         accountValidation.validate(updtPers, result);
         Person person = persService.getByEmail(principal.getName());
-        person = persService.updateAccProperties(person, updtPers, request);
         if (result.hasErrors()){
             return "userAccount";
         }
+        
+        if(!person.getEmail().equals(updtPers.getEmail())) { 
+            person = persService.updateAccProperties(person, updtPers, request);
+            persService.update(person);
+            return "redirect:/logout"; 
+        }
+        person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
-        return "redirect:/logout";
+        return "userAccount";
     }
     
 	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	public String passwordView(@ModelAttribute("password") Password password,
 			BindingResult result, Principal principal) {
-		//if (password == null)
-		//	return null;
-		//else {
-               changePass.validate(password, result);
+	       changePass.validate(password, result);
                if(result.hasErrors()){
                      return "pass";
                } else {
