@@ -101,5 +101,11 @@ public class OrdersServiceImpl implements OrdersService{
 		   ordDAO.updateOrder(ord);
 		
 	}
+
+	@Override
+	@Transactional
+	public long getCountOrdersByPerson(String name) {
+		return ordDAO.getCountOrdersByPerson(name);
+	}
     
 }

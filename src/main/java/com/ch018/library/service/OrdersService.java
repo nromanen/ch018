@@ -29,4 +29,5 @@ public interface OrdersService {
      Orders getById(int id);
      boolean orderExist(int personId, int bookId);
      Date minOrderDateOf(int bookId);
+     long getCountOrdersByPerson(String name);
 }

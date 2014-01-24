@@ -236,4 +236,20 @@ public class OrdersDAOImpl implements OrdersDAO {
 		
 	}
 
+	@Override
+	public long getCountOrdersByPerson(String name) {
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(*) from Orders O where O.person.email=:name")
+					.setString("name", name);
+			count = (long) query.uniqueResult();
+		} catch(Exception e){
+			log.error(e);
+		}
+		return count;
+	}
+
 }

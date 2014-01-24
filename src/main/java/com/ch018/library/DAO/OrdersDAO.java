@@ -6,6 +6,7 @@ package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Date;
@@ -22,6 +23,7 @@ public interface OrdersDAO {
 	 List<Book> getAllBooks(); 
 	 List<Book> toIssueToday();
 	 List<Book> toIssuePerHour(); 
-         boolean orderExist(int personId, int bookId);
-         Date minOrderDateOf(int bookId);
+     boolean orderExist(int personId, int bookId);
+     Date minOrderDateOf(int bookId);
+     long getCountOrdersByPerson(String name);
 }

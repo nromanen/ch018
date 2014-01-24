@@ -40,6 +40,7 @@
                                             <input type="hidden" value="${order.id}"/>
                                             <input type="submit" value="Save" class="btn" style="display:none" id="saveNewIssue${order.id}">
                                             <input type="button" value="Cancel" id="cancelIssueEdit${order.id}" class="btn" style="display:none"/>
+                                            <a href="<c:url value="/deleteorder?id=${order.id}"/>"  class = "btn">Delete</a>
                                        </form:form>
                                    </c:when>
                                    <c:otherwise>

@@ -33,11 +33,13 @@ $(document).ready(function() {
   })
   
   $("input[id^=cancelIssueEdit]").click(function(){
-	  $id = $(this).next().val();
+	 // $id = $(this).next().val();
 	  $("#oldIssue" + $id).show();
 	  $("#saveNewIssue" + $id).hide();
 	  $("#cancelIssueEdit" + $id).hide();
   })
+  
+  
  
 })
 

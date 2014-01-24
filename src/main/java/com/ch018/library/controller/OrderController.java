@@ -152,6 +152,13 @@ public class OrderController {
     	return "redirect:/userOrder";
     }
     
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
+    public String deleteOrder(@RequestParam("id") int id) {
+    	order.deleteOrder(id);
+    	return "redirect:/userOrder";
+    }
+    
     /**
      * Librarian
      */

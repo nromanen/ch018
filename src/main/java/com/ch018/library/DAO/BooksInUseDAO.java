@@ -19,5 +19,6 @@ public interface BooksInUseDAO {
 	Date getMinByReturnDate(int bid);
 	void removeBooksInUse(int id);
 	BooksInUse getById(int id);
-        boolean alreadyInUse(int bookId, int personId);
+    boolean alreadyInUse(int bookId, int personId);
+    long getCountBooksByPerson(String name);
 }
