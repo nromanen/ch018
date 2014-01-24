@@ -24,4 +24,5 @@ public interface BooksInUseDAO {
     long countBooksInUse();
 	long countBooksInUseToday();
 	List<Book> getReturnBooksToday(int currentPos, int pageSize, String sort);
+    long getCountBooksByPerson(String name);
 }

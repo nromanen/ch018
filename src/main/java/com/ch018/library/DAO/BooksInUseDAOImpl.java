@@ -323,4 +323,22 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		return books;
     }
 
+
+	@Override
+	public long getCountBooksByPerson(String name) {
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(*) from BooksInUse B where B.person.email=:name")
+					.setString("name", name);
+			count = (long) query.uniqueResult();
+			
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+	}
+
 }

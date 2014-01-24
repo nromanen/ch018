@@ -28,6 +28,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/person.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/books.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>
