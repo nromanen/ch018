@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <c:forEach items="${books}" var="book">
-                <tr>
+                <tr class="info">
                     <td>${book.book.title}</td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${book.returnDate}" /></td>
