@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.util.IConstants;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -94,6 +95,17 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> simpleSearch(String parametr) {
 		return bookDAO.simpleSearch(parametr);
+	}
+	
+	@Transactional
+	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort) {
+		return bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
+	}
+	
+	@Transactional
+	public List<Book> paramSearch(String searchField, String search,
+			int currentPos, int pageSize, String sort) {
+		return bookDAO.paramSearch(searchField, search, currentPos, pageSize, sort);
 	}
 
 	@Transactional

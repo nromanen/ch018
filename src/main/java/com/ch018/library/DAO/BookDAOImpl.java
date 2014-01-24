@@ -238,5 +238,45 @@ public class BookDAOImpl implements BookDAO {
         }
         return books;
     }
-
+    
+    @Override
+    public List<Book> simpleSearch(String parametr, int currentPos,
+    		int pageSize, String sort) {
+    	parametr = "%" + parametr + "%";
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select B from Book B where (lower(B.title) "
+									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
+									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
+									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									+ "LIKE lower(:parametr)) order by B."+ sort +" asc")
+					.setString("parametr", parametr).setMaxResults(pageSize).setFirstResult(currentPos);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+    }
+    
+    @Override
+    public List<Book> paramSearch(String searchField, String search,
+    		int currentPos, int pageSize, String sort) {
+    	search = "%" + search + "%";
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select " + "B from Book B where (lower(B."+searchField+") "
+									+ "LIKE lower(:search)) order by B."+ sort +" asc")
+					.setString("search", search).setMaxResults(pageSize).setFirstResult(currentPos);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+    }
 }

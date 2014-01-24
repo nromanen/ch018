@@ -110,12 +110,10 @@ public class BooksController {
 		if (!sort.equals("id")) {
 			session.setAttribute("sort", sort);
 			field =(String) session.getAttribute("sort");
-		}	
-		/*if (show != null) {
-			session.setAttribute("SHOW", show);
-		} else {
-			show = (String) session.getAttribute("SHOW");
-		}*/
+		}
+		String search = (String) session.getAttribute("search");
+		String searchField = (String) session.getAttribute("searchField");
+		
 		Book book = new Book();
 		long count;
 		long pages = 1;
@@ -123,38 +121,23 @@ public class BooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
 		List<Book> books = new ArrayList<>();
-
-		// if (show == null) {
-		count = bookService.countBooks();
-		pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-		currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field));
-		/*} else {
-			switch (show) {
-			case "return":
-				count = booksInUseService.countBooksInUse();
-				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
-				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(booksInUseService.getAllBooks(currentPos,IConstants.PAGE_SIZE, sess));
-				break;
-			case "returntd":
-				books.addAll(booksInUseService.getReturnBooksToday());
-				break;
-			case "issuetd":
-				books.addAll(ordersService.toIssueToday());
-				break;
-			case "issueph":
-				books.addAll(ordersService.toIssuePerHour());
-				break;
-			default:
-				session.setAttribute("SHOW", null);
-				count = bookService.countBooks();
-				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
-				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(bookService.getAllBooks(currentPos,IConstants.PAGE_SIZE, sess));
-				break;
-			}
-		}*/
+		if (searchField == null || search != null) {
+			count = bookService.countBooks();
+			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+			currentPos = (page - 1) * IConstants.PAGE_SIZE;
+			books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field));
+		} else if (searchField.equals("all")) {
+			count = bookService.countBooks();
+			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+			currentPos = (page - 1) * IConstants.PAGE_SIZE;
+			books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, field));
+		} else {
+			count = bookService.countBooks();
+			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+			currentPos = (page - 1) * IConstants.PAGE_SIZE;
+			books.addAll(bookService.paramSearch(searchField, search, currentPos, IConstants.PAGE_SIZE, field));
+		}
+		
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);
@@ -235,6 +218,7 @@ public class BooksController {
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		session.setAttribute("search", search);
+		session.setAttribute("searchField", field);
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres());
 		if (field.equals("all")) {

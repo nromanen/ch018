@@ -1,5 +1,6 @@
 package com.ch018.library.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ public interface BookService {
 	List<Book> getBooksByYear(int year);
 	List<Book> simpleSearch(String parametr);
 	List<Book> paramSearch(String field, String parametr);
-        List<Book> latestArrivals();
-		List<Book> getAllBooks(int currentPos, int pageSize, String sort);
-		long countBooks();
+    List<Book> latestArrivals();
+    List<Book> getAllBooks(int currentPos, int pageSize, String sort);
+	long countBooks();
+	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort);
+	List<Book> paramSearch(String searchField, String search,
+			int currentPos, int pageSize, String sort);
 }
