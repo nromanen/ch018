@@ -103,10 +103,10 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	@Transactional
-	public List<Person> getAll(int currentPos, int pageSize) {
+	public List<Person> getAll(int currentPos, int pageSize, String field) {
 		
 		if (currentPos > -1) {
-			return personDao.getAll(currentPos, pageSize);
+			return personDao.getAll(currentPos, pageSize, field);
 		} else {
 			return personDao.getAll();
 		}

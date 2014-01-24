@@ -1,6 +1,7 @@
 package com.ch018.library.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,17 @@ public class PersonController {
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-			Model model) {
+			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			Model model, HttpSession session) {
+		String field =(String) session.getAttribute("personsort");
+		if (field == null) {
+			session.setAttribute("personsort", sort);
+			field =(String) session.getAttribute("personsort");
+		}
+		if (!sort.equals("id")) {
+			session.setAttribute("personsort", sort);
+			field =(String) session.getAttribute("personsort");
+		}	
 		Person person = new Person();
 		long count = personService.getCount();
 		long pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
@@ -55,7 +66,7 @@ public class PersonController {
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		person.setEmail("");
-		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE));
+		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field));
 		model.addAttribute("person", person);
 		return "users";
 	}

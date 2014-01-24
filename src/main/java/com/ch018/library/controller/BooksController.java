@@ -102,14 +102,14 @@ public class BooksController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
-		String sess =(String) session.getAttribute("sort");
-		if (sess == null) {
+		String field =(String) session.getAttribute("sort");
+		if (field == null) {
 			session.setAttribute("sort", sort);
-			sess =(String) session.getAttribute("sort");
+			field =(String) session.getAttribute("sort");
 		}
 		if (!sort.equals("id")) {
 			session.setAttribute("sort", sort);
-			sess =(String) session.getAttribute("sort");
+			field =(String) session.getAttribute("sort");
 		}	
 		/*if (show != null) {
 			session.setAttribute("SHOW", show);
@@ -128,7 +128,7 @@ public class BooksController {
 		count = bookService.countBooks();
 		pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, sess));
+		books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field));
 		/*} else {
 			switch (show) {
 			case "return":

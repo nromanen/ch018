@@ -21,17 +21,16 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="person.firstname" /></th>
-					<th><spring:message code="person.lastname" /></th>
-					<th><spring:message code="person.mail" /></th>
-					<th><spring:message code="person.mobile" /></th>
-					<th><spring:message code="person.multibookallowed" /></th>
-					<th><spring:message code="person.untimelly" /></th>
-					<th><spring:message code="person.timelly" /></th>
-					<th><spring:message code="person.failed" /></th>
-					<th><spring:message code="person.rating" /></th>
-
-					<th><spring:message code="person.confirmed" /></th>
+					<th><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"> <i class="icon-chevron-down"/> </a></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -124,37 +123,6 @@
 			<c:if test="${page < pages}">
 				<li>
 					<a href="<c:url value="/users?page=${page+1}"/>">»</a>
-				</li>
-			</c:if>
-		</ul>
-	</div>
-	
-	<!-- Pagination -->
-	<div class="pagination pagination-centered">
-		<ul>
-			<c:if test="${page == 1}">
-				<li class = "disabled">
-					<a href="<c:url value="#"/>">«</a>
-				</li>
-			</c:if>
-			<c:if test="${page > 1}">
-				<li>
-					<a href="<c:url value="?page=${page-1}"/>">«</a>
-				</li>
-			</c:if>
-			<c:forEach var="i" begin="1" end="${pages}">
-   				<li>
-   					<a href="?page=${i}"><c:out value="${i}"/></a>
-				</li>
-			</c:forEach>
-			<c:if test="${page == pages}">
-				<li class = "disabled">
-					<a href="<c:url value="#"/>">»</a>
-				</li>
-			</c:if>
-			<c:if test="${page < pages}">
-				<li>
-					<a href="<c:url value="?page=${page+1}"/>">»</a>
 				</li>
 			</c:if>
 		</ul>

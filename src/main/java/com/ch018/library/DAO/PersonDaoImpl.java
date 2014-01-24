@@ -250,10 +250,10 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Override
-	public List<Person> getAll(int currentPos, int pageSize) {
+	public List<Person> getAll(int currentPos, int pageSize, String field) {
 		List<Person> persons = new ArrayList<>();
 		try {
-			persons.addAll(sessionFactory.getCurrentSession().createQuery("from Person P order by P.id asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
+			persons.addAll(sessionFactory.getCurrentSession().createQuery("from Person P order by P." + field + " asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
 		} catch (Exception e) {
 			log.error("Error getting all persons: " + e.getMessage());
 		}
