@@ -36,8 +36,10 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import com.ch018.library.util.IConstants;
 import com.ch018.library.validator.AccountValidation;
 import com.ch018.library.validator.ChangePasswordValid;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -65,10 +67,15 @@ public class AuthorizedUserController {
     @Autowired ChangePasswordValid changePass;
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String welomePage(@RequestParam(value = "genre", required = false) Integer id,
-			Model model) {
+	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "genre", required = false) Integer id, Model model) {
+		long count = book.countBooks();
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", page);
 		if (id == null) {
-			model.addAttribute("latest", book.getAllBooks());
+			model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
 		} else {
 			Genre genre = genreService.getGenreByIdWithBooks(id);
 			model.addAttribute("latest", genre.getBooks());

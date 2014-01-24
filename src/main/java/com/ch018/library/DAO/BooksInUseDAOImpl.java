@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,7 +155,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<Book> getAllBooks() {
-		// TODO Auto-generated method stub
 		List<Book> books = new ArrayList<>();
 		try {
 			books.addAll(sessionFactory
@@ -162,6 +162,23 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.setProjection(
 							Projections.distinct(Projections.property("book")))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+	}
+	
+	@Override
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
+		List<Book> books = new ArrayList<>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.setProjection(
+							Projections.distinct(Projections.property("book")))
+							.setMaxResults(pageSize).setFirstResult(currentPos).addOrder(Order.asc("book." + sort))
 					.list());
 		} catch (Exception e) {
 			log.error(e);
@@ -190,8 +207,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 			books.addAll(sessionFactory
 					.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.add(Expression.ge("returnDate", startDate.getTime()))
-					.add(Expression.le("returnDate", endDate.getTime()))
+					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
 					.setProjection(
 							Projections.distinct(Projections.property("book")))
 					.list());
@@ -226,6 +242,85 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
             log.error(e);
         }
         return exist;
+    }
+    
+    @Override
+    public long countBooksInUse() {
+    	long count = 0;
+		try {
+			count = (long) sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.setProjection(
+							Projections.distinct(Projections.property("book")))
+							.setProjection(Projections.rowCount())
+							.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+    }
+    
+    @Override
+    public long countBooksInUseToday() {
+    	final int HOURS_PER_DAY = 23;
+		final int MINUTES_PER_HOUR = 59;
+		final int SECONDS_PER_MINUTE = 23;
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
+		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
+		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
+    	long count = 0;
+		try {
+			count = (long) sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
+					.setProjection(
+							Projections.distinct(Projections.property("book")))
+							.setProjection(Projections.rowCount())
+							.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+    }
+    
+    @Override
+    public List<Book> getReturnBooksToday(int currentPos, int pageSize,
+    		String sort) {
+    	final int HOURS_PER_DAY = 23;
+		final int MINUTES_PER_HOUR = 59;
+		final int SECONDS_PER_MINUTE = 23;
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
+		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
+		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
+    	List<Book> books = new ArrayList<>();
+		try {
+			books.addAll(sessionFactory
+					.getCurrentSession()
+					.createCriteria(BooksInUse.class)
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.setMaxResults(pageSize).setFirstResult(currentPos).addOrder(Order.asc("book." + sort))
+					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
+					.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
     }
 
 }

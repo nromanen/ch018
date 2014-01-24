@@ -129,6 +129,17 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		// TODO Auto-generated method stub
 		return booksInUseDAO.getAllBooks();
 	}
+	
+	@Override
+	@Transactional
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
+		if (currentPos > -1) {
+			return booksInUseDAO.getAllBooks(currentPos, pageSize, sort);
+		} else {
+			return booksInUseDAO.getAllBooks();
+		}
+		
+	}
 
 	@Override
 	@Transactional
@@ -160,6 +171,25 @@ public class BooksInUseServiceImpl implements BooksInUseService {
     @Transactional
     public boolean alreadyInUse(int bookId, int personId) {
         return booksInUseDAO.alreadyInUse(bookId, personId);
+    }
+    
+    @Override
+    @Transactional
+    public long countBooksInUse() {
+    	return booksInUseDAO.countBooksInUse();
+    }
+    
+    @Override
+    @Transactional
+    public long countBooksInUseToday() {
+    	return booksInUseDAO.countBooksInUseToday();
+    }
+    
+    @Override
+    @Transactional
+    public List<Book> getReturnBooksToday(int currentPos, int pageSize,
+    		String sort) {
+    	return booksInUseDAO.getReturnBooksToday(currentPos, pageSize, sort);
     }
 
 }

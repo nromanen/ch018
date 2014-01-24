@@ -5,7 +5,9 @@
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.Person;
+
 import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,4 +32,6 @@ public interface PersonDao {
 	List<Person> getConfirmed();
 	List<Person> getSmsEnabled();
 	long isExist(String email);
+	long count();
+	List<Person> getAll(int currentPos, int pageSize, String field);
 }

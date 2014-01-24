@@ -224,7 +224,7 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksIssueTd() throws Exception {
-		when(ordersService.toIssueToday()).thenReturn(Arrays.asList(book));
+//		when(ordersService.toIssueToday()).thenReturn(Arrays.asList(book));
 		mockMvc.perform(get("/books").param("show", "issuetd"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
@@ -232,7 +232,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("genre", hasItem(genre)))
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
-		verify(ordersService, times(1)).toIssueToday();
+//		verify(ordersService, times(1)).toIssueToday();
 		verifyNoMoreInteractions(ordersService);
 		verify(genreService, times(1)).getAllGenres();
 		verifyNoMoreInteractions(genreService);

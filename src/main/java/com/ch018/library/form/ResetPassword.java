@@ -45,4 +45,11 @@ public class ResetPassword {
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		//return super.equals(obj);
+		return key.equals(((ResetPassword)obj).key);
+	}
 }

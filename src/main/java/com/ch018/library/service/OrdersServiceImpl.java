@@ -95,4 +95,28 @@ public class OrdersServiceImpl implements OrdersService{
         return ordDAO.minOrderDateOf(bookId);
     }
     
+    @Override
+    @Transactional
+    public long countOrdersToday() {
+    	return ordDAO.countOrdersToday();
+    }
+    
+    @Override
+    @Transactional
+    public List<Book> toIssueToday(int currentPos, int pageSize, String sort) {
+    	return ordDAO.toIssueToday(currentPos, pageSize, sort);
+    }
+    
+    @Override
+    @Transactional
+    public long countOrdersPerHour() {
+    	return ordDAO.countOrdersPerHour();
+    }
+    
+    @Override
+    @Transactional
+    public List<Book> toIssuePerHour(int currentPos, int pageSize, String string) {
+    	return ordDAO.toIssuePerHour(currentPos, pageSize, string);
+    }
+    
 }

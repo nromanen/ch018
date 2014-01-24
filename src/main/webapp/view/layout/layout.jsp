@@ -22,7 +22,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/bootstrap-alert.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script>
+	<%-- <script src="${pageContext.request.contextPath}/resources/js/jquery.tablesorter.js"></script> --%>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/account.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/person.js"></script>

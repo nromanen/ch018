@@ -35,6 +35,23 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks() {
 		return bookDAO.getAllBooks();
 	}
+	
+	@Override
+	@Transactional
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
+		if (currentPos > -1) {
+			return bookDAO.getAllBooks(currentPos, pageSize, sort);
+		} else {
+			return bookDAO.getAllBooks();
+		}
+		
+	}
+	
+	@Override
+	@Transactional
+	public long countBooks() {
+		return bookDAO.countBooks();
+	}
 
 
 	@Transactional

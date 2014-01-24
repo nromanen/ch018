@@ -100,6 +100,17 @@ public class PersonServiceImpl implements PersonService {
 	public List<Person> getAll() {
 		return personDao.getAll();
 	}
+	
+	@Override
+	@Transactional
+	public List<Person> getAll(int currentPos, int pageSize, String field) {
+		
+		if (currentPos > -1) {
+			return personDao.getAll(currentPos, pageSize, field);
+		} else {
+			return personDao.getAll();
+		}
+	}
 
 	@Override
 	@Transactional
@@ -239,6 +250,12 @@ public class PersonServiceImpl implements PersonService {
 				"Library email confirmation", message);
 
 		personDao.save(person);
+    }
+    
+    @Override
+    @Transactional
+    public long getCount() {
+    	return personDao.count();
     }
 
 }

@@ -12,10 +12,12 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
 /**
@@ -234,6 +236,28 @@ public class PersonDaoImpl implements PersonDao {
 		}
 
 		return count;
+	}
+	
+	@Override
+	public long count() {
+		long count = 0;
+		try {
+			count = (long) sessionFactory.getCurrentSession().createCriteria(Person.class).setProjection(Projections.rowCount()).uniqueResult();
+		} catch (Exception e) {
+			log.error("Error getting count of persons: " + e.getMessage());
+		}
+		return count;
+	}
+	
+	@Override
+	public List<Person> getAll(int currentPos, int pageSize, String field) {
+		List<Person> persons = new ArrayList<>();
+		try {
+			persons.addAll(sessionFactory.getCurrentSession().createQuery("from Person P order by P." + field + " asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
+		} catch (Exception e) {
+			log.error("Error getting all persons: " + e.getMessage());
+		}
+		return persons;
 	}
 
 }
