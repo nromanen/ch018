@@ -30,7 +30,7 @@
                                    <c:when test="${currentDate==orderDate}">
                                        <form:form method="POST" modelAttribute="editIssue">
                                             <input type="text" id="oldIssue${order.id}" 
-                                                      value="<fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.issueDate}"/>"/>
+                                                      value="<fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.issueDate}"/>" disabled="true"/>
                                             
                                             <form:input path="id" type="hidden" value="${order.id}"/>       
                                             <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>

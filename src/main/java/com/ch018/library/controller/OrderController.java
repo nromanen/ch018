@@ -146,7 +146,6 @@ public class OrderController {
     		                    @ModelAttribute("editIssue") Orders editIssue,
     		                    BindingResult result) {
     	Orders updateOrder = order.getById(editIssue.getId());
-    	Date aaa = new Date();
        	updateOrder.setIssueDate(editIssue.getIssueDate());
         order.updateOrder(updateOrder);
     	return "redirect:/userOrder";
