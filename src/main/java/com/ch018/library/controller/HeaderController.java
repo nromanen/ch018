@@ -35,6 +35,8 @@ public class HeaderController implements ViewPreparer {
 	    
 	    if (!name.equals("anonymousUser")) {
 	    	countWish = wishListService.getCountByPerson(name);
+	    	countOrders = ordersService.getCountOrdersByPerson(name);
+	    	countBooks = booksInUseService.getCountBooksByPerson(name);
 	    }
 		
 		

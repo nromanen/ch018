@@ -192,4 +192,10 @@ public class BooksInUseServiceImpl implements BooksInUseService {
     	return booksInUseDAO.getReturnBooksToday(currentPos, pageSize, sort);
     }
 
+	@Override
+	@Transactional
+	public long getCountBooksByPerson(String name) {
+		return booksInUseDAO.getCountBooksByPerson(name);
+	}
+
 }

@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*" %>
 			<!-- Center -->
 <div class="span8">
@@ -13,7 +14,7 @@
                            <c:choose>
                                <c:when test="${order.book.available==0}">
                                    Sorry, but you can't order this book right now.
-                                   <br> This book will be available after ${date}
+                                   <br> This book will be available after <fmt:formatDate pattern="dd.MM.yyyy" value="${date}"/> 
                                </c:when>
                                <c:when test="${order.book.available==1}">
                                    <c:if test="${orderDate!=null}">You may order this book, but you must return it till ${orderDate} </c:if> 
@@ -21,7 +22,7 @@
                                           
                                    <table>
                                        <tr><td>Choose issue date:</td> 
-                                           <td><form:input path="issueDate" class="datetimepicker"/></td></tr>
+                                           <form:input path="issueDate" class="datetimepicker"/></td></tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>

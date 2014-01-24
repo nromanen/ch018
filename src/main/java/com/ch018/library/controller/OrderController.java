@@ -1,12 +1,13 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.List;
-
 import java.util.Calendar;
 
 
 import java.util.Set;
+
 
 
 import com.ch018.library.entity.Book;
@@ -20,7 +21,9 @@ import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 
 
+
 import java.util.Date;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +80,7 @@ public class OrderController {
         int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
-        String fail = "You exceed your limit at the same time to take the book";
+        //String fail = "You exceed your limit at the same time to take the book";
         if (j == uses) {            
             return "redirect:/userOrder";
         } 
@@ -95,10 +98,11 @@ public class OrderController {
                 if (available == 1) {
                     Date date = order.minOrderDateOf(bookId);
                     if(date == null){
-                       available++;
+                    	model.addAttribute("term", term);
                        } else {
                         date.setDate(date.getDate() - 1);
-                        model.addAttribute("orderDate", date);
+                       // date = Calendar.getInstance().getTime();
+                        model.addAttribute("orderDate", date.toString());
                     }
                 }
                 if (available > 1) {
@@ -115,13 +119,13 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result) {
-        int bookId = newOrder.getBook().getId();
+    	
+    	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
-        //------------------------------------------
-
+        Calendar calendar = Calendar.getInstance();
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
-        newOrder.setDate(new java.util.Date());
+        newOrder.setDate(calendar.getTime());
         order.addOrder(newOrder);
         if (wish.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
                     int id = wish.getWishWithoutId(bookId, personId).getId();
@@ -131,9 +135,28 @@ public class OrderController {
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/userOrder")
-    public ModelAndView showOrder(Principal principal) {
+    @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
+    public ModelAndView showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue) {
         return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
+    }
+    
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
+    public String editIssueDate(Model model, Principal principal,
+    		                    @ModelAttribute("editIssue") Orders editIssue,
+    		                    BindingResult result) {
+    	Orders updateOrder = order.getById(editIssue.getId());
+    	Date aaa = new Date();
+       	updateOrder.setIssueDate(editIssue.getIssueDate());
+        order.updateOrder(updateOrder);
+    	return "redirect:/userOrder";
+    }
+    
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
+    public String deleteOrder(@RequestParam("id") int id) {
+    	order.deleteOrder(id);
+    	return "redirect:/userOrder";
     }
     
     /**

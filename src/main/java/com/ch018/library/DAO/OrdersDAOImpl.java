@@ -328,4 +328,31 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return books;
     }
 
+	@Override
+	public void updateOrder(Orders ord) {
+		try {
+			sessionFactory.getCurrentSession().update(ord);		
+			log.info("Updated order: " + ord);
+		} catch(Exception e){
+		    log.error("Error insert " + e);
+		}
+		
+	}
+
+	@Override
+	public long getCountOrdersByPerson(String name) {
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(*) from Orders O where O.person.email=:name")
+					.setString("name", name);
+			count = (long) query.uniqueResult();
+		} catch(Exception e){
+			log.error(e);
+		}
+		return count;
+	}
+
 }
