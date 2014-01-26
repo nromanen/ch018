@@ -131,5 +131,12 @@ public class OrdersServiceImpl implements OrdersService{
     public List<Book> toIssuePerHour(int currentPos, int pageSize, String string) {
     	return ordDAO.toIssuePerHour(currentPos, pageSize, string);
     }
+
+	@Override
+	@Transactional
+	public long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo,
+			int BookId) {
+		return ordDAO.getCountOrdersBookBeetweenDates(dateFrom, dateTo, BookId);
+	}
     
 }

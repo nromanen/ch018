@@ -10,6 +10,8 @@ import java.util.Set;
 
 
 
+
+
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
@@ -22,9 +24,15 @@ import com.ch018.library.service.WishListService;
 
 
 
+import com.ch018.library.validator.OrderValidator;
+
 import java.util.Date;
 
 
+
+
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -48,22 +56,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderController {
     
     @Autowired
-    private OrdersService order;
+    private OrdersService orderService;
     
     @Autowired
-    private WishListService wish;
+    private WishListService wishListService;
     
     @Autowired
-    private PersonService pers;
+    private PersonService personService;
     
     @Autowired
     private BookService bookService;
     
     @Autowired
     private BooksInUseService booksInUseService;
-
+    
     @Autowired
-    private PersonService personService;
+    private OrderValidator orderValidator;
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.GET)
@@ -71,12 +79,12 @@ public class OrderController {
                                     @RequestParam("book") int bookId, 
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
-        Person p = pers.getByEmail(principal.getName());
+        Person p = personService.getByEmail(principal.getName());
         if (booksInUseService.alreadyInUse(bookId, p.getId())) {
             return "redirect:/usersBooks";
         }
         int personId = p.getId();
-        int  uses = order.getOrdersByPersonId(personId).size();
+        int  uses = orderService.getOrdersByPersonId(personId).size();
         int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
@@ -84,7 +92,7 @@ public class OrderController {
         if (j == uses) {            
             return "redirect:/userOrder";
         } 
-        if (order.orderExist(personId, bookId)) {
+        if (orderService.orderExist(personId, bookId)) {
               return "redirect:/userOrder";
           } else {
                 Orders newOrder = new Orders();
@@ -96,7 +104,7 @@ public class OrderController {
                     model.addAttribute("date", date);
                 }
                 if (available == 1) {
-                    Date date = order.minOrderDateOf(bookId);
+                    Date date = orderService.minOrderDateOf(bookId);
                     if(date == null){
                     	model.addAttribute("term", term);
                        } else {
@@ -124,37 +132,62 @@ public class OrderController {
         int personId = newOrder.getPerson().getId();
         Calendar calendar = Calendar.getInstance();
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
-        newOrder.setPerson(pers.getById(newOrder.getPerson().getId()));
+        newOrder.setPerson(personService.getById(newOrder.getPerson().getId()));
         newOrder.setDate(calendar.getTime());
-        order.addOrder(newOrder);
-        if (wish.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
-                    int id = wish.getWishWithoutId(bookId, personId).getId();
-					wish.deleteWishById(id);
+        orderService.addOrder(newOrder);
+        if (wishListService.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
+                    int id = wishListService.getWishWithoutId(bookId, personId).getId();
+					wishListService.deleteWishById(id);
 				}
         return "redirect:/userOrder";
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
-    public ModelAndView showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue) {
-        return new ModelAndView("userOrder", "showOrders", order.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
+    public Model showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue, Model model) {
+        //return new ModelAndView("userOrder", "showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
+    	model.addAttribute("showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
+    	return model;
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     public String editIssueDate(Model model, Principal principal,
-    		                    @ModelAttribute("editIssue") Orders editIssue,
+    		                    @ModelAttribute("editIssue") @Valid Orders editIssue,
     		                    BindingResult result) {
-    	Orders updateOrder = order.getById(editIssue.getId());
-       	updateOrder.setIssueDate(editIssue.getIssueDate());
-        order.updateOrder(updateOrder);
-    	return "redirect:/userOrder";
+    	orderValidator.validate(editIssue, result);
+    	if (result.hasErrors()) {
+    		return "userOrder";
+    	}
+    	Orders updateOrder = orderService.getById(editIssue.getId());
+       	int available = updateOrder.getBook().getAvailable();
+       	long  a = booksInUseService.getCountReturnBooksBeetweenDates(updateOrder.getIssueDate(), 
+       			                                                    editIssue.getIssueDate(), 
+       			                                                    updateOrder.getBook().getId());
+       	long b = orderService.getCountOrdersBookBeetweenDates(updateOrder.getIssueDate(), 
+       			                                                    editIssue.getIssueDate(), 
+       			                                                    updateOrder.getBook().getId()) - 1;
+       	int expectedAvailable = (int) ((int) a - b);
+       	expectedAvailable = expectedAvailable + available;
+        if (expectedAvailable > 1 ) {
+        	updateOrder.setIssueDate(editIssue.getIssueDate());
+            orderService.updateOrder(updateOrder);
+            return "redirect:/userOrder";
+        } else {
+        	model.addAttribute("fail", "Try another date");
+        	return "redirect:/userOrder";
+        }
+       	//System.out.println(a);
+        //System.out.println(b);
+       //	updateOrder.setIssueDate(editIssue.getIssueDate());
+       // orderService.updateOrder(updateOrder);
+    	//return "redirect:/userOrder";
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
     public String deleteOrder(@RequestParam("id") int id) {
-    	order.deleteOrder(id);
+    	orderService.deleteOrder(id);
     	return "redirect:/userOrder";
     }
     
@@ -185,7 +218,7 @@ public class OrderController {
 	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteOrder(@PathVariable Integer id) {
-		order.deleteOrder(id);
+		orderService.deleteOrder(id);
 		return "order";
 	}
 

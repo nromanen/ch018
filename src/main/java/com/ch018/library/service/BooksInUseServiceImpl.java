@@ -198,4 +198,10 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		return booksInUseDAO.getCountBooksByPerson(name);
 	}
 
+	@Override
+	@Transactional
+	public long getCountReturnBooksBeetweenDates(Date dateFrom, Date dateTo, int BookId) {
+		return booksInUseDAO.getCountReturnBooksBeetweenDates(dateFrom, dateTo, BookId);
+	}
+
 }

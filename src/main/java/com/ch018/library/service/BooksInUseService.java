@@ -20,12 +20,13 @@ public interface BooksInUseService {
 	List<Book> getReturnBooksToday();
 	void removeBooksInUse(int id);
 	BooksInUse getById(int id);
-  Date getMinByReturnDate(int bid);
-  boolean alreadyInUse(int bookId, int personId);
+    Date getMinByReturnDate(int bid);
+    boolean alreadyInUse(int bookId, int personId);
 	List<Book> getAllBooks(int currentPos, int pageSize, String sort);
 	long countBooksInUse();
 	long countBooksInUseToday();
 	List<Book> getReturnBooksToday(int currentPos, int pageSize, String sort);
-  long getCountBooksByPerson(String name);
+    long getCountBooksByPerson(String name);
+    long getCountReturnBooksBeetweenDates(Date dateFrom, Date dateTo, int BookId);
 
 }

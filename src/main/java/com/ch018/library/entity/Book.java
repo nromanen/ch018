@@ -51,6 +51,7 @@ public class Book implements Serializable {
 	private int count;
 	private int available;
 	private float rating;
+	private int numberOfEvaluations;
 
 	
 	private Set<BooksInUse> booksinuses = new HashSet<>();
@@ -182,7 +183,12 @@ public class Book implements Serializable {
 	public float getRating() {
 		return rating;
 	}
-
+	
+	@Column(name = "numberOfEvaluations", columnDefinition = "int default 0")
+    public int getNumberOfEvaluations(){
+	    return this.numberOfEvaluations;	
+	}
+	
 	public void setOrders(Set<Orders> orders) {
 		this.orders = orders;
 	}
@@ -246,7 +252,10 @@ public class Book implements Serializable {
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
-
+    
+	public void setNumberOfEvaluations(int number){
+		this.numberOfEvaluations = number;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
