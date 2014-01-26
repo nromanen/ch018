@@ -6,6 +6,7 @@ package com.ch018.library.service;
 
 import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Orders;
 
 import java.util.Collection;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ public class OrdersServiceImpl implements OrdersService{
 
     @Autowired
     private OrdersDAO ordDAO;
+    
+    @Autowired
+    private LocalizationService localizationService;
     
     @Transactional
     public void addOrder(Orders ord) {
@@ -117,7 +122,13 @@ public class OrdersServiceImpl implements OrdersService{
     @Override
     @Transactional
     public List<Book> toIssueToday(int currentPos, int pageSize, String sort) {
-    	return ordDAO.toIssueToday(currentPos, pageSize, sort);
+    	List<Book> books = ordDAO.toIssueToday(currentPos, pageSize, sort);
+    	for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+    	return books;
     }
     
     @Override
@@ -129,7 +140,13 @@ public class OrdersServiceImpl implements OrdersService{
     @Override
     @Transactional
     public List<Book> toIssuePerHour(int currentPos, int pageSize, String string) {
-    	return ordDAO.toIssuePerHour(currentPos, pageSize, string);
+    	List<Book> books = ordDAO.toIssuePerHour(currentPos, pageSize, string);
+    	for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+    	return books;
     }
     
 }
