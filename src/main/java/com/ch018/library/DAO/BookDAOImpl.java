@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -62,10 +64,21 @@ public class BookDAOImpl implements BookDAO {
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		List<Book> books = new ArrayList<>();
 		try {
-			books.addAll(sessionFactory.getCurrentSession().createQuery("from Book B order by B."+ sort +" asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
+			Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Book.class);	
+			/*criteria.setProjection(Projections.rowCount());
+		    Long resultCount = (Long)criteria.uniqueResult();
+			criteria.setProjection(null);*/
+			criteria.addOrder(Order.asc(sort));
+			criteria.setMaxResults(pageSize);
+		    criteria.setFirstResult(currentPos);
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error("Error getting all books: " + e.getMessage());
 		}
+		for (Book book2 : books) {
+			Hibernate.initialize(book2.getGenre());
+		}
+		
 		return books;
 	}
 	
@@ -279,4 +292,43 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return books;
     }
+    
+    @Override
+	public long simpleSearchCount(String parametr) {
+		parametr = "%" + parametr + "%";
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(B) from Book B where (lower(B.title) "
+									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
+									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
+									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									+ "LIKE lower(:parametr))")
+					.setString("parametr", parametr);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+	}
+
+	 @Override
+	public long paramSearchCount(String field, String parametr) {
+		parametr = "%" + parametr + "%";
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select " + "B from Book B where (lower(B."+field+") "
+									+ "LIKE lower(:parametr))")
+					.setString("parametr", parametr);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+	}
 }

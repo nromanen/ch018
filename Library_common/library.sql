@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.0.9
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1
--- Время создания: Янв 19 2014 г., 22:35
--- Версия сервера: 5.6.11
--- Версия PHP: 5.5.3
+-- Хост: localhost
+-- Время создания: Янв 25 2014 г., 23:52
+-- Версия сервера: 5.6.14
+-- Версия PHP: 5.5.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `library`
 --
-CREATE DATABASE IF NOT EXISTS `library` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `library`;
 
 -- --------------------------------------------------------
 
@@ -31,40 +29,38 @@ USE `library`;
 CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `authors` varchar(200) NOT NULL,
-  `bookcase` int(11) DEFAULT NULL,
+  `available` int(11) DEFAULT '0',
+  `bookcase` int(11) DEFAULT '0',
+  `count` int(11) DEFAULT '0',
   `description` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT 'http://placehold.it/120x150',
-  `pages` int(11) DEFAULT NULL,
+  `pages` int(11) DEFAULT '0',
   `publication` varchar(50) NOT NULL,
-  `shelf` int(11) DEFAULT NULL,
+  `rating` float DEFAULT '0',
+  `shelf` int(11) DEFAULT '0',
   `term` int(11) DEFAULT '14',
   `title` varchar(200) NOT NULL,
-  `year_public` int(11) DEFAULT NULL,
-  `gid` int(11) NOT NULL,
-  `available` int(11) DEFAULT NULL,
-  `count` int(11) DEFAULT NULL,
-  `rating` float DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `FK_k00r52dx96mgbrvv8i05saupq` (`gid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+  `year_public` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Дамп данных таблицы `books`
 --
 
-INSERT INTO `books` (`id`, `authors`, `bookcase`, `description`, `image`, `pages`, `publication`, `shelf`, `term`, `title`, `year_public`, `gid`, `available`, `count`, `rating`) VALUES
-(2, 'Antonio Goncalves', 1, 'Beginning Java EE 7 is one of the first tutorials written with definitive expertise on the Java EE 7 platform.', 'https://www.apress.com/media/catalog/product/cache/9/small_image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430246268-small_4.png', 608, 'Apress', 1, 14, 'Beginning Java EE 7', 2013, 2, 5, 5, 0),
-(3, 'Fain Y.', 2, 'As one of the most popular software languages for building Web applications, Java is often the first programming language developers learn.', 'http://i31.fastpic.ru/big/2011/1224/c0/ad98f9c71227aa37a7e2fb2c6d4539c0.jpg', 470, 'WILEY', 4, 14, ' Java Programming 24-Hour Trainer', 2011, 2, 5, 5, 0),
-(4, 'Craig Walls', 2, 'Spring in Action, Third Edition, is for all Java developers', 'http://i26.fastpic.ru/big/2011/0712/42/5d3223e783805d76392181b12c60e642.jpg', 401, 'Manning', 2, 14, 'Spring in action', 2011, 2, 5, 5, 0),
-(5, 'K. Sierra, B. Bates', 2, 'With hundreds of practice questions and hands-on exercises, SCJP Sun Certified Programmer for Java 6 Study Guide covers what you need to know--and shows you how to prepare--for this challenging exam.', 'https://d3hgnfpzeohxco.cloudfront.net/images/bau/97800715/9780071591065/0/0/plain/scjp-sun-certified-programmer-for-java-6-study-guide-exam-310-065.jpg', 890, 'MC Graw Hill', 3, 14, 'SCJP', 2008, 2, 5, 5, 0),
-(6, 'M. Deinum & K. Serneels', 1, 'Pro Spring MVC is an in-depth guide to Spring MVC, a modern web framework build on top of the Spring Framework.', 'http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430241553-3d_5.png', 590, 'Apress', 1, 14, 'Pro Spring MVC: with Web Flow', 2011, 2, 5, 5, 0),
-(14, ' Joanna Martine Woolfolk', 10, 'Everyone''s favorite astrology book, having sold over 500,000 copies, is now even easier to use with an interactive CD-ROM', 'http://d23a3s5l1qjyz.cloudfront.net/wp-content/uploads/2011/05/astrology-book.jpg', 461, 'Taylor Trade Publishing', 1, 14, 'The Only Astrology Book You''ll Ever Need', 2006, 6, 5, 5, 0),
-(15, 'Roger L Tokheim', 6, 'Designed to be used as an introductory text for students new to the electronics field', 'http://i.ebayimg.com/t/Digital-Electronics-Roger-L-Tokheim-1993-Hardcover/00/$T2eC16V,!yEE9s5jFKheBRbsjOE%2BUw~~_35.JPG', 392, 'World', 1, 14, 'Digital Electronics', 1988, 4, 2, 2, 0),
-(16, 'J.R.R. Tolkien', 12, 'In a hole in the ground there lived a hobbit...', 'http://d202m5krfqbpi5.cloudfront.net/books/1372847500l/5907.jpg', 365, 'Houghton Mifflin', 1, 14, 'The Hobbit (Middle-Earth Universe)', 2002, 10, 5, 5, 0),
-(17, 'Jared Diamond', 14, 'Life isn''t fair--here''s why: Since 1500, Europeans have, for better & worse, called the tune that the world has danced to.', 'http://d202m5krfqbpi5.cloudfront.net/books/1363934734l/1842.jpg', 494, 'W.W. Norton & Company', 2, 14, 'Guns, Germs, and Steel: The Fates of Human Societies', 2005, 5, 8, 8, 0),
-(18, 'Clifford A. Pickover', 15, 'Math’s infinite mysteries and beauty unfold in this follow-up to the best-selling The Science Book', 'http://ecx.images-amazon.com/images/I/41PsllMMlCL._SX258_PJlook-inside-v2,TopRight,1,0_SH20_BO1,204,203,200_.jpg', 985, 'The Science Book', 1, 14, 'The Math Book', 2008, 3, 3, 3, 0),
-(19, 'Friedrich Nietzsche, Walter Kaufmann', 20, 'Thus Spoke Zarathustra: A Book for All and None Thus is a philosophical novel by German philosopher Friedrich Nietzsche', 'http://d202m5krfqbpi5.cloudfront.net/books/1349449118l/51893.jpg', 327, 'Penguin Books', 2, 14, 'Thus Spoke Zarathustra', 1978, 7, 5, 5, 0),
-(20, 'Jon Ronson', 11, 'The Psychopath Test is a fascinating journey through the minds of madness.', 'http://d202m5krfqbpi5.cloudfront.net/books/1307825196l/9378733.jpg', 288, 'Riverhead Hardcover', 2, 14, 'The Psychopath Test: A Journey Through the Madness Industry', 2011, 9, 6, 6, 0);
+INSERT INTO `books` (`id`, `authors`, `available`, `bookcase`, `count`, `description`, `image`, `pages`, `publication`, `rating`, `shelf`, `term`, `title`, `year_public`) VALUES
+(2, 'Antonio Goncalves', 5, 1, 5, 'Beginning Java EE 7 is one of the first tutorials written with definitive expertise on the Java EE 7 platform.', 'https://www.apress.com/media/catalog/product/cache/9/small_image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430246268-small_4.png', 608, 'Apress', 0, 1, 14, 'Beginning Java EE 7', 2013),
+(3, 'Fain Y.', 5, 2, 5, 'As one of the most popular software languages for building Web applications, Java is often the first programming language developers learn.', 'http://i31.fastpic.ru/big/2011/1224/c0/ad98f9c71227aa37a7e2fb2c6d4539c0.jpg', 470, 'WILEY', 0, 4, 14, ' Java Programming 24-Hour Trainer', 2011),
+(4, 'Craig Walls', 5, 2, 5, 'Spring in Action, Third Edition, is for all Java developers', 'http://i26.fastpic.ru/big/2011/0712/42/5d3223e783805d76392181b12c60e642.jpg', 401, 'Manning', 0, 2, 14, 'Spring in action', 2011),
+(5, 'K. Sierra, B. Bates', 5, 2, 5, 'With hundreds of practice questions and hands-on exercises, SCJP Sun Certified Programmer for Java 6 Study Guide covers what you need to know--and shows you how to prepare--for this challenging exam.', 'https://d3hgnfpzeohxco.cloudfront.net/images/bau/97800715/9780071591065/0/0/plain/scjp-sun-certified-programmer-for-java-6-study-guide-exam-310-065.jpg', 890, 'MC Graw Hill', 0, 3, 14, 'SCJP', 2008),
+(6, 'M. Deinum & K. Serneels', 5, 1, 5, 'Pro Spring MVC is an in-depth guide to Spring MVC, a modern web framework build on top of the Spring Framework.', 'http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430241553-3d_5.png', 590, 'Apress', 0, 1, 14, 'Pro Spring MVC: with Web Flow', 2011),
+(14, ' Joanna Martine Woolfolk', 5, 10, 5, 'Everyone''s favorite astrology book, having sold over 500,000 copies, is now even easier to use with an interactive CD-ROM', 'http://d23a3s5l1qjyz.cloudfront.net/wp-content/uploads/2011/05/astrology-book.jpg', 461, 'Taylor Trade Publishing', 0, 1, 14, 'The Only Astrology Book You''ll Ever Need', 2006),
+(15, 'Roger L Tokheim', 2, 6, 2, 'Designed to be used as an introductory text for students new to the electronics field', 'http://i.ebayimg.com/t/Digital-Electronics-Roger-L-Tokheim-1993-Hardcover/00/$T2eC16V,!yEE9s5jFKheBRbsjOE%2BUw~~_35.JPG', 392, 'World', 0, 1, 14, 'Digital Electronics', 1988),
+(16, 'J.R.R. Tolkien', 5, 12, 5, 'In a hole in the ground there lived a hobbit...', 'http://d202m5krfqbpi5.cloudfront.net/books/1372847500l/5907.jpg', 365, 'Houghton Mifflin', 0, 1, 14, 'The Hobbit (Middle-Earth Universe)', 2002),
+(17, 'Jared Diamond', 8, 14, 8, 'Life isn''t fair--here''s why: Since 1500, Europeans have, for better & worse, called the tune that the world has danced to.', 'http://d202m5krfqbpi5.cloudfront.net/books/1363934734l/1842.jpg', 494, 'W.W. Norton & Company', 0, 2, 14, 'Guns, Germs, and Steel: The Fates of Human Societies', 2005),
+(18, 'Clifford A. Pickover', 3, 15, 3, 'Math’s infinite mysteries and beauty unfold in this follow-up to the best-selling The Science Book', 'http://ecx.images-amazon.com/images/I/41PsllMMlCL._SX258_PJlook-inside-v2,TopRight,1,0_SH20_BO1,204,203,200_.jpg', 985, 'The Science Book', 0, 1, 14, 'The Math Book', 2008),
+(19, 'Friedrich Nietzsche, Walter Kaufmann', 5, 20, 5, 'Thus Spoke Zarathustra: A Book for All and None Thus is a philosophical novel by German philosopher Friedrich Nietzsche', 'http://d202m5krfqbpi5.cloudfront.net/books/1349449118l/51893.jpg', 327, 'Penguin Books', 0, 2, 14, 'Thus Spoke Zarathustra', 1978),
+(20, 'Jon Ronson', 6, 11, 6, 'The Psychopath Test is a fascinating journey through the minds of madness.', 'http://d202m5krfqbpi5.cloudfront.net/books/1307825196l/9378733.jpg', 288, 'Riverhead Hardcover', 0, 2, 14, 'The Psychopath Test: A Journey Through the Madness Industry', 2011);
 
 -- --------------------------------------------------------
 
@@ -83,7 +79,39 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
   PRIMARY KEY (`buid`),
   KEY `FK_2nkoqh845najnu1vfv20lkp6p` (`Books_id`),
   KEY `FK_rece9y8w4qeg63ksgcrecwn54` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `book_genre`
+--
+
+CREATE TABLE IF NOT EXISTS `book_genre` (
+  `book_id` int(11) NOT NULL,
+  `genre_id` int(11) NOT NULL,
+  PRIMARY KEY (`book_id`,`genre_id`),
+  KEY `FK_21qfbh5aqd40pc3ifun9qyia5` (`genre_id`),
+  KEY `FK_rqso634ufpdpsixx3fddgqfq4` (`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `book_genre`
+--
+
+INSERT INTO `book_genre` (`book_id`, `genre_id`) VALUES
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(2, 2),
+(3, 2),
+(4, 2),
+(5, 2),
+(6, 2);
 
 -- --------------------------------------------------------
 
@@ -93,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
 
 CREATE TABLE IF NOT EXISTS `genre` (
   `gid` int(11) NOT NULL AUTO_INCREMENT,
+  `language` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`gid`),
   UNIQUE KEY `UK_ctffrbu4484ft8dlsa5vmqdka` (`name`)
@@ -102,17 +131,29 @@ CREATE TABLE IF NOT EXISTS `genre` (
 -- Дамп данных таблицы `genre`
 --
 
-INSERT INTO `genre` (`gid`, `name`) VALUES
-(6, 'Astrology'),
-(4, 'Electronics'),
-(8, 'Encyclopedia'),
-(10, 'Fantasy'),
-(5, 'History'),
-(3, 'Math'),
-(1, 'None genred'),
-(7, 'Philosophy'),
-(2, 'Programming'),
-(9, 'Psychology');
+INSERT INTO `genre` (`gid`, `language`, `name`) VALUES
+(1, 'EN', 'None genred'),
+(2, 'EN', 'Programming'),
+(3, 'EN', 'Math'),
+(4, 'EN', 'Electronics'),
+(5, 'EN', 'History'),
+(6, 'EN', 'Astrology'),
+(7, 'EN', 'Philosophy'),
+(8, 'EN', 'Encyclopedia'),
+(9, 'EN', 'Psychology'),
+(10, 'EN', 'Fantasy');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `localization`
+--
+
+CREATE TABLE IF NOT EXISTS `localization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `language` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`id`),
   KEY `FK_iwon2xdheg3wibjdl8rp7tsf3` (`Books_id`),
   KEY `FK_fowd2x4g292tvs9sykevhxbos` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -144,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `e_mail` varchar(255) NOT NULL,
   `emailConfirmed` tinyint(1) DEFAULT NULL,
   `failedOrders` int(11) DEFAULT NULL,
-  `multibookAllowed` int(11) DEFAULT NULL,
+  `multibookAllowed` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `rating` double DEFAULT NULL,
@@ -183,34 +224,25 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   PRIMARY KEY (`id`),
   KEY `FK_qc2mmx7r8ebvjkf4x67qv02hf` (`Books_id`),
   KEY `FK_8fo1hianyjf9k9pcdh1jlcxdq` (`Person_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
-
---
--- Дамп данных таблицы `wishlist`
---
-
-INSERT INTO `wishlist` (`id`, `Books_id`, `Person_id`) VALUES
-(3, 16, 3),
-(4, 20, 3),
-(6, 19, 4),
-(7, 15, 5);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Ограничения внешнего ключа таблицы `books`
---
-ALTER TABLE `books`
-  ADD CONSTRAINT `FK_k00r52dx96mgbrvv8i05saupq` FOREIGN KEY (`gid`) REFERENCES `genre` (`gid`);
-
---
 -- Ограничения внешнего ключа таблицы `booksinuse`
 --
 ALTER TABLE `booksinuse`
-  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`),
-  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`);
+  ADD CONSTRAINT `FK_rece9y8w4qeg63ksgcrecwn54` FOREIGN KEY (`Person_id`) REFERENCES `person` (`id`),
+  ADD CONSTRAINT `FK_2nkoqh845najnu1vfv20lkp6p` FOREIGN KEY (`Books_id`) REFERENCES `books` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `book_genre`
+--
+ALTER TABLE `book_genre`
+  ADD CONSTRAINT `FK_rqso634ufpdpsixx3fddgqfq4` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `FK_21qfbh5aqd40pc3ifun9qyia5` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`gid`);
 
 --
 -- Ограничения внешнего ключа таблицы `orders`

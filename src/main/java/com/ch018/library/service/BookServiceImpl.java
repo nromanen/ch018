@@ -1,13 +1,16 @@
 package com.ch018.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.util.IConstants;
 
 @Service
@@ -41,7 +44,8 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		if (currentPos > -1) {
-			return bookDAO.getAllBooks(currentPos, pageSize, sort);
+			List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
+			return books;
 		} else {
 			return bookDAO.getAllBooks();
 		}
@@ -113,9 +117,15 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.paramSearch(field, parametr);
 	}
 
-         @Transactional
-         public List<Book> latestArrivals() {
-               return bookDAO.latestArrivals();
-         }
+    @Transactional
+    public List<Book> latestArrivals() {
+        return bookDAO.latestArrivals();
+    }
+    
+    @Override
+    @Transactional
+    public long simpleSearchCount(String search) {
+    	return bookDAO.simpleSearchCount(search);
+    }
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 /**
@@ -26,8 +27,10 @@ public class Genre implements Serializable {
 	 */
 	private static final long serialVersionUID = -5001085796621940917L;
 	private int id;
+	private String language;
 	private String name;
 	private Set<Book> books = new HashSet<>();
+    //private Set<Localization> localizedGenres;
 
 	public Genre() {
 
@@ -48,11 +51,22 @@ public class Genre implements Serializable {
 	public String getName() {
 		return name;
 	}
+	
+	@Column(name = "language")
+	public String getLanguage() {
+		return language;
+	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "genres")
 	public Set<Book> getBooks() {
 		return this.books;
 	}
+	
+	/*@OneToMany(mappedBy="genre")
+	public Set<Localization> getLocalizedGenres() {
+		return localizedGenres;
+	}*/
+	
 
 	public void setId(int id) {
 		this.id = id;
@@ -61,10 +75,18 @@ public class Genre implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
+	
+	/*public void setLocalizedGenres(Set<Localization> localizedGenres) {
+		this.localizedGenres = localizedGenres;
+	}*/
 
 	@Override
 	public boolean equals(Object obj) {

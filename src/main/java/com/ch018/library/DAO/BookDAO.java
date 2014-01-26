@@ -24,4 +24,6 @@ public interface BookDAO {
 			String sort);
 	List<Book> paramSearch(String searchField, String search, int currentPos,
 			int pageSize, String sort);
+	long simpleSearchCount(String parametr);
+	long paramSearchCount(String field, String parametr);
 }

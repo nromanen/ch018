@@ -1,7 +1,10 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,9 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -22,6 +28,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.ch018.library.util.IConstants;
 
@@ -52,7 +59,7 @@ public class Book implements Serializable {
 	private int available;
 	private float rating;
 
-	
+	private Set<Genre> genres = new HashSet<>();
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 	private Set<WishList> wishList = new HashSet<>();
 	private Set<Orders> orders = new HashSet<>();
@@ -73,10 +80,34 @@ public class Book implements Serializable {
 		return this.id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "gid", nullable = false)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "book_genre", joinColumns = {
+			@JoinColumn(name = "book_id", nullable = false, updatable = false)
+	},
+	inverseJoinColumns = {
+			@JoinColumn(name = "genre_id", nullable = false, updatable = false)
+	})
+	public Set<Genre> getGenres() {
+		return this.genres;
+	}
+	
+	@Transient
 	public Genre getGenre() {
-		return this.genre;
+		Locale locale = LocaleContextHolder.getLocale();
+		List<Genre> gs = new ArrayList<>();
+		gs.addAll(genres);
+		for (Genre g : gs) {
+			if (g.getLanguage().equals(locale.getLanguage())) {
+				return g;
+				//break;
+			}
+		}
+		return genre;
+	}
+	
+	public void setGenre(Genre genre) {
+		//genres.add(genre);		
+		this.genre = genre;
 	}
 
 	@Size(min = 0, max = IConstants.MAX_LENGTH_TITLE)
@@ -195,8 +226,8 @@ public class Book implements Serializable {
 		this.bookcase = bookcase;
 	}
 
-	public void setGenre(Genre genre) {
-		this.genre = genre;
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
 	}
 
 	public void setTitle(String title) {
@@ -259,6 +290,9 @@ public class Book implements Serializable {
 		if (this.title.equals(((Book) obj).getTitle())
 				&& this.getAuthors().equals(((Book) obj).getAuthors())
 				&& this.getPublication().equals(((Book) obj).getPublication())) {
+			return true;
+		}
+		if (this.id == ((Book) obj).getId()) {
 			return true;
 		}
 		return false;

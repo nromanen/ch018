@@ -116,7 +116,7 @@ public class BooksControllerTest {
 		book.setTerm(14);
 		book.setTitle("title");
 		book.setYear(2000);
-		book.setGenre(genre);
+		//book.setGenre(genre);
 		book.setImage("img");
 		
 		
@@ -133,7 +133,7 @@ public class BooksControllerTest {
 		book2.setTerm(1);
 		book2.setTitle("title2");
 		book2.setYear(2002);
-		book2.setGenre(genre);
+		//book2.setGenre(genre);
 		book2.setImage("img");
 		
 		books.add(book);
@@ -141,7 +141,7 @@ public class BooksControllerTest {
 		
 		
 		when(bookService.getAllBooks()).thenReturn(books);
-		when(genreService.getAllGenres()).thenReturn(Arrays.asList(genre));
+		when(genreService.getAllGenres("EN")).thenReturn(Arrays.asList(genre));
 	}
 
 	@After
@@ -170,7 +170,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(bookService, times(1)).getAllBooks();
 		verifyNoMoreInteractions(bookService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -186,7 +186,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(bookService, times(1)).getAllBooks();
 		verifyNoMoreInteractions(bookService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -202,7 +202,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)));
 		verify(booksInUseService, times(1)).getAllBooks();
 		verifyNoMoreInteractions(booksInUseService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -218,7 +218,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(booksInUseService, times(1)).getReturnBooksToday();
 		verifyNoMoreInteractions(booksInUseService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -234,7 +234,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)));
 //		verify(ordersService, times(1)).toIssueToday();
 		verifyNoMoreInteractions(ordersService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -250,7 +250,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(ordersService, times(1)).toIssuePerHour();
 		verifyNoMoreInteractions(ordersService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 
@@ -284,7 +284,7 @@ public class BooksControllerTest {
 				
 		verify(bookService, times(1)).simpleSearch(search);
 		verifyNoMoreInteractions(bookService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 	
@@ -307,7 +307,7 @@ public class BooksControllerTest {
 				
 		verify(bookService, times(1)).paramSearch(field, search);
 		verifyNoMoreInteractions(bookService);
-		verify(genreService, times(1)).getAllGenres();
+		verify(genreService, times(1)).getAllGenres("EN");
 		verifyNoMoreInteractions(genreService);
 	}
 

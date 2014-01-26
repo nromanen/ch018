@@ -27,4 +27,5 @@ public interface BookService {
 	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort);
 	List<Book> paramSearch(String searchField, String search,
 			int currentPos, int pageSize, String sort);
+	long simpleSearchCount(String search);
 }

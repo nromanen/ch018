@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.GenreDAO;
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 
 @Component
@@ -23,9 +24,9 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	@Transactional
-	public List<Genre> getAllGenres() {
+	public List<Genre> getAllGenres(String language) {
 		// TODO Auto-generated method stub
-		return genreDAO.getAllGenres();
+		return genreDAO.getAllGenres(language);
 	}
 
 	@Override
@@ -50,6 +51,13 @@ public class GenreServiceImpl implements GenreService {
 	public Genre getGenreByName(String name) {
 		// TODO Auto-generated method stub
 		return genreDAO.getGenreByName(name);
+	}
+	
+	@Override
+	@Transactional
+	public Genre getGenreByBook(Book book, String locale) {
+		// TODO Auto-generated method stub
+		return genreDAO.getGenreByBook(book, locale);
 	}
 
 }

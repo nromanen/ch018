@@ -2,6 +2,8 @@ package com.ch018.library.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -23,9 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -41,6 +47,8 @@ import com.ch018.library.util.IConstants;
 @Secured("ROLE_LIBRARIAN")
 @Controller
 public class BooksController {
+	
+	
 
 	@Autowired
 	private BookService bookService;
@@ -59,6 +67,7 @@ public class BooksController {
 	
 	@Autowired 
 	private MessageSource messageSource;
+	
 
 	/**
 	 * Add new book
@@ -79,6 +88,10 @@ public class BooksController {
 				bookService.addBook(book);
 			} else {
 				book.setImage(bookService.getBooksById(book.getId()).getImage());
+				Set<Genre> genres = book.getGenres();
+				genres.add(genreService.getGenreById(book.getGenre().getId()));
+				//Genre genre = genreService.getGenreById(book.getGenre().getId());
+				book.setGenres(genres);
 				bookService.updateBook(book);
 			}
 			resp.setResult(book);
@@ -98,10 +111,10 @@ public class BooksController {
 	 */
 	@RequestMapping(value = "/books", method = RequestMethod.GET)
 	public String showBooks(
-			//@RequestParam(value = "show", required = false) String show,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
+		Locale locale = LocaleContextHolder.getLocale();
 		String field =(String) session.getAttribute("sort");
 		if (field == null) {
 			session.setAttribute("sort", sort);
@@ -119,20 +132,21 @@ public class BooksController {
 		long pages = 1;
 		int currentPos;
 		model.addAttribute("book", book);
-		model.addAttribute("genre", genreService.getAllGenres());
+		
+		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));  // TODO: Change "EN"
 		List<Book> books = new ArrayList<>();
-		if (searchField == null || search != null) {
+		if (searchField == null || search == null) {
 			count = bookService.countBooks();
 			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 			currentPos = (page - 1) * IConstants.PAGE_SIZE;
 			books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field));
 		} else if (searchField.equals("all")) {
-			count = bookService.countBooks();
+			count = bookService.simpleSearchCount(search);
 			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 			currentPos = (page - 1) * IConstants.PAGE_SIZE;
 			books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, field));
 		} else {
-			count = bookService.countBooks();
+			count = bookService.simpleSearchCount(search);
 			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 			currentPos = (page - 1) * IConstants.PAGE_SIZE;
 			books.addAll(bookService.paramSearch(searchField, search, currentPos, IConstants.PAGE_SIZE, field));
@@ -150,6 +164,7 @@ public class BooksController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
+		Locale locale = LocaleContextHolder.getLocale();
 		String sess = (String) session.getAttribute("sort");
 		if (sess == null) {
 			session.setAttribute("sort", sort);
@@ -164,7 +179,7 @@ public class BooksController {
 		long pages = 1;
 		int currentPos;
 		model.addAttribute("book", book);
-		model.addAttribute("genre", genreService.getAllGenres());
+		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage())); // TODO: Change "EN"
 		List<Book> books = new ArrayList<>();
 		
 		switch (show) {
@@ -193,7 +208,10 @@ public class BooksController {
 				books.addAll(ordersService.toIssuePerHour(currentPos,IConstants.PAGE_SIZE, "id"));
 				break;
 			default:
-				session.setAttribute("SHOW", null);
+				session.removeAttribute("search");
+				session.removeAttribute("searchField");
+				session.removeAttribute("sort");
+				session.removeAttribute("SHOW");
 				count = bookService.countBooks();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
@@ -215,17 +233,26 @@ public class BooksController {
 	@RequestMapping(value = "/books", method = RequestMethod.POST)
 	public String search(@RequestParam String search,
 			@RequestParam String field, Model model, HttpSession session) {
+		Locale locale = LocaleContextHolder.getLocale();
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		session.setAttribute("search", search);
 		session.setAttribute("searchField", field);
 		model.addAttribute("book", book);
-		model.addAttribute("genre", genreService.getAllGenres());
+		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage())); // TODO: Change "EN"
+		long count;
+		long pages = 1;
 		if (field.equals("all")) {
-			books.addAll(bookService.simpleSearch(search));
+			count = bookService.simpleSearchCount(search);
+			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+			books.addAll(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id"));
 		} else {
-			books.addAll(bookService.paramSearch(field, search));
+			count = bookService.simpleSearchCount(search);
+			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+			books.addAll(bookService.paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id"));
 		}
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", 1);
 		model.addAttribute("books", books);
 		return "books";
 	}

@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!-- Center -->
 <div class="span8">
+	<c:if test="${indexSearch != null}">
+	<span>Show all results by request: </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" >Show all</a>
+	</c:if>
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
 		<c:if test="${(rowCounter.count + 2) % 3 == 0}">
 			<div class="row-fluid">
