@@ -59,7 +59,7 @@ public class Book implements Serializable {
 	private int available;
 	private float rating;
 
-	private Set<Genre> genres = new HashSet<>();
+	//private Set<Genre> genres = new HashSet<>();
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 	private Set<WishList> wishList = new HashSet<>();
 	private Set<Orders> orders = new HashSet<>();
@@ -80,7 +80,7 @@ public class Book implements Serializable {
 		return this.id;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	/*@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "book_genre", joinColumns = {
 			@JoinColumn(name = "book_id", nullable = false, updatable = false)
 	},
@@ -89,21 +89,13 @@ public class Book implements Serializable {
 	})
 	public Set<Genre> getGenres() {
 		return this.genres;
-	}
+	}*/
 	
-	@Transient
-	public Genre getGenre() {
-		Locale locale = LocaleContextHolder.getLocale();
-		List<Genre> gs = new ArrayList<>();
-		gs.addAll(genres);
-		for (Genre g : gs) {
-			if (g.getLanguage().equals(locale.getLanguage())) {
-				return g;
-				//break;
-			}
-		}
-		return genre;
-	}
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "gid", nullable = false)
+    public Genre getGenre() {
+            return this.genre;
+    }
 	
 	public void setGenre(Genre genre) {
 		//genres.add(genre);		
@@ -226,9 +218,9 @@ public class Book implements Serializable {
 		this.bookcase = bookcase;
 	}
 
-	public void setGenres(Set<Genre> genres) {
+	/*public void setGenres(Set<Genre> genres) {
 		this.genres = genres;
-	}
+	}*/
 
 	public void setTitle(String title) {
 		this.title = title;

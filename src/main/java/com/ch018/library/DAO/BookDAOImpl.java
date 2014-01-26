@@ -264,7 +264,7 @@ public class BookDAOImpl implements BookDAO {
 							"select B from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+								//	+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
 									+ "LIKE lower(:parametr)) order by B."+ sort +" asc")
 					.setString("parametr", parametr).setMaxResults(pageSize).setFirstResult(currentPos);
 			books.addAll(query.list());
@@ -304,7 +304,7 @@ public class BookDAOImpl implements BookDAO {
 							"select count(B) from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+							//		+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
 									+ "LIKE lower(:parametr))")
 					.setString("parametr", parametr);
 			count = (long) query.uniqueResult();

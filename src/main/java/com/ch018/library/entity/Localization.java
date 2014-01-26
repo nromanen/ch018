@@ -13,7 +13,8 @@ public class Localization {
 
     private int id;
     private String language;
-    //private Genre genre;
+    private Genre genre;
+    private String localizedName;
     
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +26,28 @@ public class Localization {
 		return language;
 	}
     
-/*    public Genre getGenre() {
+    public String getLocalizedName() {
+		return localizedName;
+	}
+    
+    @ManyToOne
+    public Genre getGenre() {
     	return genre;
-    }*/
+    }
     
     public void setId(int id) {
     	this.id = id;
     }
     
-   /* public void setGenre(Genre genre) {
+    public void setGenre(Genre genre) {
     	this.genre = genre;
-    }*/
+    }
     
     public void setLanguage(String language) {
     	this.language = language;
+    }
+    
+    public void setLocalizedName(String localizedName) {
+    	this.localizedName = localizedName;
     }
 }

@@ -19,6 +19,9 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private BookDAO bookDAO;
 	
+	@Autowired
+	private LocalizationService localizationService;
+	
 	@Transactional
 	public void addBook(Book book) {
 		// TODO: isn't this string default for image url string?
@@ -45,6 +48,13 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		if (currentPos > -1) {
 			List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
+			//List<Genre> genres = genreService.getAllGenres("en");
+			for (Book book : books) {
+				Genre genre = book.getGenre();
+				genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+				book.setGenre(genre);
+			//	genre.setName(localizationService.getName(genre.getId(), language));
+			}
 			return books;
 		} else {
 			return bookDAO.getAllBooks();

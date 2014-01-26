@@ -16,6 +16,9 @@ public class GenreServiceImpl implements GenreService {
 	@Autowired
 	private GenreDAO genreDAO;
 	
+	@Autowired 
+	private LocalizationService localizationService;
+	
 	@Transactional
 	public void addGenre(Genre genre) {
 		// TODO Auto-generated method stub
@@ -25,8 +28,11 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	@Transactional
 	public List<Genre> getAllGenres(String language) {
-		// TODO Auto-generated method stub
-		return genreDAO.getAllGenres(language);
+		List<Genre> genres = genreDAO.getAllGenres(language);
+		for (Genre genre : genres) {
+			genre.setName(localizationService.getName(genre.getId(), language));
+		}
+		return genres;
 	}
 
 	@Override

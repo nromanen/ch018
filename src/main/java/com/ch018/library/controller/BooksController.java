@@ -88,10 +88,10 @@ public class BooksController {
 				bookService.addBook(book);
 			} else {
 				book.setImage(bookService.getBooksById(book.getId()).getImage());
-				Set<Genre> genres = book.getGenres();
+				/*Set<Genre> genres = book.getGenres();
 				genres.add(genreService.getGenreById(book.getGenre().getId()));
 				//Genre genre = genreService.getGenreById(book.getGenre().getId());
-				book.setGenres(genres);
+				book.setGenres(genres);*/
 				bookService.updateBook(book);
 			}
 			resp.setResult(book);

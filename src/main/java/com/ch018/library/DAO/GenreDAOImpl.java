@@ -38,8 +38,9 @@ public class GenreDAOImpl implements GenreDAO {
 		List<Genre> genres = new ArrayList<>();
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
-					.createCriteria(Genre.class).add(Restrictions.eq("language", language))
-					.addOrder(Order.asc("name")).list());
+					.createCriteria(Genre.class)//.add(Restrictions.eq("language", language))
+					//.addOrder(Order.asc("name"))
+					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
