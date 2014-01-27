@@ -8,9 +8,12 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 
 @Component
@@ -31,11 +34,13 @@ public class GenreDAOImpl implements GenreDAO {
 	}
 
 	@Override
-	public List<Genre> getAllGenres() {
+	public List<Genre> getAllGenres(String language) {
 		List<Genre> genres = new ArrayList<>();
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
-					.createCriteria(Genre.class).list());
+					.createCriteria(Genre.class)//.add(Restrictions.eq("language", language))
+					//.addOrder(Order.asc("name"))
+					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -84,6 +89,12 @@ public class GenreDAOImpl implements GenreDAO {
 			log.error(e);
 		}
 		return genre;
+	}
+	
+	@Override
+	public Genre getGenreByBook(Book book, String locale) {
+
+		return null;
 	}
 
 }

@@ -1,19 +1,26 @@
 package com.ch018.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
+import com.ch018.library.util.IConstants;
 
 @Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private BookDAO bookDAO;
+	
+	@Autowired
+	private LocalizationService localizationService;
 	
 	@Transactional
 	public void addBook(Book book) {
@@ -40,7 +47,15 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		if (currentPos > -1) {
-			return bookDAO.getAllBooks(currentPos, pageSize, sort);
+			List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
+			//List<Genre> genres = genreService.getAllGenres("en");
+			for (Book book : books) {
+				Genre genre = book.getGenre();
+				genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+				book.setGenre(genre);
+			//	genre.setName(localizationService.getName(genre.getId(), language));
+			}
+			return books;
 		} else {
 			return bookDAO.getAllBooks();
 		}
@@ -95,15 +110,44 @@ public class BookServiceImpl implements BookService {
 	public List<Book> simpleSearch(String parametr) {
 		return bookDAO.simpleSearch(parametr);
 	}
+	
+	@Transactional
+	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort) {
+		List<Book> books = bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
+		for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+		return books;
+	}
+	
+	@Transactional
+	public List<Book> paramSearch(String searchField, String search,
+			int currentPos, int pageSize, String sort) {
+		List<Book> books = bookDAO.paramSearch(searchField, search, currentPos, pageSize, sort);
+		for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+		return books;
+	}
 
 	@Transactional
 	public List<Book> paramSearch(String field, String parametr) {
 		return bookDAO.paramSearch(field, parametr);
 	}
 
-         @Transactional
-         public List<Book> latestArrivals() {
-               return bookDAO.latestArrivals();
-         }
+    @Transactional
+    public List<Book> latestArrivals() {
+        return bookDAO.latestArrivals();
+    }
+    
+    @Override
+    @Transactional
+    public long simpleSearchCount(String search) {
+    	return bookDAO.simpleSearchCount(search);
+    }
 
 }

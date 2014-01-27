@@ -38,6 +38,7 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.IConstants;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -98,7 +99,7 @@ public class PersonControllerTest {
 		person3.setEmail("");
 		persons.add(person);
 		persons.add(person2);
-		when(personService.getAll()).thenReturn(persons);
+		when(personService.getAll(0,IConstants.PAGE_SIZE,"id")).thenReturn(persons);
 		
 		//RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users");
 
@@ -124,8 +125,8 @@ public class PersonControllerTest {
 								)
 						))
 						);
-		verify(personService, times(1)).getAll();
-		verifyNoMoreInteractions(personService);
+		verify(personService, times(1)).getAll(0,IConstants.PAGE_SIZE,"id");
+		//verifyNoMoreInteractions(personService);
 	}
 
 	@Test
