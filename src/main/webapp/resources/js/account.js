@@ -28,6 +28,7 @@ $(document).ready(function() {
 	  $("#oldIssue" + $id).hide();
 	  $("#saveNewIssue" + $id).show();
 	  $("#cancelIssueEdit" + $id).show();
+	  $("#newIssue" + $id).val($("#oldIssue" + $id).text());
 	  $("#newIssue" + $id).show();
   
   })

@@ -29,12 +29,12 @@
                                  <c:choose>
                                    <c:when test="${currentDate==orderDate}">
                                        <form:form method="POST" modelAttribute="editIssue">
-                                            <span id="oldIssue${order.id}"><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${order.issueDate}"/></span>
-                                            <form:input path="id" type="hidden" value="${order.id}"/>       
+                                              <span id="oldIssue${order.id}"><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${order.issueDate}"/></span>
+                                              <form:input path="id" type="hidden" value="${order.id}"/>       
                                            <div class="controls">
-                                            <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
-                                            <form:errors path="issueDate" cssClass="error"/>
-                                            </div>
+                                               <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
+                                               <form:errors path="issueDate" cssClass="error"/>
+                                           </div>
                                             <br>                                  
                                             <input type="button" value="Edit" id="editIssueDate${order.id}" class="btn btn-info"/>
                                             <input type="hidden" value="${order.id}"/>

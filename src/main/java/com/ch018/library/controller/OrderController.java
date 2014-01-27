@@ -157,6 +157,7 @@ public class OrderController {
     		                    BindingResult result) {
     	orderValidator.validate(editIssue, result);
     	if (result.hasErrors()) {
+    		model.addAttribute("showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     		return "userOrder";
     	}
     	Orders updateOrder = orderService.getById(editIssue.getId());
@@ -177,11 +178,6 @@ public class OrderController {
         	model.addAttribute("fail", "Try another date");
         	return "redirect:/userOrder";
         }
-       	//System.out.println(a);
-        //System.out.println(b);
-       //	updateOrder.setIssueDate(editIssue.getIssueDate());
-       // orderService.updateOrder(updateOrder);
-    	//return "redirect:/userOrder";
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })

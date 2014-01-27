@@ -14,7 +14,7 @@ public class OrderValidator implements Validator {
 
 	@Autowired
 	private PersonService personService;
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Orders.class.isAssignableFrom(clazz);
@@ -22,8 +22,14 @@ public class OrderValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "issueDate",
-				"required.issueDate", "Field  is required.");
+		// ValidationUtils.rejectIfEmptyOrWhitespace();
+		//ValidationUtils.rejectIfEmpty(errors, "issueDate", "required.issueDate", "Field  is required.");
+		/*Orders order = (Orders) target;
+
+		
+			if (order.getIssueDate().before(new java.util.Date())) {
+				errors.rejectValue("issueDate", "date.expired");
+			} */
 		
 	}
 

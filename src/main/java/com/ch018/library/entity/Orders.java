@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 
@@ -60,6 +63,7 @@ public class Orders {
 
 	
 	@Column(name = "issue_date")
+	@NotNull(message="{NotEmpty.order.issueDate}")
 	public Date getIssueDate() {
 		return this.issueDate;
 	}
