@@ -22,18 +22,19 @@
 						<tr class="info">
 							
 							<td>${order.book.title}</td>
-                            <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.date}" /></td>
+                            <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${order.date}" /></td>
                             <td> <jsp:useBean id="date" class="java.util.Date"/>
                                  <fmt:formatDate pattern = "dd.MM.yyyy" value="${date}" var="currentDate"/>
                                  <fmt:formatDate pattern = "dd.MM.yyyy" value="${order.date}" var="orderDate"/>
                                  <c:choose>
                                    <c:when test="${currentDate==orderDate}">
                                        <form:form method="POST" modelAttribute="editIssue">
-                                            <input type="text" id="oldIssue${order.id}" 
-                                                      value="<fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.issueDate}"/>"/>
-                                            
-                                            <form:input path="id" type="hidden" value="${order.id}"/>       
-                                            <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
+                                              <span id="oldIssue${order.id}"><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${order.issueDate}"/></span>
+                                              <form:input path="id" type="hidden" value="${order.id}"/>       
+                                           <div class="controls">
+                                               <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
+                                               <form:errors path="issueDate" cssClass="error"/>
+                                           </div>
                                             <br>                                  
                                             <input type="button" value="Edit" id="editIssueDate${order.id}" class="btn btn-info"/>
                                             <input type="hidden" value="${order.id}"/>
@@ -41,8 +42,9 @@
                                             <input type="button" value="Cancel" id="cancelIssueEdit${order.id}" class="btn btn-warning" style="display:none"/>
                                             <input type="hidden" value="${order.id}"/>
                                             <a href="<c:url value="/deleteorder?id=${order.id}"/>"  class = "btn btn-danger">Delete</a>
-                                           
-                                       </form:form>
+                                            <br>
+                                        </form:form>
+                                         ${fail}
                                    </c:when>
                                    <c:otherwise>
                                     <fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${order.issueDate}" />

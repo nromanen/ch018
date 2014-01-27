@@ -148,5 +148,12 @@ public class OrdersServiceImpl implements OrdersService{
 		}
     	return books;
     }
+
+	@Override
+	@Transactional
+	public long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo,
+			int BookId) {
+		return ordDAO.getCountOrdersBookBeetweenDates(dateFrom, dateTo, BookId);
+	}
     
 }
