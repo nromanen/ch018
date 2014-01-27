@@ -11,7 +11,7 @@ import com.ch018.library.service.LocalizationService;
 
 public class GenreInterceptor extends EmptyInterceptor {
 	
-	/*@Autowired
+	@Autowired
 	private LocalizationService localizationService;
 	
 	@Override
@@ -22,5 +22,5 @@ public class GenreInterceptor extends EmptyInterceptor {
 			return true;
 	    }
 		return false;
-	}*/
+	}
 }

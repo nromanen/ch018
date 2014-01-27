@@ -50,6 +50,7 @@ import com.ch018.library.service.GenreService;
 import com.ch018.library.service.LocalizationService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.IConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -64,6 +65,7 @@ public class BooksControllerTest {
 	private Localization localization = new Localization();
 	private Book book = new Book();
 	private Book book2 = new Book();
+	List<Book> books = new ArrayList<>();
 	
 	
 	private MockMvc mockMvc;
@@ -102,9 +104,7 @@ public class BooksControllerTest {
 		Mockito.reset(booksInUseService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		
-		List<Book> books = new ArrayList<>();
-		
-		
+
 		genre.setId(1);
 		genre.setName("Genre");
 		
@@ -149,23 +149,24 @@ public class BooksControllerTest {
 		books.add(book);
 		books.add(book2);
 		
-		
-		
+
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
-		when(bookService.getAllBooks(0,9,"id")).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id")).thenReturn(books);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		books.clear();		
 	}
 
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-		/*mockMvc.perform(post("/book/update")
+	/*	mockMvc.perform(post("/book/update")
 				.contentType(new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8")))
 				.content( new ObjectMapper().writeValueAsBytes(book))
+				.param("", values)
 				)
 				.andExpect(status().isBadRequest());*/
 	}
@@ -180,7 +181,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(2)))
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(bookService, times(1)).getAllBooks(0,9,"id");
+		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -196,7 +197,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(2)))
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(bookService, times(1)).getAllBooks(0, 9, "id");
+		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -204,7 +205,7 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksReturn() throws Exception {
-		when(booksInUseService.getAllBooks(0, 9, "id")).thenReturn(Arrays.asList(book));
+		when(booksInUseService.getAllBooks(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
 		mockMvc.perform(get("/books/{show}", "return"))//.param("show", "return"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
@@ -212,7 +213,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("genre", hasItem(genre)))
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
-		verify(booksInUseService, times(1)).getAllBooks(0, 9, "id");
+		verify(booksInUseService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(booksInUseService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -220,7 +221,7 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksReturnTd() throws Exception {
-		when(booksInUseService.getReturnBooksToday(0, 9, "id")).thenReturn(Arrays.asList(book2));
+		when(booksInUseService.getReturnBooksToday(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book2));
 		mockMvc.perform(get("/books/{show}", "returntd"))//.param("show", "returntd"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
@@ -228,7 +229,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("genre", hasItem(genre)))
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(booksInUseService, times(1)).getReturnBooksToday(0, 9, "id");
+		verify(booksInUseService, times(1)).getReturnBooksToday(0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(booksInUseService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -236,7 +237,7 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksIssueTd() throws Exception {
-		when(ordersService.toIssueToday(0, 9, "id")).thenReturn(Arrays.asList(book));
+		when(ordersService.toIssueToday(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
 		mockMvc.perform(get("/books/{show}", "issuetd"))//.param("show", "issuetd"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
@@ -244,7 +245,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("genre", hasItem(genre)))
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
-		verify(ordersService, times(1)).toIssueToday(0, 9, "id");
+		verify(ordersService, times(1)).toIssueToday(0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(ordersService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -252,7 +253,7 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksIssuePh() throws Exception {
-		when(ordersService.toIssuePerHour(0, 9, "id")).thenReturn(Arrays.asList(book2));
+		when(ordersService.toIssuePerHour(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book2));
 		mockMvc.perform(get("/books/{show}", "issueph"))//.param("show", "issueph"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
@@ -260,7 +261,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("genre", hasItem(genre)))
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(ordersService, times(1)).toIssuePerHour(0, 9, "id");
+		verify(ordersService, times(1)).toIssuePerHour(0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(ordersService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -280,7 +281,7 @@ public class BooksControllerTest {
 	public void testAllSearch() throws Exception {
 		String search = "Java";
 		String field = "all";
-		when(bookService.simpleSearch(search, 0, 9, "id")).thenReturn(Arrays.asList(book, book2));
+		when(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book, book2));
 		mockMvc.perform(post("/books")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("search", search)
@@ -294,7 +295,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 				
-		verify(bookService, times(1)).simpleSearch(search, 0, 9, "id");
+		verify(bookService, times(1)).simpleSearch(search, 0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -304,7 +305,7 @@ public class BooksControllerTest {
 	public void testParamSearch() throws Exception {
 		String search = "Java";
 		String field = "title";
-		when(bookService.paramSearch(field, search, 0, 9, "id")).thenReturn(Arrays.asList(book));
+		when(bookService.paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
 		mockMvc.perform(post("/books")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.param("search", search)
@@ -317,7 +318,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
 				
-		verify(bookService, times(1)).paramSearch(field, search, 0, 9, "id");
+		verify(bookService, times(1)).paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);

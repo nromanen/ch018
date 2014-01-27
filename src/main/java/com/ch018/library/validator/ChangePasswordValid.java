@@ -6,12 +6,12 @@
 
 package com.ch018.library.validator;
 
-import com.ch018.library.form.Password;
-
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.ch018.library.form.Password;
 
 /**
  *

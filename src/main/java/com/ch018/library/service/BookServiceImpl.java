@@ -113,13 +113,25 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort) {
-		return bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
+		List<Book> books = bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
+		for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+		return books;
 	}
 	
 	@Transactional
 	public List<Book> paramSearch(String searchField, String search,
 			int currentPos, int pageSize, String sort) {
-		return bookDAO.paramSearch(searchField, search, currentPos, pageSize, sort);
+		List<Book> books = bookDAO.paramSearch(searchField, search, currentPos, pageSize, sort);
+		for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+		return books;
 	}
 
 	@Transactional
