@@ -22,6 +22,14 @@
 		<put-attribute name="footer" value="/view/layout/footer.jsp" />
 	</definition>
 	
+	<definition name="adminLayout" template="/view/layout/adminlayout.jsp">
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="includes" value="/view/layout/includes.jsp" />
+		<put-attribute name="header" value="header" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/view/layout/footer.jsp" />
+	</definition>
+	
 	<definition name="index" extends="baseLayout">
 		<put-attribute name="title" value="Library" />
 		<put-attribute name="body" value="/view/index.jsp" />
@@ -100,8 +108,13 @@
 		<put-attribute name="body" value="/view/order.jsp" />
 	</definition>
         
-        <definition name="pass" extends="baseLayout">
+    <definition name="pass" extends="baseLayout">
 		<put-attribute name="title" value="Library" />
 		<put-attribute name="body" value="/view/pass.jsp" />
+	</definition>
+	
+	<definition name="admin" extends="adminLayout">
+		<put-attribute name="title" value="Librarian > registration" />
+		<put-attribute name="body" value="/view/admin/index.jsp" />
 	</definition>
 </tiles-definitions>    

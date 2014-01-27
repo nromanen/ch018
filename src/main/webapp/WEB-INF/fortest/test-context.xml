@@ -90,5 +90,9 @@
 	<bean id="changePass" name="changePass" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.validator.ChangePasswordValid"/>
 	</bean>
+	
+	<bean id="localizationService" name="localizationService" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.service.LocalizationService"/>
+	</bean>
 
 </beans>

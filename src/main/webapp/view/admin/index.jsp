@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"  isELIgnored="false" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+	pageEncoding="UTF-8" isELIgnored="false"%>
+	<%@ page session="true"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
-<%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
-<div class="span10">
-	<!-- Alert -->
-	<div class="alert alert-error" style="display: none">
-		<button type="button" class="close">&times;</button>
-		<h4>
-			<spring:message code="message.error" />
-		</h4>
-		<spring:message code="person.errordel" />
-	</div>
-
-	<div style="overflow-y: scroll">
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras"%>
+<div style="overflow-y: scroll">
 		<table id="utable" class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
@@ -31,6 +22,7 @@
 					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"> <i class="icon-chevron-down"/> </a></th>
 					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"> <i class="icon-chevron-down"/> </a></th>
 					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.role" /><a href="<c:url value="?sort=role"/>"> <i class="icon-chevron-down"/> </a></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -56,7 +48,7 @@
 						<td><input class="confirm${person.id}" type="checkbox"
 							name="confirm" value="confirm"
 							${person.confirm == true ? 'checked' : ''} disabled></td>
-							
+						<td class="role${person.id}">${person.role}</td>	
 						<td>
 							<div class="btn-group">
 								<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -81,18 +73,15 @@
 						<td><a href="#" id="edituser${person.id}"
 							class="btn btn-warning"><spring:message code="button.edit" /></a></td>
 						<td>
-							<c:if test="${person.role != 'ROLE_LIBRARIAN' && person.role != 'ROLE_ADMINISTRATOR'}">
 								<a href="#" id="deleteuser${person.id}"
 								class="btn btn-danger"><spring:message code="button.delete" /></a>
-							</c:if>	
 						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
-
-	<!-- New user button -->
+		<!-- New user button -->
 	<a href="#" id="newuserbutton" class="btn"><spring:message
 			code="person.new" /></a>
 			
@@ -166,9 +155,9 @@
 			<span id="errorperson" class="error"></span>
 		</div>
 		<div class="modal-body">
-			<form:form id="addedituser" class="form-horizontal" method="POST"
+			<form:form id="addedituseradm" class="form-horizontal" method="POST"
 				commandName="person"
-				action="${pageContext.request.contextPath}/user/update">
+				action="${pageContext.request.contextPath}/admin/update">
 				<form:input path="id" id="id" class="hide" disabled="disabled" />
 
 				<div class="control-group">
@@ -219,29 +208,39 @@
 					</div>
 				</div>
 
-				<div class="control-group hide">
+				<div class="control-group">
 					<label class="control-label" for="untimelyReturns"><spring:message
 							code="person.untimelly" /></label>
 					<div class="controls">
-						<form:hidden path="untimelyReturns" id="untimelyReturns"
+						<form:input path="untimelyReturns" id="untimelyReturns"
 							placeholder="0" />
+						<form:label id="errormuntimelyReturns" path="untimelyReturns" cssClass="error" />
 					</div>
 				</div>
 
-				<div class="control-group hide">
+				<div class="control-group">
 					<label class="control-label" for="timelyReturns"><spring:message
 							code="person.timelly" /></label>
 					<div class="controls">
-						<form:hidden path="timelyReturns" id="timelyReturns"
+						<form:input path="timelyReturns" id="timelyReturns"
 							placeholder="0" />
+						<form:label id="errortimelyReturns" path="timelyReturns" cssClass="error" />
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="role">Role</label>
+					<div class="controls">
+						<form:select path="role" id="role" items="${role}" />
 					</div>
 				</div>
 
-				<div class="control-group hide">
+				<div class="control-group">
 					<label class="control-label" for="failedOrders"><spring:message
 							code="person.failed" /></label>
 					<div class="controls">
-						<form:hidden path="failedOrders" id="failedOrders" placeholder="0" />
+						<form:input path="failedOrders" id="failedOrders" placeholder="0" />
+						<form:label id="errorfailedOrders" path="failedOrders" cssClass="error" />
 					</div>
 				</div>
 
@@ -250,6 +249,7 @@
 							code="person.confirmed" /></label>
 					<div class="controls">
 						<form:checkbox path="confirm" id="confirm" />
+						<form:label id="errorconfirm" path="confirm" cssClass="error" />
 					</div>
 				</div>
 				<div class="form-actions">
@@ -260,4 +260,3 @@
 			</form:form>
 		</div>
 	</div>
-</div>

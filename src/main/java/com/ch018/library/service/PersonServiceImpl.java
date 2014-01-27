@@ -254,6 +254,39 @@ public class PersonServiceImpl implements PersonService {
     
     @Override
     @Transactional
+    public void adminUpdatePerson(Person person, Person person2) {
+    	person.setPassword(person2.getPassword());
+		//person.setRole(person2.getRole());
+		//person.setRating(person2.getRating());
+		person.setEmailConfirmed(person2.getEmailConfirmed());
+		person.setVerificationKey(person2.getVerificationKey());
+		personDao.update(person);
+    }
+    
+    @Override
+    @Transactional
+    public void adminSavePerson(Person person, HttpServletRequest request) {
+    	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		person.setPassword(passwordEncoder.encode(PasswordGen.generateString(6)));
+		//person.setRole(Person.Role.ROLE_USER.toString());
+		person.setEmailConfirmed(false);
+		person.setVerificationKey(VerificationKey.generate(person.getEmail()));
+		person.setConfirm(false);
+		person.setRating(CalculateRating.getRating());
+		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
+		String url = "http://localhost:8080/library/remind";
+		String message = "Thank you for joining our JLibrary. Change your password by clicking next link: "
+		+ url + "/pass?key="                
+		+ person.getVerificationKey();
+		
+		mailService.sendMail(person.getEmail(),
+				"Library email confirmation", message);
+
+		personDao.save(person);
+    }
+    
+    @Override
+    @Transactional
     public long getCount() {
     	return personDao.count();
     }

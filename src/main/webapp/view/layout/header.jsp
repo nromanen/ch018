@@ -40,7 +40,7 @@
 						<li><a href="<c:url value="/registration"/>"><spring:message
 									code="menu.registration" /></a></li>
 					</sec:authorize>
-					<sec:authorize access="isAuthenticated()">
+					<sec:authorize access="hasAnyRole({'ROLE_LIBRARIAN','ROLE_USER'})">
 						<li><a href="<c:url value="/wishList"/>"><spring:message
 									code="menu.wish" />
 									<c:if test="${countWish > 0}"> <span class="badge badge-info">${countWish}</span></c:if></a></li>
@@ -50,6 +50,10 @@
 						<li><a href="<c:url value="/usersBooks"/>"><spring:message
 									code="menu.mbooks" />
 									<c:if test="${countBooks > 0}"> <span class="badge badge-info">${countBooks}</span></c:if></a></li>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+						<li><a href="<c:url value="/admusers"/>"><spring:message
+									code="menu.users" /></a></li>
 					</sec:authorize>
 					
 					<sec:authorize access="isAuthenticated()">

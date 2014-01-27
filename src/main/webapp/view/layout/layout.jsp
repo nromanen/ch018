@@ -12,10 +12,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="${pageContext.request.contextPath}/resources/css/style.css"
 	rel="stylesheet" type="text/css" />
-	<link
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css"
-	rel="stylesheet" type="text/css" />
-        <link href="${pageContext.request.contextPath}/resources/css/jquery.datetimepicker.css"	
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css"	rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css"	rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/resources/css/jquery.datetimepicker.css"	
         rel="stylesheet" type="text/css"/>
         
     <link

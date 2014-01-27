@@ -33,4 +33,6 @@ public interface PersonService {
 	void librarianSavePerson(Person person, HttpServletRequest request);
 	long getCount();
 	List<Person> getAll(int currentPos, int pageSize, String field);
+	void adminSavePerson(Person person, HttpServletRequest request);
+	void adminUpdatePerson(Person person, Person person2);
 }

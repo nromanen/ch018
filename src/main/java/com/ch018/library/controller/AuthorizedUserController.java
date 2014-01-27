@@ -41,6 +41,7 @@ import com.ch018.library.validator.AccountValidation;
 import com.ch018.library.validator.ChangePasswordValid;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -72,25 +73,45 @@ public class AuthorizedUserController {
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-			@RequestParam(value = "genre", required = false) Integer id, Model model) {
-		long count = book.countBooks();
-		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		model.addAttribute("pages", pages);
-		model.addAttribute("page", page);
+			@RequestParam(value = "show", required = false) String show,
+			@RequestParam(value = "genre", required = false) Integer id, Model model, HttpSession session) {
+		if (show != null){
+			session.removeAttribute("indexSearch");
+		}
+		String search = (String) session.getAttribute("indexSearch");
+		long pages = 1;
+		
 		if (id == null) {
-			model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
+			if (search != null) {
+				long count = book.simpleSearchCount(search);
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id"));
+			} else {
+				long count = book.countBooks();
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
+			}
 		} else {
+			session.removeAttribute("indexSearch");
 			Genre genre = genreService.getGenreByIdWithBooks(id);
 			model.addAttribute("latest", genre.getBooks());
 		}
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", page);
 		return "index";
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String search(@RequestParam String search, Model model) {
+	public String search(@RequestParam String search, Model model, HttpSession session) {
 		List<Book> books = new ArrayList<Book>();
-		books.addAll(book.simpleSearch(search));
+		session.setAttribute("indexSearch", search);
+		long count = book.simpleSearchCount(search);
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", 1);
+		books.addAll(book.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id"));
 		model.addAttribute("latest", books);
 		return "index";
 	}

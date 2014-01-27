@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.DAO.PersonDao;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.util.CalculateRating;
@@ -33,6 +35,9 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	
 	@Autowired
 	private BookDAO bookDAO;
+	
+	@Autowired
+	private LocalizationService localizationService;
 	
 	@Override
 	@Transactional
@@ -134,7 +139,13 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		if (currentPos > -1) {
-			return booksInUseDAO.getAllBooks(currentPos, pageSize, sort);
+			List<Book> books = booksInUseDAO.getAllBooks(currentPos, pageSize, sort);
+			for (Book book : books) {
+				Genre genre = book.getGenre();
+				genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+				book.setGenre(genre);
+			}
+			return books;
 		} else {
 			return booksInUseDAO.getAllBooks();
 		}
@@ -145,7 +156,13 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	@Transactional
 	public List<Book> getReturnBooksToday() {
 		// TODO Auto-generated method stub
-		return booksInUseDAO.getReturnBooksToday();
+		List<Book> books = booksInUseDAO.getReturnBooksToday();
+		for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+		return books;
 	}
 
 	@Override
@@ -189,7 +206,13 @@ public class BooksInUseServiceImpl implements BooksInUseService {
     @Transactional
     public List<Book> getReturnBooksToday(int currentPos, int pageSize,
     		String sort) {
-    	return booksInUseDAO.getReturnBooksToday(currentPos, pageSize, sort);
+    	List<Book> books = booksInUseDAO.getReturnBooksToday(currentPos, pageSize, sort);
+    	for (Book book : books) {
+			Genre genre = book.getGenre();
+			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
+			book.setGenre(genre);
+		}
+    	return books;
     }
 
 	@Override

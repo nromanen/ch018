@@ -13,7 +13,7 @@
 		<!-- Button group -->
 		<div class="span8">
 			<div class="btn-group">
-				<a href="<c:url value="/books"/>" class="btn btn-primary"><spring:message
+				<a href="<c:url value="/books/all"/>" class="btn btn-primary"><spring:message
 						code="book.all" /></a> <a href="<c:url value="/books/issuetd"/>"
 					class="btn btn-primary"><spring:message code="book.issuetd" /></a>
 				<a href="<c:url value="/books/issueph"/>"
@@ -60,7 +60,12 @@
 
 	<!-- Books table class="TableBooks"-->
 	<div style="overflow-y: scroll">
-	<span>Sorted by: </span><c:out value="${sort}"></c:out>
+	<c:if test="${sort != null}">
+		<span>Sorted by: </span><c:out value="${sort}"></c:out>
+	</c:if>
+	<c:if test="${search != null}">
+		<span>Show all results by request: </span><c:out value="${searchField}"></c:out>"<c:out value="${search}"></c:out>"
+	</c:if>
 		<table class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
