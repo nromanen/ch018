@@ -40,7 +40,7 @@ $(document).ready(function() {
 	  $("#newIssue" + $id1).hide();
   })
   
-  
+  $('div.rating').rating();
  
 })
 
