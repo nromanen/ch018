@@ -139,10 +139,6 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.paramSearch(field, parametr);
 	}
 
-    @Transactional
-    public List<Book> latestArrivals() {
-        return bookDAO.latestArrivals();
-    }
     
     @Override
     @Transactional

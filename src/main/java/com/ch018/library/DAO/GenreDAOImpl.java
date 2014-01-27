@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.Localization;
 
 @Component
 public class GenreDAOImpl implements GenreDAO {
@@ -38,12 +40,29 @@ public class GenreDAOImpl implements GenreDAO {
 		List<Genre> genres = new ArrayList<>();
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
-					.createCriteria(Genre.class)//.add(Restrictions.eq("language", language))
+					.createCriteria(Genre.class, "genre")
+					.createAlias("genre.localizations", "localization")  //inner join
+					.add(Restrictions.eq("localization.language", language))
+					
+					//.add(Restrictions.eq("localization.language", language))
 					//.addOrder(Order.asc("name"))
+					
+					/*
+					 * 
+SELECT * 
+FROM
+  genre
+  INNER JOIN 
+  localization 
+    ON genre.gid = localization.genre_gid
+where localization.language = 'en'
+					 */
 					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
+		//ArrayList<Localization> loc = new ArrayList<>();
+		//loc.addAll(genres.get(0).getLocalizations());
 		return genres;
 	}
 	

@@ -235,22 +235,6 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return books;
 	}
-
-    @Override
-    public List<Book> latestArrivals() {
-        List<Book> books = new ArrayList<Book>();
-        try { 
-            
-            // TODO: bad practice to use SQL query, add comment or replace with HQL
-            Query query = sessionFactory.getCurrentSession()
-                           .createSQLQuery("Select * From books order by `id` DESC LIMIT 5;");
-           // books.addAll(query.list());
-            books = (List<Book>)query.list();
-        } catch (Exception e) {
-            log.error(e);
-        }
-        return books;
-    }
     
     @Override
     public List<Book> simpleSearch(String parametr, int currentPos,

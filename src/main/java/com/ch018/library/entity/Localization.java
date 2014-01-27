@@ -1,6 +1,7 @@
 package com.ch018.library.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Localization {
 		return localizedName;
 	}
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public Genre getGenre() {
     	return genre;
     }
