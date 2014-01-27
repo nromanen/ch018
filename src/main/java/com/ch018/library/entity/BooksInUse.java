@@ -28,6 +28,7 @@ public class BooksInUse {
 	private Date returnDate;
 	private boolean inUse;
 	private int term;
+	private int mark;
 
 	public BooksInUse() {
 
@@ -71,7 +72,12 @@ public class BooksInUse {
 	public int getTerm() {
 		return term;
 	}
-
+	
+	@Column(name = "mark", columnDefinition = "int default 0")
+    public int getMark() {
+		return this.mark;
+	}
+	
 	public void setBuid(int buid) {
 		this.buid = buid;
 	}
@@ -98,6 +104,10 @@ public class BooksInUse {
 
 	public void setTerm(int term) {
 		this.term = term;
+	}
+	
+	public void setMark(int mark) {
+		this.mark = mark;
 	}
 
 }

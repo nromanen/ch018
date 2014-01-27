@@ -20,11 +20,12 @@
             <c:forEach items="${books}" var="book">
                 <tr class="info">
                     <td>${book.book.title}</td>
-                    <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${book.issueDate}" /></td>
-                    <td><fmt:formatDate pattern="dd.MM.yyyy hh:mm" value="${book.returnDate}" /></td>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
                     <td>${book.term}</td>
                 </tr>
             </c:forEach>
         </table>
+        <div class="rating"></div>
 </div>
 			

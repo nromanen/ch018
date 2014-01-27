@@ -134,11 +134,10 @@ public class AuthorizedUserController {
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
-                              //@ModelAttribute("password")Object password, 
                               BindingResult result, Principal principal, HttpServletRequest request) {
         accountValidation.validate(updtPers, result);
         Person person = persService.getByEmail(principal.getName());
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return "userAccount";
         }
         

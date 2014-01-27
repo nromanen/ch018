@@ -25,4 +25,5 @@ public interface BooksInUseDAO {
 	long countBooksInUseToday();
 	List<Book> getReturnBooksToday(int currentPos, int pageSize, String sort);
     long getCountBooksByPerson(String name);
+    long getCountReturnBooksBeetweenDates(Date dateFrom, Date dateTo , int BookId);
 }

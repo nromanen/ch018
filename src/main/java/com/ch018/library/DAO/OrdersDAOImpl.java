@@ -355,4 +355,21 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return count;
 	}
 
+	@Override
+	public long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo,
+			int BookId) {
+		long count = 0;
+		try {
+			Query query = sessionFactory.getCurrentSession()
+					      .createQuery("select count (*) from Orders O where O.book.id=:id AND O.issueDate between :start and :end");
+	        query.setParameter("start", dateFrom);
+			query.setParameter("end", dateTo);
+			query.setParameter("id", BookId);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+			}
+
 }

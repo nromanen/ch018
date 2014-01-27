@@ -28,6 +28,7 @@ $(document).ready(function() {
 	  $("#oldIssue" + $id).hide();
 	  $("#saveNewIssue" + $id).show();
 	  $("#cancelIssueEdit" + $id).show();
+	  $("#newIssue" + $id).val($("#oldIssue" + $id).text());
 	  $("#newIssue" + $id).show();
   
   })
@@ -40,7 +41,7 @@ $(document).ready(function() {
 	  $("#newIssue" + $id1).hide();
   })
   
-  
+  $('div.rating').rating();
  
 })
 

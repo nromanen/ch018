@@ -28,6 +28,7 @@ public interface OrdersService {
 	long countOrdersPerHour();
 	List<Book> toIssuePerHour(int currentPos, int pageSize,
 			String string);
-  void updateOrder(Orders ord);
-  long getCountOrdersByPerson(String name);
+    void updateOrder(Orders ord);
+    long getCountOrdersByPerson(String name);
+    long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo , int BookId);
 }
