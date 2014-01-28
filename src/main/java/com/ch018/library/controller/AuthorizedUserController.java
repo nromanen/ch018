@@ -75,7 +75,7 @@ public class AuthorizedUserController {
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "show", required = false) String show,
 			@RequestParam(value = "genre", required = false) Integer id, Model model, HttpSession session) {
-		if (show != null){
+		if (show != null && show.equals("all")){
 			session.removeAttribute("indexSearch");
 		}
 		String search = (String) session.getAttribute("indexSearch");
@@ -94,9 +94,16 @@ public class AuthorizedUserController {
 				model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
 			}
 		} else {
-			session.removeAttribute("indexSearch");
-			Genre genre = genreService.getGenreByIdWithBooks(id);
-			model.addAttribute("latest", genre.getBooks());
+			//session.removeAttribute("indexSearch");
+			if (search == null) {
+				Genre genre = genreService.getGenreByIdWithBooks(id);
+				model.addAttribute("latest", genre.getBooks());
+			} else {
+				long count = book.countBooksByGenre(search, id);
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.getBooksByGenre(search, id, currentPos, IConstants.PAGE_SIZE, "id"));
+			}
 		}
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);

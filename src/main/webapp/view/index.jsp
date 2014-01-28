@@ -6,14 +6,14 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!-- Center -->
 <div class="span8">
-	<c:if test="${indexSearch != null}">
+	<c:if test="${indexSearch != null && indexSearch != ''}">
 	<span>Show all results by request: </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" >Show all</a>
 	</c:if>
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
-		<c:if test="${(rowCounter.count + 2) % 3 == 0}">
+		<c:if test="${(rowCounter.count + 3) % 4 == 0}">
 			<div class="row-fluid">
 		</c:if>
-				<div class="thumbnail span4 sp">
+				<div class="thumbnail span3 ">
 				<div class="media">
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
@@ -26,11 +26,9 @@
 					</sec:authorize>
 				</div>
 				<div class="caption">
-					<h3>
-						<small>${latest.title}</small>
-					</h3>
+					<h3><small class = "texttitle">${latest.title}</small></h3>
 					<p>${latest.authors}</p>
-					<p>${latest.description}</p>
+					<div class = "textdesc">${latest.description}</div>
                     <p><c:choose>
                     	<c:when test="${latest.available==0}"><span class="label label-important">Not Available</span></c:when>
                         <c:otherwise><span class="label label-success">Available</span></c:otherwise>
@@ -38,7 +36,7 @@
                 </div>
 					
 				</div>
-		<c:if test="${(rowCounter.count % 3 == 0) || (rowCounter.last)}">
+		<c:if test="${(rowCounter.count % 4 == 0) || (rowCounter.last)}">
 			</div>
 		</c:if>
 	</c:forEach>

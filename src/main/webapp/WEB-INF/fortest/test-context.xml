@@ -94,5 +94,9 @@
 	<bean id="localizationService" name="localizationService" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.service.LocalizationService"/>
 	</bean>
+	
+	<bean id="orderValidator" name="orderValidator" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.validator.OrderValidator"/>
+	</bean>
 
 </beans>

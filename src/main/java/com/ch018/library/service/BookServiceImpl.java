@@ -48,18 +48,15 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		if (currentPos > -1) {
 			List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
-			//List<Genre> genres = genreService.getAllGenres("en");
 			for (Book book : books) {
 				Genre genre = book.getGenre();
 				genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
 				book.setGenre(genre);
-			//	genre.setName(localizationService.getName(genre.getId(), language));
 			}
 			return books;
 		} else {
 			return bookDAO.getAllBooks();
 		}
-		
 	}
 	
 	@Override
@@ -144,6 +141,18 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public long simpleSearchCount(String search) {
     	return bookDAO.simpleSearchCount(search);
+    }
+    
+    @Override
+    @Transactional
+    public long countBooksByGenre(String search, Integer id) {
+    	return bookDAO.countBooksByGenre(search, id);
+    }
+    
+    @Override
+    @Transactional
+    public List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,	String field) {
+    	return bookDAO.getBooksByGenre(search, id, currentPos, pageSize, field);
     }
 
 }

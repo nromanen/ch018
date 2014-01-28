@@ -57,10 +57,12 @@ FROM
     ON genre.gid = localization.genre_gid
 where localization.language = 'en'
 					 */
+				
 					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
+		
 		//ArrayList<Localization> loc = new ArrayList<>();
 		//loc.addAll(genres.get(0).getLocalizations());
 		return genres;

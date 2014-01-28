@@ -37,6 +37,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0073b0e2', e
 	border-bottom-width:0px;
 }
 
+.textdesc {
+	height: 100px;
+	overflow: hidden;
+}
+
 #newbook, #newuser {
 	z-index: 9999;
 	border: 1px solid #444;
@@ -85,3 +90,17 @@ body > .navbar {
 .body-content {
 	/*min-width: 1024px;*/
 }
+
+/* Description  */
+
+
+    .caption .textdesc {
+        color:                      #333;
+        padding:                    20px;
+        width:                      204px;
+        overflow:                   hidden;
+        font-size:                  .95em;
+        line-height:                1;
+        text-align:     			justify;
+    }
+ 

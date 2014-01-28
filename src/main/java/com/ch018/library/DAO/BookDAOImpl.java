@@ -59,18 +59,20 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return books;
 	}
-	
+
 	@Override
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		List<Book> books = new ArrayList<>();
 		try {
-			Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Book.class);	
-			/*criteria.setProjection(Projections.rowCount());
-		    Long resultCount = (Long)criteria.uniqueResult();
-			criteria.setProjection(null);*/
+			Criteria criteria = sessionFactory.getCurrentSession()
+					.createCriteria(Book.class);
+			/*
+			 * criteria.setProjection(Projections.rowCount()); Long resultCount
+			 * = (Long)criteria.uniqueResult(); criteria.setProjection(null);
+			 */
 			criteria.addOrder(Order.asc(sort));
 			criteria.setMaxResults(pageSize);
-		    criteria.setFirstResult(currentPos);
+			criteria.setFirstResult(currentPos);
 			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error("Error getting all books: " + e.getMessage());
@@ -78,15 +80,17 @@ public class BookDAOImpl implements BookDAO {
 		for (Book book2 : books) {
 			Hibernate.initialize(book2.getGenre());
 		}
-		
+
 		return books;
 	}
-	
+
 	@Override
 	public long countBooks() {
 		long count = 0;
 		try {
-			count = (long) sessionFactory.getCurrentSession().createCriteria(Book.class).setProjection(Projections.rowCount()).uniqueResult();
+			count = (long) sessionFactory.getCurrentSession()
+					.createCriteria(Book.class)
+					.setProjection(Projections.rowCount()).uniqueResult();
 		} catch (Exception e) {
 			log.error("Error getting count of books: " + e.getMessage());
 		}
@@ -104,7 +108,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return book;
 	}
-	
+
 	@Override
 	public Book getBooksByIdWithUses(int id) {
 		Book book = null;
@@ -117,7 +121,7 @@ public class BookDAOImpl implements BookDAO {
 		Hibernate.initialize(book.getBooksinuses());
 		return book;
 	}
-	
+
 	@Override
 	public Book getBooksByIdWithOrders(int id) {
 		Book book = null;
@@ -185,8 +189,7 @@ public class BookDAOImpl implements BookDAO {
 	public int deleteBook(int id) {
 		int deleted = 0;
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
+			Query query = sessionFactory.getCurrentSession()
 					.createQuery("delete from Book where id=:id")
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
@@ -196,7 +199,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return deleted;
 	}
-	
+
 	@Override
 	public List<Book> simpleSearch(String parametr) {
 		parametr = "%" + parametr + "%";
@@ -205,7 +208,8 @@ public class BookDAOImpl implements BookDAO {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery(
-							"select " + "B from Book B where (lower(B.title) "
+							"select "
+									+ "B from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
 									+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
@@ -218,7 +222,7 @@ public class BookDAOImpl implements BookDAO {
 		return books;
 	}
 
-	 @Override
+	@Override
 	public List<Book> paramSearch(String field, String parametr) {
 		parametr = "%" + parametr + "%";
 		List<Book> books = new ArrayList<Book>();
@@ -226,8 +230,8 @@ public class BookDAOImpl implements BookDAO {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery(
-							"select " + "B from Book B where (lower(B."+field+") "
-									+ "LIKE lower(:parametr))")
+							"select " + "B from Book B where (lower(B." + field
+									+ ") " + "LIKE lower(:parametr))")
 					.setString("parametr", parametr);
 			books.addAll(query.list());
 		} catch (Exception e) {
@@ -235,11 +239,11 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return books;
 	}
-    
-    @Override
-    public List<Book> simpleSearch(String parametr, int currentPos,
-    		int pageSize, String sort) {
-    	parametr = "%" + parametr + "%";
+
+	@Override
+	public List<Book> simpleSearch(String parametr, int currentPos,
+			int pageSize, String sort) {
+		parametr = "%" + parametr + "%";
 		List<Book> books = new ArrayList<Book>();
 		try {
 			Query query = sessionFactory
@@ -248,36 +252,41 @@ public class BookDAOImpl implements BookDAO {
 							"select B from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-								//	+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
-									+ "LIKE lower(:parametr)) order by B."+ sort +" asc")
-					.setString("parametr", parametr).setMaxResults(pageSize).setFirstResult(currentPos);
+									// +
+									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									+ "LIKE lower(:parametr)) order by B."
+									+ sort + " asc")
+					.setString("parametr", parametr).setMaxResults(pageSize)
+					.setFirstResult(currentPos);
 			books.addAll(query.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return books;
-    }
-    
-    @Override
-    public List<Book> paramSearch(String searchField, String search,
-    		int currentPos, int pageSize, String sort) {
-    	search = "%" + search + "%";
+	}
+
+	@Override
+	public List<Book> paramSearch(String searchField, String search,
+			int currentPos, int pageSize, String sort) {
+		search = "%" + search + "%";
 		List<Book> books = new ArrayList<Book>();
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery(
-							"select " + "B from Book B where (lower(B."+searchField+") "
-									+ "LIKE lower(:search)) order by B."+ sort +" asc")
-					.setString("search", search).setMaxResults(pageSize).setFirstResult(currentPos);
+							"select " + "B from Book B where (lower(B."
+									+ searchField + ") "
+									+ "LIKE lower(:search)) order by B." + sort
+									+ " asc").setString("search", search)
+					.setMaxResults(pageSize).setFirstResult(currentPos);
 			books.addAll(query.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return books;
-    }
-    
-    @Override
+	}
+
+	@Override
 	public long simpleSearchCount(String parametr) {
 		parametr = "%" + parametr + "%";
 		long count = 0;
@@ -288,7 +297,8 @@ public class BookDAOImpl implements BookDAO {
 							"select count(B) from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-							//		+ "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									// +
+									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
 									+ "LIKE lower(:parametr))")
 					.setString("parametr", parametr);
 			count = (long) query.uniqueResult();
@@ -298,7 +308,7 @@ public class BookDAOImpl implements BookDAO {
 		return count;
 	}
 
-	 @Override
+	@Override
 	public long paramSearchCount(String field, String parametr) {
 		parametr = "%" + parametr + "%";
 		long count = 0;
@@ -306,8 +316,8 @@ public class BookDAOImpl implements BookDAO {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery(
-							"select " + "B from Book B where (lower(B."+field+") "
-									+ "LIKE lower(:parametr))")
+							"select " + "B from Book B where (lower(B." + field
+									+ ") " + "LIKE lower(:parametr))")
 					.setString("parametr", parametr);
 			count = (long) query.uniqueResult();
 		} catch (Exception e) {
@@ -315,4 +325,46 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return count;
 	}
+	
+	@Override
+	public long countBooksByGenre(String search, Integer id) {
+		search = "%" + search + "%";
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select B from Book B where ((lower(B.title) LIKE lower(:parametr)) OR (lower(B.authors) LIKE lower(:parametr)) OR (lower(B.publication) LIKE lower(:parametr))) AND gid=:id ")
+					.setInteger("id", id).setString("parametr", search);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+	}
+	
+	@Override
+	public List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,	String field) {
+		search = "%" + search + "%";
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select B from Book B where ((lower(B.title) "
+									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
+									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
+									// +
+									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
+									+ "LIKE lower(:parametr))) AND gid=:id order by B."
+									+ field + " asc")
+					.setString("parametr", search).setInteger("id", id).setMaxResults(pageSize)
+					.setFirstResult(currentPos);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+	}
+
 }

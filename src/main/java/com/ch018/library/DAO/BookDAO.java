@@ -25,4 +25,7 @@ public interface BookDAO {
 			int pageSize, String sort);
 	long simpleSearchCount(String parametr);
 	long paramSearchCount(String field, String parametr);
+	long countBooksByGenre(String search, Integer id);
+	List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,
+			String field);
 }

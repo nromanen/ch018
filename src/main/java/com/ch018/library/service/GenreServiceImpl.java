@@ -32,7 +32,6 @@ public class GenreServiceImpl implements GenreService {
 	public List<Genre> getAllGenres(String language) {
 		List<Genre> genres = genreDAO.getAllGenres(language);
 		List<Localization> l = new ArrayList<>();
-		
 		for (Genre genre : genres) {
 			l.addAll(genre.getLocalizations());
 			for (Localization localization : l) {
