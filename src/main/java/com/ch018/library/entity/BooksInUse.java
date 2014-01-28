@@ -28,7 +28,7 @@ public class BooksInUse {
 	private Date returnDate;
 	private boolean inUse;
 	private int term;
-	private int mark;
+	private float mark;
 
 	public BooksInUse() {
 
@@ -73,8 +73,8 @@ public class BooksInUse {
 		return term;
 	}
 	
-	@Column(name = "mark", columnDefinition = "int default 0")
-    public int getMark() {
+	@Column(name = "mark", columnDefinition = "float default 0")
+    public float getMark() {
 		return this.mark;
 	}
 	
@@ -106,7 +106,7 @@ public class BooksInUse {
 		this.term = term;
 	}
 	
-	public void setMark(int mark) {
+	public void setMark(float mark) {
 		this.mark = mark;
 	}
 

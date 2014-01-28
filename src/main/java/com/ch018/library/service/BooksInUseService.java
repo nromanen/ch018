@@ -9,6 +9,7 @@ import com.ch018.library.entity.BooksInUse;
 
 public interface BooksInUseService {
 	void addBooksInUse(int days, int orderId);
+	void updateBooksInUse(BooksInUse inUse);
 	void returnBook(BooksInUse booksInUse);
 	List<BooksInUse> getAllBooksInUse();
 	List<BooksInUse> getByPersonId(int personId);

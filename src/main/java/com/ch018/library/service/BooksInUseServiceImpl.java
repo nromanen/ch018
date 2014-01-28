@@ -227,4 +227,11 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		return booksInUseDAO.getCountReturnBooksBeetweenDates(dateFrom, dateTo, BookId);
 	}
 
+	@Override
+	@Transactional
+	public void updateBooksInUse(BooksInUse inUse) {
+		booksInUseDAO.updateBooksInUse(inUse);
+		
+	}
+
 }

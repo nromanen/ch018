@@ -358,4 +358,16 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		return count;
 	}
 
+
+	@Override
+	public void updateBooksInUse(BooksInUse inUse) {
+		try { 
+		     sessionFactory.getCurrentSession().update(inUse);
+		     log.info("Updated booksinuse" + inUse);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		
+	}
+
 }

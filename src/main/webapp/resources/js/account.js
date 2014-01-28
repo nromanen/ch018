@@ -41,7 +41,29 @@ $(document).ready(function() {
 	  $("#newIssue" + $id1).hide();
   })
   
-  $('div.rating').rating();
+  $(".display-item").rateBar({
+	  defaultStarColor : '#777777',
+      ratedStarColor : '#FFD700',
+      onRate : function(rate) {
+    	  $r = rate;
+          $bookID = $("#bookID").val();
+          $buID = $("#buID").val();
+    	  console.log(rate);
+          var href = $("#hrefrate").val();
+          
+          $.ajax({
+        	 url: href + "/" +$r+ "/" +$bookID + "/" +$buID,
+             type: "GET",
+             success: function() {
+            	           console.log("success");
+                     },
+        	 error: function() {
+        		        console.log("error");
+        		     }  	 
+        	 
+          });
+      }
+});
  
 })
 

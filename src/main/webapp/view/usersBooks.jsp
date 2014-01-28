@@ -15,6 +15,7 @@
                     <td><spring:message code="person.issuedate"/></td>
                     <td><spring:message code="person.returndate"/></td>
                     <td><spring:message code="message.term"/></td>
+                    <td><spring:message code="message.rating"/></td>
                 </tr>
             </thead>
             <c:forEach items="${books}" var="book">
@@ -23,9 +24,15 @@
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
                     <td>${book.term}</td>
+                   
+                    <td><div class="display-item"></div> 
+                       <input type="hidden" id="hrefrate" value = "${pageContext.request.contextPath}/vote"/>
+                       <input type="hidden" id="bookID" value="${book.book.id}">
+                       <input type="hidden" id="buID" value="${book.buid}">
+                    </td>
                 </tr>
             </c:forEach>
         </table>
-        <div class="rating"></div>
+        
 </div>
 			
