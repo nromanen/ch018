@@ -31,5 +31,5 @@ public interface BookService {
 	long countBooksByGenre(String search, Integer id);
 	List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,
 			String field);
-	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize, String sort);
+	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 }

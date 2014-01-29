@@ -7,7 +7,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <!-- Content -->
-<div class="span10">
+<div class="span10 offset1">
 	<c:if test="${book != null}">
 		<div class="alert alert-info" id="bookname">${book.title}, ${book.authors}, ${book.year}, ${book.publication}</div>
 	</c:if>
@@ -168,3 +168,4 @@
 		</div>
 	</div>
 </div>
+<div class="span1"></div>

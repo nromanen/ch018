@@ -171,8 +171,8 @@ public class BookServiceImpl implements BookService {
     
     @Override
     @Transactional
-    public List<Book> advancedSearch(AdvancedSearch search, int currentPos,	int pageSize, String sort) {
-    	return bookDAO.advancedSearch(search, currentPos, pageSize, sort);
+    public List<Book> advancedSearch(AdvancedSearch search, int currentPos,	int pageSize) {
+    	return bookDAO.advancedSearch(search, currentPos, pageSize);
     }
 
 	@Override

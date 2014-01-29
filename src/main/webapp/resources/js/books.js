@@ -3,6 +3,7 @@ $(document).ready(function() {
 	   * Edit book action
 	   */
 	  $("#editbook").submit(function(event) {
+		  $("body").addClass("loading");
 		  var id = $("#id").val();
 		  var title = $("#title").val();
 		  var authors = $("#authors").val();
@@ -38,16 +39,19 @@ $(document).ready(function() {
 		    			  $("#error" + key).text(response.errorsMap[key]);
 		    		  }
 		    	  }
+		    	  $("body").removeClass("loading");
 			  },
 			  error: function(response) {
 				  $("#errorbook").text("Error occured when data sending to server");
 				  console.log("error: " + response);
+				  $("body").removeClass("loading");
 			}
 		  });
 		  event.preventDefault();	
 	});
 	  
 	  $("#advancedsearch").submit(function(event) {
+		 // $("body").addClass("loading");
 		  var title = $("#advtitle").val();
 		  var authors = $("#advautors").val();
 		  var year = $("#advyear").val();
@@ -67,26 +71,17 @@ $(document).ready(function() {
 		            xhr.setRequestHeader("Content-Type", "application/json");  
 		      },
 		      success: function(response) {
-		    	  console.log(response);
+		    	  /*console.log(response);
 		    	  for(var key in response) {
 		    		  console.log(key['title']);
-		    	  }
-		    	  
-		    	  //location.reload();
-		    	  /*if (response.status == "SUCCESS") {
-		    		  console.log("success " + response.result);
-		    		  $('#action_popup').modal("hide");
-		    		  location.reload();				// temporary!!!!!!!
-		    	  } else {
-		    		  for(var key in response.errorsMap) { 
-		    			  console.log(response.errorsMap[key]);
-		    			  $("#error" + key).text(response.errorsMap[key]);
-		    		  }
 		    	  }*/
+		    	  //$("body").removeClass("loading");
+		    	  location.reload();				// temporary!!!!!!!  
 			  },
 			  error: function(response) {
-				  $("#errorbook").text("Error occured when data sending to server");
 				  console.log("error: " + response);
+				  location.reload();
+				  //$("body").removeClass("loading");
 			}
 		  });
 		  console.log(json);

@@ -259,7 +259,7 @@ public class BookDAOImpl implements BookDAO {
 	
 	@Override
 	public List<Book> advancedSearch(AdvancedSearch search, int currentPos,
-			int pageSize, String sort) {
+			int pageSize) {
 		//parametr = "%" + parametr + "%";
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
@@ -280,7 +280,7 @@ public class BookDAOImpl implements BookDAO {
 							+ "AND (lower(B.authors) LIKE lower(:authors)) "
 							+ "AND (lower(B.publication) LIKE lower(:publication))"
 							+ qyear
-							+ " order by B." + sort + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
+							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
 //					.setString("parametr", parametr).setMaxResults(pageSize)
 			books.addAll(query.list());
 		} catch (Exception e) {

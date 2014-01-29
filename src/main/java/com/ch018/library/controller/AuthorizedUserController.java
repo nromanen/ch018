@@ -39,6 +39,7 @@ import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
+import com.ch018.library.form.Registration;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -55,7 +56,7 @@ public class AuthorizedUserController {
     private BookService book;
     
     @Autowired
-    private PersonService persService; //TODO: replace with meaningful and consistent variable name - book, persService, genreService. Check other files too.
+    private PersonService persService; 
     
     @Autowired
     private GenreService genreService;
@@ -72,15 +73,16 @@ public class AuthorizedUserController {
     @Autowired
     private BooksInUseService inUse;
     
-    // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "show", required = false) String show,
 			@RequestParam(value = "genre", required = false) Integer id, Model model, HttpSession session) {
 		if (show != null && show.equals("all")){
 			session.removeAttribute("indexSearch");
+			session.removeAttribute("advancedSearch");
 		}
 		String search = (String) session.getAttribute("indexSearch");
+		AdvancedSearch advancedSearch = (AdvancedSearch) session.getAttribute("advancedSearch");
 		long pages = 1;
 		
 		if (id == null) {
@@ -89,6 +91,11 @@ public class AuthorizedUserController {
 				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 				model.addAttribute("latest", book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id"));
+			} else if (advancedSearch != null) {
+				long count = 10;
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
 			} else {
 				long count = book.countBooks();
 				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
@@ -96,7 +103,6 @@ public class AuthorizedUserController {
 				model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
 			}
 		} else {
-			//session.removeAttribute("indexSearch");
 			if (search == null) {
 				Genre genre = genreService.getGenreByIdWithBooks(id);
 				model.addAttribute("latest", genre.getBooks());
@@ -113,9 +119,13 @@ public class AuthorizedUserController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String search(@RequestParam(required = false) String search, Model model, HttpSession session) {
+	public String search(@RequestParam(required = false) String search, 
+			Model model, HttpSession session) {
 		List<Book> books = new ArrayList<Book>();
-		session.setAttribute("indexSearch", search);
+		if (search != null) {
+			session.setAttribute("indexSearch", search);
+			session.removeAttribute("advancedSearch");
+		}
 		long count = book.simpleSearchCount(search);
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		model.addAttribute("pages", pages);
@@ -127,16 +137,17 @@ public class AuthorizedUserController {
 	
 	@RequestMapping(value = "/advsearch", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Book> advancedSearch(@RequestBody AdvancedSearch search, Model model, HttpSession session) {
-		List<Book> books = new ArrayList<Book>();
+	public String advancedSearch(@RequestBody AdvancedSearch search, Model model, HttpSession session) {
 		session.setAttribute("advancedSearch", search);
-		//long count = book.simpleSearchCount(search);
-		//long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-		//model.addAttribute("pages", pages);
+		session.removeAttribute("indexSearch");
+		/*
+		long count = 10;
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		model.addAttribute("pages", pages);
 		model.addAttribute("page", 1);
 		books.addAll(book.advancedSearch(search, 0, 9, "id"));
-		model.addAttribute("latest", books);
-		return books;
+		model.addAttribute("latest", books);*/
+		return "index";
 	}
 	
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)

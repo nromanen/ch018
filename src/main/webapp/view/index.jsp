@@ -73,5 +73,6 @@
 			</c:if>
 		</ul>
 	</div>
+	<div class="modalloading"></div>
 	<div id="push"></div>
 </div>

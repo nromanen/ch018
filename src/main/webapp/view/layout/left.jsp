@@ -8,6 +8,8 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <tilesx:useAttribute name="genres" />
 <div class="span2 sp">
+ <div class="row-fluid">
+ <div class="span12">
 	<ul class="nav nav-pills nav-stacked">
 		<li class="nav-header"><spring:message code="book.genre" /></li>
 		<li><a href="<c:url value="/"/>">All</a></li>
@@ -15,27 +17,31 @@
 			<li><a href="<c:url value="/?genre=${genre.id}"/>">${genre.name}</a></li>
 		</c:forEach>
 	</ul>
-
+	</div>
+ </div>
+ <div class="row-fluid">
+   <div class="span12">
 	<form action="${pageContext.request.contextPath}/advsearch" id = "advancedsearch">
 		<fieldset>
 			<legend><small>Advanced Search</small></legend>
+		</fieldset>
 			<label><spring:message code="book.title" /></label> 
-			<input id="advtitle" type="text" placeholder="Title…"> 
+			<input id="advtitle" type="text" placeholder="Title…" class="fluid"> 
 			
 			<label><spring:message code="book.authors" /></label> 
-			<input id="advautors" type="text" placeholder="Authors…">  
+			<input id="advautors" type="text" placeholder="Authors…" class="fluid">  
 			
 			<label><spring:message code="book.publication" /></label> 
-			<input id="advpublication" type="number" placeholder="Publication…">
+			<input id="advpublication" type="text" placeholder="Publication…" class="fluid">
 			 
 			<label><spring:message code="book.year" /></label> 
-			<input id="advyear" type="number" placeholder="Year…">
+			<input id="advyear" type="number" placeholder="Year…" class="fluid">
 			
 			<label class="checkbox"> 
-			<input id="advavailable" type="checkbox"> <spring:message code="book.available" /></label>
+			<input id="advavailable" type="checkbox" > <spring:message code="book.available" /></label>
 			
 			<label><spring:message code="sort.field" /></label> 
-			<select id="advsort">
+			<select id="advsort" class="fluid">
 				<option value="title"><spring:message code="book.title" /></option>
 				<option value="authors"><spring:message code="book.authors" /></option>
 				<option value="publication"><spring:message code="book.publication" /></option>
@@ -44,7 +50,7 @@
 			</select>
 			
 			<button type="submit" class="btn"><spring:message code="book.search" /></button>
-		</fieldset>
-
 	</form>
+  </div>
+</div>
 </div>
