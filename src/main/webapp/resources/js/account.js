@@ -50,9 +50,8 @@ $(document).ready(function() {
           $buID = $("#buID").val();
     	  console.log(rate);
           var href = $("#hrefrate").val();
-          
           $.ajax({
-        	 url: href + "/" +$r+ "/" +$bookID + "/" +$buID,
+        	 url: href + "/" +$r+ "/" +$bookID+"/"+$buID,
              type: "GET",
              success: function() {
             	           console.log("success");

@@ -24,11 +24,10 @@
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
                     <td>${book.term}</td>
-                   
-                    <td><div class="display-item"></div> 
+                    <td><div class="display-item" disabled="true">
                        <input type="hidden" id="hrefrate" value = "${pageContext.request.contextPath}/vote"/>
                        <input type="hidden" id="bookID" value="${book.book.id}">
-                       <input type="hidden" id="buID" value="${book.buid}">
+                       <input type="hidden" id="buID" value="${book.buid}"></div> 
                     </td>
                 </tr>
             </c:forEach>
