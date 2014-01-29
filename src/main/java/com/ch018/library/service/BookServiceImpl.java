@@ -175,4 +175,10 @@ public class BookServiceImpl implements BookService {
     	return bookDAO.advancedSearch(search, currentPos, pageSize, sort);
     }
 
+	@Override
+	@Transactional
+	public List<Book> getBooksByRating() {
+		return bookDAO.getBooksByRating();
+	}
+
 }

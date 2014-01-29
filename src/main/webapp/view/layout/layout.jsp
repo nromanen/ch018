@@ -18,10 +18,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css"	rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/resources/css/jquery.datetimepicker.css"	
         rel="stylesheet" type="text/css"/>
-        
-    <link
-	href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
-	rel="stylesheet" type="text/css" />
+    <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
+	    rel="stylesheet" type="text/css"/>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
@@ -34,7 +32,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/books.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
     <c:if test="${lang.equals('ru')}">
 		<script src="${pageContext.request.contextPath}/resources/js/messages_ru.js"></script>
@@ -42,6 +39,7 @@
 	<c:if test="${lang.equals('uk')}">
 		<script src="${pageContext.request.contextPath}/resources/js/messages_uk.js"></script>
 	</c:if>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.rating.js"></script>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>

@@ -3,6 +3,7 @@
 <tiles-definitions>
 	<definition name="left" preparer="com.ch018.library.controller.GenreController" template="/view/layout/left.jsp" />
 	<definition name="header" preparer="com.ch018.library.controller.HeaderController" template="/view/layout/header.jsp" />
+	<definition name="right" preparer="com.ch018.library.controller.RightSideController" template="/view/layout/right.jsp" />
 	
 	<definition name="baseLayout" template="/view/layout/layout.jsp">
 		<put-attribute name="title" value="Sample Title" />
@@ -10,7 +11,7 @@
 		<put-attribute name="header" value="header" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="left" value="left" />
-		<put-attribute name="right" value="/view/layout/right.jsp" />
+		<put-attribute name="right" value="right" />
 		<put-attribute name="footer" value="/view/layout/footer.jsp" />
 	</definition>
 	
@@ -120,5 +121,10 @@
 	<definition name="admin" extends="adminLayout">
 		<put-attribute name="title" value="Librarian > registration" />
 		<put-attribute name="body" value="/view/admin/index.jsp" />
+	</definition>
+	
+	<definition name="rate" extends="baseLayout">
+		<put-attribute name="title" value="Book" />
+		<put-attribute name="body" value="/view/rate.jsp" />
 	</definition>
 </tiles-definitions>    

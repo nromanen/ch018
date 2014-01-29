@@ -8,6 +8,7 @@
 
 package com.ch018.library.controller;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
 import com.ch018.library.service.BookService;
+import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
@@ -65,6 +68,9 @@ public class AuthorizedUserController {
     
     @Autowired 
     private ChangePasswordValid changePass;
+    
+    @Autowired
+    private BooksInUseService inUse;
     
     // TODO: add carriage return after parameter list to separate parameters and method body
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -140,7 +146,23 @@ public class AuthorizedUserController {
 		model.addAttribute("book", books);
 		return "book";
 	}
-    
+	
+	@Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+	@RequestMapping(value = "/rate", method = RequestMethod.GET)
+    public void rate(@RequestParam("bookID") int bookID, 
+    		         @RequestParam("buID") int buid,
+    		         Model model) {
+		Book books = book.getBooksById(bookID);
+		model.addAttribute("book",books);
+		BooksInUse temp = inUse.getById(buid);
+		model.addAttribute("buid", buid);
+		float mark = books.getRating();
+		BigDecimal bd = new BigDecimal(mark);
+		bd = bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
+		model.addAttribute("mark", bd);
+		System.out.println(bookID);
+	}
+	
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" }) // TODO: these strings are good as constants somewhere
     @RequestMapping(value = "/userAccount", method = RequestMethod.GET)
     public Model viewAccount(Model model, Principal principal) {
