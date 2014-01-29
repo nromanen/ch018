@@ -20,14 +20,12 @@
             </thead>
             <c:forEach items="${books}" var="book">
                 <tr class="info">
-                    <td>${book.book.title}</td>
+                    <td><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>">${book.book.title}</a></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
                     <td>${book.term}</td>
-                    <td><div class="display-item" disabled="true">
-                       <input type="hidden" id="hrefrate" value = "${pageContext.request.contextPath}/vote"/>
-                       <input type="hidden" id="bookID" value="${book.book.id}">
-                       <input type="hidden" id="buID" value="${book.buid}"></div> 
+                    <td><c:if test="${book.mark >0}">${book.mark}</c:if>
+                        <c:if test="${book.mark == 0}"><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>">Rate</a></c:if>
                     </td>
                 </tr>
             </c:forEach>

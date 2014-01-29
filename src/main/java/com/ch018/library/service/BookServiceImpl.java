@@ -150,4 +150,10 @@ public class BookServiceImpl implements BookService {
     	return bookDAO.simpleSearchCount(search);
     }
 
+	@Override
+	@Transactional
+	public List<Book> getBooksByRating() {
+		return bookDAO.getBooksByRating();
+	}
+
 }

@@ -55,6 +55,8 @@ $(document).ready(function() {
              type: "GET",
              success: function() {
             	           console.log("success");
+            	            alert("Thank you for voting");
+            	            location.reload();
                      },
         	 error: function() {
         		        console.log("error");

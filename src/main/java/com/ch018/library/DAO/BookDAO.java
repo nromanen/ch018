@@ -19,6 +19,7 @@ public interface BookDAO {
 	List<Book> simpleSearch(String parametr);
 	List<Book> paramSearch(String field, String parametr);
     List<Book> latestArrivals();
+    List<Book> getBooksByRating();
     long countBooks();
 	List<Book> simpleSearch(String parametr, int currentPos, int pageSize,
 			String sort);
