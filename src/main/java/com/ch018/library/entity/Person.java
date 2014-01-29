@@ -36,6 +36,9 @@ public class Person implements Serializable {
 		ROLE_ADMINISTRATOR, ROLE_LIBRARIAN, ROLE_USER
 	};
 	private static final long serialVersionUID = 3607258059474732202L;
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,8 +51,8 @@ public class Person implements Serializable {
 	@Column(name = "surname")
 	private String surname;
 
-	@NotEmpty(message = "{NotEmpty.person.email}")
-	@Email(message = "{Email.registration.email}")
+	@NotEmpty(message = "{NotEmpty.Person.email}")
+	@Email(message = "{Email.Person.email}")
 	@Column(name = "e_mail", unique = true, nullable = false)
 	private String email;
 

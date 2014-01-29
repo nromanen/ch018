@@ -23,7 +23,8 @@
 				action="${pageContext.request.contextPath}/">
 				<input name="search" type="text" class="search-query input-small"
 					placeholder="Search" value="${indexSearch}">
-			</form>
+				<!-- <a href="/">Advanced</a> -->
+			</form> 
 			<div class="nav-collapse collapse" style="height: 0px;">
 				<ul class="nav">
 					<sec:authorize access="hasRole('ROLE_LIBRARIAN')">

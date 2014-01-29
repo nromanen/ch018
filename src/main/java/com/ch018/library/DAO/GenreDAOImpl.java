@@ -41,30 +41,12 @@ public class GenreDAOImpl implements GenreDAO {
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(Genre.class, "genre")
-					.createAlias("genre.localizations", "localization")  //inner join
+					.createAlias("genre.localizations", "localization")
 					.add(Restrictions.eq("localization.language", language))
-					
-					//.add(Restrictions.eq("localization.language", language))
-					//.addOrder(Order.asc("name"))
-					
-					/*
-					 * 
-SELECT * 
-FROM
-  genre
-  INNER JOIN 
-  localization 
-    ON genre.gid = localization.genre_gid
-where localization.language = 'en'
-					 */
-				
 					.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
-		
-		//ArrayList<Localization> loc = new ArrayList<>();
-		//loc.addAll(genres.get(0).getLocalizations());
 		return genres;
 	}
 	
@@ -111,11 +93,4 @@ where localization.language = 'en'
 		}
 		return genre;
 	}
-	
-	@Override
-	public Genre getGenreByBook(Book book, String locale) {
-
-		return null;
-	}
-
 }

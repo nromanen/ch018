@@ -1,8 +1,10 @@
 package com.ch018.library.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.mail.Session;
@@ -19,6 +21,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,14 +91,19 @@ public class BooksController {
 				bookService.addBook(book);
 			} else {
 				book.setImage(bookService.getBooksById(book.getId()).getImage());
-				/*Set<Genre> genres = book.getGenres();
-				genres.add(genreService.getGenreById(book.getGenre().getId()));
-				//Genre genre = genreService.getGenreById(book.getGenre().getId());
-				book.setGenres(genres);*/
 				bookService.updateBook(book);
 			}
 			resp.setResult(book);
 		} else {
+			Map<String,String> errors = new HashMap<>();
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			for (FieldError fieldError : fieldErrors) {
+				String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+				String string = resolveMessageCodes[0];
+				String message = messageSource.getMessage(string + "." + fieldError.getField(), new Object[]{fieldError.getRejectedValue()},LocaleContextHolder.getLocale());
+				errors.put(fieldError.getField(), message);
+			}
+			resp.setErrorsMap(errors);	
 			resp.setStatus("FAIL");
 			resp.setResult(result.getAllErrors());
 		}

@@ -39,7 +39,6 @@ public class GenreServiceImpl implements GenreService {
 					genre.setName(localization.getLocalizedName());
 				}
 			}
-//			genre.setName(l.);//localizationService.getName(genre.getId(), language));
 		}
 		return genres;
 	}
@@ -47,7 +46,6 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	@Transactional
 	public Genre getGenreById(int id) {
-		// TODO Auto-generated method stub
 		return genreDAO.getGenreById(id);
 	}
 	
@@ -57,22 +55,13 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	@Transactional
 	public Genre getGenreByIdWithBooks(int id) {
-		// TODO Auto-generated method stub
 		return genreDAO.getGenreByIdWithBooks(id);
 	}
 
 	@Override
 	@Transactional
 	public Genre getGenreByName(String name) {
-		// TODO Auto-generated method stub
 		return genreDAO.getGenreByName(name);
-	}
-	
-	@Override
-	@Transactional
-	public Genre getGenreByBook(Book book, String locale) {
-		// TODO Auto-generated method stub
-		return genreDAO.getGenreByBook(book, locale);
 	}
 
 }

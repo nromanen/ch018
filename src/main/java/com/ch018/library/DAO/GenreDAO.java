@@ -12,5 +12,4 @@ public interface GenreDAO {
 	Genre getGenreByIdWithBooks(int id);
 	Genre getGenreByName(String name);
 	List<Genre> getAllGenres(String language);
-	Genre getGenreByBook(Book book, String locale);
 }

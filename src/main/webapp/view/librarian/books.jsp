@@ -7,8 +7,7 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras"%>
-
-<div class="span10">
+<div class="span10 offset1">
 	<div class="row-fluid">
 		<!-- Button group -->
 		<div class="span8">
@@ -353,3 +352,4 @@
 		</div>
 	</div>
 </div>
+<div class="span1"></div>

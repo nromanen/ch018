@@ -26,9 +26,12 @@
 					</sec:authorize>
 				</div>
 				<div class="caption">
-					<h3><small class = "texttitle">${latest.title}</small></h3>
-					<p>${latest.authors}</p>
-					<div class = "textdesc">${latest.description}</div>
+					<div class = "booktitle">${latest.title} <br>
+					${latest.authors}</div>
+					<div class = "box">
+						<div class = "textdesc"><small>${latest.description}</small></div>
+					</div>
+					<a href="<c:url value="/book/${latest.id}"/>">More</a>
                     <p><c:choose>
                     	<c:when test="${latest.available==0}"><span class="label label-important">Not Available</span></c:when>
                         <c:otherwise><span class="label label-success">Available</span></c:otherwise>

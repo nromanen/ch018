@@ -8,7 +8,9 @@
 <div class="span8">
 	<div class="row-fluid">
 		<div class="thumbnail media">
+		
 			<img src="${book.image}" class="img-rounded pull-left">
+			<div class="media-width">
 				<h4 class="media-heading">${book.title}</h4>
 				<p><strong><spring:message code="book.authors" />: </strong>${book.authors}</p>
 				<p><strong><spring:message code="book.year" />: </strong>${book.year}</p>
@@ -29,6 +31,7 @@
 				</div>
 				</sec:authorize>
 		
+		</div>
 		</div>
 	</div>
 </div>

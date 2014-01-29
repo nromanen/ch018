@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
-<div class="span10">
+<div class="span10 offset1">
 	<!-- Alert -->
 	<div class="alert alert-error" style="display: none">
 		<button type="button" class="close">&times;</button>
@@ -59,7 +59,7 @@
 							
 						<td>
 							<div class="btn-group">
-								<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+								<button class="btn btn-primary dropdown-toggle btn-small" data-toggle="dropdown">
 									<spring:message code="button.action" />
 	    							<span class="caret"></span>
 	    						</button>
@@ -79,11 +79,11 @@
 						</td>
 
 						<td><a href="#" id="edituser${person.id}"
-							class="btn btn-warning"><spring:message code="button.edit" /></a></td>
+							class="btn btn-warning btn-small"><spring:message code="button.edit" /></a></td>
 						<td>
 							<c:if test="${person.role != 'ROLE_LIBRARIAN' && person.role != 'ROLE_ADMINISTRATOR'}">
 								<a href="#" id="deleteuser${person.id}"
-								class="btn btn-danger"><spring:message code="button.delete" /></a>
+								class="btn btn-danger btn-small"><spring:message code="button.delete" /></a>
 							</c:if>	
 						</td>
 					</tr>

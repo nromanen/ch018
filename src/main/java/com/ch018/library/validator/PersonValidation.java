@@ -24,7 +24,7 @@ public class PersonValidation implements Validator {
 	public void validate(Object target, Errors errors) {
 		Person person = (Person) target;
 		if (personService.isExist(person.getEmail()) > 0 && person.getId() == 0) {
-			errors.rejectValue("email", "exist.email");
+			errors.rejectValue("email", "exist.email", "exist.email");
 		}
 	}
 

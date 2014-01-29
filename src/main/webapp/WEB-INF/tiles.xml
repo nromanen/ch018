@@ -44,24 +44,28 @@
 		<put-attribute name="title" value="Librarian > Books" />
 		<put-attribute name="body" value="/view/librarian/books.jsp" />
 		<put-attribute name="right" value="" />
+		<put-attribute name="left" value="" />
 	</definition>
 	
 	<definition name="users" extends="baseLayout">
 		<put-attribute name="title" value="Librarian > Users" />
 		<put-attribute name="body" value="/view/librarian/users.jsp" />
 		<put-attribute name="right" value="" />
+		<put-attribute name="left" value="" />
 	</definition>
 	
 	<definition name="orders" extends="baseLayout">
 		<put-attribute name="title" value="Librarian > Orders" />
 		<put-attribute name="body" value="/view/librarian/orders.jsp" />
 		<put-attribute name="right" value="" />
+		<put-attribute name="left" value="" />
 	</definition>
 	
 	<definition name="bookinuse" extends="baseLayout">
 		<put-attribute name="title" value="Librarian > Book In Use" />
 		<put-attribute name="body" value="/view/librarian/bookinuse.jsp" />
 		<put-attribute name="right" value="" />
+		<put-attribute name="left" value="" />
 	</definition>
 	
 	<definition name="login" extends="signLayout">

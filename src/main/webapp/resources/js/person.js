@@ -35,9 +35,9 @@ $(document).ready(function() {
 		    		  $('#action_popup').modal("hide");
 		    		  location.reload();				// temporary!!!!!!!
 		    	  } else {
-		    		  for(i = 0 ; i < response.result.length ; i++){
-		    			  console.log("error " + response.result[i].defaultMessage);
-		    			  $("#error" + response.result[i].field).text(response.result[i].defaultMessage);
+		    		  for(var key in response.errorsMap) { 
+		    			  console.log(response.errorsMap[key]);
+		    			  $("#error" + key).text(response.errorsMap[key]);
 		    		  }
 		    	  }
 			  },
@@ -87,9 +87,9 @@ $(document).ready(function() {
 		    		  $('#action_popup').modal("hide");
 		    		  location.reload();				// temporary!!!!!!!
 		    	  } else {
-		    		  for(i = 0 ; i < response.result.length ; i++){
-		    			  console.log("error " + response.result[i].defaultMessage);
-		    			  $("#error" + response.result[i].field).text(response.result[i].defaultMessage);
+		    		  for(var key in response.errorsMap) { 
+		    			  console.log(response.errorsMap[key]);
+		    			  $("#error" + key).text(response.errorsMap[key]);
 		    		  }
 		    	  }
 			  },
