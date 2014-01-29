@@ -63,6 +63,30 @@ function reset_form() {
 }
 
 $(document).ready(function() { 
+
+	$("#formlogin").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
+	
+	$("#registration").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
+	
+	$("#loginpopup").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
 	
 	/**
 	 * Highlight nav
@@ -113,7 +137,6 @@ $(document).ready(function() {
 	$("a[id^=editbook], a[id^=edituser]").click(function() {
 		var tr = "#" + $(this).parent().parent().attr("id");
 		var id = $(tr + " td:first-child").text();
-		//var name = $(tr + " td:nth-child(2)").text() + " " + $("#" + tr + " td:nth-child(3)").text(); 
 		fill_form("#action_popup", id)
 		$('#action_popup').modal();
 		$(".myModalLabelEdit").show();

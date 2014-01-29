@@ -15,4 +15,36 @@
 			<li><a href="<c:url value="/?genre=${genre.id}"/>">${genre.name}</a></li>
 		</c:forEach>
 	</ul>
+
+	<form action="${pageContext.request.contextPath}/advsearch" id = "advancedsearch">
+		<fieldset>
+			<legend><small>Advanced Search</small></legend>
+			<label><spring:message code="book.title" /></label> 
+			<input id="advtitle" type="text" placeholder="Title…"> 
+			
+			<label><spring:message code="book.authors" /></label> 
+			<input id="advautors" type="text" placeholder="Authors…">  
+			
+			<label><spring:message code="book.publication" /></label> 
+			<input id="advpublication" type="number" placeholder="Publication…">
+			 
+			<label><spring:message code="book.year" /></label> 
+			<input id="advyear" type="number" placeholder="Year…">
+			
+			<label class="checkbox"> 
+			<input id="advavailable" type="checkbox"> <spring:message code="book.available" /></label>
+			
+			<label><spring:message code="sort.field" /></label> 
+			<select id="advsort">
+				<option value="title"><spring:message code="book.title" /></option>
+				<option value="authors"><spring:message code="book.authors" /></option>
+				<option value="publication"><spring:message code="book.publication" /></option>
+				<option value="year"><spring:message code="book.year" /></option>
+				<option value="available"><spring:message code="book.available" /></option>
+			</select>
+			
+			<button type="submit" class="btn"><spring:message code="book.search" /></button>
+		</fieldset>
+
+	</form>
 </div>

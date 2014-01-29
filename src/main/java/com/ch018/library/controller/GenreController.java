@@ -29,9 +29,8 @@ public class GenreController implements ViewPreparer {
 	@Override
 	public void execute(Request tilesRequest, AttributeContext attributeContext) {
 		Locale locale = LocaleContextHolder.getLocale();
-		List<Genre> genres = genreService.getAllGenres(locale.getLanguage()); 		 // TODO: Change "EN"
-		
-		attributeContext.putAttribute("genres", new Attribute(genres));		
+		//List<Genre> genres = genreService.getAllGenres(locale.getLanguage());
+		attributeContext.putAttribute("genres", new Attribute(""));		
 	}
 
 }

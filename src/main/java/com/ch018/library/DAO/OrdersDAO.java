@@ -1,15 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ch018.library.DAO;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Date;
 
 public interface OrdersDAO {
 	 Orders getById(int id);

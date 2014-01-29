@@ -12,10 +12,12 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,13 +26,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
+import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
@@ -39,15 +44,6 @@ import com.ch018.library.service.WishListService;
 import com.ch018.library.util.IConstants;
 import com.ch018.library.validator.AccountValidation;
 import com.ch018.library.validator.ChangePasswordValid;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-
-// TODO: use only spaces or only tabs, remove trailing spaces, unnecessary double carriage returns in all files
-   
- 
 
 @Controller
 public class AuthorizedUserController {
@@ -111,7 +107,7 @@ public class AuthorizedUserController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String search(@RequestParam String search, Model model, HttpSession session) {
+	public String search(@RequestParam(required = false) String search, Model model, HttpSession session) {
 		List<Book> books = new ArrayList<Book>();
 		session.setAttribute("indexSearch", search);
 		long count = book.simpleSearchCount(search);
@@ -121,6 +117,20 @@ public class AuthorizedUserController {
 		books.addAll(book.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id"));
 		model.addAttribute("latest", books);
 		return "index";
+	}
+	
+	@RequestMapping(value = "/advsearch", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Book> advancedSearch(@RequestBody AdvancedSearch search, Model model, HttpSession session) {
+		List<Book> books = new ArrayList<Book>();
+		session.setAttribute("advancedSearch", search);
+		//long count = book.simpleSearchCount(search);
+		//long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		//model.addAttribute("pages", pages);
+		model.addAttribute("page", 1);
+		books.addAll(book.advancedSearch(search, 0, 9, "id"));
+		model.addAttribute("latest", books);
+		return books;
 	}
 	
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)

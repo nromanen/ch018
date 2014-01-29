@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+<% String l = org.springframework.context.i18n.LocaleContextHolder.getLocale().getLanguage();%>
+<c:set var="lang" scope="session" value="<%=l%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,12 +35,19 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+    <c:if test="${lang.equals('ru')}">
+		<script src="${pageContext.request.contextPath}/resources/js/messages_ru.js"></script>
+	</c:if>
+	<c:if test="${lang.equals('uk')}">
+		<script src="${pageContext.request.contextPath}/resources/js/messages_uk.js"></script>
+	</c:if>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
 		<div class="container-fluid body-content">
-			<div class="row-fluid rf">
+			<div class="row-fluid">
 				<tiles:insertAttribute name="left" /> 
 				<tiles:insertAttribute name="body" /> 
 				<tiles:insertAttribute name="right" />

@@ -7,9 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
-import com.ch018.library.entity.Person;
 
 @Component
 public class LocalizationDAOImpl implements LocalizationDAO {
@@ -24,9 +22,6 @@ public class LocalizationDAOImpl implements LocalizationDAO {
 		Localization loc = new Localization();
 		String name = "";
 		try {
-			/*name = (String) sessionFactory.getCurrentSession().createQuery("select localizedName from Lokalization where Genre.id=:id and language=:language")
-					.setString("language", language).setInteger("id", id).list().get(0);
-			*/
 			loc = (Localization) sessionFactory.getCurrentSession()
 					.createCriteria(Localization.class)
 					.add(Restrictions.eq("genre.id", id))

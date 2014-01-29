@@ -14,14 +14,14 @@ import java.util.Collection;
 
 
 public interface WishListService {
-    public void addWish(WishList wish);
-    public void deleteWish(WishList wish);
-    public void deleteWishById(int id);
-    public Collection getAllWishes();
-    public WishList getWishById(int id);
-    public ArrayList<WishList> getWishesByPerson(int personId);
-    public ArrayList<WishList> getWishesByPerson(String personEmail);
-    public boolean bookExistInWishList(int bookId, int personId);
-    public WishList getWishWithoutId(int bookId, int personId);
+    void addWish(WishList wish);
+    void deleteWish(WishList wish);
+    void deleteWishById(int id);
+    Collection getAllWishes();
+    WishList getWishById(int id);
+    ArrayList<WishList> getWishesByPerson(int personId);
+    ArrayList<WishList> getWishesByPerson(String personEmail);
+    boolean bookExistInWishList(int bookId, int personId);
+    WishList getWishWithoutId(int bookId, int personId);
     long getCountByPerson(String name);
 }

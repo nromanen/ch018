@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.ch018.library.DAO;
 
 import com.ch018.library.entity.WishList;
@@ -20,21 +14,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface WishListDAO {
-	public void addWish(WishList wish);
-
-	public void deleteWish(WishList wish);
-
-	public void deleteWishById(int id);
-        
-        public Collection getAllWishes();
-
-	public WishList getWishById(int id);
-        
-        public ArrayList<WishList> getWishesByPerson(int personId);
-        public ArrayList<WishList> getWishesByPerson(String personEmail);
-        
-        public boolean bookExistInWishList(int bookId, int personId);
-        public WishList getWishWithoutId(int bookId, int personId);
-        
-    long getCountByPerson(String name);
+	void addWish(WishList wish);
+	void deleteWish(WishList wish);
+	void deleteWishById(int id);
+	Collection getAllWishes();
+	WishList getWishById(int id);
+	ArrayList<WishList> getWishesByPerson(int personId);
+	ArrayList<WishList> getWishesByPerson(String personEmail);
+	boolean bookExistInWishList(int bookId, int personId);
+	WishList getWishWithoutId(int bookId, int personId);
+	long getCountByPerson(String name);
 }

@@ -7,7 +7,6 @@
 package com.ch018.library.service;
 
 import com.ch018.library.DAO.WishListDAO;
-import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.WishList;
 

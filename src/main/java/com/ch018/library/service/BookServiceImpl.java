@@ -12,7 +12,7 @@ import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
-import com.ch018.library.util.IConstants;
+import com.ch018.library.form.AdvancedSearch;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -167,6 +167,12 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,	String field) {
     	return bookDAO.getBooksByGenre(search, id, currentPos, pageSize, field);
+    }
+    
+    @Override
+    @Transactional
+    public List<Book> advancedSearch(AdvancedSearch search, int currentPos,	int pageSize, String sort) {
+    	return bookDAO.advancedSearch(search, currentPos, pageSize, sort);
     }
 
 }

@@ -30,7 +30,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public void addBooksInUse(BooksInUse booksInUse) {
-		// TODO Auto-generated method stub
 		try {
 			sessionFactory.getCurrentSession().save(booksInUse);
 		} catch (Exception e) {
@@ -55,7 +54,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getAllBooksInUse() {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
@@ -68,7 +66,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getByPersonId(int personId) {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
@@ -82,7 +79,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getByBookId(int bookId) {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
@@ -96,7 +92,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getByIssueDate(Date issueDate) {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
@@ -110,7 +105,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getByReturnDate(Date returnDate) {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
@@ -141,7 +135,6 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getInUse(boolean inUse) {
-		// TODO Auto-generated method stub
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()

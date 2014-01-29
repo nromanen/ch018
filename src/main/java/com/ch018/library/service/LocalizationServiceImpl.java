@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.LocalizationDAO;
-import com.ch018.library.entity.Genre;
 
 @Component
 public class LocalizationServiceImpl implements LocalizationService {

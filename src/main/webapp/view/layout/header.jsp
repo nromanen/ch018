@@ -72,7 +72,7 @@
 
 
 			<div id="popover_content_wrapper" style="display: none">
-				<form class="" action="j_spring_security_check" method="post">
+				<form class="" action="j_spring_security_check" method="post" id="loginpopup">
 					<div class="control-group">
 						<label class="control-label" for="inputEmail"><spring:message
 								code="person.mail" /></label>
@@ -85,7 +85,7 @@
 								code="person.pass" /></label>
 						<div class="controls">
 							<input name="j_password" type="password" id="inputPassword"
-								placeholder="Pass">
+								placeholder="Pass" required>
 						</div>
 					</div>
 					<div class="control-group">

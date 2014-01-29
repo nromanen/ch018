@@ -1,10 +1,7 @@
 package com.ch018.library.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,22 +12,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.ch018.library.util.IConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -60,7 +52,6 @@ public class Book implements Serializable {
 	private float rating;
 	private int numberOfEvaluations;
 
-	//private Set<Genre> genres = new HashSet<>();
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 	private Set<WishList> wishList = new HashSet<>();
 	private Set<Orders> orders = new HashSet<>();
@@ -80,17 +71,6 @@ public class Book implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-
-	/*@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "book_genre", joinColumns = {
-			@JoinColumn(name = "book_id", nullable = false, updatable = false)
-	},
-	inverseJoinColumns = {
-			@JoinColumn(name = "genre_id", nullable = false, updatable = false)
-	})
-	public Set<Genre> getGenres() {
-		return this.genres;
-	}*/
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "gid", nullable = false)
@@ -98,8 +78,7 @@ public class Book implements Serializable {
             return this.genre;
     }
 	
-	public void setGenre(Genre genre) {
-		//genres.add(genre);		
+	public void setGenre(Genre genre) {	
 		this.genre = genre;
 	}
 
@@ -180,6 +159,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
@@ -189,6 +169,7 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
@@ -198,6 +179,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<Orders> getOrders() {
 		return orders;
 	}
@@ -223,10 +205,6 @@ public class Book implements Serializable {
 	public void setBookcase(int bookcase) {
 		this.bookcase = bookcase;
 	}
-
-	/*public void setGenres(Set<Genre> genres) {
-		this.genres = genres;
-	}*/
 
 	public void setTitle(String title) {
 		this.title = title;

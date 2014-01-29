@@ -41,6 +41,17 @@
 	
 	<mvc:annotation-driven/>
 	
+	<mvc:annotation-driven>
+        <mvc:message-converters>
+            <!-- Use the HibernateAware mapper instead of the default -->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.ch018.library.util.HibernateAwareObjectMapper" />
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+	
 	<!-- *********************** L10n ***************************** -->
 	
 	<bean id="messageSource"

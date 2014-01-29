@@ -11,13 +11,12 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.form.AdvancedSearch;
 
-// TODO: remove comments if not necessary: TODO Auto-generated method stub
 // TODO: use NamedQuery somewhere
 // TODO: change line length limit to 120 or 150 characters to avoid poor formatting
 @Component
@@ -66,10 +65,6 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(Book.class);
-			/*
-			 * criteria.setProjection(Projections.rowCount()); Long resultCount
-			 * = (Long)criteria.uniqueResult(); criteria.setProjection(null);
-			 */
 			criteria.addOrder(Order.asc(sort));
 			criteria.setMaxResults(pageSize);
 			criteria.setFirstResult(currentPos);
@@ -80,7 +75,6 @@ public class BookDAOImpl implements BookDAO {
 		for (Book book2 : books) {
 			Hibernate.initialize(book2.getGenre());
 		}
-
 		return books;
 	}
 
@@ -252,8 +246,6 @@ public class BookDAOImpl implements BookDAO {
 							"select B from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									// +
-									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
 									+ "LIKE lower(:parametr)) order by B."
 									+ sort + " asc")
 					.setString("parametr", parametr).setMaxResults(pageSize)
@@ -263,6 +255,58 @@ public class BookDAOImpl implements BookDAO {
 			log.error(e);
 		}
 		return books;
+	}
+	
+	@Override
+	public List<Book> advancedSearch(AdvancedSearch search, int currentPos,
+			int pageSize, String sort) {
+		//parametr = "%" + parametr + "%";
+		String title = "%" + search.getTitle() + "%";
+		String authors = "%" + search.getAuthors() + "%";
+		String publication = "%" + search.getPublication() + "%";
+		int year = search.getYear();
+		String qyear = "";
+		if (year > 0) {
+			qyear += " AND ((B.year) = ("+year+"))";
+		}
+		boolean available = search.getAvailable();
+		
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select B from Book B where (lower(B.title) LIKE lower(:title)) "
+							+ "AND (lower(B.authors) LIKE lower(:authors)) "
+							+ "AND (lower(B.publication) LIKE lower(:publication))"
+							+ qyear
+							+ " order by B." + sort + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
+//					.setString("parametr", parametr).setMaxResults(pageSize)
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return books;
+	}
+	
+	@Override
+	public long advancedSearchCount(AdvancedSearch search) {
+		//parametr = "%" + parametr + "%";
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(B) from Book B where (lower(B.title) "
+									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
+									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
+									+ "LIKE lower(:parametr))");
+//					.setString("parametr", parametr);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
 	}
 
 	@Override
@@ -297,8 +341,6 @@ public class BookDAOImpl implements BookDAO {
 							"select count(B) from Book B where (lower(B.title) "
 									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									// +
-									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
 									+ "LIKE lower(:parametr))")
 					.setString("parametr", parametr);
 			count = (long) query.uniqueResult();

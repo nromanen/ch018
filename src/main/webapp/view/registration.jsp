@@ -23,7 +23,7 @@
 					<label class="control-label" for="inputEmailReg"><spring:message
 							code="person.mail" /></label>
 					<div class="controls">
-						<form:input path="email" type="text" id="inputEmailReg" />
+						<form:input path="email" type="email" id="inputEmailReg" required="true" /><br>
 						<form:errors path="email" cssClass="error"></form:errors>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 							code="person.pass" /></label>
 					<div class="controls">
 						<form:input path="password" type="password" id="inputPasswordReg"
-							placeholder="Pass" />
+							placeholder="Pass" required="true" /><br>
 						<form:errors path="password" cssClass="error"></form:errors>
 					</div>
 				</div>
@@ -43,8 +43,8 @@
 							code="person.confirmpass" /></label>
 					<div class="controls">
 						<form:input path="confirmPassword" type="password"
-							id="confirmPasswordReg" placeholder="Pass" />
-						<form:errors path="confirmPassword" cssClass="error"></form:errors>
+							id="confirmPasswordReg" placeholder="Pass" /><br>
+						<form:errors path="confirmPassword" cssClass="error" required="true"></form:errors>
 					</div>
 				</div>
 

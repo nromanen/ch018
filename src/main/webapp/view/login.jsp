@@ -13,7 +13,7 @@
 			<span class = "error"><spring:message code="${error}" /></span>
 		</div>
 		<div class="modal-body">
-			<form class="form-horizontal" action="j_spring_security_check"
+			<form class="form-horizontal" action="j_spring_security_check" id="formlogin"
 				method="post">
 				<div class="control-group">
 					<label class="control-label" for="inputEmail"><spring:message
@@ -27,7 +27,7 @@
 							code="person.pass" /></label>
 					<div class="controls">
 						<input name="j_password" type="password" id="inputPassword"
-							placeholder="Pass">
+							placeholder="Pass" required>
 					</div>
 				</div>
 				<div class="control-group">

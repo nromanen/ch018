@@ -6,6 +6,8 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+<% String l = org.springframework.context.i18n.LocaleContextHolder.getLocale().getLanguage();%>
+<c:set var="lang" scope="session" value="<%=l%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,13 @@
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
+    <c:if test="${lang.equals('ru')}">
+		<script src="${pageContext.request.contextPath}/resources/js/messages_ru.js"></script>
+	</c:if>
+	<c:if test="${lang.equals('uk')}">
+		<script src="${pageContext.request.contextPath}/resources/js/messages_uk.js"></script>
+	</c:if>
 	<script
 	src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 	<script

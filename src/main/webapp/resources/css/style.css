@@ -78,6 +78,11 @@ body > .navbar {
 	width: 120px;
 }
 
+.large{
+	height: 300px;
+	width: 240px;
+}
+
 /* Description  */
 .box {
 	position: relative;
@@ -138,5 +143,25 @@ body > .navbar {
 }
 
 .media-width {
-	width: 400px;
+	width: 600px;
+}
+
+.my-nav-header {
+	legend {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #E5E5E5;
+    border-image: none;
+    border-style: none none solid;
+    border-width: 0 0 1px;
+    color: #333333;
+    display: block;
+    font-size: 21px;
+    line-height: 40px;
+    margin-bottom: 20px;
+    padding: 0;
+    width: 100%;
+}
 }

@@ -38,9 +38,6 @@ public class HeaderController implements ViewPreparer {
 	    	countOrders = ordersService.getCountOrdersByPerson(name);
 	    	countBooks = booksInUseService.getCountBooksByPerson(name);
 	    }
-		
-		
-		
 		attributeContext.putAttribute("countWish", new Attribute(countWish));
 		attributeContext.putAttribute("countOrders", new Attribute(countOrders));
 		attributeContext.putAttribute("countBooks", new Attribute(countBooks));
