@@ -31,7 +31,7 @@
 					<select name="field" class="add-on my">
 						<option value="all"><spring:message code="book.searchall" /></option>
 						<option value="title"><spring:message code="book.title" /></option>
-						<option value="author"><spring:message
+						<option value="authors"><spring:message
 								code="book.authors" /></option>
 						<option value="publication"><spring:message
 								code="book.publication" /></option>

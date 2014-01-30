@@ -63,7 +63,7 @@ function reset_form() {
 }
 
 $(document).ready(function() { 
-
+	$( ".hidden-nb" ).hide();
 	$("#formlogin").validate({
 		highlight: function(element, errorClass) {
 			$(element).fadeOut(function() {
@@ -88,11 +88,11 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("fff").click(function() {
-		if ( $( "div:first" ).is( ":hidden" ) ) {
-			$( "div" ).show( "slow" );
+	$(".my-nav-header").click(function() {
+		if ( $( ".hidden-nb" ).is( ":hidden" ) ) {
+			$( ".hidden-nb" ).show( "slow" );
 		} else {
-			$( "div" ).slideUp();
+			$( ".hidden-nb" ).slideUp();
 		}
 	});
 	
