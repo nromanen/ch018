@@ -11,9 +11,11 @@ import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
+import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.service.GenreService;
 /**
  * 
@@ -30,7 +32,7 @@ public class GenreController implements ViewPreparer {
 	public void execute(Request tilesRequest, AttributeContext attributeContext) {
 		Locale locale = LocaleContextHolder.getLocale();
 		List<Genre> genres = genreService.getAllGenres(locale.getLanguage());
-		attributeContext.putAttribute("genres", new Attribute(genres));		
+		attributeContext.putAttribute("genres", new Attribute(genres));
 	}
 
 }

@@ -115,6 +115,7 @@ public class AuthorizedUserController {
 		}
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
+		
 		return "index";
 	}
 	
@@ -140,13 +141,6 @@ public class AuthorizedUserController {
 	public String advancedSearch(@RequestBody AdvancedSearch search, Model model, HttpSession session) {
 		session.setAttribute("advancedSearch", search);
 		session.removeAttribute("indexSearch");
-		/*
-		long count = 10;
-		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-		model.addAttribute("pages", pages);
-		model.addAttribute("page", 1);
-		books.addAll(book.advancedSearch(search, 0, 9, "id"));
-		model.addAttribute("latest", books);*/
 		return "index";
 	}
 	

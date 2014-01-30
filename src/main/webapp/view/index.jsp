@@ -7,7 +7,9 @@
 <!-- Center -->
 <div class="span8">
 	<c:if test="${indexSearch != null && indexSearch != ''}">
-	<span>Show all results by request: </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" >Show all</a>
+	<div class="alert">
+		<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" ><spring:message code="search.showall" /></a>
+	</div>
 	</c:if>
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
 		<c:if test="${(rowCounter.count + 3) % 4 == 0}">

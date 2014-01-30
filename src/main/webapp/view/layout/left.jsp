@@ -23,26 +23,26 @@
    <div class="span12">
 	<form action="${pageContext.request.contextPath}/advsearch" id = "advancedsearch">
 		<fieldset>
-			<legend><small>Advanced Search</small></legend>
+			<legend><small>Advanced Search <c:if test="${advancedSearch != null}"><a href="<c:url value="?show=all"/>" ><spring:message code="search.showall" /></a></c:if></small></legend>
 		</fieldset>
 			<label><spring:message code="book.title" /></label> 
-			<input id="advtitle" type="text" placeholder="Title…" class="fluid"> 
+			<input id="advtitle" type="text" placeholder="Title…" class="fluid" value="${advancedSearch.title}"> 
 			
 			<label><spring:message code="book.authors" /></label> 
-			<input id="advautors" type="text" placeholder="Authors…" class="fluid">  
+			<input id="advautors" type="text" placeholder="Authors…" class="fluid" value="${advancedSearch.authors}">  
 			
 			<label><spring:message code="book.publication" /></label> 
-			<input id="advpublication" type="text" placeholder="Publication…" class="fluid">
+			<input id="advpublication" type="text" placeholder="Publication…" class="fluid" value="${advancedSearch.publication}">
 			 
 			<label><spring:message code="book.year" /></label> 
-			<input id="advyear" type="number" placeholder="Year…" class="fluid">
+			<input id="advyear" type="number" placeholder="Year…" class="fluid" value="${advancedSearch.year}">
 			
 			<label class="checkbox"> 
 			<input id="advavailable" type="checkbox" > <spring:message code="book.available" /></label>
 			
 			<label><spring:message code="sort.field" /></label> 
-			<select id="advsort" class="fluid">
-				<option value="title"><spring:message code="book.title" /></option>
+			<select id="advsort" class="fluid" >
+				<option value="title" ><spring:message code="book.title" /></option>
 				<option value="authors"><spring:message code="book.authors" /></option>
 				<option value="publication"><spring:message code="book.publication" /></option>
 				<option value="year"><spring:message code="book.year" /></option>
