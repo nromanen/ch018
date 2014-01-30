@@ -156,7 +156,7 @@ body > .navbar {
 	width: 600px;
 }
 
-.my-nav-header {
+.my-nav-header, .my-nav-header-top {
   display: block;
   width: 100%;
   padding: 0;
@@ -173,6 +173,11 @@ body > .navbar {
   color: #999999;
 }
 
+
+.my-nav-header-top small {
+  font-size: 15px;
+  color: #999999;
+}
 /* Ajax loading */
 
 .modalloading {
