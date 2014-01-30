@@ -21,16 +21,16 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"> <i class="icon-chevron-down"/> </a></th>
+					<th><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"> <i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"> <i class="icon-chevron-down"> </i> </a></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -40,23 +40,18 @@
 				<c:forEach items="${persons}" var="person">
 					<tr id="person${person.id}" class="table${person.id}">
 						<td hidden="true" class="id${person.id}">${person.id}</td>
-						<td class="uname${person.id}"><c:out value="${person.name}"
-								escapeXml="true" /></td>
-						<td class="surname${person.id}"><c:out
-								value="${person.surname}" escapeXml="true" /></td>
-						<td class="email${person.id}"><c:out value="${person.email}"
-								escapeXml="true" /></td>
-						<td class="cellphone${person.id}"><c:out
-								value="${person.cellphone}" escapeXml="true" /></td>
-						<td class="multibookAllowed${person.id}">${person.multibookAllowed}</td>
-						<td class="untimelyReturns${person.id}">${person.untimelyReturns}</td>
-						<td class="timelyReturns${person.id}">${person.timelyReturns}</td>
-						<td class="failedOrders${person.id}">${person.failedOrders}</td>
+						<td class="uname${person.id}"><c:out value="${person.name}"	escapeXml="true" /></td>
+						<td class="surname${person.id}"><c:out value="${person.surname}" escapeXml="true" /></td>
+						<td class="email${person.id}"><c:out value="${person.email}" escapeXml="true" /></td>
+						<td class="cellphone${person.id}"><c:out value="${person.cellphone}" escapeXml="true" /></td>
 						<td class="rating${person.id}">${person.rating}</td>
 						<td><input class="confirm${person.id}" type="checkbox"
 							name="confirm" value="confirm"
 							${person.confirm == true ? 'checked' : ''} disabled></td>
-							
+						<td class="multibookAllowed${person.id}">${person.multibookAllowed}</td>
+						<td class="untimelyReturns${person.id}">${person.untimelyReturns}</td>
+						<td class="timelyReturns${person.id}">${person.timelyReturns}</td>
+						<td class="failedOrders${person.id}">${person.failedOrders}</td>	
 						<td>
 							<div class="btn-group">
 								<button class="btn btn-primary dropdown-toggle btn-small" data-toggle="dropdown">

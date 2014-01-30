@@ -260,7 +260,6 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> advancedSearch(AdvancedSearch search, int currentPos,
 			int pageSize) {
-		//parametr = "%" + parametr + "%";
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
 		String publication = "%" + search.getPublication() + "%";
@@ -281,7 +280,6 @@ public class BookDAOImpl implements BookDAO {
 							+ "AND (lower(B.publication) LIKE lower(:publication))"
 							+ qyear
 							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
-//					.setString("parametr", parametr).setMaxResults(pageSize)
 			books.addAll(query.list());
 		} catch (Exception e) {
 			log.error(e);
@@ -291,17 +289,30 @@ public class BookDAOImpl implements BookDAO {
 	
 	@Override
 	public long advancedSearchCount(AdvancedSearch search) {
-		//parametr = "%" + parametr + "%";
+		String title = "%" + search.getTitle() + "%";
+		String authors = "%" + search.getAuthors() + "%";
+		String publication = "%" + search.getPublication() + "%";
+		int year = search.getYear();
+		String qyear = "";
+		String available = "";
+		if (year > 0) {
+			qyear += " AND ((B.year) = ("+year+"))";
+		}
+		if (search.getAvailable()) {
+			available += " AND ((B.available) > 0)";
+		}
+		
 		long count = 0;
 		try {
 			Query query = sessionFactory
 					.getCurrentSession()
 					.createQuery(
-							"select count(B) from Book B where (lower(B.title) "
-									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
-									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									+ "LIKE lower(:parametr))");
-//					.setString("parametr", parametr);
+							"select count(B) from Book B where (lower(B.title) LIKE lower(:title)) "
+							+ "AND (lower(B.authors) LIKE lower(:authors)) "
+							+ "AND (lower(B.publication) LIKE lower(:publication))"
+							+ qyear
+							+ available
+							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication);
 			count = (long) query.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
@@ -421,6 +432,73 @@ public class BookDAOImpl implements BookDAO {
 		 } catch (Exception e){
 			 log.error(e);
 		 }
+		return books;
+	}
+	
+	@Override
+	public long countBooksByGenreWithAdvSearch(AdvancedSearch search,
+			Integer id) {
+		String title = "%" + search.getTitle() + "%";
+		String authors = "%" + search.getAuthors() + "%";
+		String publication = "%" + search.getPublication() + "%";
+		int year = search.getYear();
+		String qyear = "";
+		String available = "";
+		if (year > 0) {
+			qyear += " AND ((B.year) = ("+year+"))";
+		}
+		if (search.getAvailable()) {
+			available += " AND ((B.available) > 0)";
+		}
+		
+		long count = 0;
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select count(B) from Book B where (lower(B.title) LIKE lower(:title)) "
+							+ "AND (lower(B.authors) LIKE lower(:authors)) "
+							+ "AND (lower(B.publication) LIKE lower(:publication)) "
+							+ "AND gid=:id"
+							+ qyear
+							+ available
+							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setInteger("id", id);
+			count = (long) query.uniqueResult();
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return count;
+	}
+	
+	@Override
+	public List<Book> getBooksByGenreWithAdvSearch(
+			AdvancedSearch search, Integer id, int currentPos,
+			int pageSize) {
+		String title = "%" + search.getTitle() + "%";
+		String authors = "%" + search.getAuthors() + "%";
+		String publication = "%" + search.getPublication() + "%";
+		int year = search.getYear();
+		String qyear = "";
+		if (year > 0) {
+			qyear += " AND ((B.year) = ("+year+"))";
+		}
+		boolean available = search.getAvailable();
+		
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select B from Book B where (lower(B.title) LIKE lower(:title)) "
+							+ "AND (lower(B.authors) LIKE lower(:authors)) "
+							+ "AND (lower(B.publication) LIKE lower(:publication))"
+							+ "AND gid=:id"
+							+ qyear
+							+ " order by B." + search.getSortby() + " asc").setInteger("id", id).setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
 		return books;
 	}
 }

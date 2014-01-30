@@ -88,6 +88,14 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("fff").click(function() {
+		if ( $( "div:first" ).is( ":hidden" ) ) {
+			$( "div" ).show( "slow" );
+		} else {
+			$( "div" ).slideUp();
+		}
+	});
+	
 	/**
 	 * Highlight nav
 	 */

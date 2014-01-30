@@ -25,7 +25,6 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public void addBook(Book book) {
-		// TODO: isn't this string default for image url string?
 		if (book.getImage() == null)
 			book.setImage("http://placehold.it/120x150");
 		bookDAO.addBook(book);
@@ -174,11 +173,29 @@ public class BookServiceImpl implements BookService {
     public List<Book> advancedSearch(AdvancedSearch search, int currentPos,	int pageSize) {
     	return bookDAO.advancedSearch(search, currentPos, pageSize);
     }
+    
+    @Override
+    @Transactional
+    public long advancedSearchCount(AdvancedSearch search) {
+    	return bookDAO.advancedSearchCount(search);
+    }
 
 	@Override
 	@Transactional
 	public List<Book> getBooksByRating() {
 		return bookDAO.getBooksByRating();
+	}
+	
+	@Override
+	@Transactional
+	public long countBooksByGenreWithAdvSearch(AdvancedSearch advancedSearch, Integer id) {
+		return bookDAO.countBooksByGenreWithAdvSearch(advancedSearch, id);
+	}
+	
+	@Override
+	@Transactional
+	public List<Book> getBooksByGenreWithAdvSearch(AdvancedSearch advancedSearch, Integer id, int currentPos, int pageSize) {
+		return bookDAO.getBooksByGenreWithAdvSearch(advancedSearch, id, currentPos, pageSize);
 	}
 
 }

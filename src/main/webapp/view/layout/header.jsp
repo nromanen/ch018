@@ -23,7 +23,6 @@
 				action="${pageContext.request.contextPath}/">
 				<input name="search" type="text" class="search-query input-small"
 					placeholder="Search" value="${indexSearch}">
-				<!-- <a href="/">Advanced</a> -->
 			</form> 
 			<div class="nav-collapse collapse" style="height: 0px;">
 				<ul class="nav">

@@ -17,7 +17,7 @@
 		</c:if>
 				<div class="thumbnail span3 ">
 				<div class="media">
-					<a href="<c:url value="/book/${latest.id}"/>"><img src="${latest.image}" class="img-rounded pull-left"></a>
+					<a href="<c:url value="/book/${latest.id}"/>"><img src="${pageContext.request.contextPath}${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
 						<div class="btn-group btn-group-vertical  pull-right">
 						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"

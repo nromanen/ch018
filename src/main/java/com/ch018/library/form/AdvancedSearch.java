@@ -6,7 +6,7 @@ public class AdvancedSearch {
 	private String authors;
 	private String publication;
 	private String sortby;
-	private int year;
+	private Integer year;
 	private boolean available;
 	
 	public AdvancedSearch() {
@@ -29,7 +29,7 @@ public class AdvancedSearch {
 		return this.sortby;
 	}
 	
-	public int getYear() {
+	public Integer getYear() {
 		return this.year;
 	}
 	
@@ -53,7 +53,8 @@ public class AdvancedSearch {
 		this.sortby = sortby;
 	}
 	
-	public void setYear(int year) {
+	public void setYear(Integer year) {
+		if (year == null) year = 0;
 		this.year = year;
 	}
 	

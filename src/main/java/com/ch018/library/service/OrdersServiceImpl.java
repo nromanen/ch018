@@ -59,14 +59,17 @@ public class OrdersServiceImpl implements OrdersService{
 
 	@Transactional
 	public List<Book> getAllBooks() {
-		// TODO Auto-generated method stub
 		return ordDAO.getAllBooks();
 	}
 
 	@Transactional
 	public List<Book> toIssueToday() {
-		// TODO Auto-generated method stub
 		return ordDAO.toIssueToday();
+	}
+	
+	@Transactional
+	public List<Orders> todayOrders() {
+		return ordDAO.todayOrders();
 	}
 
 	@Transactional

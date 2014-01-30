@@ -50,7 +50,7 @@ $(document).ready(function() {
 		  event.preventDefault();	
 	});
 	  
-	  $("#advancedsearch").submit(function(event) {
+	  /*$("#advancedsearch").submit(function(event) {
 		 // $("body").addClass("loading");
 		  var title = $("#advtitle").val();
 		  var authors = $("#advautors").val();
@@ -71,10 +71,10 @@ $(document).ready(function() {
 		            xhr.setRequestHeader("Content-Type", "application/json");  
 		      },
 		      success: function(response) {
-		    	  /*console.log(response);
+		    	  console.log(response);
 		    	  for(var key in response) {
 		    		  console.log(key['title']);
-		    	  }*/
+		    	  }
 		    	  //$("body").removeClass("loading");
 		    	  location.reload();				// temporary!!!!!!!  
 			  },
@@ -86,7 +86,7 @@ $(document).ready(function() {
 		  });
 		  console.log(json);
 		  event.preventDefault();	
-	  })
+	  })*/
 	  
 	  
 })

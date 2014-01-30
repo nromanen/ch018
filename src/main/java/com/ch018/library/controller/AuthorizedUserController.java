@@ -92,7 +92,7 @@ public class AuthorizedUserController {
 				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 				model.addAttribute("latest", book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id"));
 			} else if (advancedSearch != null) {
-				long count = 10;
+				long count = book.advancedSearchCount(advancedSearch);
 				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 				model.addAttribute("latest", book.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
@@ -103,14 +103,19 @@ public class AuthorizedUserController {
 				model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
 			}
 		} else {
-			if (search == null) {
-				Genre genre = genreService.getGenreByIdWithBooks(id);
-				model.addAttribute("latest", genre.getBooks());
-			} else {
+			if (search != null) {
 				long count = book.countBooksByGenre(search, id);
 				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 				model.addAttribute("latest", book.getBooksByGenre(search, id, currentPos, IConstants.PAGE_SIZE, "id"));
+			} else if (advancedSearch != null) {
+				long count = book.countBooksByGenreWithAdvSearch(advancedSearch, id);
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.getBooksByGenreWithAdvSearch(advancedSearch, id, currentPos, IConstants.PAGE_SIZE));
+			} else {
+				Genre genre = genreService.getGenreByIdWithBooks(id);
+				model.addAttribute("latest", genre.getBooks());
 			}
 		}
 		model.addAttribute("pages", pages);
@@ -120,7 +125,7 @@ public class AuthorizedUserController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String search(@RequestParam(required = false) String search, 
+	public String search(@RequestParam String search, 
 			Model model, HttpSession session) {
 		List<Book> books = new ArrayList<Book>();
 		if (search != null) {
@@ -137,11 +142,10 @@ public class AuthorizedUserController {
 	}
 	
 	@RequestMapping(value = "/advsearch", method = RequestMethod.POST)
-	@ResponseBody
-	public String advancedSearch(@RequestBody AdvancedSearch search, Model model, HttpSession session) {
-		session.setAttribute("advancedSearch", search);
+	public String advancedSearch(@ModelAttribute("advancedsearch") AdvancedSearch advancedSearch, Model model, HttpSession session) {
+		session.setAttribute("advancedSearch", advancedSearch);
 		session.removeAttribute("indexSearch");
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)

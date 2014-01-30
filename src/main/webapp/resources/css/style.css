@@ -147,21 +147,20 @@ body > .navbar {
 }
 
 .my-nav-header {
-    -moz-border-bottom-colors: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: -moz-use-text-color -moz-use-text-color #E5E5E5;
-    border-image: none;
-    border-style: none none solid;
-    border-width: 0 0 1px;
-    color: #333333;
-    display: block;
-    font-size: 21px;
-    line-height: 40px;
-    margin-bottom: 20px;
-    padding: 0;
-    width: 100%;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: 40px;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.my-nav-header small {
+  font-size: 15px;
+  color: #999999;
 }
 
 /* Ajax loading */

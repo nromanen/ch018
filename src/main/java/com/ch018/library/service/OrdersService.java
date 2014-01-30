@@ -21,6 +21,7 @@ public interface OrdersService {
 	List<Book> getAllBooks();
 	List<Book> toIssueToday(int currentPos, int pageSize, String sort);
 	List<Book> toIssuePerHour();
+	List<Orders> todayOrders();
 	Orders getById(int id);
 	boolean orderExist(int personId, int bookId);
 	Date minOrderDateOf(int bookId);

@@ -9,7 +9,7 @@
 	<div class="row-fluid">
 		<div class="thumbnail media">
 		
-			<img src="${book.image}" class="img-rounded pull-left large">
+			<img src="${pageContext.request.contextPath}${book.image}" class="img-rounded pull-left large">
 			<div class="media-width">
 				<h4 class="media-heading">${book.title}</h4>
 				<p><strong><spring:message code="book.authors" />: </strong>${book.authors}</p>

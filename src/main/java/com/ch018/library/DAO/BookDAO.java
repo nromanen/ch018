@@ -28,8 +28,9 @@ public interface BookDAO {
 	long simpleSearchCount(String parametr);
 	long paramSearchCount(String field, String parametr);
 	long countBooksByGenre(String search, Integer id);
-	List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,
-			String field);
+	List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize, String field);
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
+	long countBooksByGenreWithAdvSearch(AdvancedSearch advancedSearch, Integer id);
+	List<Book> getBooksByGenreWithAdvSearch(AdvancedSearch advancedSearch, Integer id, int currentPos, int pageSize);
 }

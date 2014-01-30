@@ -11,7 +11,7 @@
 	<div class="row-fluid">
 		<!-- Button group -->
 		<div class="span8">
-			<div class="btn-group">
+			<div class="btn-group fluid">
 				<a href="<c:url value="/books/all"/>" class="btn btn-primary"><spring:message
 						code="book.all" /></a> <a href="<c:url value="/books/issuetd"/>"
 					class="btn btn-primary"><spring:message code="book.issuetd" /></a>
@@ -59,26 +59,26 @@
 
 	<!-- Books table class="TableBooks"-->
 	<div style="overflow-y: scroll">
-	<c:if test="${sort != null}">
-		<span>Sorted by: </span><c:out value="${sort}"></c:out>
-	</c:if>
-	<c:if test="${search != null}">
-		<span>Show all results by request: </span><c:out value="${searchField}"></c:out>"<c:out value="${search}"></c:out>"
+	
+	<c:if test="${search != null && search != ''}">
+		<div class="alert">
+			<span><spring:message code="search.results" /> </span>"<c:out value="${search}"/>"
+		</div>
 	</c:if>
 		<table class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>">1</a></th>
-					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>">1</a></th>
-					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>">1</a></th>
-					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>">1</a></th>
-					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>">1</a></th>
-					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>">1</a></th>
-					<th><spring:message code="book.genre" /><a href="<c:url value="?sort=genre.name"/>">1</a></th>
-					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>">1</a></th>
-					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>">1</a></th>
+					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.genre" /></th>
+					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>"><i class="icon-chevron-down"> </i> </a></th>
 					<th></th>
 					<th></th>
 					<th></th>
