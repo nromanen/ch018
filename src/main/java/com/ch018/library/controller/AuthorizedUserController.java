@@ -154,7 +154,6 @@ public class AuthorizedUserController {
     		         Model model) {
 		Book books = book.getBooksById(bookID);
 		model.addAttribute("book",books);
-		BooksInUse temp = inUse.getById(buid);
 		model.addAttribute("buid", buid);
 		float mark = books.getRating();
 		BigDecimal bd = new BigDecimal(mark);

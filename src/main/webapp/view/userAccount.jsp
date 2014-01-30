@@ -52,7 +52,7 @@
                                 <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
                                    
                              </form:form>
-                               
+                               <div class="display-item"></div>
                                 <a href="<c:url value="/pass"/>" class="btn" id="submit"><spring:message code="button.changepass"/></a>
                                
 </div>

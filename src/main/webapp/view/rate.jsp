@@ -9,6 +9,11 @@
 	<div class="row-fluid">
 		<div class="thumbnail media">
 			<img src="${book.image}" class="img-rounded pull-left">
+			<div class="display-item">
+                       <input type="hidden" id="hrefrate" value = "${pageContext.request.contextPath}/vote"/>
+                       <input type="hidden" id="bookID" value="${book.id}">
+                       <input type="hidden" id="buID" value="${buid}">
+                    </div> 
 				<h4 class="media-heading">${book.title}</h4>
 				<p><strong><spring:message code="book.authors" />: </strong>${book.authors}</p>
 				<p><strong><spring:message code="book.year" />: </strong>${book.year}</p>
@@ -21,20 +26,10 @@
 					</c:choose>
 				</p>
 				<sec:authorize access="isAuthenticated()">
-				<div class="btn-group btn-group-vertical">
-					<a href="<c:url value="/wishlist?bookId=${book.id}"/>"
-						class="btn btn-success"><spring:message code="message.cart" /></a>
-					<a href="<c:url value="/order?book=${book.id}&wish=0"/>"
-						class="btn btn-warning"><spring:message code="message.ordernow" /></a>
-				</div>
-				
-				<c:if test="${mark > 0}">Rating : ${mark} of 5.0</c:if>
-                <c:if test="${mark == 0}">
-				<div class="display-item">
-                       <input type="hidden" id="hrefrate" value = "${pageContext.request.contextPath}/vote"/>
-                       <input type="hidden" id="bookID" value="${book.id}">
-                       <input type="hidden" id="buID" value="${buid}"></div> 
-                       </c:if>
+			    <c:if test="${mark > 0}">Rating : ${mark} of 5.0</c:if>
+                <c:if test="${mark == 0}">   
+				   
+                </c:if>
 				</sec:authorize>
 		
 		</div>
