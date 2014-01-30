@@ -11,7 +11,17 @@
 	<ul class="nav nav-pills nav-stacked">
 		<li class="nav-header">Top 5</li>
 	     	<c:forEach var="bookz" items="${books}">
-		       <li><a href="<c:url value="/book/${bookz.id}"/>">${bookz.title}, ${bookz.authors}</a></li>
+	     	   <li></li>
+		       <li>
+		           <a href="<c:url value="/book/${bookz.id}"/>">
+		           <img src="${bookz.image}" class="img-top5">
+		           <br>
+		           <img src="${pageContext.request.contextPath}/resources/img/star.jpg" class="star"> <span>${bookz.rating}</span>
+		           <br>
+		           ${bookz.title}, 
+		           <br> ${bookz.authors}</a>
+		           </li>
+		       <li></li>
 		</c:forEach>
 	</ul>
 </div>

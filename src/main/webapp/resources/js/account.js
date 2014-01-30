@@ -66,5 +66,20 @@ $(document).ready(function() {
       }
 });
  
+  $("#account").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
+  
+  $("#order").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
 })
 

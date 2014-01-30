@@ -9,20 +9,20 @@
 			<!-- Center -->
 <div class="span8">
                  <br><br>
-                       <form:form method="POST" modelAttribute="order">
+                       <form:form method="POST"  id="order" modelAttribute="order">
                            <p><span>${order.book.title}</span></p>
                            <c:choose>
                                <c:when test="${order.book.available==0}">
-                                   Sorry, but you can't order this book right now.
-                                   <br> This book will be available after <fmt:formatDate pattern="dd.MM.yyyy" value="${date}"/> 
+                                   <spring:message code="message.orderfail"/>
+                                   <br> <spring:message code="message.orderafter"/> <fmt:formatDate pattern="dd.MM.yyyy" value="${date}"/> 
                                </c:when>
                                <c:when test="${order.book.available==1}">
-                                   <c:if test="${orderDate!=null}">You may order this book, but you must return it till ${orderDate} </c:if> 
-                                   <c:if test="${orderDate==null}">You may took this book for : ${term} days</c:if>    
+                                   <c:if test="${orderDate!=null}"><spring:message code="message.order2"/> ${orderDate} </c:if> 
+                                   <c:if test="${orderDate==null}"><spring:message code="message.order1"/> : ${term} <spring:message code="message.day"/></c:if>    
                                           
                                    <table>
-                                       <tr><td>Choose issue date:</td> 
-                                           <form:input path="issueDate" class="datetimepicker"/></td></tr>
+                                       <tr><td><spring:message code="message.issuedate"/></td> 
+                                           <form:input path="issueDate" class="datetimepicker" type="date" required="true"/></td></tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>
@@ -36,10 +36,10 @@
                                    </table>
                                </c:when>
                                <c:otherwise>
-                                   You may took this book for : ${term} days
+                                   <spring:message code="message.order1"/> : ${term} <spring:message code="message.day"/>
                                    <table>
-                                       <tr><td>Choose issue date:</td> 
-                                           <td><form:input path="issueDate" class="datetimepicker"/></td></tr>
+                                       <tr><td><spring:message code="message.issuedate"/></td> 
+                                           <td><form:input path="issueDate" class="datetimepicker" type="date" required="true"/></td></tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>
@@ -49,7 +49,7 @@
                                        <tr><td></td>
                                            <td><form:input path="person.id" type="hidden"/></td>
                                        </tr>
-                                       <tr><td><input type="submit" class="btn" value="Order"/></td></tr>
+                                       <tr><td><input type="submit" class="btn" value=<spring:message code="message.order"/>></td></tr>
                                    </table>
                                </c:otherwise>
                            </c:choose>

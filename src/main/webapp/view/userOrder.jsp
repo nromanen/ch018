@@ -36,12 +36,12 @@
                                                <form:errors path="issueDate" cssClass="error"/>
                                            </div>
                                             <br>                                  
-                                            <input type="button" value="Edit" id="editIssueDate${order.id}" class="btn btn-info"/>
+                                            <input type="button" value=<spring:message code="button.edit"/> id="editIssueDate${order.id}" class="btn btn-info"/>
                                             <input type="hidden" value="${order.id}"/>
-                                            <input type="submit" value="Save" class="btn btn-success" style="display:none" id="saveNewIssue${order.id}">
-                                            <input type="button" value="Cancel" id="cancelIssueEdit${order.id}" class="btn btn-warning" style="display:none"/>
+                                            <input type="submit" value=<spring:message code="button.save"/> class="btn btn-info" style="display:none" id="saveNewIssue${order.id}">
+                                            <input type="button" value=<spring:message code="button.cancel"/> id="cancelIssueEdit${order.id}" class="btn btn-info" style="display:none"/>
                                             <input type="hidden" value="${order.id}"/>
-                                            <a href="<c:url value="/deleteorder?id=${order.id}"/>"  class = "btn btn-danger">Delete</a>
+                                            <a href="<c:url value="/deleteorder?id=${order.id}"/>"  class = "btn btn-danger"><spring:message code="button.delete"/></a>
                                             <br>
                                         </form:form>
                                          ${fail}

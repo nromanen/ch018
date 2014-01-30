@@ -56,6 +56,12 @@ public class OrderController {
     private OrderValidator orderValidator;
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/fail")
+    public void fail(Model model){
+    	
+    }
+    
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
                                     @RequestParam("book") int bookId, 
@@ -70,9 +76,9 @@ public class OrderController {
         int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
-        //String fail = "You exceed your limit at the same time to take the book";
-        if (j == uses) {            
-            return "redirect:/userOrder";
+        if (j == uses) {
+           	//model.addAttribute("uses", uses);
+            return "redirect:/fail";
         } 
         if (orderService.orderExist(personId, bookId)) {
               return "redirect:/userOrder";

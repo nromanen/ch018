@@ -127,4 +127,9 @@
 		<put-attribute name="title" value="Book" />
 		<put-attribute name="body" value="/view/rate.jsp" />
 	</definition>
+	
+	<definition name="fail" extends="baseLayout">
+		<put-attribute name="title" value="Book" />
+		<put-attribute name="body" value="/view/fail.jsp" />
+	</definition>
 </tiles-definitions>    
