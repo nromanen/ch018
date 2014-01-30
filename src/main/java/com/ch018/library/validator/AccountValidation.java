@@ -33,7 +33,10 @@ public class AccountValidation implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "required.surname", "surname is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cellphone", "required.cellphone", "cellphone must contain only numbers");
        
-       // Person person = (Person) o;
+        //Person person = (Person) o;
+        //if(){
+        	
+        //}
        // if (personService.isExist(person.getEmail()) > 0 && person.getId() == 0) {
 		//	errors.rejectValue("email", "exist.email");
 		//}

@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -189,8 +192,9 @@ public class PersonServiceImpl implements PersonService {
 			String message = "You have change your e-mail address on account in J Library"
 					+ " Please confirm your new email by clicking next link: "
 					+ url + "/confirm?key=" + person.getVerificationKey();
-			mailService.sendMail(person.getEmail(),
-					"Library email confirmation", message);
+			mailService.sendMail(person.getEmail(), "Library email confirmation", message);
+			Authentication auth = new PreAuthenticatedAuthenticationToken(person.getEmail(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+           SecurityContextHolder.getContext().setAuthentication(auth);
 		}
 
 		person.setSms(updatedPerson.getSms());

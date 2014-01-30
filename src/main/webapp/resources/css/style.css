@@ -78,6 +78,16 @@ body > .navbar {
 	width: 120px;
 }
 
+.img-top5 {
+	height: 100px;
+	width: 70px;
+}
+
+.star {
+	height: 20px;
+	width: 20px;
+}
+
 .large{
 	height: 300px;
 	width: 240px;
