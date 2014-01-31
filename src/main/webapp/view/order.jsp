@@ -22,7 +22,10 @@
                                           
                                    <table>
                                        <tr><td><spring:message code="message.issuedate"/></td> 
-                                           <form:input path="issueDate" class="datetimepicker" type="date" required="true"/></td></tr>
+                                           <td><form:input path="issueDate" class="datetimepicker" required="true"/>
+                                               <form:errors path="issueDate" cssClass="error"/>
+                                           </td>
+                                      </tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>
@@ -39,7 +42,10 @@
                                    <spring:message code="message.order1"/> : ${term} <spring:message code="message.day"/>
                                    <table>
                                        <tr><td><spring:message code="message.issuedate"/></td> 
-                                           <td><form:input path="issueDate" class="datetimepicker" type="date" required="true"/></td></tr>
+                                           <td><form:input path="issueDate" class="datetimepicker" required="true"/>
+                                                <form:errors path="issueDate" cssClass="error"/>
+                                           </td>
+                                      </tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>
                                        </tr>
