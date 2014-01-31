@@ -30,8 +30,8 @@
 				</c:choose>
 			</p>
 			<sec:authorize access="isAuthenticated()">
-				<c:if test="${mark > 0}"><spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00</c:if>
-			    <c:if test="${mark < 1}">  
+				<c:if test="${usermark > 0}"><spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00</c:if>
+			    <c:if test="${usermark < 1}">  
 				  <div class="display-item">
 						<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
 						<input type="hidden" id="bookID" value="${book.id}" /> 

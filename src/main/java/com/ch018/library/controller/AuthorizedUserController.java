@@ -166,8 +166,12 @@ public class AuthorizedUserController {
 		model.addAttribute("buid", buid);
 		float mark = books.getRating();
 		BigDecimal bd = new BigDecimal(mark);
+		float usermark = inUse.getById(buid).getMark();
+		BigDecimal bdUserMark = new BigDecimal(usermark);
 		bd = bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
+		bdUserMark.setScale(2,BigDecimal.ROUND_HALF_DOWN);
 		model.addAttribute("mark", bd);
+		model.addAttribute("usermark", bdUserMark);
 		System.out.println(bookID);
 	}
 	
