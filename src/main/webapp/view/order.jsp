@@ -9,6 +9,7 @@
 			<!-- Center -->
 <div class="span8">
                  <br><br>
+                 <span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>
                        <form:form method="POST"  id="order" modelAttribute="order">
                            <p><span>${order.book.title}</span></p>
                            <c:choose>
@@ -22,7 +23,7 @@
                                           
                                    <table>
                                        <tr><td><spring:message code="message.issuedate"/></td> 
-                                           <td><form:input path="issueDate" class="datetimepicker" required="true"/>
+                                           <td><form:input path="issueDate" class="datetimepicker" required="true" id="orderDate"/>
                                                <form:errors path="issueDate" cssClass="error"/>
                                            </td>
                                       </tr>
@@ -35,14 +36,14 @@
                                        <tr><td></td>
                                            <td><form:input path="person.id" type="hidden"/></td>
                                        </tr>
-                                       <tr><td><input type="submit" class="btn" value="Order"/></td></tr>
+                                       <tr><td><input type="submit" class="btn" value="Order" id="submitOrder"/></td></tr>
                                    </table>
                                </c:when>
                                <c:otherwise>
                                    <spring:message code="message.order1"/> : ${term} <spring:message code="message.day"/>
                                    <table>
                                        <tr><td><spring:message code="message.issuedate"/></td> 
-                                           <td><form:input path="issueDate" class="datetimepicker" required="true"/>
+                                           <td><form:input path="issueDate" class="datetimepicker" required="true" id="orderDate"/>
                                                 <form:errors path="issueDate" cssClass="error"/>
                                            </td>
                                       </tr>
