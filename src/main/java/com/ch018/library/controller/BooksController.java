@@ -219,6 +219,8 @@ public class BooksController {
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);
+		
+		
 		return "books";
 	}
 

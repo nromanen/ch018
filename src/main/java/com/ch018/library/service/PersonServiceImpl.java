@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +33,9 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private MailService mailService;
 	
+	@Autowired 
+	private MessageSource messageSource;
+	
 	private static final int MULTIBOOK_DEFAULT = 10;
 	
 	@Override
@@ -56,10 +61,11 @@ public class PersonServiceImpl implements PersonService {
 		person.setRating(CalculateRating.getRating());
 		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
 		String url = request.getRequestURL().toString();
-		String message = "Thank you for joining our JLibrary."
-				+ " Please confirm your email by clicking next link: "
-				+ url + "/confirm?key="                
-				+ person.getVerificationKey();
+		String url2 = request.getServletPath();
+		String url3 = url.replaceAll(url2, "/");
+		String message = "Thank you for joining our JLibrary. Please confirm your email by clicking next link: "; 
+				//messageSource.getMessage("message.confirm.registration", null, LocaleContextHolder.getLocale());
+		message = message + url + "/confirm?key=" + person.getVerificationKey();
 		mailService.sendMail(registration.getEmail(),
 				"Library email confirmation", message);
 		personDao.save(person);
@@ -230,7 +236,9 @@ public class PersonServiceImpl implements PersonService {
 		person.setConfirm(false);
 		person.setRating(CalculateRating.getRating());
 		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
-		String url = "http://localhost:8080/library/remind";
+		String url = request.getRequestURL().toString();
+		String url2 = request.getServletPath();
+		url = url.replaceAll(url2, "/remind");
 		String message = "Thank you for joining our JLibrary. Change your password by clicking next link: "
 		+ url + "/pass?key="                
 		+ person.getVerificationKey();

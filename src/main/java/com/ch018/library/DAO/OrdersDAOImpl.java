@@ -128,23 +128,14 @@ public class OrdersDAOImpl implements OrdersDAO {
 	}
 	
 	@Override
-	public List<Orders> todayOrders() {
-		Calendar startDate = Calendar.getInstance();
+	public List<Orders> failedOrders() {
 		Calendar endDate = Calendar.getInstance();
-		startDate.set(Calendar.HOUR_OF_DAY, 0);
-		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
-		endDate.set(Calendar.HOUR_OF_DAY, 23);
-		endDate.set(Calendar.MINUTE, 59);
-		endDate.set(Calendar.SECOND, 59);
-		
 		List<Orders> orders = new ArrayList<Orders>();
 		try {
 			orders.addAll(sessionFactory
 					.getCurrentSession()
 					.createCriteria(Orders.class)
-					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
-					.setProjection(Projections.distinct(Projections.property("book")))
+					.add(Restrictions.le("issueDate", endDate.getTime()))
 					.list());
 		} catch (Exception e) {
 			log.error(e);

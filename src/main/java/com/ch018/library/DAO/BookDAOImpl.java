@@ -265,10 +265,13 @@ public class BookDAOImpl implements BookDAO {
 		String publication = "%" + search.getPublication() + "%";
 		int year = search.getYear();
 		String qyear = "";
+		String available = "";
 		if (year > 0) {
 			qyear += " AND ((B.year) = ("+year+"))";
 		}
-		boolean available = search.getAvailable();
+		if (search.getAvailable()) {
+			available += " AND ((B.available) > 0)";
+		}
 		
 		List<Book> books = new ArrayList<Book>();
 		try {
@@ -279,6 +282,7 @@ public class BookDAOImpl implements BookDAO {
 							+ "AND (lower(B.authors) LIKE lower(:authors)) "
 							+ "AND (lower(B.publication) LIKE lower(:publication))"
 							+ qyear
+							+ available
 							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
 			books.addAll(query.list());
 		} catch (Exception e) {

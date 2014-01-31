@@ -159,7 +159,6 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
@@ -169,7 +168,6 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
@@ -179,7 +177,6 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@JsonIgnore
 	public Set<Orders> getOrders() {
 		return orders;
 	}

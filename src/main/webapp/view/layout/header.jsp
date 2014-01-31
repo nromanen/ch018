@@ -71,7 +71,7 @@
 
 
 			<div id="popover_content_wrapper" style="display: none">
-				<form class="" action="j_spring_security_check" method="post" id="loginpopup">
+				<form class="" action="${pageContext.request.contextPath}/j_spring_security_check" method="post" id="loginpopup">
 					<div class="control-group">
 						<label class="control-label" for="inputEmail"><spring:message
 								code="person.mail" /></label>

@@ -60,13 +60,11 @@ public class Genre implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
-	@JsonIgnore
     public Set<Book> getBooks() {
             return this.books;
     }
 	
 	@OneToMany(fetch = FetchType.LAZY ,mappedBy="genre")
-	@JsonIgnore
 	public Set<Localization> getLocalizations() {
 		return localizations;
 	}

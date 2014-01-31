@@ -10,8 +10,8 @@
 <div class="span10 offset1">
 	<div class="row-fluid">
 		<!-- Button group -->
-		<div class="span8">
-			<div class="btn-group fluid">
+		<div class="span8" style="overflow: scroll;">
+			<div class="btn-group">
 				<a href="<c:url value="/books/all"/>" class="btn btn-primary"><spring:message
 						code="book.all" /></a> <a href="<c:url value="/books/issuetd"/>"
 					class="btn btn-primary"><spring:message code="book.issuetd" /></a>

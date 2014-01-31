@@ -38,7 +38,7 @@
 			<input id="advyear" name="year" type="number" placeholder="Year…" class="fluid" value="${advancedSearch.year}">
 			
 			<label class="checkbox"> 
-			<input id="advavailable" name="available" type="checkbox" > <spring:message code="book.available" /></label>
+			<input id="advavailable" name="available" type="checkbox" ${advancedSearch.available == true ? 'checked' : ''} > <spring:message code="book.available" /></label>
 			
 			<label><spring:message code="sort.field" /></label> 
 			<select id="advsort" name="sortby" class="fluid" >

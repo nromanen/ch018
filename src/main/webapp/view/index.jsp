@@ -33,10 +33,10 @@
 					<div class = "box">
 						<div class = "textdesc"><small>${latest.description}</small></div>
 					</div>
-					<a href="<c:url value="/book/${latest.id}"/>">More</a>
+					<a class="pull-right" href="<c:url value="/book/${latest.id}"/>"><small>More</small></a><br>
                     <p><c:choose>
-                    	<c:when test="${latest.available==0}"><span class="label label-important">Not Available</span></c:when>
-                        <c:otherwise><span class="label label-success">Available</span></c:otherwise>
+                    	<c:when test="${latest.available==0}"><span class="label label-important"><spring:message code="book.notavailable" /></span></c:when>
+                        <c:otherwise><span class="label label-success"><spring:message code="book.available" /></span></c:otherwise>
                        </c:choose></p>
                 </div>
 					

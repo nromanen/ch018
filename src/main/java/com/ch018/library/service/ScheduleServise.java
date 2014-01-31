@@ -26,12 +26,12 @@ public class ScheduleServise {
 	@Autowired
 	private PersonDao personDao;
 	
-	@Scheduled(cron="0 23 * * * ?")
+	@Scheduled(cron="0 0 22 * * MON-FRI")
 	@Transactional
 	public void setFailedOrder() {
 		Person person = new Person();
 		int i = 0;
-		List<Orders> orders = ordersDAO.todayOrders();
+		List<Orders> orders = ordersDAO.failedOrders();
 		for (Orders order : orders) {
 			person = order.getPerson();
 			i = person.getFailedOrders();
@@ -39,7 +39,7 @@ public class ScheduleServise {
 			person.setFailedOrders(i);
 			person.setRating(CalculateRating.getRating(i, person.getUntimelyReturns(), person.getTimelyReturns()));
 			personDao.update(person);
-			ordersDAO.deleteOrder(order);
+			ordersDAO.deleteOrder(order.getId());
 		}
 	}
 }

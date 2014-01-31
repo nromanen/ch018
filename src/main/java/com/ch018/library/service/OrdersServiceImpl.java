@@ -68,8 +68,8 @@ public class OrdersServiceImpl implements OrdersService{
 	}
 	
 	@Transactional
-	public List<Orders> todayOrders() {
-		return ordDAO.todayOrders();
+	public List<Orders> failedOrders() {
+		return ordDAO.failedOrders();
 	}
 
 	@Transactional

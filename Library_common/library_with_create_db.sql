@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 31 2014 г., 01:28
+-- Время создания: Янв 31 2014 г., 01:30
 -- Версия сервера: 5.6.14
 -- Версия PHP: 5.5.6
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `library`
 --
+CREATE DATABASE IF NOT EXISTS `library` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `library`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Структура таблицы `books`
 --
 
+DROP TABLE IF EXISTS `books`;
 CREATE TABLE IF NOT EXISTS `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `authors` varchar(200) NOT NULL,
@@ -71,6 +74,7 @@ INSERT INTO `books` (`id`, `authors`, `available`, `bookcase`, `count`, `descrip
 -- Структура таблицы `booksinuse`
 --
 
+DROP TABLE IF EXISTS `booksinuse`;
 CREATE TABLE IF NOT EXISTS `booksinuse` (
   `buid` int(11) NOT NULL AUTO_INCREMENT,
   `inUse` tinyint(1) DEFAULT NULL,
@@ -104,6 +108,7 @@ INSERT INTO `booksinuse` (`buid`, `inUse`, `issue_date`, `return_date`, `term`, 
 -- Структура таблицы `genre`
 --
 
+DROP TABLE IF EXISTS `genre`;
 CREATE TABLE IF NOT EXISTS `genre` (
   `gid` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`gid`)
@@ -131,6 +136,7 @@ INSERT INTO `genre` (`gid`) VALUES
 -- Структура таблицы `localization`
 --
 
+DROP TABLE IF EXISTS `localization`;
 CREATE TABLE IF NOT EXISTS `localization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(255) DEFAULT NULL,
@@ -182,6 +188,7 @@ INSERT INTO `localization` (`id`, `language`, `genre_gid`, `localizedName`) VALU
 -- Структура таблицы `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_date` datetime DEFAULT NULL,
@@ -206,6 +213,7 @@ INSERT INTO `orders` (`id`, `order_date`, `issue_date`, `Books_id`, `Person_id`)
 -- Структура таблицы `person`
 --
 
+DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cellphone` varchar(255) DEFAULT NULL,
@@ -249,6 +257,7 @@ INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `emailConfirmed`
 -- Структура таблицы `wishlist`
 --
 
+DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE IF NOT EXISTS `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Books_id` int(11) DEFAULT NULL,
