@@ -114,9 +114,12 @@ public class OrderController {
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
-                              BindingResult result) {
-    	
-    	int bookId = newOrder.getBook().getId();
+                              BindingResult result, Model model) {
+    //	orderValidator.validate(newOrder, result);
+    //	if(result.hasErrors()){
+    //		return "redirect:/order?book=14&wish=4";
+    	//}
+      	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
         Calendar calendar = Calendar.getInstance();
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));

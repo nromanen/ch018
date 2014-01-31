@@ -81,5 +81,18 @@ $(document).ready(function() {
 			});
 		}
 	});
+  
+  $("#order").submit(function(e){
+	  var currDate = (new Date).getTime();
+	  var orderDate = (new Date($("#orderDate").val())).getTime();
+	  console.log(currDate);
+	  console.log(orderDate);
+	  
+	  if(orderDate < currDate) {
+		  e.preventDefault();
+		  alert($("#dateExpired").text());
+	  } 
+	 // e.preventDefault();
+  })
 })
 
