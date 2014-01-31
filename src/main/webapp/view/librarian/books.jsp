@@ -69,16 +69,16 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>">^</a></th>
+					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>">^</a></th>
+					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>">^</a></th>
+					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>">^</a></th>
+					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>">^</a></th>
+					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>">^</a></th>
+					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>">^</a></th>
 					<th><spring:message code="book.genre" /></th>
-					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>"><i class="icon-chevron-down"> </i> </a></th>
-					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>"><i class="icon-chevron-down"> </i> </a></th>
+					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>">^</a></th>
+					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>">^</a></th>
 					<th></th>
 					<th></th>
 					<th></th>
