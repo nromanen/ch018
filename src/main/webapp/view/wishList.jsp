@@ -27,5 +27,15 @@
 		               </tr>
 	                  </c:forEach>
              </table>
+             
+             <div id="modal" class="modal hide fade">
+                  <div class="modal-header">111111</div>
+                  <div class="modal-body">11111111</div>
+             </div>
+             
+             <a href="#modal" role="button" class="btn" data-toggle="modal">Click Me</a>
+           
+            <input type="button" class="btn" id="butt1" value="modal"/>
+             
         ${fail}
 </div>

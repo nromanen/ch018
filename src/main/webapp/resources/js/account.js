@@ -41,6 +41,12 @@ $(document).ready(function() {
 	  $("#newIssue" + $id1).hide();
   })
   
+  
+  $("input[id=butt1]").click(function(){
+	  $("#modal").modal();
+	  
+  })
+  
   $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',
@@ -94,5 +100,8 @@ $(document).ready(function() {
 	  } 
 	 // e.preventDefault();
   })
+  
+  
+
 })
 
