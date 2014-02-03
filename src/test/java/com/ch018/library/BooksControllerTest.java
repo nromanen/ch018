@@ -100,7 +100,6 @@ public class BooksControllerTest {
 		Mockito.reset(bookService);
 		Mockito.reset(genreService);
 		Mockito.reset(ordersService);
-//		Mockito.reset(messageSource);
 		Mockito.reset(booksInUseService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		
@@ -153,6 +152,7 @@ public class BooksControllerTest {
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
 		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id")).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name")).thenReturn(books);
 	}
 
 	@After
@@ -163,10 +163,9 @@ public class BooksControllerTest {
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-	/*	mockMvc.perform(post("/book/update")
-				.contentType(new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8")))
-				.content( new ObjectMapper().writeValueAsBytes(book))
-				.param("", values)
+		/*mockMvc.perform(post("/book/update")
+				.contentType(MediaType.ALL)
+				.content("book")
 				)
 				.andExpect(status().isBadRequest());*/
 	}
@@ -198,6 +197,22 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
+		//verifyNoMoreInteractions(bookService);
+		verify(genreService, times(1)).getAllGenres("en");
+		verifyNoMoreInteractions(genreService);
+	}
+	
+	@Test
+	public void testShowBooksWithSort() throws Exception {
+		mockMvc.perform(get("/books").param("sort", "name"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("books"))
+				.andExpect(model().attribute("genre", hasSize(1)))
+				.andExpect(model().attribute("genre", hasItem(genre)))
+				.andExpect(model().attribute("books", hasSize(2)))
+				.andExpect(model().attribute("books", hasItem(book)))
+				.andExpect(model().attribute("books", hasItem(book2)));
+		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "name");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
