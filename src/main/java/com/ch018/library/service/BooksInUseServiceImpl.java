@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,14 @@ import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.util.CalculateRating;
 import com.ch018.library.util.IConstants;
+import com.ch018.library.util.Smsc;
 
 @Service
 public class BooksInUseServiceImpl implements BooksInUseService {
+	
+	private static Logger log = LogManager.getLogger(BooksInUseServiceImpl.class);
+	
+	Smsc sd= new Smsc();
 
 	@Autowired
 	private BooksInUseDAO booksInUseDAO;
@@ -63,6 +70,12 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		bookDAO.updateBook(book);
 		booksInUseDAO.addBooksInUse(booksInUse);
 		ordersDAO.deleteOrder(orderId);
+		log.info("Issue book {}", orders);
+		if (person.getSms()) {
+			log.info("Sending sms");
+			String[] send = sd.send_sms("+38" + person.getCellphone(), book.getTitle(), 0, "", "", 0, "JLibrary", "");
+			log.info(send);
+		}
 	}
 	
 	@Override
