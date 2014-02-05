@@ -11,7 +11,5 @@ import com.ch018.library.entity.Genre;
 public interface GenreService {
 	void addGenre(Genre genre);
 	Genre getGenreById(int id);
-	Genre getGenreByIdWithBooks(int id);
-	Genre getGenreByName(String name);
 	List<Genre> getAllGenres(String language);
 }

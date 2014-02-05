@@ -1,11 +1,3 @@
-// TODO: License, WHAT?
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.ch018.library.controller;
 
 import java.math.BigDecimal;
@@ -18,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,19 +18,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
-import com.ch018.library.form.Registration;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -122,8 +109,10 @@ public class AuthorizedUserController {
 				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 				model.addAttribute("latest", book.getBooksByGenreWithAdvSearch(advancedSearch, id, currentPos, IConstants.PAGE_SIZE));
 			} else {
-				Genre genre = genreService.getGenreByIdWithBooks(id);
-				model.addAttribute("latest", genre.getBooks());
+				long count = book.countBooksByGenre("", id);
+				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+				model.addAttribute("latest", book.getBooksByGenre("", id, currentPos, IConstants.PAGE_SIZE, "id"));
 			}
 		}
 		model.addAttribute("pages", pages);

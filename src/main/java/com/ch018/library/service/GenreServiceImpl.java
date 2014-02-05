@@ -22,7 +22,6 @@ public class GenreServiceImpl implements GenreService {
 	
 	@Transactional
 	public void addGenre(Genre genre) {
-		// TODO Auto-generated method stub
 		genreDAO.addGenre(genre);
 	}
 
@@ -47,20 +46,4 @@ public class GenreServiceImpl implements GenreService {
 	public Genre getGenreById(int id) {
 		return genreDAO.getGenreById(id);
 	}
-	
-	/**
-	 * Lazy initialization
-	 */
-	@Override
-	@Transactional
-	public Genre getGenreByIdWithBooks(int id) {
-		return genreDAO.getGenreByIdWithBooks(id);
-	}
-
-	@Override
-	@Transactional
-	public Genre getGenreByName(String name) {
-		return genreDAO.getGenreByName(name);
-	}
-
 }

@@ -46,6 +46,7 @@
 		</c:if>
 	</c:forEach>
 	<!-- Pagination -->
+	<c:if test="${page > 1}">
 	<div class="pagination pagination-centered">
 		<ul>
 			<c:if test="${page == 1}">
@@ -75,6 +76,7 @@
 			</c:if>
 		</ul>
 	</div>
+	</c:if>
 	<div class="modalloading"></div>
 	<div id="push"></div>
 </div>

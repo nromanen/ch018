@@ -41,5 +41,4 @@ public class MailServiceImpl implements MailService {
 			log.error(e);
 		}
 	}
-
 }

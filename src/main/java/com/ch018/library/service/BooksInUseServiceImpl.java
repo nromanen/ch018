@@ -44,6 +44,10 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	public void addBooksInUse(int days, int orderId) {
 		Calendar issueDate = Calendar.getInstance();
 		Calendar returnDate = Calendar.getInstance();
+		issueDate.set(Calendar.MINUTE, 0);
+		issueDate.set(Calendar.SECOND, 0);
+		issueDate.set(Calendar.MILLISECOND, 0);
+		returnDate.setTime(issueDate.getTime());
 		returnDate.add(Calendar.DATE, days);
 		BooksInUse booksInUse = new BooksInUse();
 		Orders orders = ordersDAO.getById(orderId);
@@ -59,7 +63,6 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		bookDAO.updateBook(book);
 		booksInUseDAO.addBooksInUse(booksInUse);
 		ordersDAO.deleteOrder(orderId);
-		
 	}
 	
 	@Override
@@ -69,9 +72,12 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		int timely = person.getTimelyReturns();
 		int untimely = person.getUntimelyReturns();
 		double rating;
-		Date now = new Date();
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 23);
+		today.set(Calendar.MINUTE, 59);
+		
 		Date returnDate = booksInUse.getReturnDate();
-		if (returnDate.getTime() < now.getTime()) {
+		if (returnDate.getTime() < today.getTime().getTime()) {
 			untimely++;
 		}
 		else {
@@ -89,49 +95,42 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	@Override
 	@Transactional
 	public List<BooksInUse> getAllBooksInUse() {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getAllBooksInUse();
 	}
 
 	@Override
 	@Transactional
 	public List<BooksInUse> getByPersonId(int personId) {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getByPersonId(personId);
 	}
 
 	@Override
 	@Transactional
 	public List<BooksInUse> getByBookId(int bookId) {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getByBookId(bookId);
 	}
 
 	@Override
 	@Transactional
 	public List<BooksInUse> getByIssueDate(Date issueDate) {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getByIssueDate(issueDate);
 	}
 
 	@Override
 	@Transactional
 	public List<BooksInUse> getByReturnDate(Date returnDate) {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getByReturnDate(returnDate);
 	}
 
 	@Override
 	@Transactional
 	public List<BooksInUse> getInUse(boolean inUse) {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getInUse(inUse);
 	}
 
 	@Override
 	@Transactional
 	public List<Book> getAllBooks() {
-		// TODO Auto-generated method stub
 		return booksInUseDAO.getAllBooks();
 	}
 	
@@ -155,7 +154,6 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	@Override
 	@Transactional
 	public List<Book> getReturnBooksToday() {
-		// TODO Auto-generated method stub
 		List<Book> books = booksInUseDAO.getReturnBooksToday();
 		for (Book book : books) {
 			Genre genre = book.getGenre();
@@ -168,7 +166,6 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	@Override
 	@Transactional
 	public void removeBooksInUse(int id) {
-		// TODO Auto-generated method stub
 		booksInUseDAO.removeBooksInUse(id);
 	}
 
