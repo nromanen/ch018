@@ -47,6 +47,55 @@ $(document).ready(function() {
 	  
   })
   
+  $("input[id^=deleteWish]").click(function(){
+	  $id = $(this).next().val();
+	  console.log($id);
+	  $wishID = $("#wishID" + $id).val();
+	  //console.log(wishID);
+	  var href = $("#hrefrate").val();
+	  console.log(href);
+	  $.ajax({
+		  url: href + "/" + $id,
+		  type: "GET",
+		  success: function() {
+			  console.log("success");
+			  $("#modal" + $id).modal();
+			  //$("modal" + $id).delay(5000);
+			  setTimeout(function () {location.reload();}, 1500);
+			  
+		  },
+		  error: function() {
+			  console.log("error");
+		  }
+	  });
+  })
+  
+  $("input[id^=addToWish]").click(function(){
+	  $id = $(this).next().val();
+	  console.log($id);
+	  var href = $("#href").val();
+	  console.log(href);
+	  $.ajax({
+		  url: href + "/" +$id,
+		  type: "GET",
+		  success: function(data) {
+			  console.log(data);
+			  if (data == 0){
+				  console.log("11111");
+				  $("#errorAdd" + $id).modal();
+			  }
+			  if (data == 1) {
+			     console.log("22222");
+			     $("#successAdd" + $id).modal();
+			     setTimeout(function () {location.reload();}, 1500);
+			  }
+		  },
+	      error: function() {
+	    	  console.log("22222");
+	      }
+	  });
+  })
+  
   $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',

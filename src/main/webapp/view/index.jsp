@@ -6,6 +6,7 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!-- Center -->
 <div class="span8">
+     <input type="hidden" id="href" value="${pageContext.request.contextPath}/wishlist" />
 	<c:if test="${indexSearch != null && indexSearch != ''}">
 	<div class="alert">
 		<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" ><spring:message code="search.showall" /></a>
@@ -20,8 +21,10 @@
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="${pageContext.request.contextPath}${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
 						<div class="btn-group btn-group-vertical  pull-right">
-						<a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
-							class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
+						<!-- <a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
+							class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>  -->
+						<input type="button" value="<spring:message code="message.cart" />" class="btn btn-success btn-mini" id="addToWish${latest.id}"/>
+						<input type="hidden" value="${latest.id}">
 						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
 							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  </a>
 						</div>
@@ -41,6 +44,14 @@
                 </div>
 					
 				</div>
+				<div id="successAdd${latest.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${latest.title} successfully added to wish list</div>
+                </div>
+                <div id="errorAdd${latest.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">You already have ${latest.title} in your wish list</div>
+                </div>
 		<c:if test="${(rowCounter.count % 4 == 0) || (rowCounter.last)}">
 			</div>
 		</c:if>
