@@ -26,7 +26,12 @@ public class ForgotPasswordController {
 	@Autowired
 	private ResetPwdValidation resetPwdValidation;
 
-	@Secured("ROLE_ANONYMOUS")
+	/**
+	 * 
+	 * @param model
+	 * @param error
+	 * @return
+	 */
 	@RequestMapping(value = "/remind", method = RequestMethod.GET)
 	public String remindForm(Model model,
 			@RequestParam(value = "error", required = false) String error) {
@@ -38,7 +43,12 @@ public class ForgotPasswordController {
 		return "remind";
 	}
 
-	@Secured("ROLE_ANONYMOUS")
+	/**
+	 * 
+	 * @param email
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/remind", method = RequestMethod.POST)
 	public String passwordRestore(@RequestParam String email,
 			HttpServletRequest request) {
@@ -50,7 +60,12 @@ public class ForgotPasswordController {
 		return "redirect:/";
 	}
 	
-	@Secured("ROLE_ANONYMOUS")
+	/**
+	 * 
+	 * @param key
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/remind/pass", method = RequestMethod.GET)
 	public String resetPassForm(@RequestParam String key, Model model) {
 		ResetPassword resetPassword = new ResetPassword();
@@ -59,7 +74,11 @@ public class ForgotPasswordController {
 		return "restore";
 	}
 	
-	@Secured("ROLE_ANONYMOUS")
+	/**
+	 * 
+	 * @param resetPassword
+	 * @return
+	 */
 	@RequestMapping(value = "/remind/pass", method = RequestMethod.POST)
 	public String passwordRestore(@ModelAttribute @Valid ResetPassword resetPassword) {
 		Person person = personService.getByKey(resetPassword.getKey());

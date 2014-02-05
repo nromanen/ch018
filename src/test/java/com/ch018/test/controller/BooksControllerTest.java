@@ -153,11 +153,11 @@ public class BooksControllerTest {
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-		/*mockMvc.perform(post("/book/update")
-				.contentType(MediaType.ALL)
+		mockMvc.perform(post("/book/update")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.content("book")
-				)
-				.andExpect(status().isBadRequest());*/
+				);
+				//.andExpect(status().isBadRequest());
 	}
 
 	@Test

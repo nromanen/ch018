@@ -34,6 +34,13 @@ public class BooksInUseController {
 	@Autowired
 	private PersonService personService;
 	
+	/**
+	 * 
+	 * @param id
+	 * @param query
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/bookusers/{query}/{id}", method = RequestMethod.GET)
 	public String showBookInUse(@PathVariable(value = "id") Integer id,
 			@PathVariable(value = "query") String query, Model model) {
@@ -54,6 +61,11 @@ public class BooksInUseController {
 		return "404";
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/booksinuse/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteInUse(@PathVariable int id) {
@@ -61,6 +73,11 @@ public class BooksInUseController {
 		return "booksinuse";
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/booksinuse/return{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public String returnBook(@PathVariable int id) {

@@ -61,7 +61,6 @@ public class OrderController {
     	
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
                                     @RequestParam("book") int bookId, 
@@ -111,7 +110,6 @@ public class OrderController {
              }
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result, Model model) {
@@ -133,7 +131,6 @@ public class OrderController {
         return "redirect:/userOrder";
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
     public Model showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue, Model model) {
         //return new ModelAndView("userOrder", "showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
@@ -141,7 +138,6 @@ public class OrderController {
     	return model;
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     public String editIssueDate(Model model, Principal principal,
     		                    @ModelAttribute("editIssue") @Valid Orders editIssue,
@@ -171,7 +167,6 @@ public class OrderController {
         }
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
     public String deleteOrder(@RequestParam("id") int id) {
     	orderService.deleteOrder(id);
@@ -179,9 +174,9 @@ public class OrderController {
     }
     
     /**
+     *      
      * Librarian
      */
-        @Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/{query}/{id}", method = RequestMethod.GET)
 	public String showOrders(@PathVariable("id") Integer id,
 			@PathVariable("query") String query, Model model) {
@@ -201,7 +196,6 @@ public class OrderController {
 		return "404";
 	}
 
-	@Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String deleteOrder(@PathVariable Integer id) {
@@ -209,7 +203,6 @@ public class OrderController {
 		return "order";
 	}
 
-	@Secured("ROLE_LIBRARIAN")
 	@RequestMapping(value = "/orders/issue{id}/{days}", method = RequestMethod.GET)
 	@ResponseBody
 	public String issueOrder(@PathVariable int id, @PathVariable int days) {

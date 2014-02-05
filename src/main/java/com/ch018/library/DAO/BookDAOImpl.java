@@ -18,7 +18,6 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.form.AdvancedSearch;
 
 // TODO: use NamedQuery somewhere
-// TODO: change line length limit to 120 or 150 characters to avoid poor formatting
 @Component
 public class BookDAOImpl implements BookDAO {
 

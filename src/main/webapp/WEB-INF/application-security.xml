@@ -17,6 +17,8 @@
 		<intercept-url pattern="/user/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/wishList/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/userOrder/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
+		<intercept-url pattern="/deleteOrder/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
+		<intercept-url pattern="/order/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/usersBooks/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/userAccount/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')" />
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_LIBRARIAN')" />
@@ -25,6 +27,7 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMINISTRATOR')" /> 
 		<intercept-url pattern="/registration/**" access="isAnonymous()" />
 		<intercept-url pattern="/login/**" access="isAnonymous()" />
+		<intercept-url pattern="/remind/**" access="isAnonymous()" />
 
 		<form-login login-page="/login"
 					authentication-failure-url="/login?error" default-target-url="/" />

@@ -55,6 +55,10 @@
 		<constructor-arg value="com.ch018.library.service.BookService"/>
 	</bean>
 	
+	<bean id="bookDAO" name="bookDAO" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.DAO.BookDAO"/>
+	</bean>
+	
 	<bean id="genreService" name="genreService" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.service.GenreService"/>
 	</bean>

@@ -17,7 +17,7 @@ import com.ch018.library.service.LocalizationService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/fortest/servlet-context.xml",
-		"file:src/main/webapp/WEB-INF/fortest/test-service-context.xml"
+		"file:src/main/webapp/WEB-INF/fortest/test-context.xml"
 })
 @WebAppConfiguration
 public class BookServiceImplTest {

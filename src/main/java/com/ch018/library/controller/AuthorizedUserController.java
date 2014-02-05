@@ -73,18 +73,26 @@ public class AuthorizedUserController {
     @Autowired
     private BooksInUseService inUse;
     
+    /**
+     * 
+     * @param page
+     * @param show
+     * @param id
+     * @param model
+     * @param session
+     * @return
+     */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "show", required = false) String show,
 			@RequestParam(value = "genre", required = false) Integer id, Model model, HttpSession session) {
-		if (show != null && show.equals("all")){
+		if (show != null && show.equals("all")) {
 			session.removeAttribute("indexSearch");
 			session.removeAttribute("advancedSearch");
 		}
 		String search = (String) session.getAttribute("indexSearch");
 		AdvancedSearch advancedSearch = (AdvancedSearch) session.getAttribute("advancedSearch");
 		long pages = 1;
-		
 		if (id == null) {
 			if (search != null) {
 				long count = book.simpleSearchCount(search);
@@ -120,10 +128,16 @@ public class AuthorizedUserController {
 		}
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
-		
 		return "index";
 	}
 	
+	/**
+	 * 
+	 * @param search
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String search(@RequestParam String search, 
 			Model model, HttpSession session) {
@@ -141,6 +155,13 @@ public class AuthorizedUserController {
 		return "index";
 	}
 	
+	/**
+	 * 
+	 * @param advancedSearch
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/advsearch", method = RequestMethod.POST)
 	public String advancedSearch(@ModelAttribute("advancedsearch") AdvancedSearch advancedSearch, Model model, HttpSession session) {
 		session.setAttribute("advancedSearch", advancedSearch);
@@ -148,6 +169,12 @@ public class AuthorizedUserController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET)
 	public String bookPage(@PathVariable(value = "id") Integer id,
 			Model model) {
@@ -156,7 +183,12 @@ public class AuthorizedUserController {
 		return "book";
 	}
 	
-	@Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+	/**
+	 * 
+	 * @param bookID
+	 * @param buid
+	 * @param model
+	 */
 	@RequestMapping(value = "/rate", method = RequestMethod.GET)
     public void rate(@RequestParam("bookID") int bookID, 
     		         @RequestParam("buID") int buid,
@@ -171,14 +203,26 @@ public class AuthorizedUserController {
 		System.out.println(bookID);
 	}
 	
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" }) // TODO: these strings are good as constants somewhere
+	/**
+	 * 
+	 * @param model
+	 * @param principal
+	 * @return
+	 */
     @RequestMapping(value = "/userAccount", method = RequestMethod.GET)
     public Model viewAccount(Model model, Principal principal) {
      model.addAttribute("person", persService.getByEmail(principal.getName()));
      return model;
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    /**
+     * 
+     * @param updtPers
+     * @param result
+     * @param principal
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
                               BindingResult result, Principal principal, HttpServletRequest request) {
@@ -187,7 +231,6 @@ public class AuthorizedUserController {
         if (result.hasErrors()) {
             return "userAccount";
         }
-        
         if(!person.getEmail().equals(updtPers.getEmail())) { 
             person = persService.updateAccProperties(person, updtPers, request);
             persService.update(person);
@@ -198,7 +241,13 @@ public class AuthorizedUserController {
         return "userAccount";
     }
     
-	@Secured({ "ROLE_USER", "ROLE_LIBRARIAN" })
+    /**
+     * 
+     * @param password
+     * @param result
+     * @param principal
+     * @return
+     */
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	public String passwordView(@ModelAttribute("password") Password password,
 			BindingResult result, Principal principal) {
@@ -219,7 +268,12 @@ public class AuthorizedUserController {
 		}
 	}
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+	/**
+	 * 
+	 * @param password
+	 * @param result
+	 * @param principal
+	 */
     @RequestMapping(value = "/pass", method = RequestMethod.GET)
     public void changePassword(@ModelAttribute("password")Password password, 
                                BindingResult result, 
