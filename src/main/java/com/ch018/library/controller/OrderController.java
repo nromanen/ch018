@@ -62,27 +62,30 @@ public class OrderController {
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String order(Model model, 
+    @RequestMapping(value = "/prepareorder", method = RequestMethod.GET)
+    @ResponseBody
+    public int prepareOrder(Model model, 
                                     @RequestParam("book") int bookId, 
                                     @RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = personService.getByEmail(principal.getName());
         if (booksInUseService.alreadyInUse(bookId, p.getId())) {
-            return "redirect:/usersBooks";
+            return 0;
+            		//"redirect:/usersBooks";
         }
         int personId = p.getId();
         int  uses = orderService.getOrdersByPersonId(personId).size();
-        int term = 14;
+        //int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         if (j == uses) {
-           	//model.addAttribute("uses", uses);
-            return "redirect:/fail";
+            return 2;
+            		//"redirect:/fail";
         } 
         if (orderService.orderExist(personId, bookId)) {
-              return "redirect:/userOrder";
-          } else {
+              return 3;
+              //"redirect:/userOrder";
+          }/* else {
                 Orders newOrder = new Orders();
                 Book b = bookService.getBooksById(bookId);
                 int available = b.getAvailable();
@@ -108,17 +111,49 @@ public class OrderController {
                 newOrder.setBook(b);
                 model.addAttribute("order", newOrder);
                 return "order";
-             }
+             } */
+        return 1;
     }
+    
+    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public String order(Model model, 
+            @RequestParam("book") int bookId, 
+            @RequestParam("wish") int wishId, 
+            Principal principal) {
+    	Person p = personService.getByEmail(principal.getName());
+        Orders newOrder = new Orders();
+        Book b = bookService.getBooksById(bookId);
+        int term = 14;
+        int available = b.getAvailable();
+        if (available == 0) {
+            Date date;
+            date = booksInUseService.getMinByReturnDate(bookId);
+            model.addAttribute("date", date);
+        }
+        if (available == 1) {
+            Date date = orderService.minOrderDateOf(bookId);
+            if(date == null){
+            	model.addAttribute("term", term);
+               } else {
+                date.setDate(date.getDate() - 1);
+               // date = Calendar.getInstance().getTime();
+                model.addAttribute("orderDate", date.toString());
+            }
+        }
+        if (available > 1) {
+            model.addAttribute("term", term);
+        }
+        newOrder.setPerson(p);
+        newOrder.setBook(b);
+        model.addAttribute("order", newOrder);
+        return "order";
+   }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String createOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result, Model model) {
-    //	orderValidator.validate(newOrder, result);
-    //	if(result.hasErrors()){
-    //		return "redirect:/order?book=14&wish=4";
-    	//}
       	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
         Calendar calendar = Calendar.getInstance();

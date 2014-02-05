@@ -96,6 +96,29 @@ $(document).ready(function() {
 	  });
   })
   
+  $("input[id^=orderNow]").click(function() {
+	  $id= $(this).next().val();
+	  console.log($id);
+	  var href = $("#hrefOrder").val();
+	  href = href + "?book=" + $id + "&wish=0";
+	  var hrefNewOrder = $("#hrefNewOrder").val();
+	  hrefNewOrder = hrefNewOrder+ "?book=" +$id+ "&wish=0";
+	  console.log(href);
+	  console.log(hrefNewOrder);
+	  $.ajax({
+		  url: href,
+	      type: "GET",
+	      success: function(data) {
+	    	  console.log(data);
+	    	  if(data == 1) location.href = hrefNewOrder;
+	    	  console.log("11111");
+	      },
+	      error: function() {
+	    	  console.log("22222");
+	      }
+	  });
+  })
+  
   $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',

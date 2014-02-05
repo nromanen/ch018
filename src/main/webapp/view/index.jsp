@@ -7,6 +7,8 @@
 <!-- Center -->
 <div class="span8">
      <input type="hidden" id="href" value="${pageContext.request.contextPath}/wishlist" />
+     <input type="hidden" id="hrefOrder" value="${pageContext.request.contextPath}/prepareorder" />
+     <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
 	<c:if test="${indexSearch != null && indexSearch != ''}">
 	<div class="alert">
 		<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="?show=all"/>" ><spring:message code="search.showall" /></a>
@@ -25,8 +27,11 @@
 							class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>  -->
 						<input type="button" value="<spring:message code="message.cart" />" class="btn btn-success btn-mini" id="addToWish${latest.id}"/>
 						<input type="hidden" value="${latest.id}">
-						<a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
-							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  </a>
+						<input type="button" id="orderNow${latest.id}" value="<spring:message code="message.ordernow"/>" class="btn btn-warning btn-mini"/>
+						<input type="hidden" value="${latest.id}">
+					    <a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
+							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  
+							</a>
 						</div>
 					</sec:authorize>
 				</div>
