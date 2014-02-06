@@ -51,7 +51,6 @@ $(document).ready(function() {
 	  $id = $(this).next().val();
 	  console.log($id);
 	  $wishID = $("#wishID" + $id).val();
-	  //console.log(wishID);
 	  var href = $("#hrefrate").val();
 	  console.log(href);
 	  $.ajax({
@@ -60,7 +59,6 @@ $(document).ready(function() {
 		  success: function() {
 			  console.log("success");
 			  $("#modal" + $id).modal();
-			  //$("modal" + $id).delay(5000);
 			  setTimeout(function () {location.reload();}, 1500);
 			  
 		  },
@@ -70,7 +68,7 @@ $(document).ready(function() {
 	  });
   })
   
-  $("input[id^=addToWish]").click(function(){
+  $("a[id^=addToWish]").click(function(){
 	  $id = $(this).next().val();
 	  console.log($id);
 	  var href = $("#href").val();
@@ -96,13 +94,13 @@ $(document).ready(function() {
 	  });
   })
   
-  $("input[id^=orderNow]").click(function() {
-	  $id= $(this).next().val();
+  $("a[id^=orderNow]").click(function() {
+	  $id= $(this).prev().val();
 	  console.log($id);
 	  var href = $("#hrefOrder").val();
-	  href = href + "?book=" + $id// + "&wish=0";
+	  href = href + "?book=" + $id
 	  var hrefNewOrder = $("#hrefNewOrder").val();
-	  hrefNewOrder = hrefNewOrder+ "?book=" +$id//+ "&wish=0";
+	  hrefNewOrder = hrefNewOrder+ "?book=" +$id
 	  console.log(href);
 	  console.log(hrefNewOrder);
 	  $.ajax({
@@ -179,7 +177,6 @@ $(document).ready(function() {
 		  e.preventDefault();
 		  alert($("#dateExpired").text());
 	  } 
-	 // e.preventDefault();
   })
   
   

@@ -23,15 +23,12 @@
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="${pageContext.request.contextPath}${latest.image}" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
 						<div class="btn-group btn-group-vertical  pull-right">
-						<!-- <a href="<c:url value="/wishlist?bookId=${latest.id}"/>"
-							class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>  -->
-						<input type="button" value="<spring:message code="message.cart" />" class="btn btn-success btn-mini" id="addToWish${latest.id}"/>
-						<input type="hidden" value="${latest.id}">
-						<input type="button" id="orderNow${latest.id}" value="<spring:message code="message.ordernow"/>" class="btn btn-warning btn-mini"/>
-						<input type="hidden" value="${latest.id}">
-					    <a href="<c:url value="/order?book=${latest.id}&wish=0"/>"
+						<a id="addToWish${latest.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
+						<input type="hidden" value="${latest.id}"/>
+					    <a id="orderNow${latest.id}"
 							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  
-							</a>
+						</a>
+						 
 						</div>
 						 <div id="inOrder${latest.id}" class="modal hide fade">
                                            <div class="modal-header">Message</div>
