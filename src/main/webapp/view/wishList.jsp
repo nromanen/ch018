@@ -6,6 +6,7 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span8">
    <input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/delete" />
+   <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
     <h3 class="text-info"><small><spring:message code="menu.wish" /></small></h3>
  
             <table class="table table-bordered">

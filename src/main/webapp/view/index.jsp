@@ -33,6 +33,18 @@
 							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  
 							</a>
 						</div>
+						 <div id="inOrder${latest.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${latest.title} already in your orders!</div>
+                        </div>
+                         <div id="inUse${latest.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${latest.title} is now in your hands</div>
+                        </div>
+                         <div id="fail${latest.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body"><spring:message code="message.failorder"/></div>
+                        </div> 
 					</sec:authorize>
 				</div>
 				<div class="caption">

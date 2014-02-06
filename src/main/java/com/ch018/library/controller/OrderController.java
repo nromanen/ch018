@@ -66,52 +66,22 @@ public class OrderController {
     @ResponseBody
     public int prepareOrder(Model model, 
                                     @RequestParam("book") int bookId, 
-                                    @RequestParam("wish") int wishId, 
+                                    //@RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = personService.getByEmail(principal.getName());
         if (booksInUseService.alreadyInUse(bookId, p.getId())) {
             return 0;
-            		//"redirect:/usersBooks";
         }
         int personId = p.getId();
         int  uses = orderService.getOrdersByPersonId(personId).size();
-        //int term = 14;
         uses += booksInUseService.getByPersonId(personId).size();
         int j = p.getMultibookAllowed();
         if (j == uses) {
             return 2;
-            		//"redirect:/fail";
         } 
         if (orderService.orderExist(personId, bookId)) {
               return 3;
-              //"redirect:/userOrder";
-          }/* else {
-                Orders newOrder = new Orders();
-                Book b = bookService.getBooksById(bookId);
-                int available = b.getAvailable();
-                if (available == 0) {
-                    Date date;
-                    date = booksInUseService.getMinByReturnDate(bookId);
-                    model.addAttribute("date", date);
-                }
-                if (available == 1) {
-                    Date date = orderService.minOrderDateOf(bookId);
-                    if(date == null){
-                    	model.addAttribute("term", term);
-                       } else {
-                        date.setDate(date.getDate() - 1);
-                       // date = Calendar.getInstance().getTime();
-                        model.addAttribute("orderDate", date.toString());
-                    }
-                }
-                if (available > 1) {
-                    model.addAttribute("term", term);
-                }
-                newOrder.setPerson(p);
-                newOrder.setBook(b);
-                model.addAttribute("order", newOrder);
-                return "order";
-             } */
+          }
         return 1;
     }
     
@@ -119,7 +89,7 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
             @RequestParam("book") int bookId, 
-            @RequestParam("wish") int wishId, 
+            //@RequestParam("wish") int wishId, 
             Principal principal) {
     	Person p = personService.getByEmail(principal.getName());
         Orders newOrder = new Orders();

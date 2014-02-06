@@ -100,9 +100,9 @@ $(document).ready(function() {
 	  $id= $(this).next().val();
 	  console.log($id);
 	  var href = $("#hrefOrder").val();
-	  href = href + "?book=" + $id + "&wish=0";
+	  href = href + "?book=" + $id// + "&wish=0";
 	  var hrefNewOrder = $("#hrefNewOrder").val();
-	  hrefNewOrder = hrefNewOrder+ "?book=" +$id+ "&wish=0";
+	  hrefNewOrder = hrefNewOrder+ "?book=" +$id//+ "&wish=0";
 	  console.log(href);
 	  console.log(hrefNewOrder);
 	  $.ajax({
@@ -110,7 +110,16 @@ $(document).ready(function() {
 	      type: "GET",
 	      success: function(data) {
 	    	  console.log(data);
-	    	  if(data == 1) location.href = hrefNewOrder;
+	    	  if (data == 0) 
+	    		       $("#inUse" + $id).modal();
+	    	  if (data == 2) 
+	    		  $("#fail" + $id).modal();
+	    	  if(data == 1) {
+	    		  location.href = hrefNewOrder;
+	    	  }
+	    	  if (data == 3) {
+	    		  $("#inOrder" +$id).modal();
+	    	  }
 	    	  console.log("11111");
 	      },
 	      error: function() {
