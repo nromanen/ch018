@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
@@ -62,12 +61,12 @@ public class AuthorizedUserController {
     
     /**
      * 
-     * @param page
-     * @param show
-     * @param id
+     * @param page - current page
+     * @param show - reset search
+     * @param id - genre id
      * @param model
      * @param session
-     * @return
+     * @return view
      */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String welomePage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -80,41 +79,11 @@ public class AuthorizedUserController {
 		String search = (String) session.getAttribute("indexSearch");
 		AdvancedSearch advancedSearch = (AdvancedSearch) session.getAttribute("advancedSearch");
 		long pages = 1;
-		if (id == null) {
-			if (search != null) {
-				long count = book.simpleSearchCount(search);
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id"));
-			} else if (advancedSearch != null) {
-				long count = book.advancedSearchCount(advancedSearch);
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
-			} else {
-				long count = book.countBooks();
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
-			}
-		} else {
-			if (search != null) {
-				long count = book.countBooksByGenre(search, id);
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.getBooksByGenre(search, id, currentPos, IConstants.PAGE_SIZE, "id"));
-			} else if (advancedSearch != null) {
-				long count = book.countBooksByGenreWithAdvSearch(advancedSearch, id);
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.getBooksByGenreWithAdvSearch(advancedSearch, id, currentPos, IConstants.PAGE_SIZE));
-			} else {
-				long count = book.countBooksByGenre("", id);
-				pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-				int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				model.addAttribute("latest", book.getBooksByGenre("", id, currentPos, IConstants.PAGE_SIZE, "id"));
-			}
-		}
+		long count = book.countBooks(search, advancedSearch, id);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+		pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		List<Book> books = book.getBooks(search, advancedSearch, id, currentPos);
+		model.addAttribute("latest", books);
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		return "index";
@@ -135,11 +104,11 @@ public class AuthorizedUserController {
 			session.setAttribute("indexSearch", search);
 			session.removeAttribute("advancedSearch");
 		}
-		long count = book.simpleSearchCount(search);
+		long count = book.countBooks(search, null, null);
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", 1);
-		books.addAll(book.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id"));
+		books.addAll(book.getBooks(search, null, null, 0));
 		model.addAttribute("latest", books);
 		return "index";
 	}

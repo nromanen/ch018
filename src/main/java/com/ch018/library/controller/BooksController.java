@@ -129,12 +129,14 @@ public class BooksController {
 		String search = (String) session.getAttribute("search");
 		String searchField = (String) session.getAttribute("searchField");
 		Book book = new Book();
-		long count;
-		long pages = 1;
-		int currentPos;
+		long count = bookService.countBooks(search, null, null);
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		List<Book> books = new ArrayList<>();
+		books = bookService.getBooks(search, null, null, currentPos);
+		/*
 		if (searchField == null || search == null) {
 			count = bookService.countBooks();
 			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
@@ -151,6 +153,7 @@ public class BooksController {
 			currentPos = (page - 1) * IConstants.PAGE_SIZE;
 			books.addAll(bookService.paramSearch(searchField, search, currentPos, IConstants.PAGE_SIZE, field));
 		}
+		*/
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);

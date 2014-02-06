@@ -12,6 +12,7 @@ public interface BookService {
 	void addBook(Book book);
 	void updateBook(Book book);
 	List<Book> getAllBooks();
+	List<Book> getBooks(String search, AdvancedSearch advancedSearch, Integer genre, Integer position);
 	Book getBooksById(int id);
 	Book getBooksByIdWithUses(int id);
 	Book getBooksByIdWithOrders(int id);
@@ -19,6 +20,7 @@ public interface BookService {
     List<Book> getBooksByRating();
     List<Book> getAllBooks(int currentPos, int pageSize, String sort);
 	long countBooks();
+	long countBooks(String search, AdvancedSearch advancedSearch, Integer genre);
 	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort);
 	List<Book> paramSearch(String searchField, String search, int currentPos, int pageSize, String sort);
 	long simpleSearchCount(String search);
