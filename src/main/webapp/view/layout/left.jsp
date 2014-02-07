@@ -21,9 +21,9 @@
  </div>
  <div class="row-fluid">
    <div class="span12">
-	<form action="${pageContext.request.contextPath}/advsearch" id = "advancedsearch" name = "advancedsearch" method="POST">
+	<form action="${pageContext.request.contextPath}/advsearch" id = "advancedsearch" name = "advancedsearch" method="GET">
 		<fieldset>
-			<legend><small><spring:message code="search.advanced" /> <c:if test="${advancedSearch != null}"><a href="<c:url value="?show=all"/>" ><spring:message code="search.showall" /></a></c:if></small></legend>
+			<legend><small><spring:message code="search.advanced" /> <c:if test="${advancedSearch != null}"><a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a></c:if></small></legend>
 		</fieldset>
 			<label><spring:message code="book.title" /></label> 
 			<input id="advtitle" name="title" type="text" placeholder="Title…" class="fluid" value="${advancedSearch.title}"> 

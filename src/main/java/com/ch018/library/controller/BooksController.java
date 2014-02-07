@@ -116,7 +116,7 @@ public class BooksController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
-		Locale locale = LocaleContextHolder.getLocale();
+		/*Locale locale = LocaleContextHolder.getLocale();
 		String field =(String) session.getAttribute("sort");
 		if (field == null) {
 			session.setAttribute("sort", sort);
@@ -136,7 +136,7 @@ public class BooksController {
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		List<Book> books = new ArrayList<>();
 		books = bookService.getBooks(search, null, null, currentPos);
-		/*
+		
 		if (searchField == null || search == null) {
 			count = bookService.countBooks();
 			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
@@ -154,9 +154,9 @@ public class BooksController {
 			books.addAll(bookService.paramSearch(searchField, search, currentPos, IConstants.PAGE_SIZE, field));
 		}
 		*/
-		model.addAttribute("pages", pages);
+		model.addAttribute("pages", 2);
 		model.addAttribute("page", page);
-		model.addAttribute("books", books);
+		//model.addAttribute("books", books);
 		return "books";
 	}
 	

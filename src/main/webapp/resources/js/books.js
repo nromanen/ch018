@@ -48,7 +48,11 @@ $(document).ready(function() {
 			}
 		  });
 		  event.preventDefault();	
-	});
+	  });
+	  
+
+	  
+	
 	  
 	  /*$("#advancedsearch").submit(function(event) {
 		 // $("body").addClass("loading");

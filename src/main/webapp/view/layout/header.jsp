@@ -19,9 +19,9 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="brand mybrand" href="<c:url value="/"/>">jLibrary</a>
-			<form class="navbar-search pull-right" method="POST"
-				action="${pageContext.request.contextPath}/">
-				<input name="search" type="text" class="search-query input-small"
+			<form class="navbar-search pull-right" method="GET"
+				action="${pageContext.request.contextPath}/search">
+				<input name="search" type="text" class="search-query input-small" id="isearch"
 					placeholder="Search" value="${indexSearch}">
 			</form> 
 			<div class="nav-collapse collapse" style="height: 0px;">
