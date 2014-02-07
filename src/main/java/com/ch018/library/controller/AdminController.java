@@ -39,6 +39,14 @@ public class AdminController {
 	@Autowired
 	private PersonValidation personValidation;
 	
+	/**
+	 * 
+	 * @param page
+	 * @param sort
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/admin", method = RequestMethod.GET )
 	public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
@@ -69,6 +77,13 @@ public class AdminController {
 		return "admin";
 	}
 	
+	/**
+	 * 
+	 * @param person
+	 * @param result
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/update", method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse newPerson(@RequestBody @Valid Person person,

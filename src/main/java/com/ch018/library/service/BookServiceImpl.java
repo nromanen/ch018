@@ -43,6 +43,7 @@ public class BookServiceImpl implements BookService {
 		return bookDAO.getAllBooks();
 	}
 	
+	
 	@Override
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
@@ -54,6 +55,7 @@ public class BookServiceImpl implements BookService {
 			for (Localization localization : l) {
 				if (localization.getLanguage().equals(LocaleContextHolder.getLocale().getLanguage())) {
 					genre.setName(localization.getLocalizedName());
+					break;
 				}
 			}
 			book.setGenre(genre);
@@ -83,23 +85,6 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Transactional
-	public List<Book> getBooksByTitle(String title) {
-		return bookDAO.getBooksByTitle(title);
-	}
-
-
-	@Transactional
-	public List<Book> getBooksByAuthors(String authors) {
-		return bookDAO.getBooksByAuthors(authors);
-	}
-
-
-	@Transactional
-	public List<Book> getBooksByYear(int year) {
-		return bookDAO.getBooksByYear(year);
-	}
-
-	@Transactional
 	public int deleteBook(int id) {
 		return bookDAO.deleteBook(id);
 	}
@@ -119,6 +104,7 @@ public class BookServiceImpl implements BookService {
 			for (Localization localization : l) {
 				if (localization.getLanguage().equals(LocaleContextHolder.getLocale().getLanguage())) {
 					genre.setName(localization.getLocalizedName());
+					break;
 				}
 			}
 			book.setGenre(genre);
@@ -144,12 +130,8 @@ public class BookServiceImpl implements BookService {
 		return books;
 	}
 
-	@Transactional
-	public List<Book> paramSearch(String field, String parametr) {
-		return bookDAO.paramSearch(field, parametr);
-	}
+	
 
-    
     @Override
     @Transactional
     public long simpleSearchCount(String search) {

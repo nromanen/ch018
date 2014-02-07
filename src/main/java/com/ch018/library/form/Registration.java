@@ -12,7 +12,6 @@ public class Registration {
 	@Autowired 
 	private MessageSource messageSource;
 	
-	// TODO: message placeholder should not start with capiltal letter
 	@NotEmpty(message = "{NotEmpty.registration.email}")
 	@Email(message = "{Email.registration.email}")
 	private String email;
@@ -47,6 +46,16 @@ public class Registration {
 	
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this.email.equals(((Registration)obj).getEmail()) 
+				&& (this.password.equals(((Registration)obj).getPassword()))) {
+			return true;
+		}
+		return false;
+		//return super.equals(obj);
 	}
 
 }

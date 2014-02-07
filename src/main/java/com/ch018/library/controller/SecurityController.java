@@ -32,8 +32,6 @@ public class SecurityController {
 	@Autowired
 	private RegistrationValidation registrationValidation;
 	
-	
-	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm(@RequestParam(required = false) String error, Model model) {
 		if (error != null) {
@@ -44,14 +42,12 @@ public class SecurityController {
 		return "login";
 	}
 
-	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String regForm(Model model) {
 		model.addAttribute("registration", new Registration());
 		return "registration";
 	}
 
-	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String processRegistration(@Valid final Registration registration,
 			BindingResult result, HttpServletRequest request) {
@@ -63,7 +59,6 @@ public class SecurityController {
 		return "redirect:/";
 	}
 	
-	@Secured("ROLE_ANONYMOUS")
 	@RequestMapping(value = "/registration/confirm", method = RequestMethod.GET)
 	public String confirmEmail(Model model, @RequestParam("key") String key) {
 		Person person =	personService.getByKey(key);

@@ -1,32 +1,23 @@
-package com.ch018.library;
-
-import static org.junit.Assert.*;
+package com.ch018.test.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.nio.charset.Charset;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +42,6 @@ import com.ch018.library.service.LocalizationService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.util.IConstants;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -100,7 +90,6 @@ public class BooksControllerTest {
 		Mockito.reset(bookService);
 		Mockito.reset(genreService);
 		Mockito.reset(ordersService);
-//		Mockito.reset(messageSource);
 		Mockito.reset(booksInUseService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		
@@ -153,6 +142,7 @@ public class BooksControllerTest {
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
 		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id")).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name")).thenReturn(books);
 	}
 
 	@After
@@ -163,12 +153,11 @@ public class BooksControllerTest {
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-	/*	mockMvc.perform(post("/book/update")
-				.contentType(new MediaType(MediaType.APPLICATION_JSON.getType(), MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8")))
-				.content( new ObjectMapper().writeValueAsBytes(book))
-				.param("", values)
-				)
-				.andExpect(status().isBadRequest());*/
+		mockMvc.perform(post("/book/update")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content("book")
+				);
+				//.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -198,6 +187,22 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
+		//verifyNoMoreInteractions(bookService);
+		verify(genreService, times(1)).getAllGenres("en");
+		verifyNoMoreInteractions(genreService);
+	}
+	
+	@Test
+	public void testShowBooksWithSort() throws Exception {
+		mockMvc.perform(get("/books").param("sort", "name"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("books"))
+				.andExpect(model().attribute("genre", hasSize(1)))
+				.andExpect(model().attribute("genre", hasItem(genre)))
+				.andExpect(model().attribute("books", hasSize(2)))
+				.andExpect(model().attribute("books", hasItem(book)))
+				.andExpect(model().attribute("books", hasItem(book2)));
+		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "name");
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);

@@ -45,22 +45,6 @@ public class GenreDAOImpl implements GenreDAO {
 		}
 		return genres;
 	}
-	
-	/**
-	 * Lazy initialization
-	 */
-	@Override
-	public Genre getGenreByIdWithBooks(int id) {
-		Genre genre = null;
-		try {
-			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
-					id);
-		} catch (Exception e) {
-			log.error(e);
-		}
-		Hibernate.initialize(genre.getBooks());
-		return genre;
-	}
 
 	@Override
 	public Genre getGenreById(int id) {
@@ -68,22 +52,6 @@ public class GenreDAOImpl implements GenreDAO {
 		try {
 			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
 					id);
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return genre;
-	}
-
-	@Override
-	public Genre getGenreByName(String name) {
-		Genre genre = null;
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("select G from Genre G where lower(G.name) "
-									+ "LIKE lower(:name)")
-					.setString("name", name);
-			genre = (Genre) query;
 		} catch (Exception e) {
 			log.error(e);
 		}

@@ -20,6 +20,8 @@
         rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
 	    rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/resources/css/jquery-ui.custom.css"
+	    rel="stylesheet" type="text/css"/>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/scripts.js"></script>
@@ -40,6 +42,8 @@
 		<script src="${pageContext.request.contextPath}/resources/js/messages_uk.js"></script>
 	</c:if>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.rating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.custom.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>

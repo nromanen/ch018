@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.entity.Book;
@@ -36,7 +34,6 @@ public class BookInUseController {
     @Autowired 
     private BookService bookService;
      
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/usersBooks")
     public ModelAndView showMyBooks(Principal principal) {
         List<BooksInUse> books = new ArrayList<BooksInUse>();
@@ -44,7 +41,6 @@ public class BookInUseController {
         return new ModelAndView("usersBooks", "books", books);
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/vote/{rate}/{bookID}/{buID}", method = RequestMethod.GET)
     public String voteRating(@PathVariable float rate, @PathVariable int bookID, @PathVariable int buID){
     	BooksInUse bookInUse = inUse.getById(buID);
@@ -59,8 +55,6 @@ public class BookInUseController {
     	book.setNumberOfEvaluations(number);
     	book.setRating(rating);
     	bookService.updateBook(book);
-        //System.out.println(rate);
-    	//System.out.println(bookID);
     	return "usersBooks";
     }
     

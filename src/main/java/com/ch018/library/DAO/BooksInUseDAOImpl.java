@@ -105,11 +105,26 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 
 	@Override
 	public List<BooksInUse> getByReturnDate(Date returnDate) {
+		final int HOURS_PER_DAY = 23;
+		final int MINUTES_PER_HOUR = 59;
+		final int SECONDS_PER_MINUTE = 23;
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		
+		startDate.setTime(returnDate);
+		endDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		
+		endDate.setTime(returnDate);
+		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
+		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
+		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
 		List<BooksInUse> booksInUses = new ArrayList<>();
 		try {
 			booksInUses.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.add(Restrictions.eq("return_date", returnDate)).list());
+					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime())).list());
 		} catch (Exception e) {
 			log.error(e);
 		}

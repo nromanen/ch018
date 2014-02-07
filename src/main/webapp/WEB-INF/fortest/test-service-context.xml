@@ -47,16 +47,16 @@
         </bean>
 	</mvc:interceptors>
 	
-	<bean id="personService" name="personService" class="org.mockito.Mockito" factory-method="mock">
-		<constructor-arg value="com.ch018.library.service.PersonService"/>
-	</bean>
-	
-	<bean id="bookService" name="bookService" class="org.mockito.Mockito" factory-method="mock">
-		<constructor-arg value="com.ch018.library.service.BookService"/>
-	</bean>
-	
 	<bean id="bookDAO" name="bookDAO" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.DAO.BookDAO"/>
+	</bean>
+	
+	<bean id="localizationService" name="localizationService" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.service.LocalizationService"/>
+	</bean>
+	
+	<!-- <bean id="bookService" name="bookService" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.service.BookService"/>
 	</bean>
 	
 	<bean id="genreService" name="genreService" class="org.mockito.Mockito" factory-method="mock">
@@ -101,6 +101,6 @@
 	
 	<bean id="orderValidator" name="orderValidator" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.validator.OrderValidator"/>
-	</bean>
+	</bean> -->
 
 </beans>
