@@ -6,6 +6,7 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+
 <tilesx:useAttribute name="countWish" />
 <tilesx:useAttribute name="countOrders" />
 <tilesx:useAttribute name="countBooks" />
@@ -107,11 +108,11 @@
 </div>
 <article itemscope="" itemtype="http://schema.org/Article">
 <header>
-	<span style="float: right"> <a href="?lang=en"><img
+	<span style="float: right"> <a href="${pageContext.request.contextPath}/?lang=en"><img
 			src="${pageContext.request.contextPath}/resources/img/lang/GB.png"
-			alt="english"></a> | <a href="?lang=ru"><img
+			alt="english"></a> | <a href="${pageContext.request.contextPath}/?lang=ru"><img
 			src="${pageContext.request.contextPath}/resources/img/lang/RU.png"
-			alt="english"></a> | <a href="?lang=uk"><img
+			alt="english"></a> | <a href="${pageContext.request.contextPath}/?lang=uk"><img
 			src="${pageContext.request.contextPath}/resources/img/lang/UA.png"
 			alt="english"></a> <!-- <embed src="http://www.kissfm.ua/player_emb.swf" quality="high" width="313" height="45" name="radioplayernewemb" align="middle" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" /> -->
 	</span>

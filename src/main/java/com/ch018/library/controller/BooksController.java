@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Book;
+import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -65,15 +67,15 @@ public class BooksController {
 	
 
 	/**
-	 * Add new book
+	 * Add/Update book
 	 * 
-	 * @param book
-	 * @param result
+	 * @param book - updated or new book
+	 * @param result - Binding Result
 	 * @return
 	 */
-	@RequestMapping(value = "/book/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/book/update", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonResponse newOrUpdateBook(@RequestBody @Valid Book book,
+	public JsonResponse newOrUpdateBook(@Valid Book book,
 			BindingResult result) {
 		JsonResponse resp = new JsonResponse();
 		if (!result.hasErrors()) {
@@ -83,7 +85,6 @@ public class BooksController {
 				bookService.addBook(book);
 			} else {
 				log.info("Update book {}", book);
-				book.setImage(bookService.getBooksById(book.getId()).getImage());
 				bookService.updateBook(book);
 			}
 			resp.setResult(book);
@@ -105,10 +106,12 @@ public class BooksController {
 	}
 
 	/**
-	 * Show table edit book
+	 * Show table books
 	 * 
-	 * @param id
+	 * @param page - current page
+	 * @param sort - sort field
 	 * @param model
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "/books", method = RequestMethod.GET)
@@ -116,7 +119,7 @@ public class BooksController {
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
-		/*Locale locale = LocaleContextHolder.getLocale();
+		Locale locale = LocaleContextHolder.getLocale();
 		String field =(String) session.getAttribute("sort");
 		if (field == null) {
 			session.setAttribute("sort", sort);
@@ -126,37 +129,19 @@ public class BooksController {
 			session.setAttribute("sort", sort);
 			field =(String) session.getAttribute("sort");
 		}
-		String search = (String) session.getAttribute("search");
-		String searchField = (String) session.getAttribute("searchField");
+		session.removeAttribute("search");
+		session.removeAttribute("advancedSearch");
 		Book book = new Book();
-		long count = bookService.countBooks(search, null, null);
+		long count = bookService.countBooks();
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		List<Book> books = new ArrayList<>();
-		books = bookService.getBooks(search, null, null, currentPos);
-		
-		if (searchField == null || search == null) {
-			count = bookService.countBooks();
-			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-			currentPos = (page - 1) * IConstants.PAGE_SIZE;
-			books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field));
-		} else if (searchField.equals("all")) {
-			count = bookService.simpleSearchCount(search);
-			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-			currentPos = (page - 1) * IConstants.PAGE_SIZE;
-			books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, field));
-		} else {
-			count = bookService.simpleSearchCount(search);
-			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-			currentPos = (page - 1) * IConstants.PAGE_SIZE;
-			books.addAll(bookService.paramSearch(searchField, search, currentPos, IConstants.PAGE_SIZE, field));
-		}
-		*/
-		model.addAttribute("pages", 2);
+		books = bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field);
+		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
-		//model.addAttribute("books", books);
+		model.addAttribute("books", books);
 		return "books";
 	}
 	
@@ -169,7 +154,7 @@ public class BooksController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/books/{show}", method = RequestMethod.GET)
+	@RequestMapping(value = "/books/show/{show}", method = RequestMethod.GET)
 	public String showBooksFilters(
 			@PathVariable(value = "show") String show,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -236,8 +221,9 @@ public class BooksController {
 	}
 	
 	/**
+	 * Delete book
 	 * 
-	 * @param id
+	 * @param id - ID of book to delete
 	 * @return
 	 */
 	@RequestMapping(value = "/book/delete{id}", method = RequestMethod.DELETE)
@@ -247,36 +233,64 @@ public class BooksController {
 	}
 
 	/**
+	 * Simple search for librarian
 	 * 
-	 * @param search
-	 * @param field
+	 * @param search - search query
+	 * @param field - search by field
 	 * @param model
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/books", method = RequestMethod.POST)
-	public String search(@RequestParam String search,
-			@RequestParam String field, Model model, HttpSession session) {
+	@RequestMapping(value = "/books/search", method = RequestMethod.GET)
+	public String search(@RequestParam(value = "search", required = false) String search, @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
-		session.setAttribute("search", search);
-		session.setAttribute("searchField", field);
+		session.removeAttribute("advancedSearch");
+		if (search == null) {
+			search = session.getAttribute("search").toString();
+		} else {
+			session.setAttribute("search", search);
+		}
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
-		long count;
-		long pages = 1;
-		if (field.equals("all")) {
-			count = bookService.simpleSearchCount(search);
-			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-			books.addAll(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id"));
-		} else {
-			count = bookService.simpleSearchCount(search);
-			pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-			books.addAll(bookService.paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id"));
-		}
+		long count = bookService.simpleSearchCount(search);
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+		books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort));
 		model.addAttribute("pages", pages);
-		model.addAttribute("page", 1);
+		model.addAttribute("page", page);
+		model.addAttribute("books", books);
+		return "books";
+	}
+	
+	/**
+	 * 
+	 * @param advancedSearch
+	 * @param page
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/books/advsearch", method = RequestMethod.GET)
+	public String advancedSearch(@ModelAttribute("advancedsearch") AdvancedSearch advancedSearch, 
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+			Model model, HttpSession session) {
+		Locale locale = LocaleContextHolder.getLocale();
+		Book book = new Book();
+		session.setAttribute("advancedSearch", advancedSearch);
+		session.removeAttribute("indexSearch");
+		List<Book> books = new ArrayList<Book>();
+		long count = bookService.advancedSearchCount(advancedSearch);
+		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
+		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
+		model.addAttribute("book", book);
+		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
+		model.addAttribute("pages", pages);
+		model.addAttribute("page", page);
+		books.addAll(bookService.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
 		model.addAttribute("books", books);
 		return "books";
 	}

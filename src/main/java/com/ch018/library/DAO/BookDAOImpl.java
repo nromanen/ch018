@@ -262,10 +262,10 @@ public class BookDAOImpl implements BookDAO {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
 		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
+		Integer year = search.getYear();
 		String qyear = "";
 		String available = "";
-		if (year > 0) {
+		if (year != null && year > 0) {
 			qyear += " AND ((B.year) = ("+year+"))";
 		}
 		if (search.getAvailable()) {
@@ -295,10 +295,10 @@ public class BookDAOImpl implements BookDAO {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
 		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
+		Integer year = search.getYear();
 		String qyear = "";
 		String available = "";
-		if (year > 0) {
+		if (year != null && year > 0) {
 			qyear += " AND ((B.year) = ("+year+"))";
 		}
 		if (search.getAvailable()) {

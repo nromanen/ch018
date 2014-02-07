@@ -87,20 +87,20 @@
 			</c:if>
 			<c:if test="${page > 1}">
 				<li>
-					<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+					<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="<c:url value="?${request}&page=${page-1}"/>">«</a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="<c:url value="?page=${page-1}"/>">«</a>
 					</c:if>
 				</li>
 			</c:if>
 			<c:forEach var="i" begin="1" end="${pages}">
    				<li>
-	   				<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+	   				<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="?${request}&page=${i}"><c:out value="${i}"/></a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="?page=${i}"><c:out value="${i}"/></a>
 					</c:if>
 				</li>
@@ -112,10 +112,10 @@
 			</c:if>
 			<c:if test="${page < pages}">
 				<li>
-					<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+					<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="<c:url value="?${request}&page=${page+1}"/>">»</a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="<c:url value="?page=${page+1}"/>">»</a>
 					</c:if>
 				</li>

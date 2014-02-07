@@ -4,30 +4,14 @@ $(document).ready(function() {
 	   */
 	  $("#editbook").submit(function(event) {
 		  $("body").addClass("loading");
-		  var id = $("#id").val();
-		  var title = $("#title").val();
-		  var authors = $("#authors").val();
-		  var year = $("#year").val();
-		  var publication = $("#publication").val();
-		  var pages = $("#pages").val();
-		  var description = $("#description").val();
-		  var term = $("#term").val();
-		  var bookcase = $("#bookcase").val();
-		  var shelf = $("#shelf").val();
-		  var genre = $("#genre").val();
-		  var count = $("#count").val();
-		  var available = $("#available").val();
-		  var json = { "id" : id, "title" : title, "authors": authors, "year" : year, "publication": publication, 
-				  "pages" : pages, "description": description, "term" : term, "bookcase": bookcase,
-				  "shelf" : shelf, "genre": genre, "count": count, "available": available};
 		  $.ajax({
 			  url: $("#editbook").attr( "action"),
-			  data: JSON.stringify(json),
+			  //data: JSON.stringify(json),
+			  data : $('#editbook').serialize(),
 			  type: "POST",
-			  beforeSend: function(xhr) {  
-		            xhr.setRequestHeader("Accept", "application/json");  
-		            xhr.setRequestHeader("Content-Type", "application/json");  
-		      },
+			  dataType : "json",
+				contentType : 'application/x-www-form-urlencoded',
+				mimeType : 'application/json',
 		      success: function(response) {
 		    	  if (response.status == "SUCCESS") {
 		    		  console.log("success " + response.result);
@@ -48,49 +32,5 @@ $(document).ready(function() {
 			}
 		  });
 		  event.preventDefault();	
-	  });
-	  
-
-	  
-	
-	  
-	  /*$("#advancedsearch").submit(function(event) {
-		 // $("body").addClass("loading");
-		  var title = $("#advtitle").val();
-		  var authors = $("#advautors").val();
-		  var year = $("#advyear").val();
-		  var publication = $("#advpublication").val();
-		  var available = $("#advavailable").prop('checked');
-		  var sortby = $("#advsort").val();
-		  if (year == "") {
-			  year = 0;
-		  }
-		  var json = {"title" : title, "authors": authors, "year" : year, "publication": publication, "available": available, "sortby": sortby};
-		  $.ajax({
-			  url: $("#advancedsearch").attr( "action"),
-			  data: JSON.stringify(json),
-			  type: "POST",
-			  beforeSend: function(xhr) {  
-		            xhr.setRequestHeader("Accept", "application/json");  
-		            xhr.setRequestHeader("Content-Type", "application/json");  
-		      },
-		      success: function(response) {
-		    	  console.log(response);
-		    	  for(var key in response) {
-		    		  console.log(key['title']);
-		    	  }
-		    	  //$("body").removeClass("loading");
-		    	  location.reload();				// temporary!!!!!!!  
-			  },
-			  error: function(response) {
-				  console.log("error: " + response);
-				  location.reload();
-				  //$("body").removeClass("loading");
-			}
-		  });
-		  console.log(json);
-		  event.preventDefault();	
-	  })*/
-	  
-	  
+	  });  
 })
