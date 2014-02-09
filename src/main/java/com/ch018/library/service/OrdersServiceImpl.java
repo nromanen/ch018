@@ -126,11 +126,6 @@ public class OrdersServiceImpl implements OrdersService{
     @Transactional
     public List<Book> toIssueToday(int currentPos, int pageSize, String sort) {
     	List<Book> books = ordDAO.toIssueToday(currentPos, pageSize, sort);
-    	for (Book book : books) {
-			Genre genre = book.getGenre();
-			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
-			book.setGenre(genre);
-		}
     	return books;
     }
     
@@ -144,11 +139,6 @@ public class OrdersServiceImpl implements OrdersService{
     @Transactional
     public List<Book> toIssuePerHour(int currentPos, int pageSize, String string) {
     	List<Book> books = ordDAO.toIssuePerHour(currentPos, pageSize, string);
-    	for (Book book : books) {
-			Genre genre = book.getGenre();
-			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
-			book.setGenre(genre);
-		}
     	return books;
     }
 

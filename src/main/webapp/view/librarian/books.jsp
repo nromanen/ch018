@@ -85,9 +85,7 @@
 			<div id="adv_search_title" style="display: none"><spring:message code="search.advanced" /></div>
 			<label class="checkbox"> 
 			<input id="advavailable" name="available" type="checkbox" ${advancedSearch.available == true ? 'checked' : ''} > <spring:message code="book.available" /></label>
-					
-			
-					
+
 			<button type="submit" class="btn"><spring:message code="book.search" /></button>
 		</form>
 	</div>
@@ -107,6 +105,11 @@
 	<c:if test="${search != null && search != ''}">
 		<div class="alert">
 			<span><spring:message code="search.results" /> </span>"<c:out value="${search}"/>"
+		</div>
+	</c:if>
+	<c:if test="${advancedSearch != null}">
+		<div class="alert">
+			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> <c:out value="${advancedSearch.available}"/>"
 		</div>
 	</c:if>
 		<table class="table table-striped table-condensed table-hover">
@@ -406,7 +409,7 @@
 				<div class="control-group hide">
 					<label class="control-label" for="numberOfEvaluations"></label>
 					<div class="controls">
-						<form:input path="numberOfEvaluations" type="text" id="numberOfEvaluations"
+						<form:input path="numberOfEvaluations" type="number" id="numberOfEvaluations"
 							placeholder="numberOfEvaluations" />
 					</div>
 				</div>
@@ -423,5 +426,6 @@
 			</form:form>
 		</div>
 	</div>
+	<div class="modalloading"></div>
 </div>
 <div class="span1"></div>

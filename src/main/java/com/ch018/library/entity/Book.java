@@ -74,6 +74,7 @@ public class Book implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "gid", nullable = false)
+	@JsonIgnore
     public Genre getGenre() {
             return this.genre;
     }
@@ -159,6 +160,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
@@ -168,6 +170,7 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
@@ -177,6 +180,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<Orders> getOrders() {
 		return orders;
 	}

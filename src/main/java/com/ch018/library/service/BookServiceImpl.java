@@ -1,17 +1,13 @@
 package com.ch018.library.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
-import com.ch018.library.entity.Genre;
-import com.ch018.library.entity.Localization;
 import com.ch018.library.form.AdvancedSearch;
 
 @Service
@@ -25,15 +21,11 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public void addBook(Book book) {
-		if (book.getImage() == null)
-			book.setImage("http://placehold.it/120x150");
 		bookDAO.addBook(book);
 	}
 
 	@Transactional
 	public void updateBook(Book book) {
-		if (book.getImage() == null)
-			book.setImage("http://placehold.it/120x150");
 		bookDAO.updateBook(book);
 	}
 
@@ -47,19 +39,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
-		List<Localization> l = new ArrayList<>();
+		//List<Localization> l = new ArrayList<>();
 		List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
-		for (Book book : books) {
+		/*for (Book book : books) {
 			Genre genre = book.getGenre();
 			l.addAll(genre.getLocalizations());
 			for (Localization localization : l) {
 				if (localization.getLanguage().equals(LocaleContextHolder.getLocale().getLanguage())) {
 					genre.setName(localization.getLocalizedName());
-					break;
 				}
 			}
 			book.setGenre(genre);
-		}
+		}*/
 		return books;
 	}
 	
@@ -97,18 +88,6 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort) {
 		List<Book> books = bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
-		List<Localization> l = new ArrayList<>();
-		for (Book book : books) {
-			Genre genre = book.getGenre();
-			l.addAll(genre.getLocalizations());
-			for (Localization localization : l) {
-				if (localization.getLanguage().equals(LocaleContextHolder.getLocale().getLanguage())) {
-					genre.setName(localization.getLocalizedName());
-					break;
-				}
-			}
-			book.setGenre(genre);
-		}
 		return books;
 	}
 	
@@ -116,17 +95,6 @@ public class BookServiceImpl implements BookService {
 	public List<Book> paramSearch(String searchField, String search,
 			int currentPos, int pageSize, String sort) {
 		List<Book> books = bookDAO.paramSearch(searchField, search, currentPos, pageSize, sort);
-		List<Localization> l = new ArrayList<>();
-		for (Book book : books) {
-			Genre genre = book.getGenre();
-			l.addAll(genre.getLocalizations());
-			for (Localization localization : l) {
-				if (localization.getLanguage().equals(LocaleContextHolder.getLocale().getLanguage())) {
-					genre.setName(localization.getLocalizedName());
-				}
-			}
-			book.setGenre(genre);
-		}
 		return books;
 	}
 
@@ -153,7 +121,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public List<Book> advancedSearch(AdvancedSearch search, int currentPos,	int pageSize) {
-    	return bookDAO.advancedSearch(search, currentPos, pageSize);
+    	List<Book> books = bookDAO.advancedSearch(search, currentPos, pageSize);
+		return books;
     }
     
     @Override

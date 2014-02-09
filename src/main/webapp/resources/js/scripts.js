@@ -54,7 +54,7 @@ function reset_form() {
 	  $("#available").val(0);
 	  $("#image").val("");
 	  $("#rating").val(0);
-	  $("#numberOfEvaluations").val("");
+	  $("#numberOfEvaluations").val(0);
 	  
 	  $("#uname").val("");
 	  $("#surname").val("");
@@ -308,4 +308,6 @@ $(document).ready(function() {
       });
       event.preventDefault();
   });  
+  
+	
 });

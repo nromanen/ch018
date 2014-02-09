@@ -277,22 +277,29 @@ public class BooksController {
 	@RequestMapping(value = "/books/advsearch", method = RequestMethod.GET)
 	public String advancedSearch(@ModelAttribute("advancedsearch") AdvancedSearch advancedSearch, 
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page, 
+			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
+		List<Book> books = new ArrayList<>();
 		Book book = new Book();
-		session.setAttribute("advancedSearch", advancedSearch);
-		session.removeAttribute("indexSearch");
-		List<Book> books = new ArrayList<Book>();
+		session.removeAttribute("search");
+		if (advancedSearch == null) {
+			advancedSearch = (AdvancedSearch)session.getAttribute("advancedSearch");
+		} else {
+			session.setAttribute("advancedSearch", advancedSearch);
+		}
+		if (!sort.equals("id")) {
+			advancedSearch.setSortby(sort);
+		}
+		model.addAttribute("book", book);
+		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		long count = bookService.advancedSearchCount(advancedSearch);
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		model.addAttribute("book", book);
-		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
+		books.addAll(bookService.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
-		books.addAll(bookService.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
 		model.addAttribute("books", books);
 		return "books";
 	}
-
 }

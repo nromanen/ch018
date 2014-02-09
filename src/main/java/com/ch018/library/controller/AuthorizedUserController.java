@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
@@ -133,6 +134,58 @@ public class AuthorizedUserController {
 		books.addAll(book.advancedSearch(advancedSearch, currentPos, IConstants.PAGE_SIZE));
 		model.addAttribute("latest", books);
 		return "index";
+	}
+	
+	@RequestMapping(value = "/advsearch/getTitles", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getTitles(@RequestParam(value="term") String title) {
+		return simulateSearchResult(title, "title");
+	}
+	
+	@RequestMapping(value = "/advsearch/getAuthors", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getAuthors(@RequestParam(value="term") String title) {
+		return simulateSearchResult(title, "authors");
+	}
+	
+	@RequestMapping(value = "/advsearch/getPublics", method = RequestMethod.GET)
+	public @ResponseBody
+	List<String> getPublics(@RequestParam(value="term") String title) {
+		return simulateSearchResult(title, "publication");
+	}
+	
+	private List<String> simulateSearchResult(String title, String field) {
+		List<String> result = new ArrayList<String>();
+		AdvancedSearch advancedSearch = new AdvancedSearch();
+		advancedSearch.setTitle("");
+		advancedSearch.setAuthors("");
+		advancedSearch.setPublication("");
+		if (field.equals("title")) {
+			advancedSearch.setTitle(title);
+			List<Book> books = book.advancedSearch(advancedSearch, 0, 0);
+			for (Book book : books) {
+				result.add(book.getTitle());
+			}
+			return result;
+		}
+		if (field.equals("authors")) {
+			advancedSearch.setAuthors(title);
+			List<Book> books = book.advancedSearch(advancedSearch, 0, 0);
+			for (Book book : books) {
+				result.add(book.getAuthors());
+			}
+			return result;
+		}
+		if (field.equals("publication")) {
+			advancedSearch.setPublication(title);
+			List<Book> books = book.advancedSearch(advancedSearch, 0, 0);
+			for (Book book : books) {
+				result.add(book.getPublication());
+			}
+			return result;
+		}
+		
+		return result;
 	}
 	
 	/**

@@ -8,9 +8,11 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -93,38 +95,45 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public Book getBooksById(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
+		session.clear();
 		return book;
 	}
 
 	@Override
 	public Book getBooksByIdWithUses(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
+			
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
 		Hibernate.initialize(book.getBooksinuses());
+		session.clear();
 		return book;
 	}
 
 	@Override
 	public Book getBooksByIdWithOrders(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
 		Hibernate.initialize(book.getOrders());
+		session.clear();
 		return book;
 	}
 
@@ -247,8 +256,10 @@ public class BookDAOImpl implements BookDAO {
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
 									+ "LIKE lower(:parametr)) order by B."
 									+ sort + " asc")
-					.setString("parametr", parametr).setMaxResults(pageSize)
-					.setFirstResult(currentPos);
+					.setString("parametr", parametr);
+			if (pageSize != 0) {
+				query.setMaxResults(pageSize).setFirstResult(currentPos);
+			}
 			books.addAll(query.list());
 		} catch (Exception e) {
 			log.error(e);
@@ -262,28 +273,26 @@ public class BookDAOImpl implements BookDAO {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
 		String publication = "%" + search.getPublication() + "%";
-		Integer year = search.getYear();
-		String qyear = "";
-		String available = "";
-		if (year != null && year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		if (search.getAvailable()) {
-			available += " AND ((B.available) > 0)";
-		}
-		
 		List<Book> books = new ArrayList<Book>();
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication))"
-							+ qyear
-							+ available
-							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
-			books.addAll(query.list());
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Book.class);
+			criteria.add(Restrictions.like("title", title).ignoreCase());
+			criteria.add(Restrictions.like("authors", authors).ignoreCase());
+			criteria.add(Restrictions.like("publication", publication));
+			if (search.getAvailable()) {
+				criteria.add(Restrictions.gt("available", 0));
+			}
+			if (search.getYear() != null) {
+				criteria.add(Restrictions.eq("year", search.getYear()));
+			}
+			if (search.getSortby() != null) {
+				criteria.addOrder(Order.asc(search.getSortby()));
+			}
+			if (pageSize != 0) {
+				criteria.setFirstResult(currentPos);
+				criteria.setMaxResults(pageSize);
+			}
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -294,29 +303,21 @@ public class BookDAOImpl implements BookDAO {
 	public long advancedSearchCount(AdvancedSearch search) {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
-		String publication = "%" + search.getPublication() + "%";
-		Integer year = search.getYear();
-		String qyear = "";
-		String available = "";
-		if (year != null && year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		if (search.getAvailable()) {
-			available += " AND ((B.available) > 0)";
-		}
-		
+		String publication = "%" + search.getPublication() + "%";		
 		long count = 0;
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select count(B) from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication))"
-							+ qyear
-							+ available
-							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication);
-			count = (long) query.uniqueResult();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Book.class);
+			criteria.add(Restrictions.like("title", title).ignoreCase());
+			criteria.add(Restrictions.like("authors", authors).ignoreCase());
+			criteria.add(Restrictions.like("publication", publication));
+			if (search.getAvailable()) {
+				criteria.add(Restrictions.gt("available", 0));
+			}
+			if (search.getYear() != null) {
+				criteria.add(Restrictions.eq("year", search.getYear()));
+			}
+			criteria.setProjection(Projections.rowCount());
+			count = (long) criteria.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
 		}

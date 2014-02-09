@@ -26,6 +26,9 @@ public class AdvancedSearch {
 	}
 	
 	public String getSortby() {
+		if (this.sortby == null) {
+			this.sortby = "id";
+		}
 		return this.sortby;
 	}
 	
@@ -54,7 +57,6 @@ public class AdvancedSearch {
 	}
 	
 	public void setYear(Integer year) {
-		if (year == null) year = 0;
 		this.year = year;
 	}
 	

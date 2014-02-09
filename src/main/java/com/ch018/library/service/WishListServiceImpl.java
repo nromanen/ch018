@@ -7,14 +7,12 @@
 package com.ch018.library.service;
 
 import com.ch018.library.DAO.WishListDAO;
-import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.WishList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,11 +54,6 @@ public class WishListServiceImpl implements WishListService{
     @Transactional
     public ArrayList<WishList> getWishesByPerson(int personId) {
         ArrayList<WishList> wishList = wishlistDAO.getWishesByPerson(personId);
-        for (WishList wishes : wishList) {
-			Genre genre = wishes.getBook().getGenre();
-			genre.setName(localizationService.getName(genre.getId(), LocaleContextHolder.getLocale().getLanguage()));
-			wishes.getBook().setGenre(genre);
-		}
         return wishList;
     }
 

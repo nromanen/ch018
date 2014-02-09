@@ -168,5 +168,6 @@
 			</a>
 		</div>
 	</div>
+	<div class="modalloading"></div>
 </div>
 <div class="span1"></div>

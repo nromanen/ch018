@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -169,13 +170,14 @@ public class OrdersDAOImpl implements OrdersDAO {
 	@Override
 	public Orders getById(int id) {
 		Orders orders = null;
+		Session session = null;
 		try {
-			orders = (Orders) sessionFactory.getCurrentSession()
-					.get(Orders.class, id);
+			session = sessionFactory.getCurrentSession();
+			orders = (Orders) session.get(Orders.class, id);
 		} catch (Exception e) {
-			System.out.println(e);
 			log.error(e);
 		}
+		session.clear();
 		return orders;
 	}
 
@@ -250,8 +252,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 					.createCriteria(Orders.class)
 					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
 					.setProjection(
-							Projections.distinct(Projections.property("book")))
-							.setProjection(Projections.rowCount())
+							Projections.countDistinct("book"))
 							.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
@@ -300,8 +301,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 					.createCriteria(Orders.class)
 					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
 					.setProjection(
-							Projections.distinct(Projections.property("book")))
-							.setProjection(Projections.rowCount())
+							Projections.countDistinct("book"))
 							.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);

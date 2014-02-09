@@ -56,19 +56,17 @@ public class HeaderController implements ViewPreparer {
 
 	}
 	
-	@RequestMapping(value = "/getBooks", method = RequestMethod.GET)
+	@RequestMapping(value = "/search/getBooks", method = RequestMethod.GET)
 	public @ResponseBody
-	List<Book> getBooks(@RequestParam String bookName) {
+	List<String> getBooks(@RequestParam(value="term") String bookName) {
 		return simulateSearchResult(bookName);
 	}
 	
-	private List<Book> simulateSearchResult(String bookName) {
-		List<Book> result = new ArrayList<Book>();
-		List<Book> books = bookService.getAllBooks();
+	private List<String> simulateSearchResult(String bookName) {
+		List<String> result = new ArrayList<String>();
+		List<Book> books = bookService.simpleSearch(bookName, 0, 0, "id");
 		for (Book book : books) {
-			if (book.getTitle().contains(bookName)) {
-				result.add(book);
-			}
+			result.add(book.getTitle());
 		}
 		return result;
 	}

@@ -113,7 +113,6 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public List<Person> getAll(int currentPos, int pageSize, String field) {
-		
 		if (currentPos > -1) {
 			return personDao.getAll(currentPos, pageSize, field);
 		} else {
@@ -202,9 +201,7 @@ public class PersonServiceImpl implements PersonService {
 			Authentication auth = new PreAuthenticatedAuthenticationToken(person.getEmail(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
            SecurityContextHolder.getContext().setAuthentication(auth);
 		}
-
 		person.setSms(updatedPerson.getSms());
-
 		return person;
 	}
     
@@ -253,8 +250,6 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public void adminUpdatePerson(Person person, Person person2) {
     	person.setPassword(person2.getPassword());
-		//person.setRole(person2.getRole());
-		//person.setRating(person2.getRating());
 		person.setEmailConfirmed(person2.getEmailConfirmed());
 		person.setVerificationKey(person2.getVerificationKey());
 		personDao.update(person);
@@ -265,7 +260,6 @@ public class PersonServiceImpl implements PersonService {
     public void adminSavePerson(Person person, HttpServletRequest request) {
     	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		person.setPassword(passwordEncoder.encode(PasswordGen.generateString(6)));
-		//person.setRole(Person.Role.ROLE_USER.toString());
 		person.setEmailConfirmed(false);
 		person.setVerificationKey(VerificationKey.generate(person.getEmail()));
 		person.setConfirm(false);
