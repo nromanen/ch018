@@ -19,6 +19,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ch018.library.util.IConstants;
@@ -29,7 +32,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Yurik Mikhaletskiy
  *
  */
-
+@NamedQueries({
+	@NamedQuery(
+			name = "deleteBook",
+			query = "delete from Book where id=:id"
+			)
+})
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
@@ -74,6 +82,7 @@ public class Book implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "gid", nullable = false)
+	@JsonIgnore
     public Genre getGenre() {
             return this.genre;
     }
@@ -117,6 +126,7 @@ public class Book implements Serializable {
 	}
 
 	@Column(name = "description")
+	@Type(type="text")
 	public String getDescription() {
 		return description;
 	}
@@ -159,6 +169,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
 	}
@@ -168,6 +179,7 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
@@ -177,6 +189,7 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
 	public Set<Orders> getOrders() {
 		return orders;
 	}

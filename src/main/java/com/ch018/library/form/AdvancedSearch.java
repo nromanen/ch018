@@ -1,10 +1,16 @@
 package com.ch018.library.form;
 
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 public class AdvancedSearch {
 	
 	private String title;
 	private String authors;
 	private String publication;
+	private Integer genre;
 	private String sortby;
 	private Integer year;
 	private boolean available;
@@ -25,7 +31,14 @@ public class AdvancedSearch {
 		return this.publication;
 	}
 	
+	public Integer getGenre() {
+		return this.genre;
+	}
+	
 	public String getSortby() {
+		if (this.sortby == null) {
+			this.sortby = "id";
+		}
 		return this.sortby;
 	}
 	
@@ -49,12 +62,15 @@ public class AdvancedSearch {
 		this.publication = publication;
 	}
 	
+	public void setGenre(Integer genre) {
+		this.genre = genre;
+	}
+	
 	public void setSortby(String sortby) {
 		this.sortby = sortby;
 	}
 	
 	public void setYear(Integer year) {
-		if (year == null) year = 0;
 		this.year = year;
 	}
 	

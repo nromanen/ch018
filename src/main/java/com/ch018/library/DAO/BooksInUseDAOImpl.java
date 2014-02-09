@@ -9,8 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -41,9 +41,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	@Override
 	public void removeBooksInUse(int id) {
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("delete from BooksInUse where buid=:id")
+			Query query = sessionFactory.getCurrentSession().getNamedQuery("deleteBookInUse")
 					.setInteger("id", id);
 			int g = query.executeUpdate();
 		} catch (Exception e) {
@@ -160,34 +158,19 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		}
 		return booksInUses;
 	}
-
-	@Override
-	public List<Book> getAllBooks() {
-		List<Book> books = new ArrayList<>();
-		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
-					.createCriteria(BooksInUse.class)
-					.setProjection(
-							Projections.distinct(Projections.property("book")))
-					.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
-	}
 	
 	@Override
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
 		List<Book> books = new ArrayList<>();
 		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
+			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
-					.setProjection(
-							Projections.distinct(Projections.property("book")))
-							.setMaxResults(pageSize).setFirstResult(currentPos).addOrder(Order.asc("book." + sort))
-					.list());
+					.setProjection(Projections.distinct(Projections.property("book")))
+					.addOrder(Order.asc("book." + sort));
+			if (pageSize != 0) {
+				criteria.setMaxResults(pageSize).setFirstResult(currentPos);
+			}		
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -195,45 +178,16 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	}
 	
 	@Override
-	public List<Book> getReturnBooksToday() {
-		final int HOURS_PER_DAY = 23;
-		final int MINUTES_PER_HOUR = 59;
-		final int SECONDS_PER_MINUTE = 23;
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		
-		startDate.set(Calendar.HOUR_OF_DAY, 0);
-		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
-		
-		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
-		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
-		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
-		
-		List<Book> books = new ArrayList<>();
-		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
-					.createCriteria(BooksInUse.class)
-					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
-					.setProjection(
-							Projections.distinct(Projections.property("book")))
-					.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
-	}
-
-	@Override
 	public BooksInUse getById(int id) {
 		BooksInUse bookInUse = null;
+		Session session = null;
 		try {
-			bookInUse = (BooksInUse) sessionFactory.getCurrentSession()
-					.get(BooksInUse.class, id);
+			session = sessionFactory.getCurrentSession();
+			bookInUse = (BooksInUse) session.get(BooksInUse.class, id);
 		} catch (Exception e) {
 			log.error(e);
 		}
+		session.clear();
 		return bookInUse;
 	}
 
@@ -260,8 +214,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.getCurrentSession()
 					.createCriteria(BooksInUse.class)
 					.setProjection(
-							Projections.distinct(Projections.property("book")))
-							.setProjection(Projections.rowCount())
+							Projections.countDistinct("book"))
 							.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
@@ -291,8 +244,7 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 					.createCriteria(BooksInUse.class)
 					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
 					.setProjection(
-							Projections.distinct(Projections.property("book")))
-							.setProjection(Projections.rowCount())
+							Projections.countDistinct("book"))
 							.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
@@ -318,13 +270,14 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
     	List<Book> books = new ArrayList<>();
 		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
+			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(BooksInUse.class)
 					.setProjection(Projections.distinct(Projections.property("book")))
-					.setMaxResults(pageSize).setFirstResult(currentPos).addOrder(Order.asc("book." + sort))
-					.add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()))
-					.list());
+					.addOrder(Order.asc("book." + sort)).add(Restrictions.between("returnDate", startDate.getTime(), endDate.getTime()));
+			if (pageSize != 0) {
+				criteria.setMaxResults(pageSize).setFirstResult(currentPos);
+			}
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}

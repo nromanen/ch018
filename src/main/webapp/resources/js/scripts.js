@@ -18,6 +18,9 @@ function fill_form(box, id) {
 	  $count = $(".count"+id).text().split('/');
 	  $("#count").val($count[1]);
 	  $("#available").val($count[0]);
+	  $("#image").val($(".iimg" + id).text());
+	  $("#rating").val($(".rating" + id).text());
+	  $("#numberOfEvaluations").val($(".evals" + id).text());
 	  
 	  $("#uname").val($(".uname" + id).text());
 	  $("#surname").val($(".surname" + id).text());
@@ -47,6 +50,11 @@ function reset_form() {
 	  $("#shelf").val(0);
 	  $("#genre").val(1);
 	  $("#description").val("");
+	  $("#count").val(0);
+	  $("#available").val(0);
+	  $("#image").val("");
+	  $("#rating").val(0);
+	  $("#numberOfEvaluations").val(0);
 	  
 	  $("#uname").val("");
 	  $("#surname").val("");
@@ -114,6 +122,17 @@ $(document).ready(function() {
     	content: function() {
     	      return $('#popover_content_wrapper').html();
         }
+    });
+    
+    $("#advtoggle").popover({
+    	html:true,
+    	placement: "bottom",
+    	content: function() {
+    	      return $('#popover_advanced_search').html();
+        },
+        title: function() {
+			return $('#adv_search_title').text();
+		}
     });
 
     $("#cellphone").mask("(999) 999-9999");
@@ -289,4 +308,6 @@ $(document).ready(function() {
       });
       event.preventDefault();
   });  
+  
+	
 });

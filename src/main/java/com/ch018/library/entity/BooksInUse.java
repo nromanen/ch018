@@ -13,11 +13,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * 
  * @author Yurik Mikhaletskiy
  *
  */
+@NamedQueries({
+	@NamedQuery(
+			name = "deleteBookInUse",
+			query = "delete from BooksInUse where buid=:id"
+			)
+})
 @Entity
 @Table(name = "booksinuse")
 public class BooksInUse {

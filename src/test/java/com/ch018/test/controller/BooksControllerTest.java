@@ -305,28 +305,4 @@ public class BooksControllerTest {
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
-	
-	@Test
-	public void testParamSearch() throws Exception {
-		String search = "Java";
-		String field = "title";
-		when(bookService.paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
-		mockMvc.perform(post("/books")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("search", search)
-				.param("field", field)
-				)
-				.andExpect(status().isOk())
-				.andExpect(view().name("books"))
-				.andExpect(model().attribute("genre", hasSize(1)))
-				.andExpect(model().attribute("genre", hasItem(genre)))
-				.andExpect(model().attribute("books", hasSize(1)))
-				.andExpect(model().attribute("books", hasItem(book)));
-				
-		verify(bookService, times(1)).paramSearch(field, search, 0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(bookService);
-		verify(genreService, times(1)).getAllGenres("en");
-		verifyNoMoreInteractions(genreService);
-	}
-
 }

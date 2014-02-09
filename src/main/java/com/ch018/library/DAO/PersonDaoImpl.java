@@ -7,13 +7,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
 /**
@@ -38,24 +38,11 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public List<Person> getAll() {
-		List<Person> persons = new ArrayList<>();
-		try {
-			persons = sessionFactory.getCurrentSession()
-					.createCriteria(Person.class).list();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return persons;
-	}
-
-	@Override
 	public int delete(int id) {
 		int deleted = 0;
 		try {
 			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("delete from Person where id=:id")
+					.getCurrentSession().getNamedQuery("deletePerson")
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {
@@ -88,27 +75,31 @@ public class PersonDaoImpl implements PersonDao {
 	
 	@Override
 	public Person getByIdWithBooks(int id) {
+		Session session = null;
 		Person person = null;
 		try {
-			person = (Person) sessionFactory.getCurrentSession().get(
-					Person.class, id);
+			session = sessionFactory.getCurrentSession();
+			person = (Person) session.get(Person.class, id);
 		} catch (Exception e) {
 			log.error(e);
 		}
 		Hibernate.initialize(person.getBooksinuses());
+		session.clear();
 		return person;
 	}
 	
 	@Override
 	public Person getByIdWithOrders(int id) {
+		Session session = null;
 		Person person = null;
 		try {
-			person = (Person) sessionFactory.getCurrentSession().get(
-					Person.class, id);
+			session = sessionFactory.getCurrentSession();
+			person = (Person) session.get(Person.class, id);
 		} catch (Exception e) {
 			log.error(e);
 		}
 		Hibernate.initialize(person.getOrders());
+		session.clear();
 		return person;
 	}
 
@@ -137,71 +128,6 @@ public class PersonDaoImpl implements PersonDao {
 			log.error(e);
 		}
 		return person;
-	}
-
-	@Override
-	public List<Person> getByName(String name) {
-		List<Person> persons = null;
-		try {
-			persons = sessionFactory.getCurrentSession()
-					.createCriteria(Person.class)
-					.add(Restrictions.eq("name", name)).list();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return persons;
-	}
-
-	@Override
-	public List<Person> getBySurname(String surname) {
-		List<Person> persons = null;
-		try {
-			persons = sessionFactory.getCurrentSession()
-					.createCriteria(Person.class)
-					.add(Restrictions.eq("surname", surname)).list();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return persons;
-	}
-
-	@Override
-	public Person getByCellPhone(String cellphone) {
-		Person person = null;
-		try {
-			person = (Person) sessionFactory.getCurrentSession()
-					.createCriteria(Person.class)
-					.add(Restrictions.eq("cellphone", cellphone)).list().get(0);
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return person;
-	}
-
-	@Override
-	public List<Person> getByRole(String role) {
-		List<Person> persons = null;
-		try {
-			persons = sessionFactory.getCurrentSession()
-					.createCriteria(Person.class)
-					.add(Restrictions.eq("role", role)).list();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return persons;
-	}
-
-	@Override
-	public List<Person> getConfirmed() {
-		List<Person> persons = null;
-		try {
-			persons = sessionFactory.getCurrentSession()
-					.createCriteria(Person.class)
-					.add(Restrictions.eq("confirm", "1")).list();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return persons;
 	}
 
 	@Override
@@ -249,7 +175,11 @@ public class PersonDaoImpl implements PersonDao {
 	public List<Person> getAll(int currentPos, int pageSize, String field) {
 		List<Person> persons = new ArrayList<>();
 		try {
-			persons.addAll(sessionFactory.getCurrentSession().createQuery("from Person P order by P." + field + " asc").setMaxResults(pageSize).setFirstResult(currentPos).list());
+			Query query = sessionFactory.getCurrentSession().createQuery("from Person P order by P." + field + " asc");
+			if (pageSize != 0) {
+				query.setMaxResults(pageSize).setFirstResult(currentPos);
+			}
+			persons.addAll(query.list());
 		} catch (Exception e) {
 			log.error("Error getting all persons: " + e.getMessage());
 		}

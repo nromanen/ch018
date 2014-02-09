@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,9 @@ public class SecurityController {
 	@Autowired
 	private RegistrationValidation registrationValidation;
 	
+	@Autowired 
+	private MessageSource messageSource;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm(@RequestParam(required = false) String error, Model model) {
 		if (error != null) {
@@ -55,7 +60,8 @@ public class SecurityController {
 		if (result.hasErrors()) {
 			return "registration";
 		}
-		personService.registrate(registration, request);
+		String message = messageSource.getMessage("message.confirm.registration", new Object[]{}, LocaleContextHolder.getLocale());
+		personService.registrate(registration, message, request);
 		return "redirect:/";
 	}
 	

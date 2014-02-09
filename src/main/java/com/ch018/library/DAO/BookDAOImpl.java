@@ -8,9 +8,11 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,19 +45,6 @@ public class BookDAOImpl implements BookDAO {
 		} catch (Exception e) {
 			log.error("Error insert " + e);
 		}
-	}
-
-	@Override
-	public List<Book> getAllBooks() {
-		List<Book> books = new ArrayList<>();
-		try {
-			books.addAll(sessionFactory.getCurrentSession()
-					.createCriteria(Book.class).addOrder(Order.asc("id"))
-					.list());
-		} catch (Exception e) {
-			log.error("Error getting all books: " + e.getMessage());
-		}
-		return books;
 	}
 
 	@Override
@@ -93,97 +82,53 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public Book getBooksById(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
+		session.clear();
 		return book;
 	}
 
 	@Override
 	public Book getBooksByIdWithUses(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
+			
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
 		Hibernate.initialize(book.getBooksinuses());
+		session.clear();
 		return book;
 	}
 
 	@Override
 	public Book getBooksByIdWithOrders(int id) {
 		Book book = null;
+		Session session = null;
 		try {
-			book = (Book) sessionFactory.getCurrentSession()
-					.get(Book.class, id);
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
 		Hibernate.initialize(book.getOrders());
+		session.clear();
 		return book;
-	}
-
-	@Override
-	public List<Book> getBooksByTitle(String title) {
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where lower(B.title) "
-									+ "LIKE lower(%:title%)")
-					.setString("title", title);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error("Error get Books By Title: " + e);
-		}
-		return books;
-	}
-
-	@Override
-	public List<Book> getBooksByAuthors(String authors) {
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where lower(B.authors) "
-									+ "LIKE lower(%:authors%)")
-					.setString("authors", authors);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error("Error get Books By Author: " + e);
-		}
-		return books;
-	}
-
-	@Override
-	public List<Book> getBooksByYear(int year) {
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where B.year_public "
-									+ "= (:year)").setInteger("year", year);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error("Error get Books By year: " + e);
-		}
-		return books;
 	}
 
 	@Override
 	public int deleteBook(int id) {
 		int deleted = 0;
 		try {
-			Query query = sessionFactory.getCurrentSession()
-					.createQuery("delete from Book where id=:id")
+			Query query = sessionFactory.getCurrentSession().getNamedQuery("deleteBook")
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {
@@ -216,24 +161,6 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<Book> paramSearch(String field, String parametr) {
-		parametr = "%" + parametr + "%";
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where (lower(B." + field
-									+ ") " + "LIKE lower(:parametr))")
-					.setString("parametr", parametr);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
-	}
-
-	@Override
 	public List<Book> simpleSearch(String parametr, int currentPos,
 			int pageSize, String sort) {
 		parametr = "%" + parametr + "%";
@@ -247,8 +174,10 @@ public class BookDAOImpl implements BookDAO {
 									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
 									+ "LIKE lower(:parametr)) order by B."
 									+ sort + " asc")
-					.setString("parametr", parametr).setMaxResults(pageSize)
-					.setFirstResult(currentPos);
+					.setString("parametr", parametr);
+			if (pageSize != 0) {
+				query.setMaxResults(pageSize).setFirstResult(currentPos);
+			}
 			books.addAll(query.list());
 		} catch (Exception e) {
 			log.error(e);
@@ -262,28 +191,29 @@ public class BookDAOImpl implements BookDAO {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
 		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
-		String qyear = "";
-		String available = "";
-		if (year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		if (search.getAvailable()) {
-			available += " AND ((B.available) > 0)";
-		}
-		
 		List<Book> books = new ArrayList<Book>();
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication))"
-							+ qyear
-							+ available
-							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
-			books.addAll(query.list());
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Book.class);
+			criteria.add(Restrictions.like("title", title).ignoreCase());
+			criteria.add(Restrictions.like("authors", authors).ignoreCase());
+			criteria.add(Restrictions.like("publication", publication));
+			if (search.getAvailable()) {
+				criteria.add(Restrictions.gt("available", 0));
+			}
+			if (search.getYear() != null) {
+				criteria.add(Restrictions.eq("year", search.getYear()));
+			}
+			if (search.getGenre() != 0) {
+				criteria.add(Restrictions.eq("genre.id", search.getGenre()));
+			}
+			if (search.getSortby() != null) {
+				criteria.addOrder(Order.asc(search.getSortby()));
+			}
+			if (pageSize != 0) {
+				criteria.setFirstResult(currentPos);
+				criteria.setMaxResults(pageSize);
+			}
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -294,54 +224,28 @@ public class BookDAOImpl implements BookDAO {
 	public long advancedSearchCount(AdvancedSearch search) {
 		String title = "%" + search.getTitle() + "%";
 		String authors = "%" + search.getAuthors() + "%";
-		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
-		String qyear = "";
-		String available = "";
-		if (year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		if (search.getAvailable()) {
-			available += " AND ((B.available) > 0)";
-		}
-		
+		String publication = "%" + search.getPublication() + "%";		
 		long count = 0;
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select count(B) from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication))"
-							+ qyear
-							+ available
-							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication);
-			count = (long) query.uniqueResult();
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Book.class);
+			criteria.add(Restrictions.like("title", title).ignoreCase());
+			criteria.add(Restrictions.like("authors", authors).ignoreCase());
+			criteria.add(Restrictions.like("publication", publication));
+			if (search.getAvailable()) {
+				criteria.add(Restrictions.gt("available", 0));
+			}
+			if (search.getYear() != null) {
+				criteria.add(Restrictions.eq("year", search.getYear()));
+			}
+			if (search.getGenre() != 0) {
+				criteria.add(Restrictions.eq("genre.id", search.getGenre()));
+			}
+			criteria.setProjection(Projections.rowCount());
+			count = (long) criteria.uniqueResult();
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return count;
-	}
-
-	@Override
-	public List<Book> paramSearch(String searchField, String search,
-			int currentPos, int pageSize, String sort) {
-		search = "%" + search + "%";
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where (lower(B."
-									+ searchField + ") "
-									+ "LIKE lower(:search)) order by B." + sort
-									+ " asc").setString("search", search)
-					.setMaxResults(pageSize).setFirstResult(currentPos);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
 	}
 
 	@Override
@@ -363,67 +267,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return count;
 	}
-
-	@Override
-	public long paramSearchCount(String field, String parametr) {
-		parametr = "%" + parametr + "%";
-		long count = 0;
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select " + "B from Book B where (lower(B." + field
-									+ ") " + "LIKE lower(:parametr))")
-					.setString("parametr", parametr);
-			count = (long) query.uniqueResult();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return count;
-	}
 	
-	@Override
-	public long countBooksByGenre(String search, Integer id) {
-		search = "%" + search + "%";
-		long count = 0;
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where ((lower(B.title) LIKE lower(:parametr)) OR (lower(B.authors) LIKE lower(:parametr)) OR (lower(B.publication) LIKE lower(:parametr))) AND gid=:id ")
-					.setInteger("id", id).setString("parametr", search);
-			count = (long) query.uniqueResult();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return count;
-	}
-	
-	@Override
-	public List<Book> getBooksByGenre(String search, Integer id, int currentPos, int pageSize,	String field) {
-		search = "%" + search + "%";
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where ((lower(B.title) "
-									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
-									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									// +
-									// "LIKE lower(:parametr)) OR (lower(B.genre.name) "
-									+ "LIKE lower(:parametr))) AND gid=:id order by B."
-									+ field + " asc")
-					.setString("parametr", search).setInteger("id", id).setMaxResults(pageSize)
-					.setFirstResult(currentPos);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
-	}
-
-
 	@Override
 	public List<Book> getBooksByRating() {
 		List<Book> books = new ArrayList<Book>();
@@ -435,73 +279,6 @@ public class BookDAOImpl implements BookDAO {
 		 } catch (Exception e){
 			 log.error(e);
 		 }
-		return books;
-	}
-	
-	@Override
-	public long countBooksByGenreWithAdvSearch(AdvancedSearch search,
-			Integer id) {
-		String title = "%" + search.getTitle() + "%";
-		String authors = "%" + search.getAuthors() + "%";
-		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
-		String qyear = "";
-		String available = "";
-		if (year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		if (search.getAvailable()) {
-			available += " AND ((B.available) > 0)";
-		}
-		
-		long count = 0;
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select count(B) from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication)) "
-							+ "AND gid=:id"
-							+ qyear
-							+ available
-							+ " order by B." + search.getSortby() + " asc").setString("title", title).setString("authors", authors).setString("publication", publication).setInteger("id", id);
-			count = (long) query.uniqueResult();
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return count;
-	}
-	
-	@Override
-	public List<Book> getBooksByGenreWithAdvSearch(
-			AdvancedSearch search, Integer id, int currentPos,
-			int pageSize) {
-		String title = "%" + search.getTitle() + "%";
-		String authors = "%" + search.getAuthors() + "%";
-		String publication = "%" + search.getPublication() + "%";
-		int year = search.getYear();
-		String qyear = "";
-		if (year > 0) {
-			qyear += " AND ((B.year) = ("+year+"))";
-		}
-		boolean available = search.getAvailable();
-		
-		List<Book> books = new ArrayList<Book>();
-		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where (lower(B.title) LIKE lower(:title)) "
-							+ "AND (lower(B.authors) LIKE lower(:authors)) "
-							+ "AND (lower(B.publication) LIKE lower(:publication))"
-							+ "AND gid=:id"
-							+ qyear
-							+ " order by B." + search.getSortby() + " asc").setInteger("id", id).setString("title", title).setString("authors", authors).setString("publication", publication).setMaxResults(pageSize).setFirstResult(currentPos);
-			books.addAll(query.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
 		return books;
 	}
 }

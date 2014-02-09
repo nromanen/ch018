@@ -37,8 +37,6 @@ public class GenreDAOImpl implements GenreDAO {
 		try {
 			genres.addAll(sessionFactory.getCurrentSession()
 					.createCriteria(Genre.class, "genre")
-					.createAlias("genre.localizations", "localization")
-					.add(Restrictions.eq("localization.language", language))
 					.list());
 		} catch (Exception e) {
 			log.error(e);

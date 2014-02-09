@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -24,6 +26,12 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Yurik Mikhaletskiy
  *
  */
+@NamedQueries({
+	@NamedQuery(
+			name = "deletePerson",
+			query = "delete from Person where id=:id"
+			)
+})
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {

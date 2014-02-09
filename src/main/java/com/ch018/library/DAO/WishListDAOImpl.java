@@ -84,9 +84,7 @@ public class WishListDAOImpl implements WishListDAO {
     @Override
     public void deleteWishById(int id) {
       try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("delete from WishList where id=:id")
+			Query query = sessionFactory.getCurrentSession().getNamedQuery("deleteWish")
 					.setInteger("id", id);
 			int g = query.executeUpdate();
 		} catch (Exception e) {

@@ -22,11 +22,11 @@
 	</c:if>
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
 		<c:if test="${(rowCounter.count + 3) % 4 == 0}">
-			<div class="row-fluid">
+			<div class="row-fluid row-margin">
 		</c:if>
 				<div class="thumbnail span3 ">
 				<div class="media">
-					<a href="<c:url value="/book/${latest.id}"/>"><img src="${pageContext.request.contextPath}${latest.image}" class="img-rounded pull-left"></a>
+					<a href="<c:url value="/book/${latest.id}"/>"><img src="<c:url value="${latest.image}"/>" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
 						<div class="btn-group btn-group-vertical  pull-right">
 						<a id="addToWish${latest.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
@@ -87,20 +87,20 @@
 			</c:if>
 			<c:if test="${page > 1}">
 				<li>
-					<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+					<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="<c:url value="?${request}&page=${page-1}"/>">«</a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="<c:url value="?page=${page-1}"/>">«</a>
 					</c:if>
 				</li>
 			</c:if>
 			<c:forEach var="i" begin="1" end="${pages}">
    				<li>
-	   				<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+	   				<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="?${request}&page=${i}"><c:out value="${i}"/></a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="?page=${i}"><c:out value="${i}"/></a>
 					</c:if>
 				</li>
@@ -112,10 +112,10 @@
 			</c:if>
 			<c:if test="${page < pages}">
 				<li>
-					<c:if test="${(indexSearch != null && indexSearch != '') || advancedSearch != null}">
+					<c:if test="${indexSearch != null || advancedSearch != null}">
 						<a href="<c:url value="?${request}&page=${page+1}"/>">»</a>
 					</c:if>
-					<c:if test="${(indexSearch == null || indexSearch == '') && advancedSearch == null}">
+					<c:if test="${indexSearch == null && advancedSearch == null}">
 						<a href="<c:url value="?page=${page+1}"/>">»</a>
 					</c:if>
 				</li>

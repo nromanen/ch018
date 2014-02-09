@@ -7,45 +7,100 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="request" value="${pageContext.request.queryString}"/>
+<c:set var="spage" value="&page=${page}" />
+<c:if test="${fn:contains(request, 'page')}">
+	<c:set var="request" value="${fn:replace(request, spage, '')}" />
+</c:if>
 <div class="span10 offset1">
 	<div class="row-fluid">
 		<!-- Button group -->
-		<div class="span8" style="overflow: scroll;">
-			<div class="btn-group">
-				<a href="<c:url value="/books/all"/>" class="btn btn-primary"><spring:message
-						code="book.all" /></a> <a href="<c:url value="/books/issuetd"/>"
+		<div class="span7" style="overflow: scroll;">
+			<div class="btn-group" data-toggle="buttons-radio">
+				<a href="<c:url value="/books"/>" class="btn btn-primary"><spring:message
+						code="book.all" /></a> <a href="<c:url value="/books/show/issuetd"/>"
 					class="btn btn-primary"><spring:message code="book.issuetd" /></a>
-				<a href="<c:url value="/books/issueph"/>"
+				<a href="<c:url value="/books/show/issueph"/>"
 					class="btn btn-primary"><spring:message code="book.issueph" /></a>
-				<a href="<c:url value="/books/return"/>"
+				<a href="<c:url value="/books/show/return"/>"
 					class="btn btn-primary"><spring:message code="book.return" /></a> <a
-					href="<c:url value="/books/returntd"/>"
+					href="<c:url value="/books/show/returntd"/>"
 					class="btn btn-primary"><spring:message code="book.returntd" /></a>
 			</div>
 		</div>
 
-		<div class="span4">
-			<form class="formi" method="POST"
-				action="${pageContext.request.contextPath}/books">
-				<div class="input-prepend input-append row">
-					<select name="field" class="add-on my">
-						<option value="all"><spring:message code="book.searchall" /></option>
-						<option value="title"><spring:message code="book.title" /></option>
-						<option value="authors"><spring:message
-								code="book.authors" /></option>
-						<option value="publication"><spring:message
-								code="book.publication" /></option>
-						<option value="year"><spring:message code="book.year" /></option>
-						<option value="genre.name"><spring:message
-								code="book.genre" /></option>
-					</select> 
+		<div class="offset1 span4">
+			<form class="formi" method="GET"
+				action="${pageContext.request.contextPath}/books/search">
+				<div class="input-append row">
 					<input name="search" type="text" class="span6">
-					<button type="submit" class="btn btn-primary add-on my">
+					<button type="submit" class="btn btn-primary">
 						<spring:message code="book.search" />
 					</button>
+					<button class="btn btn-primary" type="button" id="advtoggle" rel="popover">Advanced</button>
 				</div>
 			</form>
 		</div>
+	</div>
+	
+	<!-- Advanced search -->
+	<div id="popover_advanced_search" style="display: none">
+		<form class="" action="${pageContext.request.contextPath}/books/advsearch" method="GET">
+			<div class="control-group">
+				<label class="control-label" for="advtitle"><spring:message code="book.title" /></label>
+				<div class="controls">
+					<input name="title" id="advtitle" type="text">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="advautors"><spring:message code="book.authors" /></label>
+				<div class="controls">
+					<input name="authors" type="text" id="advautors">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="advpublication"><spring:message code="book.publication" /></label>
+				<div class="controls">
+					<input name="publication" type="text" id="advpublication">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="advyear"><spring:message code="book.year" /></label>
+				<div class="controls">
+					<input name="year" type="text" id="advyear">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="advgenre"><spring:message code="book.genre" /></label> 
+				<div class="controls">
+					<select name="genre" id="advgenre" class="span12">
+						<option value="0"><spring:message code="genre.all" /></option>
+						<c:forEach var="gnr" items="${genre}">
+							<option value="${gnr.id}">${gnr.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="advsort"><spring:message code="sort.field" /></label> 
+				<select id="advsort" name="sortby" class="fluid" >
+					<option value="title" ><spring:message code="book.title" /></option>
+					<option value="authors"><spring:message code="book.authors" /></option>
+					<option value="publication"><spring:message code="book.publication" /></option>
+					<option value="year"><spring:message code="book.year" /></option>
+					<option value="available"><spring:message code="book.available" /></option>
+				</select>
+			</div>
+			<div id="adv_search_title" style="display: none"><spring:message code="search.advanced" /></div>
+			<label class="checkbox"> 
+			<input id="advavailable" name="available" type="checkbox" ${advancedSearch.available == true ? 'checked' : ''} > <spring:message code="book.available" /></label>
+
+			<button type="submit" class="btn"><spring:message code="book.search" /></button>
+		</form>
 	</div>
 
 	<!-- Alert -->
@@ -63,6 +118,11 @@
 	<c:if test="${search != null && search != ''}">
 		<div class="alert">
 			<span><spring:message code="search.results" /> </span>"<c:out value="${search}"/>"
+		</div>
+	</c:if>
+	<c:if test="${advancedSearch != null}">
+		<div class="alert">
+			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> <c:out value="${advancedSearch.genre}"/> <c:out value="${advancedSearch.available}"/>"
 		</div>
 	</c:if>
 		<table class="table table-striped table-condensed table-hover">
@@ -102,6 +162,9 @@
 							<p class="genre${book.id}" hidden="true">${book.genre.id}</p></td>
 						<td class="term${book.id}">${book.term}</td>
 						<td class="desc${book.id}" hidden="true">${book.description}</td>
+						<td class="iimg${book.id}" hidden="true">${book.image}</td>
+						<td class="rating${book.id}" hidden="true">${book.rating}</td>
+						<td class="evals${book.id}" hidden="true">${book.numberOfEvaluations}</td>
 						<td class="count${book.id}">${book.available}/${book.count}</td>
 
 						<td>
@@ -141,35 +204,52 @@
 			code="book.newbook" /></a>
 			
 	<!-- Pagination -->
+	<c:if test="${pages > 1}">
 	<div class="pagination pagination-centered">
 		<ul>
 			<c:if test="${page == 1}">
 				<li class = "disabled">
-					<a href="<c:url value="#"/>">«</a>
+					<a >«</a>
 				</li>
 			</c:if>
 			<c:if test="${page > 1}">
 				<li>
-					<a href="<c:url value="?page=${page-1}"/>">«</a>
+					<c:if test="${search != null}">
+						<a href="<c:url value="?${request}&page=${page-1}"/>">«</a>
+					</c:if>
+					<c:if test="${search == null}">
+						<a href="<c:url value="?page=${page-1}"/>">«</a>
+					</c:if>
 				</li>
 			</c:if>
 			<c:forEach var="i" begin="1" end="${pages}">
    				<li>
-   					<a href="?page=${i}"><c:out value="${i}"/></a>
+	   				<c:if test="${search != null}">
+						<a href="?${request}&page=${i}"><c:out value="${i}"/></a>
+					</c:if>
+					<c:if test="${search == null}">
+						<a href="?page=${i}"><c:out value="${i}"/></a>
+					</c:if>
 				</li>
 			</c:forEach>
 			<c:if test="${page == pages}">
 				<li class = "disabled">
-					<a href="<c:url value="#"/>">»</a>
+					<a>»</a>
 				</li>
 			</c:if>
 			<c:if test="${page < pages}">
 				<li>
-					<a href="<c:url value="?page=${page+1}"/>">»</a>
+					<c:if test="${search != null}">
+						<a href="<c:url value="?${request}&page=${page+1}"/>">»</a>
+					</c:if>
+					<c:if test="${search == null}">
+						<a href="<c:url value="?page=${page+1}"/>">»</a>
+					</c:if>
 				</li>
 			</c:if>
 		</ul>
 	</div>
+	</c:if>
 	
 	
 
@@ -330,12 +410,20 @@
 						<form:label id="erroravailable" path="available" cssClass="error" />
 					</div>
 				</div>
+				<form:hidden path="image" id="image" disabled="disabled" />
+
 				<div class="control-group hide">
-					<label class="control-label" for="image"><spring:message
-							code="book.available" /></label>
+					<label class="control-label" for="rating"></label>
 					<div class="controls">
-						<form:input path="image" type="file" id="image"
-							placeholder="image" />
+						<form:input path="rating" type="text" id="rating"
+							placeholder="rating" />
+					</div>
+				</div>
+				<div class="control-group hide">
+					<label class="control-label" for="numberOfEvaluations"></label>
+					<div class="controls">
+						<form:input path="numberOfEvaluations" type="number" id="numberOfEvaluations"
+							placeholder="numberOfEvaluations" />
 					</div>
 				</div>
 
@@ -351,5 +439,6 @@
 			</form:form>
 		</div>
 	</div>
+	<div class="modalloading"></div>
 </div>
 <div class="span1"></div>

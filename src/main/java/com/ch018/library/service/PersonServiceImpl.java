@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,7 +45,7 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	@Transactional
-	public void registrate(Registration registration, 
+	public void registrate(Registration registration, String message,
 			HttpServletRequest request) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Person person = new Person();
@@ -62,9 +61,7 @@ public class PersonServiceImpl implements PersonService {
 		person.setMultibookAllowed(MULTIBOOK_DEFAULT);
 		String url = request.getRequestURL().toString();
 		String url2 = request.getServletPath();
-		String url3 = url.replaceAll(url2, "/");
-		String message = "Thank you for joining our JLibrary. Please confirm your email by clicking next link: "; 
-				//messageSource.getMessage("message.confirm.registration", null, LocaleContextHolder.getLocale());
+		url.replaceAll(url2, "/");
 		message = message + url + "/confirm?key=" + person.getVerificationKey();
 		mailService.sendMail(registration.getEmail(),
 				"Library email confirmation", message);
@@ -73,11 +70,9 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	@Transactional
-	public void remindPasswoed(Person person, HttpServletRequest request) {
+	public void remindPasswoed(Person person, String message, HttpServletRequest request) {
 		String url = request.getRequestURL().toString();
-		String message = " Change your password by clicking next link: "
-				+ url + "/pass?key="                
-				+ person.getVerificationKey();
+		message += url + "/pass?key=" + person.getVerificationKey();
 		mailService.sendMail(person.getEmail(),
 				"Library password recovery", message);
 	}
@@ -103,22 +98,11 @@ public class PersonServiceImpl implements PersonService {
 	public void update(Person person) {
 		personDao.update(person);
 	}
-
-	@Override
-	@Transactional
-	public List<Person> getAll() {
-		return personDao.getAll();
-	}
 	
 	@Override
 	@Transactional
 	public List<Person> getAll(int currentPos, int pageSize, String field) {
-		
-		if (currentPos > -1) {
-			return personDao.getAll(currentPos, pageSize, field);
-		} else {
-			return personDao.getAll();
-		}
+		return personDao.getAll(currentPos, pageSize, field);
 	}
 
 	@Override
@@ -153,36 +137,6 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public List<Person> getByName(String name) {
-		return personDao.getByName(name);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getBySurname(String surname) {
-		return personDao.getBySurname(surname);
-	}
-
-	@Override
-	@Transactional
-	public Person getByCellPhone(String cellphone) {
-		return personDao.getByCellPhone(cellphone);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getByRole(String role) {
-		return personDao.getByRole(role);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getConfirmed() {
-		return personDao.getConfirmed();
-	}
-
-	@Override
-	@Transactional
 	public List<Person> getSmsEnabled() {
 		return personDao.getSmsEnabled();
 	}
@@ -202,9 +156,7 @@ public class PersonServiceImpl implements PersonService {
 			Authentication auth = new PreAuthenticatedAuthenticationToken(person.getEmail(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
            SecurityContextHolder.getContext().setAuthentication(auth);
 		} */
-
 		person.setSms(updatedPerson.getSms());
-
 		return person;
 	}
     
@@ -253,8 +205,6 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public void adminUpdatePerson(Person person, Person person2) {
     	person.setPassword(person2.getPassword());
-		//person.setRole(person2.getRole());
-		//person.setRating(person2.getRating());
 		person.setEmailConfirmed(person2.getEmailConfirmed());
 		person.setVerificationKey(person2.getVerificationKey());
 		personDao.update(person);
@@ -265,7 +215,6 @@ public class PersonServiceImpl implements PersonService {
     public void adminSavePerson(Person person, HttpServletRequest request) {
     	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		person.setPassword(passwordEncoder.encode(PasswordGen.generateString(6)));
-		//person.setRole(Person.Role.ROLE_USER.toString());
 		person.setEmailConfirmed(false);
 		person.setVerificationKey(VerificationKey.generate(person.getEmail()));
 		person.setConfirm(false);

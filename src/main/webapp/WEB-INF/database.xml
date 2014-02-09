@@ -21,12 +21,17 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/library?characterEncoding=UTF-8" />
 		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="password" value="root" />
 	</bean>
+	
+	<bean id="genreInterceptor" class="com.ch018.library.interceptor.GenreInterceptor"/>
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="entityInterceptor">
+        	<ref bean="genreInterceptor"/>
+    	</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
