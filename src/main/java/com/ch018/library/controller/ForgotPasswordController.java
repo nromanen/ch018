@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,9 @@ public class ForgotPasswordController {
 	
 	@Autowired
 	private ResetPwdValidation resetPwdValidation;
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * 
@@ -56,7 +60,8 @@ public class ForgotPasswordController {
 		if (person == null) {
 			return "redirect:/remind?error=mail";
 		}
-		personService.remindPasswoed(person, request);
+		String message = messageSource.getMessage("message.restore.pass", new Object[]{}, LocaleContextHolder.getLocale());
+		personService.remindPasswoed(person, message, request);
 		return "redirect:/";
 	}
 	

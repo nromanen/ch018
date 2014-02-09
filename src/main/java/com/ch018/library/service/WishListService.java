@@ -17,7 +17,7 @@ public interface WishListService {
     void addWish(WishList wish);
     void deleteWish(WishList wish);
     void deleteWishById(int id);
-    Collection getAllWishes();
+    Collection<WishList> getAllWishes();
     WishList getWishById(int id);
     ArrayList<WishList> getWishesByPerson(int personId);
     ArrayList<WishList> getWishesByPerson(String personEmail);

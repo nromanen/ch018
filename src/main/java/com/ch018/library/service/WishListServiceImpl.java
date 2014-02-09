@@ -40,7 +40,7 @@ public class WishListServiceImpl implements WishListService{
 
     @Override
     @Transactional
-    public Collection getAllWishes() {
+    public Collection<WishList> getAllWishes() {
         return wishlistDAO.getAllWishes();
     }
 

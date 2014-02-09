@@ -21,12 +21,13 @@ public interface PersonService {
     Person updateAccProperties(Person person, Person updatedPerson, HttpServletRequest request);
     long isExist(String email);
     void librarianUpdatePerson(Person person, Person person2);
-	void registrate(Registration registration, HttpServletRequest request);
-	void remindPasswoed(Person person, HttpServletRequest request);
+	void registrate(Registration registration, String message, HttpServletRequest request);
 	void restorePassword(Person person, ResetPassword password);
 	void librarianSavePerson(Person person, HttpServletRequest request);
 	long getCount();
 	List<Person> getAll(int currentPos, int pageSize, String field);
 	void adminSavePerson(Person person, HttpServletRequest request);
 	void adminUpdatePerson(Person person, Person person2);
+	void remindPasswoed(Person person, String message,
+			HttpServletRequest request);
 }

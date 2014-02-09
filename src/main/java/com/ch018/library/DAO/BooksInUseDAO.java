@@ -15,8 +15,6 @@ public interface BooksInUseDAO {
 	List<BooksInUse> getByIssueDate(Date issueDate);
 	List<BooksInUse> getByReturnDate(Date returnDate);
 	List<BooksInUse> getInUse(boolean inUse);
-	List<Book> getAllBooks();
-	List<Book> getReturnBooksToday();
 	Date getMinByReturnDate(int bid);
 	void removeBooksInUse(int id);
 	BooksInUse getById(int id);

@@ -10,6 +10,11 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.service.LocalizationService;
 
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 public class GenreInterceptor extends EmptyInterceptor {
 	
 	/**

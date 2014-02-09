@@ -1,5 +1,10 @@
 package com.ch018.library.form;
 
+/**
+ * 
+ * @author Yurik Mikhaletskiy
+ *
+ */
 public class AdvancedSearch {
 	
 	private String title;

@@ -14,7 +14,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 
 /**
@@ -43,8 +42,7 @@ public class PersonDaoImpl implements PersonDao {
 		int deleted = 0;
 		try {
 			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("delete from Person where id=:id")
+					.getCurrentSession().getNamedQuery("deletePerson")
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {

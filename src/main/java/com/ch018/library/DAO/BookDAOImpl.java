@@ -128,8 +128,7 @@ public class BookDAOImpl implements BookDAO {
 	public int deleteBook(int id) {
 		int deleted = 0;
 		try {
-			Query query = sessionFactory.getCurrentSession()
-					.createQuery("delete from Book where id=:id")
+			Query query = sessionFactory.getCurrentSession().getNamedQuery("deleteBook")
 					.setInteger("id", id);
 			deleted = query.executeUpdate();
 		} catch (Exception e) {

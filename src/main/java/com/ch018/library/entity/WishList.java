@@ -17,6 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(
+			name = "deleteWish",
+			query = "delete from WishList where id=:id"
+			)
+})
 @Entity
 @Table(name = "wishlist")
 public class WishList {

@@ -14,11 +14,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * 
  * @author Yurik Mikhaletskiy
  *
  */
+@NamedQueries({
+	@NamedQuery(
+			name = "deleteOrder",
+			query = "delete from Orders where id=:id"
+			)
+})
 @Entity
 @Table(name = "orders")
 public class Orders {

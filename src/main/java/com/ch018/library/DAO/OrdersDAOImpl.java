@@ -12,7 +12,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -185,9 +184,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 	public Orders deleteOrder(int id) {
 		Orders order = getById(id);
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery("delete from Orders where id=:id")
+			Query query = sessionFactory.getCurrentSession().getNamedQuery("deleteOrder")
 					.setInteger("id", id);
 			int g = query.executeUpdate();
 		} catch (Exception e) {

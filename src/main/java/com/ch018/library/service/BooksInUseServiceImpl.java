@@ -1,6 +1,5 @@
 package com.ch018.library.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +16,6 @@ import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.DAO.PersonDao;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
-import com.ch018.library.entity.Genre;
-import com.ch018.library.entity.Localization;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.util.CalculateRating;
@@ -142,29 +138,11 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	public List<BooksInUse> getInUse(boolean inUse) {
 		return booksInUseDAO.getInUse(inUse);
 	}
-
-	@Override
-	@Transactional
-	public List<Book> getAllBooks() {
-		return booksInUseDAO.getAllBooks();
-	}
 	
 	@Override
 	@Transactional
 	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
-		if (currentPos > -1) {
-			return booksInUseDAO.getAllBooks(currentPos, pageSize, sort);
-		} else {
-			return booksInUseDAO.getAllBooks();
-		}
-		
-	}
-
-	@Override
-	@Transactional
-	public List<Book> getReturnBooksToday() {
-		List<Book> books = booksInUseDAO.getReturnBooksToday();
-		return books;
+		return booksInUseDAO.getAllBooks(currentPos, pageSize, sort);		
 	}
 
 	@Override

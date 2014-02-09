@@ -19,6 +19,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -30,7 +32,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author Yurik Mikhaletskiy
  *
  */
-
+@NamedQueries({
+	@NamedQuery(
+			name = "deleteBook",
+			query = "delete from Book where id=:id"
+			)
+})
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
