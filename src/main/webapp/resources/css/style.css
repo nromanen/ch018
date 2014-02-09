@@ -182,6 +182,10 @@ body > .navbar {
   font-size: 15px;
   color: #999999;
 }
+
+.row-margin {
+	margin-bottom: 20px;
+}
 /* Ajax loading */
 
 .modalloading {

@@ -156,16 +156,11 @@ public class AuthorizedUserControllerTest {
 		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name")).thenReturn(books);
 		when(bookService.countBooks()).thenReturn(2L);
 		when(bookService.simpleSearchCount(search)).thenReturn(1L);
-		when(bookService.countBooksByGenre(search, 1)).thenReturn(1L);
 		when(bookService.advancedSearchCount(advancedSearch)).thenReturn(1L);
 		when(bookService.countBooks()).thenReturn(1L);
 		when(bookService.getAllBooks(0, IConstants.PAGE_SIZE, "id")).thenReturn(books);
 		when(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
 		when(bookService.advancedSearch(advancedSearch, 0, IConstants.PAGE_SIZE)).thenReturn(Arrays.asList(book2));
-		when(bookService.getBooksByGenre("", 1, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
-		when(bookService.getBooksByGenre(search, 1, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
-		when(bookService.getBooksByGenreWithAdvSearch(advancedSearch, 2, 0, IConstants.PAGE_SIZE)).thenReturn(Arrays.asList(book2));
-		when(bookService.countBooksByGenreWithAdvSearch(advancedSearch, 2)).thenReturn(1L);
 		
 	}
 
@@ -234,7 +229,7 @@ public class AuthorizedUserControllerTest {
 				.andExpect(model().attribute("latest", hasItem(book)))
 				.andExpect(model().attribute("pages", 1L))
 				.andExpect(model().attribute("page", 1));
-		verify(bookService, times(1)).getBooksByGenre(search, 1, 0, IConstants.PAGE_SIZE, "id");
+		
 	}
 	
 	@Test
@@ -248,7 +243,6 @@ public class AuthorizedUserControllerTest {
 				.andExpect(model().attribute("latest", hasItem(book2)))
 				.andExpect(model().attribute("pages", 1L))
 				.andExpect(model().attribute("page", 1));
-		verify(bookService, times(1)).getBooksByGenreWithAdvSearch(advancedSearch, 2, 0, IConstants.PAGE_SIZE);
 	}
 
 	@Test

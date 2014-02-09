@@ -158,6 +158,7 @@ public class AuthorizedUserController {
 		List<String> result = new ArrayList<String>();
 		AdvancedSearch advancedSearch = new AdvancedSearch();
 		advancedSearch.setTitle("");
+		advancedSearch.setGenre(0);
 		advancedSearch.setAuthors("");
 		advancedSearch.setPublication("");
 		if (field.equals("title")) {

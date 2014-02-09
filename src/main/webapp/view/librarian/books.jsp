@@ -72,6 +72,19 @@
 					<input name="year" type="text" id="advyear">
 				</div>
 			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="advgenre"><spring:message code="book.genre" /></label> 
+				<div class="controls">
+					<select name="genre" id="advgenre" class="span12">
+						<option value="0"><spring:message code="genre.all" /></option>
+						<c:forEach var="gnr" items="${genre}">
+							<option value="${gnr.id}">${gnr.name}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			
 			<div class="control-group">
 				<label class="control-label" for="advsort"><spring:message code="sort.field" /></label> 
 				<select id="advsort" name="sortby" class="fluid" >
@@ -109,7 +122,7 @@
 	</c:if>
 	<c:if test="${advancedSearch != null}">
 		<div class="alert">
-			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> <c:out value="${advancedSearch.available}"/>"
+			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> <c:out value="${advancedSearch.genre}"/> <c:out value="${advancedSearch.available}"/>"
 		</div>
 	</c:if>
 		<table class="table table-striped table-condensed table-hover">

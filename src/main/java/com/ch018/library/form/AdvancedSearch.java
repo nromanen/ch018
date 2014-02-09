@@ -5,6 +5,7 @@ public class AdvancedSearch {
 	private String title;
 	private String authors;
 	private String publication;
+	private Integer genre;
 	private String sortby;
 	private Integer year;
 	private boolean available;
@@ -23,6 +24,10 @@ public class AdvancedSearch {
 	
 	public String getPublication() {
 		return this.publication;
+	}
+	
+	public Integer getGenre() {
+		return this.genre;
 	}
 	
 	public String getSortby() {
@@ -50,6 +55,10 @@ public class AdvancedSearch {
 	
 	public void setPublication(String publication) {
 		this.publication = publication;
+	}
+	
+	public void setGenre(Integer genre) {
+		this.genre = genre;
 	}
 	
 	public void setSortby(String sortby) {

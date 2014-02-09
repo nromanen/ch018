@@ -18,5 +18,5 @@ public interface IConstants {
 	int MIN_ORDERS_FOR_RATING = 3;
 	int MAX_MULTIBOOK_ALLOWED = 10;
 	
-	int PAGE_SIZE = 10;
+	int PAGE_SIZE = 8;
 }

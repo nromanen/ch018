@@ -283,7 +283,8 @@ public class BooksController {
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		session.removeAttribute("search");
-		if (advancedSearch == null) {
+		if (advancedSearch.getAuthors() == null || advancedSearch.getGenre() == null
+				|| advancedSearch.getPublication() == null) {
 			advancedSearch = (AdvancedSearch)session.getAttribute("advancedSearch");
 		} else {
 			session.setAttribute("advancedSearch", advancedSearch);

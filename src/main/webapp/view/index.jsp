@@ -22,11 +22,11 @@
 	</c:if>
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
 		<c:if test="${(rowCounter.count + 3) % 4 == 0}">
-			<div class="row-fluid">
+			<div class="row-fluid row-margin">
 		</c:if>
 				<div class="thumbnail span3 ">
 				<div class="media">
-					<a href="<c:url value="/book/${latest.id}"/>"><img src="${pageContext.request.contextPath}${latest.image}" class="img-rounded pull-left"></a>
+					<a href="<c:url value="/book/${latest.id}"/>"><img src="<c:url value="${latest.image}"/>" class="img-rounded pull-left"></a>
 					<sec:authorize access="isAuthenticated()">
 						<div class="btn-group btn-group-vertical  pull-right">
 						<a id="addToWish${latest.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>

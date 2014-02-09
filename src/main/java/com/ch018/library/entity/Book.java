@@ -19,6 +19,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ch018.library.util.IConstants;
@@ -118,6 +119,7 @@ public class Book implements Serializable {
 	}
 
 	@Column(name = "description")
+	@Type(type="text")
 	public String getDescription() {
 		return description;
 	}

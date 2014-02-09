@@ -15,17 +15,11 @@ public interface PersonDao {
 	void save(Person person);
 	int delete(int id);
 	void update(Person person);
-	List<Person> getAll();
 	Person getById(int id);
 	Person getByIdWithBooks(int id);
 	Person getByIdWithOrders(int id);
 	Person getByEmail(String email);
 	Person getByKey(String key);
-	List<Person> getByName(String name);
-	List<Person> getBySurname(String surname);
-	Person getByCellPhone(String cellphone);
-	List<Person> getByRole(String role);
-	List<Person> getConfirmed();
 	List<Person> getSmsEnabled();
 	long isExist(String email);
 	long count();

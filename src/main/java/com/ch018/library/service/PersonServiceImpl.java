@@ -103,21 +103,11 @@ public class PersonServiceImpl implements PersonService {
 	public void update(Person person) {
 		personDao.update(person);
 	}
-
-	@Override
-	@Transactional
-	public List<Person> getAll() {
-		return personDao.getAll();
-	}
 	
 	@Override
 	@Transactional
 	public List<Person> getAll(int currentPos, int pageSize, String field) {
-		if (currentPos > -1) {
-			return personDao.getAll(currentPos, pageSize, field);
-		} else {
-			return personDao.getAll();
-		}
+		return personDao.getAll(currentPos, pageSize, field);
 	}
 
 	@Override
@@ -148,36 +138,6 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	public Person getByKey(String key) {
 		return personDao.getByKey(key);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getByName(String name) {
-		return personDao.getByName(name);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getBySurname(String surname) {
-		return personDao.getBySurname(surname);
-	}
-
-	@Override
-	@Transactional
-	public Person getByCellPhone(String cellphone) {
-		return personDao.getByCellPhone(cellphone);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getByRole(String role) {
-		return personDao.getByRole(role);
-	}
-
-	@Override
-	@Transactional
-	public List<Person> getConfirmed() {
-		return personDao.getConfirmed();
 	}
 
 	@Override
