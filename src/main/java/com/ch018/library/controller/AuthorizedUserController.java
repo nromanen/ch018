@@ -245,6 +245,7 @@ public class AuthorizedUserController {
 	@RequestMapping(value = "/profile-email")
 	public Model emailView(Model model, Principal principal){
 		Person person = persService.getByEmail(principal.getName());
+		model.addAttribute("email", person.getEmail());
 		person.setEmail("");
 		model.addAttribute("person", person);
 		return model;

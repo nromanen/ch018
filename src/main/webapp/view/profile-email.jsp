@@ -12,7 +12,7 @@
      <br>
      <br>
       
-       <span>Your current email:</span><span> ${person.email}</span>
+       <span>Your current email:</span><span> ${email}</span>
        <br>
        <br>
    <form:form id="account" method="POST" commandName="person" class="form-horizontal">
