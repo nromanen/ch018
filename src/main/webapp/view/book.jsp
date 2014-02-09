@@ -6,6 +6,9 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <!-- Center -->
 <div class="span8">
+ <input type="hidden" id="href" value="${pageContext.request.contextPath}/wishlist" />
+ <input type="hidden" id="hrefOrder" value="${pageContext.request.contextPath}/prepareorder" />
+     <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
 	<div class="row-fluid">
 		<div class="thumbnail media">
 		
@@ -24,11 +27,32 @@
 				</p>
 				<sec:authorize access="isAuthenticated()">
 				<div class="btn-group btn-group-vertical">
-					<a href="<c:url value="/wishlist?bookId=${book.id}"/>"
-						class="btn btn-success"><spring:message code="message.cart" /></a>
-					<a href="<c:url value="/order?book=${book.id}&wish=0"/>"
-						class="btn btn-warning"><spring:message code="message.ordernow" /></a>
+					<a id="addToWish${book.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
+						<input type="hidden" value="${book.id}"/>
+					    <a id="orderNow${book.id}"
+							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  
+						</a>
 				</div>
+				 <div id="inOrder${book.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${book.title} already in your orders!</div>
+                        </div>
+                         <div id="inUse${book.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${book.title} is now in your hands</div>
+                        </div>
+                         <div id="fail${book.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body"><spring:message code="message.failorder"/></div>
+                        </div> 
+                        <div id="successAdd${book.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">${book.title} successfully added to wish list</div>
+                </div>
+                <div id="errorAdd${book.id}" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">You already have ${book.title} in your wish list</div>
+                </div>
 				</sec:authorize>
 		
 		</div>

@@ -34,6 +34,7 @@ import com.ch018.library.service.WishListService;
 import com.ch018.library.util.IConstants;
 import com.ch018.library.validator.AccountValidation;
 import com.ch018.library.validator.ChangePasswordValid;
+import com.ch018.library.validator.PersonValidation;
 
 @Controller
 public class AuthorizedUserController {
@@ -58,6 +59,9 @@ public class AuthorizedUserController {
     
     @Autowired
     private BooksInUseService inUse;
+    
+    @Autowired
+	private PersonValidation personValidation;
     
     /**
      * 
@@ -236,6 +240,25 @@ public class AuthorizedUserController {
 				}
 			return "redirect:/logout";
 		}
+	}
+	
+	@RequestMapping(value = "/profile-email")
+	public Model emailView(Model model, Principal principal){
+		Person person = persService.getByEmail(principal.getName());
+		person.setEmail("");
+		model.addAttribute("person", person);
+		return model;
+	}
+	
+	@RequestMapping(value = "/profile-email", method = RequestMethod.POST)
+	public String changeEmail(@ModelAttribute("person") @Valid Person person, Principal principal, BindingResult result, HttpServletRequest request){
+		personValidation.validate(person, result);
+		if(result.hasErrors()){
+			return "profile-email";
+		}
+		Person pers = persService.getByEmail(principal.getName());
+		persService.updateEmail(pers, person, request);
+		return "redirect:/logout";
 	}
     
 	/**

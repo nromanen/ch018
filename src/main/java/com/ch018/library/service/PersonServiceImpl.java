@@ -192,7 +192,7 @@ public class PersonServiceImpl implements PersonService {
 		person.setName(updatedPerson.getName());
 		person.setSurname(updatedPerson.getSurname());
 		person.setCellphone(updatedPerson.getCellphone());
-		if (!person.getEmail().equals(updatedPerson.getEmail())) {
+		/*if (!person.getEmail().equals(updatedPerson.getEmail())) {
 			person.setEmail(updatedPerson.getEmail());
 			String url = request.getRequestURL().toString();
 			String message = "You have change your e-mail address on account in J Library"
@@ -201,7 +201,7 @@ public class PersonServiceImpl implements PersonService {
 			mailService.sendMail(person.getEmail(), "Library email confirmation", message);
 			Authentication auth = new PreAuthenticatedAuthenticationToken(person.getEmail(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
            SecurityContextHolder.getContext().setAuthentication(auth);
-		}
+		} */
 
 		person.setSms(updatedPerson.getSms());
 
@@ -287,5 +287,19 @@ public class PersonServiceImpl implements PersonService {
     public long getCount() {
     	return personDao.count();
     }
+
+	@Override
+	@Transactional
+	public void updateEmail(Person pers, Person pers2, HttpServletRequest request) {
+		pers.setEmail(pers2.getEmail());
+		pers.setConfirm(false);
+		pers.setEmailConfirmed(false);
+		personDao.update(pers);
+		String url = request.getRequestURL().toString();
+		String message = "You have change your e-mail address on account in J Library"
+				+ " Please confirm your new email by clicking next link: "
+				+ url + "/confirm?key=" + pers.getVerificationKey();
+		mailService.sendMail(pers.getEmail(), "Library email confirmation", message);
+	}
 
 }

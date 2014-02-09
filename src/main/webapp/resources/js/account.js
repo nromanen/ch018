@@ -20,7 +20,7 @@ function validateEmail(email) {
 $(document).ready(function() { 
 
   $('.datetimepicker').datetimepicker();
-  console.log("kkkk");  
+  //console.log("kkkk");  
   //$("#email1").change(validate());
   
   $("input[id^=editIssueDate]").click(function(){
@@ -28,10 +28,44 @@ $(document).ready(function() {
 	  $("#oldIssue" + $id).hide();
 	  $("#saveNewIssue" + $id).show();
 	  $("#cancelIssueEdit" + $id).show();
-	  $("#newIssue" + $id).val($("#oldIssue" + $id).text());
+	 // $("#newIssue" + $id).val($("#oldIssue" + $id).text());
 	  $("#newIssue" + $id).show();
+	  $("#newIssue" + $id).focus();
   
   })
+  
+   $("input[id^=saveNewIssue]").click(function(e) {
+  //$("#editIssue").submit(function(e) {
+	  $id = $(this).prev().val();
+	  var currDate = (new Date).getTime();
+	  var orderDate = (new Date($("#newIssue" +$id).val())).getTime();
+	  console.log(currDate);
+	  console.log(orderDate);
+	  
+	  if(orderDate < currDate) {
+		  e.preventDefault();
+		  //alert($("#dateExpired").text());
+		  $("#dateExpired").modal();
+	  } else {
+	  var href = $("#href").val();
+	  console.log($("#editIssue" + $id).serialize());
+	  $.ajax({
+		  url: href,
+		  data: $("#editIssue" +$id).serialize(),
+	     type: "POST",
+	     dataType: "json",
+	     contentType: 'application/x-www-form-urlencoded',
+	     mimeType: 'application/json',
+	     success: function(){
+	    	 console.log("1111");
+	     },
+	     error: function() {
+	    	 console.log("22222");
+	     }
+	  })
+	  }
+	  e.preventDefault();
+  }) 
   
   $("input[id^=cancelIssueEdit]").click(function(){
 	  $id1 = $(this).next().val();
@@ -160,6 +194,14 @@ $(document).ready(function() {
 	});
   
   $("#order").validate({
+		highlight: function(element, errorClass) {
+			$(element).fadeOut(function() {
+				$(element).fadeIn();
+			});
+		}
+	});
+  
+  $("#editIssue").validate({
 		highlight: function(element, errorClass) {
 			$(element).fadeOut(function() {
 				$(element).fadeIn();

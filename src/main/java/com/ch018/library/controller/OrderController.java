@@ -8,12 +8,14 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -146,13 +148,13 @@ public class OrderController {
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
-    public String editIssueDate(Model model, Principal principal,
-    		                    @ModelAttribute("editIssue") @Valid Orders editIssue,
-    		                    BindingResult result) {
+    @ResponseBody
+	public int editIssueDate(@Valid Orders editIssue, Model model,
+			Principal principal, BindingResult result) {
     	orderValidator.validate(editIssue, result);
     	if (result.hasErrors()) {
     		model.addAttribute("showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
-    		return "userOrder";
+    		return 0;
     	}
     	Orders updateOrder = orderService.getById(editIssue.getId());
        	int available = updateOrder.getBook().getAvailable();
@@ -167,10 +169,10 @@ public class OrderController {
         if (expectedAvailable > 1 ) {
         	updateOrder.setIssueDate(editIssue.getIssueDate());
             orderService.updateOrder(updateOrder);
-            return "redirect:/userOrder";
+            return 1;
         } else {
         	model.addAttribute("fail", "Try another date");
-        	return "redirect:/userOrder";
+        	return 2;
         }
     }
     

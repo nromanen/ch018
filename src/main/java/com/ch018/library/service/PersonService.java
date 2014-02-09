@@ -35,4 +35,5 @@ public interface PersonService {
 	List<Person> getAll(int currentPos, int pageSize, String field);
 	void adminSavePerson(Person person, HttpServletRequest request);
 	void adminUpdatePerson(Person person, Person person2);
+	void updateEmail(Person pers, Person pers2, HttpServletRequest request);
 }

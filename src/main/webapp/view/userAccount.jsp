@@ -39,19 +39,27 @@
                                     </div>
                                 </div>
                                 
-                                <div class="control-group">
-                                    <label class="control-label" for="email1"><spring:message code="person.mail"/>:</label>
-                                    <div class="controls"> 
-                                        <form:input path="email" id="inputEmailReg" type="text" required="true"/>
-                                        <form:errors path="email" cssClass="error"/>
-                                       <h4 id="result"></h4>
-                                    </div>
+                                    <div class="control-group">
+                                      <label class="control-label" for="email1"><spring:message code="person.mail"/>:</label>
+                                      <div class="controls"> 
+                                          <form:input path="email" type="hidden"/>
+                                          <form:errors path="email" cssClass="error"/>
+                                          <span>${person.email}</span>
+                                          <!--  <input type="button" value="Change e-mail" class="btn btn-info"/> -->
+                                          <a href="<c:url value="/profile-email"/>" class="btn btn-info">Change e-mail</a>
+                                      </div>  
+                                   </div>
                                    
-                                </div>
-                                
+                                   <div class="control-group">
+                                         <label class="control-label">Password</label>
+                                         <div class=controls>
+                                            <a href="<c:url value="/pass"/>" class="btn btn-info"><spring:message code="button.changepass"/></a>
+                                         </div>
+                                   </div>
+                               
                                 <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
                                    
                              </form:form>
-                                <a href="<c:url value="/pass"/>" class="btn" id="submit"><spring:message code="button.changepass"/></a>
+                                
                                
 </div>

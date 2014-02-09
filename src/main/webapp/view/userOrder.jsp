@@ -8,7 +8,13 @@
 <%@ page import="java.util.Date" %>
 <!-- Center -->
 <div class="span8">
+<!-- <span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>  -->
 
+<div id="dateExpired" class="modal hide fade">
+  <div class="modal-header">Message</div>
+  <div class="modal-body"><spring:message code="date.expired"/></div>
+</div>
+<input type="hidden" id="href" value="${pageContext.request.contextPath}/userOrder"/>
     <h3 class="text-info"><small><spring:message code="message.orders"/></small></h3>
                                 <table class="table table-bordered">
                                     <thead>
@@ -28,12 +34,15 @@
                                  <fmt:formatDate pattern = "dd.MM.yyyy" value="${order.date}" var="orderDate"/>
                                  <c:choose>
                                    <c:when test="${currentDate==orderDate}">
-                                       <form:form method="POST" modelAttribute="editIssue">
+                                       <form:form method="POST" modelAttribute="editIssue" id="editIssue${order.id}">
                                               <span id="oldIssue${order.id}"><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${order.issueDate}"/></span>
-                                              <form:input path="id" type="hidden" value="${order.id}"/>       
+                                              <form:input path="id" type="hidden" value="${order.id}" id="orderId${order.id}"/>       
                                            <div class="controls">
+                                               <form:input path="date" type="hidden" value="${order.date}"/>
                                                <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
                                                <form:errors path="issueDate" cssClass="error"/>
+                                               <form:input path="person" type="hidden" value="${order.person}"/>
+                                               <form:input path="book" type="hidden" value="${order.book}"/>
                                            </div>
                                             <br>                                  
                                             <input type="button" value=<spring:message code="button.edit"/> id="editIssueDate${order.id}" class="btn btn-info"/>

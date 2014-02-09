@@ -128,8 +128,8 @@
 		<put-attribute name="body" value="/view/rate.jsp" />
 	</definition>
 	
-	<definition name="fail" extends="baseLayout">
+	<definition name="profile-email" extends="baseLayout">
 		<put-attribute name="title" value="Book" />
-		<put-attribute name="body" value="/view/fail.jsp" />
+		<put-attribute name="body" value="/view/profile-email.jsp" />
 	</definition>
 </tiles-definitions>    

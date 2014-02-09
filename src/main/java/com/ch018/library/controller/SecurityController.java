@@ -68,5 +68,16 @@ public class SecurityController {
 		}
 		return "redirect:/";
 	}
-
+	
+	@RequestMapping(value = "/profile-email/confirm", method = RequestMethod.GET)
+	public String updateEmail(Model model, @RequestParam("key") String key) {
+		Person person =	personService.getByKey(key);
+		if ((person != null) && (person.getEmailConfirmed() == false)) {
+			person.setConfirm(true);
+			person.setEmailConfirmed(true);
+			person.setEmailConfirmed(true);
+			personService.update(person);
+	}
+		return "redirect:/";
+   }
 }
