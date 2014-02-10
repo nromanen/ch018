@@ -1,6 +1,7 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
@@ -68,7 +69,6 @@ public class OrderController {
     @ResponseBody
     public int prepareOrder(Model model, 
                                     @RequestParam("book") int bookId, 
-                                    //@RequestParam("wish") int wishId, 
                                     Principal principal) {
         Person p = personService.getByEmail(principal.getName());
         if (booksInUseService.alreadyInUse(bookId, p.getId())) {
@@ -91,8 +91,7 @@ public class OrderController {
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
             @RequestParam("book") int bookId, 
-            //@RequestParam("wish") int wishId, 
-            Principal principal) {
+                      Principal principal) {
     	Person p = personService.getByEmail(principal.getName());
         Orders newOrder = new Orders();
         Book b = bookService.getBooksById(bookId);
@@ -109,7 +108,6 @@ public class OrderController {
             	model.addAttribute("term", term);
                } else {
                 date.setDate(date.getDate() - 1);
-               // date = Calendar.getInstance().getTime();
                 model.addAttribute("orderDate", date.toString());
             }
         }
@@ -142,21 +140,24 @@ public class OrderController {
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
     public Model showOrder(Principal principal, @ModelAttribute("editIssue") Orders newIssue, Model model) {
-        //return new ModelAndView("userOrder", "showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     	model.addAttribute("showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
     	return model;
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     @ResponseBody
-	public int editIssueDate(@Valid Orders editIssue, Model model,
-			Principal principal, BindingResult result) {
-    	orderValidator.validate(editIssue, result);
-    	if (result.hasErrors()) {
-    		model.addAttribute("showOrders", orderService.getOrdersByPersonId(personService.getByEmail(principal.getName()).getId()));
-    		return 0;
-    	}
-    	Orders updateOrder = orderService.getById(editIssue.getId());
+	public int editIssueDate(@RequestParam("book") Integer bookId, 
+			                 @RequestParam("person") Integer personId,
+			                 @RequestParam("issueDate") String issueDate,
+			                 @RequestParam("date") String orderDate,
+			                 @RequestParam("id") Integer id, 
+			                 Model model,
+			                 Principal principal) {
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy mm dd HH:mm");
+    	Date newIssueDate = new Date();
+    	Date date = new Date();
+    	Orders editIssue = orderService.getById(id);
+       	Orders updateOrder = orderService.getById(id);
        	int available = updateOrder.getBook().getAvailable();
        	long  a = booksInUseService.getCountReturnBooksBeetweenDates(updateOrder.getIssueDate(), 
        			                                                    editIssue.getIssueDate(), 
@@ -171,8 +172,7 @@ public class OrderController {
             orderService.updateOrder(updateOrder);
             return 1;
         } else {
-        	model.addAttribute("fail", "Try another date");
-        	return 2;
+                return 2;
         }
     }
     

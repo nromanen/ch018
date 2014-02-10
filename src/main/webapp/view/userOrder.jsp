@@ -41,8 +41,8 @@
                                                <form:input path="date" type="hidden" value="${order.date}"/>
                                                <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
                                                <form:errors path="issueDate" cssClass="error"/>
-                                               <form:input path="person" type="hidden" value="${order.person}"/>
-                                               <form:input path="book" type="hidden" value="${order.book}"/>
+                                               <form:input path="person" type="hidden" value="${order.person.id}"/>
+                                               <form:input path="book" type="hidden" value="${order.book.id}"/>
                                            </div>
                                             <br>                                  
                                             <input type="button" value=<spring:message code="button.edit"/> id="editIssueDate${order.id}" class="btn btn-info"/>

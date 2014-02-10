@@ -44,7 +44,6 @@ $(document).ready(function() {
 	  
 	  if(orderDate < currDate) {
 		  e.preventDefault();
-		  //alert($("#dateExpired").text());
 		  $("#dateExpired").modal();
 	  } else {
 	  var href = $("#href").val();
