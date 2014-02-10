@@ -1,5 +1,6 @@
 package com.ch018.library.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ch018.library.DAO.PersonDao;
 import com.ch018.library.entity.Person;
 import com.ch018.library.entity.Person.Role;
+import com.ch018.library.form.Password;
 import com.ch018.library.form.Registration;
 import com.ch018.library.form.ResetPassword;
 import com.ch018.library.util.CalculateRating;
@@ -249,6 +253,26 @@ public class PersonServiceImpl implements PersonService {
 				+ " Please confirm your new email by clicking next link: "
 				+ url + "/confirm?key=" + pers.getVerificationKey();
 		mailService.sendMail(pers.getEmail(), "Library email confirmation", message);
+	}
+
+	@Override
+	@Transactional
+	public void updatePassword(Password password, Person person) {
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
+			if (password.getNewPassword().equals(
+					password.getConfirmPassword())) {
+				person.setPassword(passwordEncoder.encode(password
+						.getNewPassword()));
+				personDao.update(person);
+			}
+		Authentication auth = 
+		new PreAuthenticatedAuthenticationToken(person.getEmail(), 
+				                                person.getPassword(), 
+				                                Arrays.asList(new SimpleGrantedAuthority(person.getRole())));
+
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 
 }

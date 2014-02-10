@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ch018.library.entity.Person;
+import com.ch018.library.form.Password;
 import com.ch018.library.form.Registration;
 import com.ch018.library.form.ResetPassword;
 
@@ -31,4 +32,5 @@ public interface PersonService {
 	void updateEmail(Person pers, Person pers2, HttpServletRequest request);
 	void remindPasswoed(Person person, String message,
 			HttpServletRequest request);
+	void updatePassword(Password password, Person person);
 }

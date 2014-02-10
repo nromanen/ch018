@@ -46,7 +46,7 @@
                                           <form:errors path="email" cssClass="error"/>
                                           <span>${person.email}</span>
                                           <!--  <input type="button" value="Change e-mail" class="btn btn-info"/> -->
-                                          <a href="<c:url value="/profile-email"/>" class="btn btn-info">Change e-mail</a>
+                                          <a href="<c:url value="/profile-email"/>" class="btn btn-info"><spring:message code="button.chEmail"/></a>
                                       </div>  
                                    </div>
                                    

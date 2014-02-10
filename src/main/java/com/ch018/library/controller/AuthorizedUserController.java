@@ -259,11 +259,11 @@ public class AuthorizedUserController {
         if (result.hasErrors()) {
             return "userAccount";
         }
-        if(!person.getEmail().equals(updtPers.getEmail())) { 
+      /*  if(!person.getEmail().equals(updtPers.getEmail())) { 
             person = persService.updateAccProperties(person, updtPers, request);
             persService.update(person);
             return "redirect:/logout"; 
-        }
+        } */
         person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
         return "userAccount";
@@ -282,7 +282,9 @@ public class AuthorizedUserController {
 	       changePass.validate(password, result);
                if(result.hasErrors()){
                      return "pass";
-               } else {
+               } 
+               Person person = persService.getByEmail(principal.getName());    
+            /*else {
 			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			Person person = persService.getByEmail(principal.getName());
 			if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
@@ -293,7 +295,9 @@ public class AuthorizedUserController {
 					persService.update(person);
 				}
 			return "redirect:/logout";
-		}
+		}*/
+               persService.updatePassword(password, person);
+               return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/profile-email")
