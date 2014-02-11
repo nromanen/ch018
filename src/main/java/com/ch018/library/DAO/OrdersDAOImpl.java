@@ -354,9 +354,14 @@ public class OrdersDAOImpl implements OrdersDAO {
 	}
 
 	@Override
-	public long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo,
-			int BookId) {
+	public long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo, int BookId) {
 		long count = 0;
+		Date tmp;
+		if (dateTo.before(dateFrom)) {
+			 tmp = dateTo;
+			 dateTo = dateFrom;
+			 dateFrom = dateTo;
+		}
 		try {
 			Query query = sessionFactory.getCurrentSession()
 					      .createQuery("select count (*) from Orders O where O.book.id=:id AND O.issueDate between :start and :end");

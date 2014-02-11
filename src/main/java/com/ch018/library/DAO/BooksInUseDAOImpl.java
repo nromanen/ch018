@@ -306,6 +306,12 @@ public class BooksInUseDAOImpl implements BooksInUseDAO {
 	@Override
 	public long getCountReturnBooksBeetweenDates(Date dateFrom, Date dateTo, int BookId) {
 		long count = 0;
+		Date tmp;
+		if (dateTo.before(dateFrom)) {
+			 tmp = dateTo;
+			 dateTo = dateFrom;
+			 dateFrom = dateTo;
+		}
 		try {
 			Query query = sessionFactory.getCurrentSession()
 					      .createQuery("select count (*) from BooksInUse B where B.book.id=:id AND B.returnDate between :start and :end");
