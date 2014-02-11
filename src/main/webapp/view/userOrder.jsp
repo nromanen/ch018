@@ -64,5 +64,8 @@
 						</tr>
 					</c:forEach>
 				</table>
-                       
+                 <div id="editissue" class="modal hide fade">
+                                           <div class="modal-header">Message</div>
+                                           <div class="modal-body">Issue date updated successfully</div>
+                        			  </div>        
 </div>

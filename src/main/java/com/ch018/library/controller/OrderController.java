@@ -1,6 +1,8 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -146,29 +148,25 @@ public class OrderController {
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     @ResponseBody
-	public int editIssueDate(@RequestParam("book") Integer bookId, 
-			                 @RequestParam("person") Integer personId,
+	public int editIssueDate(//@RequestParam("book") Integer bookId, 
 			                 @RequestParam("issueDate") String issueDate,
-			                 @RequestParam("date") String orderDate,
 			                 @RequestParam("id") Integer id, 
 			                 Model model,
-			                 Principal principal) {
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy mm dd HH:mm");
-    	Date newIssueDate = new Date();
-    	Date date = new Date();
-    	Orders editIssue = orderService.getById(id);
+			                 Principal principal) throws ParseException {
+    	DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    	Date newIssueDate = format.parse(issueDate);
        	Orders updateOrder = orderService.getById(id);
        	int available = updateOrder.getBook().getAvailable();
        	long  a = booksInUseService.getCountReturnBooksBeetweenDates(updateOrder.getIssueDate(), 
-       			                                                    editIssue.getIssueDate(), 
+       			                                                    newIssueDate, 
        			                                                    updateOrder.getBook().getId());
        	long b = orderService.getCountOrdersBookBeetweenDates(updateOrder.getIssueDate(), 
-       			                                                    editIssue.getIssueDate(), 
+       			                                                    newIssueDate, 
        			                                                    updateOrder.getBook().getId()) - 1;
        	int expectedAvailable = (int) ((int) a - b);
        	expectedAvailable = expectedAvailable + available;
         if (expectedAvailable > 1 ) {
-        	updateOrder.setIssueDate(editIssue.getIssueDate());
+        	updateOrder.setIssueDate(newIssueDate);
             orderService.updateOrder(updateOrder);
             return 1;
         } else {

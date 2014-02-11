@@ -55,7 +55,11 @@ $(document).ready(function() {
 	     dataType: "json",
 	     contentType: 'application/x-www-form-urlencoded',
 	     mimeType: 'application/json',
-	     success: function(){
+	     success: function(data){
+	    	 if (data == 1) {
+	    		 $("#editissue").modal();
+	    		 setTimeout(function () {location.reload();}, 1500);
+	    	 }
 	    	 console.log("1111");
 	     },
 	     error: function() {
