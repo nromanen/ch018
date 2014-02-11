@@ -72,6 +72,10 @@ public class Book implements Serializable {
 	public Book(Book b) {
 		title = b.getTitle();
 	}
+	
+	public void Book() {
+		
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
