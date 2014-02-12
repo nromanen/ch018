@@ -64,7 +64,7 @@ public class HeaderController implements ViewPreparer {
 	
 	private List<String> simulateSearchResult(String bookName) {
 		List<String> result = new ArrayList<String>();
-		List<Book> books = bookService.simpleSearch(bookName, 0, 0, "id");
+		List<Book> books = bookService.simpleSearch(bookName, 0, 0, "id", true);
 		for (Book book : books) {
 			result.add(book.getTitle());
 		}

@@ -16,9 +16,9 @@ public interface BookService {
 	Book getBooksByIdWithOrders(int id);
 	int deleteBook(int id);
     List<Book> getBooksByRating();
-    List<Book> getAllBooks(int currentPos, int pageSize, String sort);
+    List<Book> getAllBooks(int currentPos, int pageSize, String sort, boolean isAsc);
 	long countBooks();
-	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort);	
+	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort, boolean isAsc);	
 	long simpleSearchCount(String search);	
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
