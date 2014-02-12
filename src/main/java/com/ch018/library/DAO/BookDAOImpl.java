@@ -53,7 +53,6 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(Book.class);
-			criteria.addOrder(Order.asc(sort));
 			if (sort != null && isAsc) {
 				criteria.addOrder(Order.asc(sort));
 			}

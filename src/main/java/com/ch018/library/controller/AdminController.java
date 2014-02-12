@@ -72,7 +72,7 @@ public class AdminController {
 			roles.add(role.toString());
 		}
 		model.addAttribute("role", roles);
-		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field));
+		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field, true));
 		model.addAttribute("person", person);
 		return "admin";
 	}

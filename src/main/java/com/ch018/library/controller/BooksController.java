@@ -118,13 +118,18 @@ public class BooksController {
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
-		if (!sort.equals("id")) {
-			session.setAttribute("sort", sort);
-		} else {
-			sort = session.getAttribute("sort").toString();
-		}
 		if (session.getAttribute("isAsc") == null) {
 			session.setAttribute("isAsc", true);
+		}
+		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
+		if (session.getAttribute("sort") != null && session.getAttribute("sort").toString().equals(sort)) {
+			isAsc = !isAsc;
+			session.setAttribute("isAsc", isAsc);
+		}
+		if (!sort.equals("id")) {
+			session.setAttribute("sort", sort);
+		} else if (session.getAttribute("sort") != null) {
+			sort = (String) session.getAttribute("sort");
 		}
 		session.removeAttribute("search");
 		session.removeAttribute("advancedSearch");
@@ -135,7 +140,7 @@ public class BooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		List<Book> books = new ArrayList<>();
-		books = bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, sort, true);
+		books = bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, sort, isAsc);
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);
@@ -243,6 +248,18 @@ public class BooksController {
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
+		if (session.getAttribute("isAsc") == null) {
+			session.setAttribute("isAsc", true);
+		}
+		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
+		if (session.getAttribute("sort") != null && session.getAttribute("sort").toString().equals(sort)) {
+			isAsc = !isAsc;
+			session.setAttribute("isAsc", isAsc);
+		}if (!sort.equals("id")) {
+			session.setAttribute("sort", sort);
+		} else if (session.getAttribute("sort") != null) {
+			sort = (String) session.getAttribute("sort");
+		}
 		List<Book> books = new ArrayList<>();
 		Book book = new Book();
 		session.removeAttribute("advancedSearch");
@@ -256,7 +273,7 @@ public class BooksController {
 		long count = bookService.simpleSearchCount(search);
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort, true));
+		books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort, isAsc));
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);

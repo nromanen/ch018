@@ -60,6 +60,14 @@ public class PersonController {
 	public String showUsers(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
+		if (session.getAttribute("isAsc") == null) {
+			session.setAttribute("isAsc", true);
+		}
+		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
+		if (session.getAttribute("personsort") != null && session.getAttribute("personsort").toString().equals(sort)) {
+			isAsc = !isAsc;
+			session.setAttribute("isAsc", isAsc);
+		}
 		String field =(String) session.getAttribute("personsort");
 		if (field == null) {
 			session.setAttribute("personsort", sort);
@@ -76,7 +84,7 @@ public class PersonController {
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		person.setEmail("");
-		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field));
+		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field, isAsc));
 		model.addAttribute("person", person);
 		return "users";
 	}

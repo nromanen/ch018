@@ -23,5 +23,5 @@ public interface PersonDao {
 	List<Person> getSmsEnabled();
 	long isExist(String email);
 	long count();
-	List<Person> getAll(int currentPos, int pageSize, String field);
+	List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc);
 }

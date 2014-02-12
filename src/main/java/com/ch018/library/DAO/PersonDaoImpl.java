@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,14 +174,21 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Override
-	public List<Person> getAll(int currentPos, int pageSize, String field) {
+	public List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc) {
 		List<Person> persons = new ArrayList<>();
 		try {
-			Query query = sessionFactory.getCurrentSession().createQuery("from Person P order by P." + field + " asc");
-			if (pageSize != 0) {
-				query.setMaxResults(pageSize).setFirstResult(currentPos);
+			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Person.class);
+			if (field != null && isAsc) {
+				criteria.addOrder(Order.asc(field));
 			}
-			persons.addAll(query.list());
+			if (field != null && !isAsc) {
+				criteria.addOrder(Order.desc(field));
+			}
+			if (pageSize != 0) {
+				criteria.setFirstResult(currentPos);
+				criteria.setMaxResults(pageSize);
+			}
+			persons.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error("Error getting all persons: " + e.getMessage());
 		}

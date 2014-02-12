@@ -105,8 +105,8 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Override
 	@Transactional
-	public List<Person> getAll(int currentPos, int pageSize, String field) {
-		return personDao.getAll(currentPos, pageSize, field);
+	public List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc) {
+		return personDao.getAll(currentPos, pageSize, field, isAsc);
 	}
 
 	@Override

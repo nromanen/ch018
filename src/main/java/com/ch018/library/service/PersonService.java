@@ -26,7 +26,7 @@ public interface PersonService {
 	void restorePassword(Person person, ResetPassword password);
 	void librarianSavePerson(Person person, HttpServletRequest request);
 	long getCount();
-	List<Person> getAll(int currentPos, int pageSize, String field);
+	List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc);
 	void adminSavePerson(Person person, HttpServletRequest request);
 	void adminUpdatePerson(Person person, Person person2);
 	void updateEmail(Person pers, Person pers2, HttpServletRequest request);
