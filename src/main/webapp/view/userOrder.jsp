@@ -40,7 +40,8 @@
                                            <div class="controls">
                                                <form:input path="date" type="hidden" value="${order.date}"/>
                                                <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
-                                               <form:errors path="issueDate" cssClass="error"/>
+                                               <br>
+                                               <span  cssClass="error" style="display:none" id="fail${order.id}">Try to choose another date or time</span>
                                                <form:input path="person" type="hidden" value="${order.person.id}"/>
                                                <form:input path="book" type="hidden" value="${order.book.id}"/>
                                            </div>

@@ -48,6 +48,7 @@ $(document).ready(function() {
 	  } else {
 	  var href = $("#href").val();
 	  console.log($("#editIssue" + $id).serialize());
+	  $("#fail" + $id).hide("slow");
 	  $.ajax({
 		  url: href,
 		  data: $("#editIssue" +$id).serialize(),
@@ -59,6 +60,10 @@ $(document).ready(function() {
 	    	 if (data == 1) {
 	    		 $("#editissue").modal();
 	    		 setTimeout(function () {location.reload();}, 1500);
+	         }
+	         if (data == 0) {
+	        	 $("#fail" + $id).show("slow");
+	        	 console.log($("#fail" + $id).text());
 	    	 }
 	    	 console.log("1111");
 	     },
@@ -76,6 +81,7 @@ $(document).ready(function() {
 	  $("#saveNewIssue" + $id1).hide();
 	  $("#cancelIssueEdit" + $id1).hide();
 	  $("#newIssue" + $id1).hide();
+	  $("#fail" + $id1).hide("slow");
   })
   
   

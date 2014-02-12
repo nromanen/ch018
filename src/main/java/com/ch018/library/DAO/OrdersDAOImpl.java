@@ -360,7 +360,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		if (dateTo.before(dateFrom)) {
 			 tmp = dateTo;
 			 dateTo = dateFrom;
-			 dateFrom = dateTo;
+			 dateFrom = tmp;
 		}
 		try {
 			Query query = sessionFactory.getCurrentSession()
