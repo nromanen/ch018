@@ -40,8 +40,8 @@ public class BookServiceImpl implements BookService {
 	 */
 	@Override
 	@Transactional
-	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
-		List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort);
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort, boolean isAsc) {
+		List<Book> books = bookDAO.getAllBooks(currentPos, pageSize, sort, isAsc);
 		return books;
 	}
 	
@@ -77,8 +77,8 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	@Transactional
-	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort) {
-		List<Book> books = bookDAO.simpleSearch(parametr, currentPos, pageSize, sort);
+	public List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort, boolean isAsc) {
+		List<Book> books = bookDAO.simpleSearch(parametr, currentPos, pageSize, sort, isAsc);
 		return books;
 	}
 

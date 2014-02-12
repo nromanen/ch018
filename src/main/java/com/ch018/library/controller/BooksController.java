@@ -118,14 +118,13 @@ public class BooksController {
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
-		String field =(String) session.getAttribute("sort");
-		if (field == null) {
-			session.setAttribute("sort", sort);
-			field =(String) session.getAttribute("sort");
-		}
 		if (!sort.equals("id")) {
 			session.setAttribute("sort", sort);
-			field =(String) session.getAttribute("sort");
+		} else {
+			sort = session.getAttribute("sort").toString();
+		}
+		if (session.getAttribute("isAsc") == null) {
+			session.setAttribute("isAsc", true);
 		}
 		session.removeAttribute("search");
 		session.removeAttribute("advancedSearch");
@@ -136,7 +135,7 @@ public class BooksController {
 		model.addAttribute("book", book);
 		model.addAttribute("genre", genreService.getAllGenres(locale.getLanguage()));
 		List<Book> books = new ArrayList<>();
-		books = bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, field);
+		books = bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, sort, true);
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);
@@ -209,7 +208,7 @@ public class BooksController {
 				count = bookService.countBooks();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(bookService.getAllBooks(currentPos,IConstants.PAGE_SIZE, sessionSort));
+				books.addAll(bookService.getAllBooks(currentPos,IConstants.PAGE_SIZE, sessionSort, true));
 				break;
 		}
 		model.addAttribute("pages", pages);
@@ -257,7 +256,7 @@ public class BooksController {
 		long count = bookService.simpleSearchCount(search);
 		long pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
-		books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort));
+		books.addAll(bookService.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort, true));
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);

@@ -48,14 +48,22 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public List<Book> getAllBooks(int currentPos, int pageSize, String sort) {
+	public List<Book> getAllBooks(int currentPos, int pageSize, String sort, boolean isAsc) {
 		List<Book> books = new ArrayList<>();
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(Book.class);
 			criteria.addOrder(Order.asc(sort));
-			criteria.setMaxResults(pageSize);
-			criteria.setFirstResult(currentPos);
+			if (sort != null && isAsc) {
+				criteria.addOrder(Order.asc(sort));
+			}
+			if (sort != null && !isAsc) {
+				criteria.addOrder(Order.desc(sort));
+			}
+			if (pageSize != 0) {
+				criteria.setFirstResult(currentPos);
+				criteria.setMaxResults(pageSize);
+			}
 			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error("Error getting all books: " + e.getMessage());
@@ -162,23 +170,26 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> simpleSearch(String parametr, int currentPos,
-			int pageSize, String sort) {
+			int pageSize, String sort, boolean isAsc) {
 		parametr = "%" + parametr + "%";
 		List<Book> books = new ArrayList<Book>();
 		try {
-			Query query = sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select B from Book B where (lower(B.title) "
-									+ "LIKE lower(:parametr)) OR (lower(B.authors) "
-									+ "LIKE lower(:parametr)) OR (lower(B.publication) "
-									+ "LIKE lower(:parametr)) order by B."
-									+ sort + " asc")
-					.setString("parametr", parametr);
-			if (pageSize != 0) {
-				query.setMaxResults(pageSize).setFirstResult(currentPos);
+			Criteria criteria = sessionFactory
+					.getCurrentSession().createCriteria(Book.class);
+			criteria.add(Restrictions.or(Restrictions.like("title", parametr).ignoreCase(),
+					Restrictions.like("authors", parametr).ignoreCase(),
+					Restrictions.like("publication", parametr).ignoreCase()));
+			if (sort != null && isAsc) {
+				criteria.addOrder(Order.asc(sort));
 			}
-			books.addAll(query.list());
+			if (sort != null && !isAsc) {
+				criteria.addOrder(Order.desc(sort));
+			}
+			if (pageSize != 0) {
+				criteria.setFirstResult(currentPos);
+				criteria.setMaxResults(pageSize);
+			}
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}

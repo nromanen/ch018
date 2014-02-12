@@ -83,7 +83,7 @@ public class AuthorizedUserController {
 		long count = book.countBooks();
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 		pages = (int) Math.ceil(count / (float) IConstants.PAGE_SIZE);
-		List<Book> books = book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id");
+		List<Book> books = book.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id", true);
 		model.addAttribute("latest", books);
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
@@ -110,7 +110,7 @@ public class AuthorizedUserController {
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
-		books.addAll(book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id"));
+		books.addAll(book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id", true));
 		model.addAttribute("latest", books);
 		return "index";
 	}

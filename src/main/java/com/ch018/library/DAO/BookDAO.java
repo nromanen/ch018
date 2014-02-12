@@ -7,7 +7,7 @@ import com.ch018.library.form.AdvancedSearch;
 
 public interface BookDAO {
 	void addBook(Book book);
-	List<Book> getAllBooks(int currentPos, int pageSize, String sort);
+	List<Book> getAllBooks(int currentPos, int pageSize, String sort, boolean isAsc);
 	Book getBooksById(int id);
 	Book getBooksByIdWithUses(int id);
 	Book getBooksByIdWithOrders(int id);
@@ -16,7 +16,7 @@ public interface BookDAO {
 	List<Book> simpleSearch(String parametr);
     List<Book> getBooksByRating();
     long countBooks();
-	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort);
+	List<Book> simpleSearch(String parametr, int currentPos, int pageSize, String sort, boolean isAsc);
 	long simpleSearchCount(String parametr);
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
