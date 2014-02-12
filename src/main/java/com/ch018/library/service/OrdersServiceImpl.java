@@ -3,7 +3,12 @@ package com.ch018.library.service;
 import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
+import com.ch018.library.entity.Person;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +30,18 @@ public class OrdersServiceImpl implements OrdersService{
     
     @Autowired
     private LocalizationService localizationService;
+    
+    @Autowired
+    private BooksInUseService booksInUseService;
+    
+    @Autowired
+    private BookService bookService;
+    
+    @Autowired
+    private PersonService personService;
+    
+    @Autowired
+    private WishListService wishListService;
     
     @Transactional
     public void addOrder(Orders ord) {
@@ -140,5 +157,65 @@ public class OrdersServiceImpl implements OrdersService{
 			int BookId) {
 		return ordDAO.getCountOrdersBookBeetweenDates(dateFrom, dateTo, BookId);
 	}
+
+	@Override
+	@Transactional
+	public int updateissueDate(int id, String issueDate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    	Date newIssueDate = format.parse(issueDate);
+       	Orders updateOrder = ordDAO.getById(id);
+       	int available = updateOrder.getBook().getAvailable();
+       	long  a = booksInUseService.getCountReturnBooksBeetweenDates(updateOrder.getIssueDate(), 
+       			                                                    newIssueDate, 
+       			                                                    updateOrder.getBook().getId());
+       	long b = ordDAO.getCountOrdersBookBeetweenDates(updateOrder.getIssueDate(), 
+       			                                                    newIssueDate, 
+       			                                                    updateOrder.getBook().getId()) - 1;
+       	int expectedAvailable = (int) ((int) a - b);
+       	expectedAvailable = expectedAvailable + available;
+        if (expectedAvailable > 1 ) {
+        	updateOrder.setIssueDate(newIssueDate);
+            ordDAO.updateOrder(updateOrder);
+            return 1;
+        } else {
+                return 0;
+        }
+	}
+
+	@Override
+	@Transactional
+	public int prepareOrder(int bookID, Person pers) {
+		if (booksInUseService.alreadyInUse(bookID, pers.getId())) {
+            return 0;
+        }
+        int personId = pers.getId();
+        int  uses = ordDAO.getOrdersByPersonId(personId).size();
+        uses += booksInUseService.getByPersonId(personId).size();
+        int j = pers.getMultibookAllowed();
+        if (j == uses) {
+            return 2;
+        } 
+        if (ordDAO.orderExist(personId, bookID)) {
+              return 3;
+          }
+        return 1;
+	}
+
+	@Override
+	@Transactional
+	public String createOrder(int bookId, int personId, Orders newOrder) {
+        Calendar calendar = Calendar.getInstance();
+        newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
+        newOrder.setPerson(personService.getById(newOrder.getPerson().getId()));
+        newOrder.setDate(calendar.getTime());
+        ordDAO.addOrder(newOrder);
+        if (wishListService.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
+                    int id = wishListService.getWishWithoutId(bookId, personId).getId();
+					wishListService.deleteWishById(id);
+				}
+        return "redirect:/userOrder"; 
+	
     
+    } 
+	
 }

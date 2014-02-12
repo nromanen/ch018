@@ -150,16 +150,6 @@ public class PersonServiceImpl implements PersonService {
 		person.setName(updatedPerson.getName());
 		person.setSurname(updatedPerson.getSurname());
 		person.setCellphone(updatedPerson.getCellphone());
-		/*if (!person.getEmail().equals(updatedPerson.getEmail())) {
-			person.setEmail(updatedPerson.getEmail());
-			String url = request.getRequestURL().toString();
-			String message = "You have change your e-mail address on account in J Library"
-					+ " Please confirm your new email by clicking next link: "
-					+ url + "/confirm?key=" + person.getVerificationKey();
-			mailService.sendMail(person.getEmail(), "Library email confirmation", message);
-			Authentication auth = new PreAuthenticatedAuthenticationToken(person.getEmail(), SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-           SecurityContextHolder.getContext().setAuthentication(auth);
-		} */
 		person.setSms(updatedPerson.getSms());
 		return person;
 	}

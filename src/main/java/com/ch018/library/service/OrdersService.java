@@ -1,11 +1,13 @@
 package com.ch018.library.service;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Orders;
+import com.ch018.library.entity.Person;
 
 /**
  * 
@@ -32,4 +34,7 @@ public interface OrdersService {
     void updateOrder(Orders ord);
     long getCountOrdersByPerson(String name);
     long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo , int BookId);
+    int updateissueDate(int id, String issueDate) throws ParseException;
+    int prepareOrder(int bookID, Person pers);
+    String createOrder(int bookId, int personId, Orders newOrder);
 }

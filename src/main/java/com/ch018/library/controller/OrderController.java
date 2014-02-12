@@ -70,9 +70,11 @@ public class OrderController {
     @RequestMapping(value = "/prepareorder", method = RequestMethod.GET)
     @ResponseBody
     public int prepareOrder(Model model, 
-                                    @RequestParam("book") int bookId, 
-                                    Principal principal) {
-        Person p = personService.getByEmail(principal.getName());
+                            @RequestParam("book") int bookId, 
+                            Principal principal) {
+    	Person pers = personService.getByEmail(principal.getName());
+    	return orderService.prepareOrder(bookId, pers);
+       /* Person p = personService.getByEmail(principal.getName());
         if (booksInUseService.alreadyInUse(bookId, p.getId())) {
             return 0;
         }
@@ -86,7 +88,7 @@ public class OrderController {
         if (orderService.orderExist(personId, bookId)) {
               return 3;
           }
-        return 1;
+        return 1;*/
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
@@ -128,6 +130,9 @@ public class OrderController {
                               BindingResult result, Model model) {
       	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
+        return orderService.createOrder(bookId, personId, newOrder);
+        
+       /*
         Calendar calendar = Calendar.getInstance();
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(personService.getById(newOrder.getPerson().getId()));
@@ -137,7 +142,7 @@ public class OrderController {
                     int id = wishListService.getWishWithoutId(bookId, personId).getId();
 					wishListService.deleteWishById(id);
 				}
-        return "redirect:/userOrder";
+        return "redirect:/userOrder"; */
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
@@ -148,12 +153,12 @@ public class OrderController {
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.POST)
     @ResponseBody
-	public int editIssueDate(//@RequestParam("book") Integer bookId, 
-			                 @RequestParam("issueDate") String issueDate,
+	public int editIssueDate(@RequestParam("issueDate") String issueDate,
 			                 @RequestParam("id") Integer id, 
 			                 Model model,
 			                 Principal principal) throws ParseException {
-    	DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    	 return orderService.updateissueDate(id, issueDate);
+    	/*DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
     	Date newIssueDate = format.parse(issueDate);
        	Orders updateOrder = orderService.getById(id);
        	int available = updateOrder.getBook().getAvailable();
@@ -171,7 +176,7 @@ public class OrderController {
             return 1;
         } else {
                 return 0;
-        }
+        }*/
     }
     
     @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
