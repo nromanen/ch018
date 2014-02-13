@@ -155,8 +155,8 @@
 						code="person.confirm" />
 				</label>
 			</div>
-			<span><spring:message code="person.days" /></span><input type="number"
-				id="days" required />
+			<span><spring:message code="person.days" /></span><input type="number" id="days" required />
+			<div id="slider-range-min"></div>
 		</div>
 		<div class="modal-footer">
 			<a id="issueLink"

@@ -307,7 +307,20 @@ $(document).ready(function() {
 		  }
       });
       event.preventDefault();
-  });  
+  });
+  
+  
+  
+	  $( "#slider-range-min" ).slider({
+		  range: "min",
+		  value: 14,
+		  min: 0,
+		  max: 90,
+		  slide: function(event, ui) {
+			  $("#amount").val("$" + ui.value);  
+		  }
+	  });
+	  $("#amount").val("$" + $("#slider-range-min").slider("value")); 
   
 	
 });
