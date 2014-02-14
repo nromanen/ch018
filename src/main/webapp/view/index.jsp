@@ -35,7 +35,7 @@
  -->
 <div class="navbar-inner row-margin">
 	<div class="container" style="width: auto; padding: 10px 20px;">
-		<a type="button" class="btn pull-left" id="sortby_btn" ><i class="icon-user"></i> <spring:message code="sort.field" /> <b class="caret"></b></a>
+		<a type="button" class="btn pull-left" id="sortby_btn" > <spring:message code="sort.field" /> <b class="caret"></b></a>
 		<c:if test="${indexSearch != null && indexSearch != ''}">
 			<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
 		</c:if>
@@ -46,7 +46,7 @@
 			<c:if test="${page <= 1}">
 				<li class = "disabled"><a >Назад</a></li>
 			</c:if>
-				<li>${page}</li>
+				<li>${page} of ${pages}</li>
 			<c:if test="${page < pages}">
 				<li><a href="<c:url value="?${request}&page=${page+1}"/>">Вперед</a></li>
 			</c:if>
@@ -58,61 +58,61 @@
 </div>
 <div class="sort_options" style="display: none">
 	<dl>
-		<dt><spring:message code="book.title" /></dt>
-		<dd>
+		<dt class="book_title"><spring:message code="book.title" /></dt>
+		<dd class="book_t_ask">
 			<a href="<c:url value="/search?sort=title&isasc=true${search}"/>">
 				<span>от А до Я</span>
 			</a>
 		</dd>
-		<dd>
+		<dd class="book_t_desk">
 			<a href="<c:url value="/search?sort=title${search}"/>">
 				<span>от Я до А</span>
 			</a>
 		</dd>
 		
-		<dt><spring:message code="book.authors" /></dt>
-		<dd data-order="p">
+		<dt class="book_authors"><spring:message code="book.authors" /></dt>
+		<dd class="book_a_ask">
 			<a href="<c:url value="/search?sort=authors&isasc=true${search}"/>">
 				<span>от А до Я</span>
 			</a>
 		</dd>
-		<dd data-order="pd">
+		<dd class="book_a_desk">
 			<a href="<c:url value="/search?sort=authors${search}"/>">
 				<span>от Я до А</span>
 			</a>
 		</dd>
 		
-		<dt><spring:message code="book.publication" /></dt>
-		<dd data-order="p">
+		<dt class="book_publication"><spring:message code="book.publication" /></dt>
+		<dd class="book_p_ask">
 			<a href="<c:url value="/search?sort=publication&isasc=true${search}"/>">
 				<span>от А до Я</span>
 			</a>
 		</dd>
-		<dd data-order="pd">
+		<dd class="book_p_desk">
 			<a href="<c:url value="/search?sort=publication${search}"/>">
 				<span>от Я до А</span>
 			</a>
 		</dd>
 		
-		<dt><spring:message code="book.year" /></dt>
-		<dd data-order="t" class="selected">
+		<dt class="book_year"><spring:message code="book.year" /></dt>
+		<dd class="book_y_ask">
 			<a href="<c:url value="/search?sort=year&isasc=true${search}"/>">
 				<span>от меньшего</span>
 			</a>
 		</dd>
-		<dd data-order="td">
+		<dd class="book_y_desk">
 			<a href="<c:url value="/search?sort=year${search}"/>">
 				<span>от большего</span>
 			</a>
 		</dd>
 		
-		<dt><spring:message code="book.available" /></dt>
-		<dd data-order="n">
+		<dt class="book_available"><spring:message code="book.available" /></dt>
+		<dd class="book_av_ask">
 			<a href="<c:url value="/search?sort=available&isasc=true${search}"/>">
 			<span>от меньшего</span>
 			</a>
 		</dd>
-		<dd data-order="nd">
+		<dd class="book_av_desk">
 			<a href="<c:url value="/search?sort=available${search}"/>">
 			<span>от большего</span>
 			</a>
