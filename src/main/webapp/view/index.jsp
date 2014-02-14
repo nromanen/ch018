@@ -11,7 +11,7 @@
 	<c:set var="request" value="${fn:replace(request, spage, '')}" />
 </c:if>
 <c:choose>
-	<c:when test="${indexSearch != null}">
+	<c:when test="${indexSearch != null && indexSearch != ''}">
 		<c:set var="search" value="&search=${indexSearch}" />
 	</c:when>
 	<c:otherwise>
@@ -35,10 +35,25 @@
  -->
 <div class="navbar-inner row-margin">
 	<div class="container" style="width: auto; padding: 10px 20px;">
-		<a type="button" class="btn" id="sortby_btn" ><i class="icon-user"></i> <spring:message code="sort.field" /> <b class="caret"></b></a>
+		<a type="button" class="btn pull-left" id="sortby_btn" ><i class="icon-user"></i> <spring:message code="sort.field" /> <b class="caret"></b></a>
 		<c:if test="${indexSearch != null && indexSearch != ''}">
-			<span>  <spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
+			<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
 		</c:if>
+		<ul class="pager pull-right">
+			<c:if test="${page > 1}">
+				<li><a href="<c:url value="?${request}&page=${page-1}"/>">Назад</a></li>
+			</c:if>
+			<c:if test="${page <= 1}">
+				<li class = "disabled"><a >Назад</a></li>
+			</c:if>
+				<li>${page}</li>
+			<c:if test="${page < pages}">
+				<li><a href="<c:url value="?${request}&page=${page+1}"/>">Вперед</a></li>
+			</c:if>
+			<c:if test="${page == pages}">
+				<li class = "disabled"><a >Вперед</a></li>
+			</c:if>
+		</ul>
 	</div>
 </div>
 <div class="sort_options" style="display: none">
