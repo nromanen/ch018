@@ -325,4 +325,50 @@ $(document).ready(function() {
 	  }
   });
   $("#days").val($("#slider-range-min").slider("value")); 
+  
+  
+  /**
+   * sorting on index page
+   */
+  $uuu = window.location.href;
+  if($uuu.indexOf("sort=title") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_title").html() + ": " + $(".book_t_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_title").html() + ": " + $(".book_t_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
+  if($uuu.indexOf("sort=authors") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_authors").html() + ": " + $(".book_a_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_authors").html() + ": " + $(".book_a_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
+  if($uuu.indexOf("sort=publication") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_publication").html() + ": " + $(".book_p_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_publication").html() + ": " + $(".book_p_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
+  if($uuu.indexOf("sort=year") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_year").html() + ": " + $(".book_y_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_year").html() + ": " + $(".book_y_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
+  if($uuu.indexOf("sort=available") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_available").html() + ": " + $(".book_av_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_available").html() + ": " + $(".book_av_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
 });

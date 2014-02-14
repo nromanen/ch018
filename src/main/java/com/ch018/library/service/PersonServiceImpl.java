@@ -247,22 +247,18 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public void updatePassword(Password password, Person person) {
+	public boolean updatePassword(Password password, Person person) {
+		boolean success = false;
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		
 		if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
 			if (password.getNewPassword().equals(
 					password.getConfirmPassword())) {
 				person.setPassword(passwordEncoder.encode(password
 						.getNewPassword()));
 				personDao.update(person);
+				success = true;
 			}
-		Authentication auth = 
-		new PreAuthenticatedAuthenticationToken(person.getEmail(), 
-				                                person.getPassword(), 
-				                                Arrays.asList(new SimpleGrantedAuthority(person.getRole())));
-
-		SecurityContextHolder.getContext().setAuthentication(auth);
+		return success;
 	}
 
 }
