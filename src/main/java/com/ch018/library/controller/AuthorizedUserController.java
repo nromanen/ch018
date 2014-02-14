@@ -3,19 +3,24 @@ package com.ch018.library.controller;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
@@ -63,6 +69,9 @@ public class AuthorizedUserController {
     
     @Autowired
 	private PersonValidation personValidation;
+    
+    @Autowired 
+	private MessageSource messageSource;
     
     /**
      * 
@@ -277,27 +286,36 @@ public class AuthorizedUserController {
      * @return
      */
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
-	public String passwordView(@ModelAttribute("password") Password password,
-			BindingResult result, Principal principal) {
+	@ResponseBody
+	public JsonResponse passwordView(@ModelAttribute("password") @Valid Password password, BindingResult result, Principal principal) {
+		   JsonResponse resp = new JsonResponse();
 	       changePass.validate(password, result);
                if(result.hasErrors()){
-                     return "pass";
+                    Map<String,String> errors = new HashMap<>();
+                    List<FieldError> fieldErrors = result.getFieldErrors();
+                    for(FieldError fieldError: fieldErrors) {
+                    	String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+                    	String string = resolveMessageCodes[0];
+                    	String message = messageSource.getMessage(string + "." + fieldError.getField(), 
+                    			  new Object[]{fieldError.getRejectedValue()}, LocaleContextHolder.getLocale());
+                    	errors.put(fieldError.getField(), message);
+                    }
+                    resp.setStatus("FAIL");
+                    resp.setErrorsMap(errors);
+                    resp.setResult(result.getAllErrors());
+                    return resp;
                } 
-               Person person = persService.getByEmail(principal.getName());    
-            /*else {
-			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			Person person = persService.getByEmail(principal.getName());
-			if (BCrypt.checkpw(password.getPassword(), person.getPassword()))
-				if (password.getNewPassword().equals(
-						password.getConfirmPassword())) {
-					person.setPassword(passwordEncoder.encode(password
-							.getNewPassword()));
-					persService.update(person);
-				}
-			return "redirect:/logout";
-		}*/
-               persService.updatePassword(password, person);
-               return "redirect:/";
+              
+              Person person = persService.getByEmail(principal.getName());   
+              if (persService.updatePassword(password, person)){
+            	  resp.setStatus("SUCCESS");
+            	  
+            	  return resp;
+              } else {
+            	//  return "pass";
+            	  resp.setStatus("SUCCESS");
+            	  return resp;
+              }             
 	}
 	
 	@RequestMapping(value = "/profile-email")

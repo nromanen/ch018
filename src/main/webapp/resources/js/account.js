@@ -28,7 +28,6 @@ $(document).ready(function() {
 	  $("#oldIssue" + $id).hide();
 	  $("#saveNewIssue" + $id).show();
 	  $("#cancelIssueEdit" + $id).show();
-	 // $("#newIssue" + $id).val($("#oldIssue" + $id).text());
 	  $("#newIssue" + $id).show();
 	  $("#newIssue" + $id).focus();
   
@@ -74,6 +73,26 @@ $(document).ready(function() {
 	  }
 	  e.preventDefault();
   }) 
+  
+  $("#passForm").submit(function(e){
+	  console.log("1111");
+	  $.ajax({
+		  url: $("#passForm").attr("action"),
+		  data: $("#passForm").serialize(),
+	      type: "POST",
+	      dataType: "json",
+	      contentType : 'application/x-www-form-urlencoded',
+		  mimeType : 'application/json',
+		   success: function(data) {
+			   console.log("success");
+		   },
+		   error: function(data) {
+			   console.log("error");
+		   }
+	  })
+	  e.preventDefault();
+  })
+  
   
   $("input[id^=cancelIssueEdit]").click(function(){
 	  $id1 = $(this).next().val();

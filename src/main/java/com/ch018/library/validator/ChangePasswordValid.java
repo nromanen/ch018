@@ -29,11 +29,11 @@ public class ChangePasswordValid implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, 
-                "password", "required.password", "aaa");
+                "password", "required.password", "this filed is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, 
-                "confirmPassword", "required.confirmPassword", "aaaa");
+                "confirmPassword", "required.confirmPassword", "this filed is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, 
-                "newPassword", "required.newPassword", "aaaaaa");
+                "newPassword", "required.newPassword", "this filed is required");
         Password pass = (Password) o;
         
         if(!pass.getNewPassword().equals(pass.getConfirmPassword()))

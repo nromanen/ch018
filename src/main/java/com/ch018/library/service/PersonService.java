@@ -32,5 +32,5 @@ public interface PersonService {
 	void updateEmail(Person pers, Person pers2, HttpServletRequest request);
 	void remindPasswoed(Person person, String message,
 			HttpServletRequest request);
-	void updatePassword(Password password, Person person);
+	boolean updatePassword(Password password, Person person);
 }

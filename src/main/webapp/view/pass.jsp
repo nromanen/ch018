@@ -10,7 +10,8 @@
 	<br>
 	<br>
 	<br>
-	<form:form method="POST" commandName="password" class="form-horizontal">
+	<input type="hidden" id="href" value="${pageContext.request.contextPath}/pass" />
+	<form:form method="POST" commandName="password" class="form-horizontal" id="passForm">
             <div class="control-group">	
                 <label class="control-label" for="pass"><spring:message code="pass.old" /></label>
                 <div class="controls">
