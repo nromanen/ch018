@@ -37,7 +37,7 @@ public class ChangePasswordValid implements Validator {
         Password pass = (Password) o;
         
         if(!pass.getNewPassword().equals(pass.getConfirmPassword()))
-            errors.rejectValue("newPassword", "notmatch.password");
+            errors.rejectValue("newPassword", "notmatch");
     }
     
 }

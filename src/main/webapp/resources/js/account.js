@@ -1,27 +1,6 @@
-function validateEmail(email) {
-        // http://stackoverflow.com/a/46181/11236
-
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    }
-    
-    function validate() {
-        $("#result").text("");
-        var email = $("#email1").val();
-        if (validateEmail(email)) {
-            $("#result").text("this email is valid");
-            $("#result").css("color", "green");
-        } else {
-            $("#result").text("this email is not valid");
-            $("#result").css("color", "red");
-        }
-        return false;
-    }
 $(document).ready(function() { 
 
   $('.datetimepicker').datetimepicker();
-  //console.log("kkkk");  
-  //$("#email1").change(validate());
   
   $("input[id^=editIssueDate]").click(function(){
 	  $id = $(this).next().val();
@@ -34,8 +13,7 @@ $(document).ready(function() {
   })
   
    $("input[id^=saveNewIssue]").click(function(e) {
-  //$("#editIssue").submit(function(e) {
-	  $id = $(this).prev().val();
+  	  $id = $(this).prev().val();
 	  var currDate = (new Date).getTime();
 	  var orderDate = (new Date($("#newIssue" +$id).val())).getTime();
 	  console.log(currDate);
@@ -75,6 +53,9 @@ $(document).ready(function() {
   }) 
   
   $("#passForm").submit(function(e){
+	  $("#errorpassword").text("");
+	  $("#errornewPassword").text("");
+	  $("#errorconfirmPassword").text("");
 	  console.log("1111");
 	  $.ajax({
 		  url: $("#passForm").attr("action"),
@@ -83,10 +64,27 @@ $(document).ready(function() {
 	      dataType: "json",
 	      contentType : 'application/x-www-form-urlencoded',
 		  mimeType : 'application/json',
-		   success: function(data) {
-			   console.log("success");
+		   success: function(response) {
+			   if(response.status == "SUCCESS") {
+			     console.log("success" + response.result);
+			     $("#passModal").modal();
+			     
+			   } else {
+				    if(response.status == "FAIL") {
+				    	console.log("FAIL");
+				    	for(var key in response.errorsMap) {
+				    		  console.log(response.errorsMap[key]);
+				    		  $("#error" + key).text(response.errorsMap[key]);
+				    	}
+				    }
+				    if(response.status == "WRONGPASS") {
+				    	console.log("you enter wrong password");
+				    	$(".alert").show();
+				    }
+			   }
 		   },
-		   error: function(data) {
+		   error: function(response) {
+			   
 			   console.log("error");
 		   }
 	  })

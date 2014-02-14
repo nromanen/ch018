@@ -287,7 +287,7 @@ public class AuthorizedUserController {
      */
 	@RequestMapping(value = "/pass", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonResponse passwordView(@ModelAttribute("password") @Valid Password password, BindingResult result, Principal principal) {
+	public JsonResponse passwordView(@Valid Password password, BindingResult result, Principal principal) {
 		   JsonResponse resp = new JsonResponse();
 	       changePass.validate(password, result);
                if(result.hasErrors()){
@@ -313,7 +313,8 @@ public class AuthorizedUserController {
             	  return resp;
               } else {
             	//  return "pass";
-            	  resp.setStatus("SUCCESS");
+            	  resp.setStatus("WRONGPASS");
+            	  resp.setResult("0");
             	  return resp;
               }             
 	}
