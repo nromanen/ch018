@@ -32,6 +32,7 @@ import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import com.ch018.library.util.OrderTerm;
 import com.ch018.library.validator.OrderValidator;
 
 // TODO: author who?
@@ -195,6 +196,7 @@ public class OrderController {
     	if (query.equals("book")) {
 			Book book = bookService.getBooksByIdWithOrders(id);
 			Set<Orders> orders = book.getOrders();
+			int orderTerm = OrderTerm.calculate(book);
 			model.addAttribute("orders", orders);
 			model.addAttribute("book", book);
 			return "orders";

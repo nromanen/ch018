@@ -35,7 +35,7 @@ public class ScheduleServise {
 	@Autowired
 	private MailService mailService;
 	
-	@Scheduled(cron="0 0 22 * * MON-FRI")
+	@Scheduled(cron="0 45 15 * * MON-FRI")
 	@Transactional
 	public void setFailedOrder() {
 		Person person = new Person();

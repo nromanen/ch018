@@ -219,3 +219,7 @@ body.loading .modalloading {
 	margin-right: 0;
 	position: relative;
 }
+
+.pager {
+	margin: 0px !important;
+}

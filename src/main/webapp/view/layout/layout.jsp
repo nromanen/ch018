@@ -34,7 +34,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/person.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/books.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script>
+    <%-- <script src="${pageContext.request.contextPath}/resources/js/validform.js"></script> --%>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.validate.min.js"></script>
     <c:if test="${lang.equals('ru')}">
 		<script src="${pageContext.request.contextPath}/resources/js/messages_ru.js"></script>

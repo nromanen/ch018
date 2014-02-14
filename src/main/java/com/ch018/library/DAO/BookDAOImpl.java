@@ -53,7 +53,6 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(Book.class);
-			criteria.addOrder(Order.asc(sort));
 			if (sort != null && isAsc) {
 				criteria.addOrder(Order.asc(sort));
 			}
@@ -216,9 +215,6 @@ public class BookDAOImpl implements BookDAO {
 			}
 			if (search.getGenre() != 0) {
 				criteria.add(Restrictions.eq("genre.id", search.getGenre()));
-			}
-			if (search.getSortby() != null) {
-				criteria.addOrder(Order.asc(search.getSortby()));
 			}
 			if (pageSize != 0) {
 				criteria.setFirstResult(currentPos);

@@ -11,7 +11,6 @@ public class AdvancedSearch {
 	private String authors;
 	private String publication;
 	private Integer genre;
-	private String sortby;
 	private Integer year;
 	private boolean available;
 	
@@ -33,13 +32,6 @@ public class AdvancedSearch {
 	
 	public Integer getGenre() {
 		return this.genre;
-	}
-	
-	public String getSortby() {
-		if (this.sortby == null) {
-			this.sortby = "id";
-		}
-		return this.sortby;
 	}
 	
 	public Integer getYear() {
@@ -64,10 +56,6 @@ public class AdvancedSearch {
 	
 	public void setGenre(Integer genre) {
 		this.genre = genre;
-	}
-	
-	public void setSortby(String sortby) {
-		this.sortby = sortby;
 	}
 	
 	public void setYear(Integer year) {
