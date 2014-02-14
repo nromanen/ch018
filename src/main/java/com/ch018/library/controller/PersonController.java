@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ch018.library.domain.JsonResponse;
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.util.IConstants;
+import com.ch018.library.util.JsonResponse;
 import com.ch018.library.validator.PersonValidation;
 /**
  * 

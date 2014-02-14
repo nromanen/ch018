@@ -1,4 +1,4 @@
-package com.ch018.library.domain;
+package com.ch018.library.util;
 
 import java.util.Map;
 

@@ -85,16 +85,6 @@
 				</div>
 			</div>
 			
-			<div class="control-group">
-				<label class="control-label" for="advsort"><spring:message code="sort.field" /></label> 
-				<select id="advsort" name="sortby" class="fluid" >
-					<option value="title" ><spring:message code="book.title" /></option>
-					<option value="authors"><spring:message code="book.authors" /></option>
-					<option value="publication"><spring:message code="book.publication" /></option>
-					<option value="year"><spring:message code="book.year" /></option>
-					<option value="available"><spring:message code="book.available" /></option>
-				</select>
-			</div>
 			<div id="adv_search_title" style="display: none"><spring:message code="search.advanced" /></div>
 			<label class="checkbox"> 
 			<input id="advavailable" name="available" type="checkbox" ${advancedSearch.available == true ? 'checked' : ''} > <spring:message code="book.available" /></label>

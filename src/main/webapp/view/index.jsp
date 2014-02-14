@@ -10,16 +10,104 @@
 <c:if test="${fn:contains(request, 'page')}">
 	<c:set var="request" value="${fn:replace(request, spage, '')}" />
 </c:if>
+<c:choose>
+	<c:when test="${indexSearch != null}">
+		<c:set var="search" value="&search=${indexSearch}" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="search" value=""/>
+	</c:otherwise>
+</c:choose>
 <!-- Center -->
 <div class="span8">
+<!-- 
+<div id="myCarousel" class="carousel slide">
+  
+  <div class="carousel-inner">
+    <div class="active item"><img src="http://bootstrap-ru.com/assets/img/bootstrap-mdo-sfmoma-03.jpg" ></div>
+    <div class="item">…</div>
+    <div class="item">…</div>
+  </div>
+ 
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
+ -->
+<div class="navbar-inner row-margin">
+	<div class="container" style="width: auto; padding: 10px 20px;">
+		<a type="button" class="btn" id="sortby_btn" ><i class="icon-user"></i> <spring:message code="sort.field" /> <b class="caret"></b></a>
+		<c:if test="${indexSearch != null && indexSearch != ''}">
+			<span>  <spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
+		</c:if>
+	</div>
+</div>
+<div class="sort_options" style="display: none">
+	<dl>
+		<dt><spring:message code="book.title" /></dt>
+		<dd>
+			<a href="<c:url value="/search?sort=title&isasc=true${search}"/>">
+				<span>от А до Я</span>
+			</a>
+		</dd>
+		<dd>
+			<a href="<c:url value="/search?sort=title${search}"/>">
+				<span>от Я до А</span>
+			</a>
+		</dd>
+		
+		<dt><spring:message code="book.authors" /></dt>
+		<dd data-order="p">
+			<a href="<c:url value="/search?sort=authors&isasc=true${search}"/>">
+				<span>от А до Я</span>
+			</a>
+		</dd>
+		<dd data-order="pd">
+			<a href="<c:url value="/search?sort=authors${search}"/>">
+				<span>от Я до А</span>
+			</a>
+		</dd>
+		
+		<dt><spring:message code="book.publication" /></dt>
+		<dd data-order="p">
+			<a href="<c:url value="/search?sort=publication&isasc=true${search}"/>">
+				<span>от А до Я</span>
+			</a>
+		</dd>
+		<dd data-order="pd">
+			<a href="<c:url value="/search?sort=publication${search}"/>">
+				<span>от Я до А</span>
+			</a>
+		</dd>
+		
+		<dt><spring:message code="book.year" /></dt>
+		<dd data-order="t" class="selected">
+			<a href="<c:url value="/search?sort=year&isasc=true${search}"/>">
+				<span>от меньшего</span>
+			</a>
+		</dd>
+		<dd data-order="td">
+			<a href="<c:url value="/search?sort=year${search}"/>">
+				<span>от большего</span>
+			</a>
+		</dd>
+		
+		<dt><spring:message code="book.available" /></dt>
+		<dd data-order="n">
+			<a href="<c:url value="/search?sort=available&isasc=true${search}"/>">
+			<span>от меньшего</span>
+			</a>
+		</dd>
+		<dd data-order="nd">
+			<a href="<c:url value="/search?sort=available${search}"/>">
+			<span>от большего</span>
+			</a>
+		</dd>
+	</dl>
+</div>
      <input type="hidden" id="href" value="${pageContext.request.contextPath}/wishlist" />
      <input type="hidden" id="hrefOrder" value="${pageContext.request.contextPath}/prepareorder" />
      <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
-	<c:if test="${indexSearch != null && indexSearch != ''}">
-	<div class="alert">
-		<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
-	</div>
-	</c:if>
+	
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
 		<c:if test="${(rowCounter.count + 3) % 4 == 0}">
 			<div class="row-fluid row-margin">

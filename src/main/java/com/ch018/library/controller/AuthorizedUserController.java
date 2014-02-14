@@ -99,8 +99,10 @@ public class AuthorizedUserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search(@RequestParam String search, 
+	public String search(@RequestParam(value = "search", required = false, defaultValue = "") String search,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "isasc", required = false, defaultValue="false") Boolean isasc,
 			Model model, HttpSession session) {
 		List<Book> books = new ArrayList<Book>();
 		session.setAttribute("indexSearch", search);
@@ -110,7 +112,7 @@ public class AuthorizedUserController {
 		int currentPos = (page - 1) * IConstants.PAGE_SIZE;
 		model.addAttribute("pages", pages);
 		model.addAttribute("page", page);
-		books.addAll(book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, "id", true));
+		books.addAll(book.simpleSearch(search, currentPos, IConstants.PAGE_SIZE, sort, isasc));
 		model.addAttribute("latest", books);
 		return "index";
 	}

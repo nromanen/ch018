@@ -216,9 +216,6 @@ public class BookDAOImpl implements BookDAO {
 			if (search.getGenre() != 0) {
 				criteria.add(Restrictions.eq("genre.id", search.getGenre()));
 			}
-			if (search.getSortby() != null) {
-				criteria.addOrder(Order.asc(search.getSortby()));
-			}
 			if (pageSize != 0) {
 				criteria.setFirstResult(currentPos);
 				criteria.setMaxResults(pageSize);

@@ -134,6 +134,14 @@ $(document).ready(function() {
 			return $('#adv_search_title').text();
 		}
     });
+    
+    $("#sortby_btn").popover({
+    	html:true,
+    	placement: "bottom",
+    	content: function() {
+    	      return $('.sort_options').html();
+        }
+    });
 
     $("#cellphone").mask("(999) 999-9999");
 	
@@ -309,18 +317,14 @@ $(document).ready(function() {
       event.preventDefault();
   });
   
-  
-  
-	  $( "#slider-range-min" ).slider({
-		  range: "min",
-		  value: 14,
-		  min: 0,
-		  max: 90,
-		  slide: function(event, ui) {
-			  $("#amount").val("$" + ui.value);  
-		  }
-	  });
-	  $("#amount").val("$" + $("#slider-range-min").slider("value")); 
-  
-	
+  $( "#slider-range-min" ).slider({
+	  range: "min",
+	  value: 14,
+	  min: 0,
+	  max: 90,
+	  slide: function(event, ui) {
+		  $("#days").val(ui.value);
+	  }
+  });
+  $("#days").val($("#slider-range-min").slider("value")); 
 });
