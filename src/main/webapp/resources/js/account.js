@@ -186,6 +186,16 @@ $(document).ready(function() {
 	  });
   })
   
+ 	  $("a[id^=showAboutBook]").popover({
+		   html: true,
+	       placement: "right",
+	       content: function() {
+	    	                      $id = $(this).next().val();
+	    	                      console.log($id);
+	    	                      return $("#aboutBook" + $id).html();
+	    	        }
+	  });
+ 
   $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',
