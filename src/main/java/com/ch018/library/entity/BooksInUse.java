@@ -45,7 +45,7 @@ public class BooksInUse {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "buid")
+	@Column(name = "id")
 	public int getBuid() {
 		return buid;
 	}

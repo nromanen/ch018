@@ -1,11 +1,14 @@
 package com.ch018.library.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.form.AdvancedSearch;
@@ -73,16 +77,18 @@ public class BooksController {
 	 */
 	@RequestMapping(value = "/book/update", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonResponse newOrUpdateBook(@Valid Book book,
-			BindingResult result) {
+	public JsonResponse newOrUpdateBook(@ModelAttribute @Valid Book book, BindingResult result, 
+			@RequestParam(value="file") MultipartFile file, HttpSession session) {
 		JsonResponse resp = new JsonResponse();
 		if (!result.hasErrors()) {
 			resp.setStatus("SUCCESS");
 			if (book.getId() == 0) {
 				log.info("New book {}", book);
+				saveImage(book, file, session);
 				bookService.addBook(book);
 			} else {
 				log.info("Update book {}", book);
+				saveImage(book, file, session);
 				bookService.updateBook(book);
 			}
 			resp.setResult(book);
@@ -116,14 +122,15 @@ public class BooksController {
 	public String showBooks(
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			@RequestParam(value = "isasc", required = false, defaultValue = "false") Boolean isask,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
 		if (session.getAttribute("isAsc") == null) {
-			session.setAttribute("isAsc", true);
+			session.setAttribute("isAsc", isask);
 		}
 		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
 		if (session.getAttribute("sort") != null && session.getAttribute("sort").toString().equals(sort)) {
-			isAsc = !isAsc;
+			isAsc = isask;
 			session.setAttribute("isAsc", isAsc);
 		}
 		if (!sort.equals("id")) {
@@ -160,18 +167,10 @@ public class BooksController {
 	public String showBooksFilters(
 			@PathVariable(value = "show") String show,
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
 		String sessionSort = (String) session.getAttribute("sort");
-		if (sessionSort == null) {
-			session.setAttribute("sort", sort);
-			sessionSort = (String) session.getAttribute("sort");
-		}
-		if (!sort.equals("id")) {
-			session.setAttribute("sort", sort);
-			sessionSort = (String) session.getAttribute("sort");
-		}	
+		model.addAttribute("show", "show");
 		Book book = new Book();
 		long count;
 		long pages = 1;
@@ -246,16 +245,18 @@ public class BooksController {
 	@RequestMapping(value = "/books/search", method = RequestMethod.GET)
 	public String search(@RequestParam(value = "search", required = false) String search, @RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			@RequestParam(value = "isasc", required = false, defaultValue = "false") Boolean isask,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
 		if (session.getAttribute("isAsc") == null) {
-			session.setAttribute("isAsc", true);
+			session.setAttribute("isAsc", isask);
 		}
 		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
 		if (session.getAttribute("sort") != null && session.getAttribute("sort").toString().equals(sort)) {
-			isAsc = !isAsc;
+			isAsc = isask;
 			session.setAttribute("isAsc", isAsc);
-		}if (!sort.equals("id")) {
+		}
+		if (!sort.equals("id")) {
 			session.setAttribute("sort", sort);
 		} else if (session.getAttribute("sort") != null) {
 			sort = (String) session.getAttribute("sort");
@@ -292,6 +293,7 @@ public class BooksController {
 	public String advancedSearch(@ModelAttribute("advancedsearch") AdvancedSearch advancedSearch, 
 			@RequestParam(value = "page", required = false, defaultValue = "1") int page, 
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			@RequestParam(value = "isasc", required = false, defaultValue = "false") Boolean isask,
 			Model model, HttpSession session) {
 		Locale locale = LocaleContextHolder.getLocale();
 		List<Book> books = new ArrayList<>();
@@ -313,5 +315,24 @@ public class BooksController {
 		model.addAttribute("page", page);
 		model.addAttribute("books", books);
 		return "books";
+	}
+	
+	private void saveImage(Book book, MultipartFile file, HttpSession session) {
+		String path = session.getServletContext().getRealPath("/");
+		String imagePath = "/resources/img/books/";
+		try {
+			if (!file.isEmpty()) {
+				BufferedImage bi = ImageIO.read(file.getInputStream());
+				String imageName = file.getOriginalFilename().replace(".","") + ".png";
+			    File outputfile = new File(path + imagePath + imageName);
+			    ImageIO.write(bi, "png", outputfile);
+			    book.setImage(imagePath + imageName);
+			} else {
+				String image = (book.getImage() == null || book.getImage().isEmpty()) ? imagePath + "default.gif" : book.getImage();
+				book.setImage(image);
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 	}
 }

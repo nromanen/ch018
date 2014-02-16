@@ -35,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
+import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
@@ -56,6 +57,7 @@ public class BooksControllerTest {
 	private Book book = new Book();
 	private Book book2 = new Book();
 	List<Book> books = new ArrayList<>();
+	private AdvancedSearch advancedSearch = new AdvancedSearch();
 	
 	
 	private MockMvc mockMvc;
@@ -138,11 +140,21 @@ public class BooksControllerTest {
 		books.add(book);
 		books.add(book2);
 		
+		advancedSearch.setTitle("title2");
+		advancedSearch.setAuthors("");
+		advancedSearch.setAvailable(true);
+		advancedSearch.setGenre(genre.getId());
+		advancedSearch.setPublication("");
+		advancedSearch.setYear(0);
+		
 
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
-		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id")).thenReturn(books);
-		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name")).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id", false)).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name", false)).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"id", true)).thenReturn(books);
+		when(bookService.simpleSearch("title2", 0, IConstants.PAGE_SIZE, "name", false)).thenReturn(Arrays.asList(book2));
+		when(bookService.advancedSearch(advancedSearch, 0, IConstants.PAGE_SIZE)).thenReturn(Arrays.asList(book2));
 	}
 
 	@After
@@ -153,16 +165,16 @@ public class BooksControllerTest {
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-		mockMvc.perform(post("/book/update")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.content("book")
-				);
-				//.andExpect(status().isBadRequest());
+		//mockMvc.perform(post("/book/update")
+		//		.contentType(MediaType.MULTIPART_FORM_DATA)
+		//		.requestAttr("book", book)
+		//		);
+		//		.andExpect(status().isBadRequest());
 	}
 
 	@Test
 	public void testShowBooks() throws Exception {
-		mockMvc.perform(get("/books"))
+		mockMvc.perform(get("/books").sessionAttr("sort", "id"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -170,7 +182,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(2)))
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id");
+		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id", false);
 		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
@@ -178,7 +190,8 @@ public class BooksControllerTest {
 	
 	@Test
 	public void testShowBooksWhisFailGetParam() throws Exception {
-		mockMvc.perform(get("/books").param("show", "wrongparam"))
+		mockMvc.perform(get("/books/show/{show}", "wrongparam")
+				.sessionAttr("sort", "id"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -186,8 +199,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(2)))
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(bookService);
+		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id", true);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -202,8 +214,7 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(2)))
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
-		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "name");
-		//verifyNoMoreInteractions(bookService);
+		verify(bookService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "name", false);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -211,7 +222,7 @@ public class BooksControllerTest {
 	@Test
 	public void testShowBooksReturn() throws Exception {
 		when(booksInUseService.getAllBooks(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
-		mockMvc.perform(get("/books/{show}", "return"))//.param("show", "return"))
+		mockMvc.perform(get("/books/show/{show}", "return"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -219,7 +230,6 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
 		verify(booksInUseService, times(1)).getAllBooks(0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(booksInUseService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -227,7 +237,7 @@ public class BooksControllerTest {
 	@Test
 	public void testShowBooksReturnTd() throws Exception {
 		when(booksInUseService.getReturnBooksToday(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book2));
-		mockMvc.perform(get("/books/{show}", "returntd"))//.param("show", "returntd"))
+		mockMvc.perform(get("/books/show/{show}", "returntd"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -235,7 +245,6 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(booksInUseService, times(1)).getReturnBooksToday(0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(booksInUseService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -243,7 +252,7 @@ public class BooksControllerTest {
 	@Test
 	public void testShowBooksIssueTd() throws Exception {
 		when(ordersService.toIssueToday(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
-		mockMvc.perform(get("/books/{show}", "issuetd"))//.param("show", "issuetd"))
+		mockMvc.perform(get("/books/show/{show}", "issuetd"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -251,7 +260,6 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book)));
 		verify(ordersService, times(1)).toIssueToday(0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(ordersService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -259,7 +267,7 @@ public class BooksControllerTest {
 	@Test
 	public void testShowBooksIssuePh() throws Exception {
 		when(ordersService.toIssuePerHour(0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book2));
-		mockMvc.perform(get("/books/{show}", "issueph"))//.param("show", "issueph"))
+		mockMvc.perform(get("/books/show/{show}", "issueph"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
@@ -267,7 +275,6 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(ordersService, times(1)).toIssuePerHour(0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(ordersService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}
@@ -283,25 +290,38 @@ public class BooksControllerTest {
 	}
 
 	@Test
-	public void testAllSearch() throws Exception {
-		String search = "Java";
-		String field = "all";
-		when(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book, book2));
-		mockMvc.perform(post("/books")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+	public void testSearch() throws Exception {
+		String search = "title2";
+		mockMvc.perform(get("/books/search")
 				.param("search", search)
-				.param("field", field)
+				.param("sort", "name")
 				)
 				.andExpect(status().isOk())
 				.andExpect(view().name("books"))
 				.andExpect(model().attribute("genre", hasSize(1)))
 				.andExpect(model().attribute("genre", hasItem(genre)))
-				.andExpect(model().attribute("books", hasSize(2)))
-				.andExpect(model().attribute("books", hasItem(book)))
+				.andExpect(model().attribute("books", hasSize(1)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 				
-		verify(bookService, times(1)).simpleSearch(search, 0, IConstants.PAGE_SIZE, "id");
-		//verifyNoMoreInteractions(bookService);
+		verify(bookService, times(1)).simpleSearch(search, 0, IConstants.PAGE_SIZE, "name", false);
+		verify(genreService, times(1)).getAllGenres("en");
+		verifyNoMoreInteractions(genreService);
+	}
+	
+	@Test
+	public void testAdvancedSearch() throws Exception {
+		mockMvc.perform(get("/books/advsearch")
+				.requestAttr("advancedsearch", advancedSearch)
+				.sessionAttr("advancedSearch", advancedSearch)
+				)
+				.andExpect(status().isOk())
+				.andExpect(view().name("books"))
+				.andExpect(model().attribute("genre", hasSize(1)))
+				.andExpect(model().attribute("genre", hasItem(genre)))
+				.andExpect(model().attribute("books", hasSize(1)))
+				.andExpect(model().attribute("books", hasItem(book2)));
+				
+		verify(bookService, times(1)).advancedSearch(advancedSearch, 0, IConstants.PAGE_SIZE);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}

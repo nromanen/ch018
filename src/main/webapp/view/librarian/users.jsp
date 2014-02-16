@@ -21,16 +21,16 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>">^</a></th>
-					<th><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>">^</a></th>
-					<th><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>">^</a></th>
-					<th><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>">^</a></th>
-					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>">^</a></th>
-					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>">^</a></th>
-					<th><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>">^</a></th>
-					<th><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>">^</a></th>
-					<th><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>">^</a></th>
-					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>">^</a></th>
+					<th><nobr><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"><i class="icon-chevron-down"></i></a></nobr></th>
 					<th></th>
 					<th></th>
 					<th></th>

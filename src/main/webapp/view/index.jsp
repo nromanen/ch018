@@ -34,24 +34,18 @@
 </div>
  -->
 <div class="navbar-inner row-margin">
-	<div class="container" style="width: auto; padding: 10px 20px;">
+	<div class="container" style="width: auto; padding: 5px 20px;">
 		<a type="button" class="btn pull-left" id="sortby_btn" > <spring:message code="sort.field" /> <b class="caret"></b></a>
 		<c:if test="${indexSearch != null && indexSearch != ''}">
 			<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
 		</c:if>
 		<ul class="pager pull-right">
 			<c:if test="${page > 1}">
-				<li><a href="<c:url value="?${request}&page=${page-1}"/>">Назад</a></li>
+				<li><a href="<c:url value="?${request}&page=${page-1}"/>">&larr;</a></li>
 			</c:if>
-			<c:if test="${page <= 1}">
-				<li class = "disabled"><a >Назад</a></li>
-			</c:if>
-				<li>${page} of ${pages}</li>
+				<li><input rel="<c:url value="?${request}&page="/>" class="input_page" type="text" value="${page}" style="overflow: visible; width: 28px; margin-top: 0; margin-bottom:2px; padding: 0;"> of </li><li class="total-pages">${pages}</li>
 			<c:if test="${page < pages}">
-				<li><a href="<c:url value="?${request}&page=${page+1}"/>">Вперед</a></li>
-			</c:if>
-			<c:if test="${page == pages}">
-				<li class = "disabled"><a >Вперед</a></li>
+				<li><a href="<c:url value="?${request}&page=${page+1}"/>">&rarr;</a></li>
 			</c:if>
 		</ul>
 	</div>
@@ -61,60 +55,72 @@
 		<dt class="book_title"><spring:message code="book.title" /></dt>
 		<dd class="book_t_ask">
 			<a href="<c:url value="/search?sort=title&isasc=true${search}"/>">
-				<span>от А до Я</span>
+				<span><spring:message code="sort.froma" /></span>
 			</a>
 		</dd>
 		<dd class="book_t_desk">
 			<a href="<c:url value="/search?sort=title${search}"/>">
-				<span>от Я до А</span>
+				<span><spring:message code="sort.fromz" /></span>
 			</a>
 		</dd>
 		
 		<dt class="book_authors"><spring:message code="book.authors" /></dt>
 		<dd class="book_a_ask">
 			<a href="<c:url value="/search?sort=authors&isasc=true${search}"/>">
-				<span>от А до Я</span>
+				<span><spring:message code="sort.froma" /></span>
 			</a>
 		</dd>
 		<dd class="book_a_desk">
 			<a href="<c:url value="/search?sort=authors${search}"/>">
-				<span>от Я до А</span>
+				<span><spring:message code="sort.fromz" /></span>
 			</a>
 		</dd>
 		
 		<dt class="book_publication"><spring:message code="book.publication" /></dt>
 		<dd class="book_p_ask">
 			<a href="<c:url value="/search?sort=publication&isasc=true${search}"/>">
-				<span>от А до Я</span>
+				<span><spring:message code="sort.froma" /></span>
 			</a>
 		</dd>
 		<dd class="book_p_desk">
 			<a href="<c:url value="/search?sort=publication${search}"/>">
-				<span>от Я до А</span>
+				<span><spring:message code="sort.fromz" /></span>
 			</a>
 		</dd>
 		
 		<dt class="book_year"><spring:message code="book.year" /></dt>
 		<dd class="book_y_ask">
 			<a href="<c:url value="/search?sort=year&isasc=true${search}"/>">
-				<span>от меньшего</span>
+				<span><spring:message code="sort.froml" /></span>
 			</a>
 		</dd>
 		<dd class="book_y_desk">
 			<a href="<c:url value="/search?sort=year${search}"/>">
-				<span>от большего</span>
+				<span><spring:message code="sort.fromg" /></span>
+			</a>
+		</dd>
+		
+		<dt class="book_rating"><spring:message code="book.rating" /></dt>
+		<dd class="book_r_ask">
+			<a href="<c:url value="/search?sort=rating&isasc=true${search}"/>">
+				<span><spring:message code="sort.froml" /></span>
+			</a>
+		</dd>
+		<dd class="book_r_desk">
+			<a href="<c:url value="/search?sort=rating${search}"/>">
+				<span><spring:message code="sort.fromg" /></span>
 			</a>
 		</dd>
 		
 		<dt class="book_available"><spring:message code="book.available" /></dt>
 		<dd class="book_av_ask">
 			<a href="<c:url value="/search?sort=available&isasc=true${search}"/>">
-			<span>от меньшего</span>
+			<span><spring:message code="sort.froml" /></span>
 			</a>
 		</dd>
 		<dd class="book_av_desk">
 			<a href="<c:url value="/search?sort=available${search}"/>">
-			<span>от большего</span>
+			<span><spring:message code="sort.fromg" /></span>
 			</a>
 		</dd>
 	</dl>

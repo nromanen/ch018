@@ -197,6 +197,7 @@ public class OrderController {
 			Book book = bookService.getBooksByIdWithOrders(id);
 			Set<Orders> orders = book.getOrders();
 			int orderTerm = OrderTerm.calculate(book);
+			model.addAttribute("maxterm", orderTerm);
 			model.addAttribute("orders", orders);
 			model.addAttribute("book", book);
 			return "orders";

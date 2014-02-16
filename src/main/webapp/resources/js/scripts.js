@@ -315,17 +315,7 @@ $(document).ready(function() {
       event.preventDefault();
   });
   
-  $( "#slider-range-min" ).slider({
-	  range: "min",
-	  value: 14,
-	  min: 0,
-	  max: 90,
-	  slide: function(event, ui) {
-		  $("#days").val(ui.value);
-	  }
-  });
-  $("#days").val($("#slider-range-min").slider("value")); 
-  
+ 
   
   /**
    * sorting on index page
@@ -370,5 +360,50 @@ $(document).ready(function() {
 		  $("#sortby_btn").html($(".book_available").html() + ": " + $(".book_av_desk").text() + ' <b class="caret"></b>');
 	  }
   }
+  
+  if($uuu.indexOf("sort=rating") > -1) {
+	  if($uuu.indexOf("isasc") > -1) {
+		  $("#sortby_btn").html($(".book_rating").html() + ": " + $(".book_r_ask").text() + ' <b class="caret"></b>');
+	  } else {
+		  $("#sortby_btn").html($(".book_rating").html() + ": " + $(".book_r_desk").text() + ' <b class="caret"></b>');
+	  }
+  }
+  
+  $('.input_page').on('keydown', function(event) {
+	  if (((event.keyCode < 46) || (event.keyCode>57)) 
+			  && event.keyCode != 13 && event.keyCode != 8 
+			  && event.keyCode != 37 && event.keyCode != 39 
+			  && (event.keyCode < 96 || event.keyCode > 105)) {
+		  event.preventDefault();
+	  }
+      if (event.keyCode == 13) {
+          $page = $(this).val();
+          if (!$.isNumeric($page)) {
+        	  $page = 1;
+          }
+          $max_page = $(".total-pages").text();
+          if ($page <= $max_page) {
+        	  $rel = $(this).attr("rel")+$page;
+        	  window.location.replace($rel);
+          } else {
+        	  console.log($(this).val());
+        	  $(this).val($max_page);
+        	  $page = $max_page;
+        	  $rel = $(this).attr("rel")+$page;
+        	  window.location.replace($rel);
+          }
+          
+      }
+  });
+  
+  $(".show_image").tooltip({
+  	html:true,
+  	placement: "right",
+  	title: function() {
+  		$img = $(this).prev().text();
+  		$("#testimg").attr("src", "http://localhost:8080/library" + $img);
+  		return $('#popover_show_img').html();
+      }
+  });
   
 });
