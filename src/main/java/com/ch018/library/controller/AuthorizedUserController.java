@@ -256,7 +256,7 @@ public class AuthorizedUserController {
      return model;
     }
     
-    /**
+   /* /**
      * 
      * @param updtPers
      * @param result
@@ -264,7 +264,7 @@ public class AuthorizedUserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
                               BindingResult result, Principal principal, HttpServletRequest request) {
         accountValidation.validate(updtPers, result);
@@ -272,15 +272,39 @@ public class AuthorizedUserController {
         if (result.hasErrors()) {
             return "userAccount";
         }
-      /*  if(!person.getEmail().equals(updtPers.getEmail())) { 
-            person = persService.updateAccProperties(person, updtPers, request);
-            persService.update(person);
-            return "redirect:/logout"; 
-        } */
         person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
         return "userAccount";
-    }
+    } */
+     
+    
+    @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResponse editProfile(@Valid Person updtPers, BindingResult result, 
+    		Principal principal, HttpServletRequest request) {
+    	JsonResponse resp = new JsonResponse();
+        accountValidation.validate(updtPers, result);
+        Person person = persService.getByEmail(principal.getName());
+        if (result.hasErrors()) {
+        	Map<String,String> errors = new HashMap<>();
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            for(FieldError fieldError: fieldErrors) {
+            	String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+            	String string = resolveMessageCodes[0];
+            	String message = messageSource.getMessage(string, 
+            			  new Object[]{fieldError.getRejectedValue()}, LocaleContextHolder.getLocale());
+            	errors.put(fieldError.getField(), message);
+            }
+            resp.setStatus("FAIL");
+            resp.setErrorsMap(errors);
+            resp.setResult(result.getAllErrors());
+            return resp;
+        }
+        person = persService.updateAccProperties(person, updtPers, request);
+        persService.update(person);
+        resp.setStatus("SUCCESS");
+        return resp;
+    } 
     
     /**
      * 

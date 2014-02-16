@@ -29,11 +29,11 @@ $(document).ready(function() {
 	  $.ajax({
 		  url: href,
 		  data: $("#editIssue" +$id).serialize(),
-	     type: "POST",
-	     dataType: "json",
-	     contentType: 'application/x-www-form-urlencoded',
-	     mimeType: 'application/json',
-	     success: function(data){
+	      type: "POST",
+	      dataType: "json",
+	      contentType: 'application/x-www-form-urlencoded',
+	      mimeType: 'application/json',
+	      success: function(data){
 	    	 if (data == 1) {
 	    		 $("#editissue").modal();
 	    		 setTimeout(function () {location.reload();}, 1500);
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	  e.preventDefault();
   }) 
   
-  $("#passForm").submit(function(e){
+  $("#passForm").submit(function(e) {
 	  $("#errorpassword").text("");
 	  $("#errornewPassword").text("");
 	  $("#errorconfirmPassword").text("");
@@ -221,13 +221,13 @@ $(document).ready(function() {
       }
 });
  
-  $("#account").validate({
+/*  $("#account").validate({
 		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
+		$(element).fadeOut(function() {
 				$(element).fadeIn();
 			});
 		}
-	});
+	}); */
   
   $("#order").validate({
 		highlight: function(element, errorClass) {
@@ -258,6 +258,41 @@ $(document).ready(function() {
   })
   
   
+  $("#account").submit(function(e) {
+	 /*var regExp =[A-Z][a-zA-Z]
+	 var name = $("#name").val();
+	 console.log(name);
+	 console.log(regExp.test(name)); */
+	  $("#errorname").text("");
+	  $("#errorsurname").text("");
+	  $("#errorcellphone").text("");
+	  
+	  $.ajax({
+		  url: $("#account").attr("action"),
+		  data: $("#account").serialize(),
+	      type: "POST",
+	      dataType: "json",
+	      contentType : 'application/x-www-form-urlencoded',
+		  mimeType : 'application/json',
+		   success: function(response) {
+			   if(response.status == "SUCCESS") {
+			     $(".alert").show("slow");
+			     setTimeout(function () {$(".alert").hide("slow");}, 2500);
+			   }  
+			   if(response.status == "FAIL") {
+				   console.log("error");
+				   for(var key in response.errorsMap) {
+			    		  console.log(response.errorsMap[key]);
+			    		  $("#error" + key).text(response.errorsMap[key]);
+			    	}
+			   }
+		   },
+		   error: function(response) {
+			   console.log("error");
+		   }
+	  })
+	e.preventDefault();
+  });
 
 })
 

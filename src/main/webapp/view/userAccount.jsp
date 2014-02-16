@@ -6,28 +6,39 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span8">
     <h3><spring:message code="message.accprop"/></h3>
+    
+      <div class="alert alert-success" style="display: none">
+		<button type="button" class="close">&times;</button>
+		<h4>
+			Message
+		</h4>
+		Account successfully updated.
+	</div>	
                             <form:form id="account" method="POST" commandName="person" class="form-horizontal">
                                 <div class="control-group">
                                     <label class="control-label" for="name"><spring:message code="person.firstname"/>:</label>
                                     <div class="controls"> 
-                                        <form:input id="name" path="name" required="true"/>
-                                        <form:errors path="name" cssClass="error"/>
+                                        <form:input id="name" path="name" />
+                                     <!--    <form:errors path="name" cssClass="error"/> -->
+                                        <span id="errorname" class="error"></span>
                                     </div>
                                 </div>
                                     
                                 <div class="control-group">
                                         <label class="control-label" for="surname"><spring:message code="person.lastname"/>:</label>
                                         <div class="controls">
-                                            <form:input id="surname" path="surname" required="true"/>
-                                            <form:errors path="surname" cssClass="error"/>
+                                            <form:input id="surname" path="surname" />
+                                         <!--    <form:errors path="surname" cssClass="error"/> -->
+                                         <span id="errorsurname" class="error"></span>
                                         </div> 
                                 </div>
                                 
                                 <div class="control-group">
                                     <label class="control-label" for="cellphone"><spring:message code="person.mobile"/>:</label>
                                              <div class="controls">
-                                                  <form:input path="cellphone" id="cellphone" value="${person.cellphone}" required="true"/>
-                                                  <form:errors path="cellphone" cssClass="error"/>
+                                                  <form:input path="cellphone" id="cellphone" value="${person.cellphone}" />
+                                                  <span id="errorcellphone" class="error"></span>
+                                                <!--   <form:errors path="cellphone" cssClass="error"/> -->
                                              </div>
                                 </div>
                                 
@@ -45,7 +56,6 @@
                                           <form:input path="email" type="hidden"/>
                                           <form:errors path="email" cssClass="error"/>
                                           <span>${person.email}</span>
-                                          <!--  <input type="button" value="Change e-mail" class="btn btn-info"/> -->
                                           <a href="<c:url value="/profile-email"/>" class="btn btn-info"><spring:message code="button.chEmail"/></a>
                                       </div>  
                                    </div>
@@ -58,7 +68,7 @@
                                    </div>
                                
                                 <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
-                                   
+                                <!-- <input type="button" value="11111" class="btn" id="rrr"/>    -->
                              </form:form>
                                 
                                

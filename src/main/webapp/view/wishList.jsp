@@ -55,13 +55,16 @@
                                            <div class="modal-body"><spring:message code="message.failorder"/></div>
                                      </div>
                                      
-                                     <div id="aboutBook${wishByPers.id}" style="display: none">
-                                        <img src="${wishByPers.book.image}" class="img-top5">
-                                          <ul>
-                                              <li>${wishByPers.book.title}</li>
-                                              <li>${wishByPers.book.publication}</li>
-                                              <li>${wishByPers.book.description}</li>
-                                          </ul>
+                                     <div id="aboutBook${wishByPers.id}" style="display: none" class="thumbnail span3">
+                                         <div class="media"><img src="${wishByPers.book.image}" class="img-custom pull-left">
+                                            <ul class="thumbnails span6 pull-left">
+                                             <li><span class="label label-info">Title: </span><br><small>${wishByPers.book.title}</small></li>
+                                             <li><span class="label label-info">Publisher: </span><br><small>${wishByPers.book.publication}</small></li>
+                                            </ul>
+                                             </div>
+                                          <div class="caption pull-left">
+                                             ${wishByPers.book.description}
+                                          </div>
                                      </div>
                                  </td>
 		               </tr>
