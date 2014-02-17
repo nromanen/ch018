@@ -13,6 +13,21 @@
        <span><spring:message code="message.email"/> :</span> <span> ${email}</span>
        <br>
        <br>
+    <div class="alert alert-error" style="display: none" id="emailerror">
+		<button type="button" class="close">&times;</button>
+		<h4>
+		  Error has occurred. Please try again.
+		</h4>
+		
+	</div>
+	<div class="alert alert-success" style="display: none" id="emailSuccess">
+		<button type="button" class="close">&times;</button>
+		<h4>
+		  Check your new email and confirm your new e-mail address. 
+		  Otherwise you may continue use this site with old e-mail
+		</h4>
+		
+	</div>
    <form:form id="email" method="POST" commandName="person" class="form-horizontal">
      <div class="control-group">
                                       <label class="control-label" for="email1"><spring:message code="person.mail"/>:</label>

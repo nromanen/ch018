@@ -244,7 +244,7 @@ public class PersonServiceImpl implements PersonService {
 		String message = "You have change your e-mail address on account in J Library"
 				+ " Please confirm your new email by clicking next link: "
 				+ url + "/confirm?key=" + verifyKey.generate(pers2.getEmail()) + "&email=" +pers2.getEmail();
-		mailService.sendMail(pers.getEmail(), "Library email confirmation", message);
+		mailService.sendMail(pers2.getEmail(), "Library email confirmation", message);
 	}
 
 	@Override

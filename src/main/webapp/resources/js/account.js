@@ -305,6 +305,7 @@ $(document).ready(function() {
 			 console.log('1111'); 
 			 if(response.status == "SUCCESS") {
 				 console.log('SUCCESS');
+				 $("#emailSuccess").show();
 			 }
 			 if(response.status == "FAIL") {
 				 console.log("FAIL");
@@ -316,18 +317,10 @@ $(document).ready(function() {
 		  },
 	      error: function(response){
 	    	  console.log("error");
-	    	 
+	    	  $("#emailerror").show();
 	      }
 	  })
 	  e.preventDefault();
   });
-  
-  /* $("#rrr").click(function(){
-	  var regexp = [A-Z][a-z]*$ 
-      var name = $("#name").val();
-	  console.log(name);
-	  console.log(regexp.test(name));
-  }) */
-
 })
 

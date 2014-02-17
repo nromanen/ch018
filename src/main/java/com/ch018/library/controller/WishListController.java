@@ -60,8 +60,7 @@ public class WishListController {
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/wishlist/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public int addWish(/*@RequestParam("bookId") int bookId, */
-    		              @PathVariable int id,
+    public int addWish(@PathVariable int id,
                           Principal principal) {   
       Person person = personService.getByEmail(principal.getName());
       Book book = bookService.getBooksById(id);

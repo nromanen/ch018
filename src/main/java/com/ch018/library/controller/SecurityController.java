@@ -91,8 +91,6 @@ public class SecurityController {
 			person.setEmailConfirmed(true);
 			personService.update(person);
 	    }
-		Authentication auth = new PreAuthenticatedAuthenticationToken(email, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		SecurityContextHolder.getContext().setAuthentication(auth);
-		return "redirect:/";
+		return "redirect:/logout";
    }
 }
