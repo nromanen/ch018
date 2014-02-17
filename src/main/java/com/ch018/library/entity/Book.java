@@ -69,14 +69,6 @@ public class Book implements Serializable {
 		
 	}
 
-	public Book(Book b) {
-		title = b.getTitle();
-	}
-	
-	public void Book() {
-		
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -85,7 +77,7 @@ public class Book implements Serializable {
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "gid", nullable = false)
+    @JoinColumn(name = "genre_id", nullable = false)
 	@JsonIgnore
     public Genre getGenre() {
             return this.genre;
@@ -155,7 +147,7 @@ public class Book implements Serializable {
 		return term;
 	}
 	
-	@Column(name = "image", columnDefinition = "varchar(255) default 'http://placehold.it/120x150'")
+	@Column(name = "image", columnDefinition = "varchar(255) default '/resources/img/books/default.gif'")
 	public String getImage() {
 		return image;
 	}

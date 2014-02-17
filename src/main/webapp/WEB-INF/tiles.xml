@@ -23,6 +23,14 @@
 		<put-attribute name="footer" value="/view/layout/footer.jsp" />
 	</definition>
 	
+	<definition name="errorLayout" template="/view/layout/errorlayout.jsp">
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="includes" value="/view/layout/includes.jsp" />
+		<put-attribute name="header" value="header" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
+	
 	<definition name="adminLayout" template="/view/layout/adminlayout.jsp">
 		<put-attribute name="title" value="Sample Title" />
 		<put-attribute name="includes" value="/view/layout/includes.jsp" />
@@ -72,6 +80,26 @@
 	<definition name="login" extends="signLayout">
 		<put-attribute name="title" value="Librarian > login" />
 		<put-attribute name="body" value="/view/login.jsp" />
+	</definition>
+	
+	<definition name="error404" extends="errorLayout">
+		<put-attribute name="title" value="Librarian > 404" />
+		<put-attribute name="body" value="/view/errors/404.jsp" />
+	</definition>
+	
+	<definition name="error403" extends="errorLayout">
+		<put-attribute name="title" value="Librarian > 404" />
+		<put-attribute name="body" value="/view/errors/403.jsp" />
+	</definition>
+	
+	<definition name="error400" extends="errorLayout">
+		<put-attribute name="title" value="Librarian > 400" />
+		<put-attribute name="body" value="/view/errors/400.jsp" />
+	</definition>
+	
+	<definition name="error" extends="errorLayout">
+		<put-attribute name="title" value="Librarian > error" />
+		<put-attribute name="body" value="/view/errors/400.jsp" />
 	</definition>
 	
 	<definition name="remind" extends="signLayout">

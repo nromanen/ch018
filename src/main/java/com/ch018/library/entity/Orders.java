@@ -50,15 +50,14 @@ public class Orders {
 		return this.id;
 	}
 
-	// TODO column names should have consistent name. Either Person_id and Order_date or person_id and order_date
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Person_id")
+	@JoinColumn(name = "person_id")
 	public Person getPerson() {
 		return person;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Books_id")
+	@JoinColumn(name = "books_id")
 	public Book getBook() {
 		return book;
 	}

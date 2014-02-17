@@ -13,6 +13,10 @@
 <c:if test="${fn:contains(request, 'page')}">
 	<c:set var="request" value="${fn:replace(request, spage, '')}" />
 </c:if>
+<c:set var="asc" value="" />
+<c:if test="${isAsc == null || isAsc == false}">
+	<c:set var="asc" value="&isasc=true" />
+</c:if>
 <div class="span10 offset1">
 	<div class="row-fluid">
 		<!-- Button group -->
@@ -119,16 +123,43 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="book.title" /><a href="<c:url value="?sort=title"/>">^</a></th>
-					<th><spring:message code="book.authors" /><a href="<c:url value="?sort=authors"/>">^</a></th>
-					<th><spring:message code="book.publication" /><a href="<c:url value="?sort=publication"/>">^</a></th>
-					<th><spring:message code="book.year" /><a href="<c:url value="?sort=year"/>">^</a></th>
-					<th><spring:message code="book.pages" /><a href="<c:url value="?sort=pages"/>">^</a></th>
-					<th><spring:message code="book.bookcase" /><a href="<c:url value="?sort=bookcase"/>">^</a></th>
-					<th><spring:message code="book.shelf" /><a href="<c:url value="?sort=shelf"/>">^</a></th>
-					<th><spring:message code="book.genre" /></th>
-					<th><spring:message code="book.term" /><a href="<c:url value="?sort=term"/>">^</a></th>
-					<th><spring:message code="book.count" /><a href="<c:url value="?sort=count"/>">^</a></th>
+					<th><nobr><spring:message code="book.title" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=title${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.authors" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=authors${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.publication" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=publication${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.year" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=year${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.pages" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=pages${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.bookcase" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=bookcase${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.shelf" />
+					<c:if test="${show == null}">
+						<a href="<c:url value="?sort=shelf${asc}"/>"><i class="icon-chevron-down"></i></a>
+					</c:if></nobr></th>
+					<th><nobr><spring:message code="book.genre" /></nobr></th>
+					<th><nobr><spring:message code="book.term" />
+						<c:if test="${show == null}">
+							<a href="<c:url value="?sort=term${asc}"/>"><i class="icon-chevron-down"></i></a>
+						</c:if></nobr></th>
+					<th><nobr><spring:message code="book.count" />
+						<c:if test="${show == null}">
+							<a href="<c:url value="?sort=count${asc}"/>"><i class="icon-chevron-down"></i></a>
+						</c:if></nobr></th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -400,7 +431,15 @@
 						<form:label id="erroravailable" path="available" cssClass="error" />
 					</div>
 				</div>
-				<form:hidden path="image" id="image" disabled="disabled" />
+				
+				<div class="control-group">
+					<label class="control-label" for="file"></label>
+					<div class="controls">
+						<input id="file" name="file" type="file" accept="image/*" />
+					</div>
+				</div>
+				
+				<form:hidden path="image" id="image"/>
 
 				<div class="control-group hide">
 					<label class="control-label" for="rating"></label>

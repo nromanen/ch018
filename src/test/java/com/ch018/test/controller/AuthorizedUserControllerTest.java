@@ -143,7 +143,9 @@ public class AuthorizedUserControllerTest {
 		advancedSearch.setAuthors("Authors2");
 		advancedSearch.setAvailable(true);
 		advancedSearch.setPublication("public2");
-		advancedSearch.setSortby("id");
+		advancedSearch.setTitle("title2");
+		advancedSearch.setGenre(genre2.getId());
+		advancedSearch.setYear(2002);
 				
 		books.add(book);
 		books.add(book2);
@@ -153,15 +155,13 @@ public class AuthorizedUserControllerTest {
 		
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
-		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name")).thenReturn(books);
+		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name", false)).thenReturn(books);
 		when(bookService.countBooks()).thenReturn(2L);
 		when(bookService.simpleSearchCount(search)).thenReturn(1L);
 		when(bookService.advancedSearchCount(advancedSearch)).thenReturn(1L);
-		when(bookService.countBooks()).thenReturn(1L);
-		when(bookService.getAllBooks(0, IConstants.PAGE_SIZE, "id")).thenReturn(books);
-		when(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id")).thenReturn(Arrays.asList(book));
+		when(bookService.getAllBooks(0, IConstants.PAGE_SIZE, "id", true)).thenReturn(books);
+		when(bookService.simpleSearch(search, 0, IConstants.PAGE_SIZE, "id", false)).thenReturn(Arrays.asList(book));
 		when(bookService.advancedSearch(advancedSearch, 0, IConstants.PAGE_SIZE)).thenReturn(Arrays.asList(book2));
-		
 	}
 
 	@After
@@ -179,24 +179,27 @@ public class AuthorizedUserControllerTest {
 				.andExpect(model().attribute("latest", hasItem(book2)))
 				.andExpect(model().attribute("pages", 1L))
 				.andExpect(model().attribute("page", 1));
-		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id");
+		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id",true);
 	}
 	
 	@Test
-	public void testWelomePageWithSearch() throws Exception {
-		mockMvc.perform(get("/").sessionAttr("indexSearch", search))
+	public void testSearch() throws Exception {
+		mockMvc.perform(get("/search").param("search", search)
+				.param("page", "1").param("sort", "id").param("isasc", "false")
+				.sessionAttr("indexSearch", search))
 				.andExpect(status().isOk())
 				.andExpect(view().name("index"))
 				.andExpect(model().attribute("latest", hasSize(1)))
 				.andExpect(model().attribute("latest", hasItem(book)))
 				.andExpect(model().attribute("pages", 1L))
 				.andExpect(model().attribute("page", 1));
-		verify(bookService, times(1)).simpleSearch(search, 0,IConstants.PAGE_SIZE,"id");
+		verify(bookService, times(1)).simpleSearch(search, 0,IConstants.PAGE_SIZE,"id", false);
 	}
 	
 	@Test
-	public void testWelomePageWithAdvancedSearch() throws Exception {
-		mockMvc.perform(get("/").sessionAttr("advancedSearch", advancedSearch))
+	public void testAdvancedSearch() throws Exception {
+		mockMvc.perform(get("/advsearch").sessionAttr("advancedSearch", advancedSearch)
+				.param("title", advancedSearch.getTitle()))
 				.andExpect(status().isOk())
 				.andExpect(view().name("index"))
 				.andExpect(model().attribute("latest", hasSize(1)))
@@ -206,55 +209,6 @@ public class AuthorizedUserControllerTest {
 		verify(bookService, times(1)).advancedSearch(advancedSearch, 0, IConstants.PAGE_SIZE);
 	}
 	
-	@Test
-	public void testWelomePageByGenre() throws Exception {
-		mockMvc.perform(get("/").param("genre", "1"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("index"))
-				.andExpect(model().attribute("latest", hasSize(1)))
-				.andExpect(model().attribute("latest", hasItem(book)))
-				.andExpect(model().attribute("pages", 1L))
-				.andExpect(model().attribute("page", 1));
-		//verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id");
-	}
-	
-	@Test
-	public void testWelomePageByGenreWithSearch() throws Exception {
-		mockMvc.perform(get("/")
-				.sessionAttr("indexSearch", search)
-				.param("genre", "1"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("index"))
-				.andExpect(model().attribute("latest", hasSize(1)))
-				.andExpect(model().attribute("latest", hasItem(book)))
-				.andExpect(model().attribute("pages", 1L))
-				.andExpect(model().attribute("page", 1));
-		
-	}
-	
-	@Test
-	public void testWelomePageByGenreWithAdvancedSearch() throws Exception {
-		mockMvc.perform(get("/")
-				.sessionAttr("advancedSearch", advancedSearch)
-				.param("genre", "2"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("index"))
-				.andExpect(model().attribute("latest", hasSize(1)))
-				.andExpect(model().attribute("latest", hasItem(book2)))
-				.andExpect(model().attribute("pages", 1L))
-				.andExpect(model().attribute("page", 1));
-	}
-
-	@Test
-	public void testSearch() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAdvancedSearch() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	public void testBookPage() {
 		fail("Not yet implemented");

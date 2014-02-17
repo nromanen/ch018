@@ -7,6 +7,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <!-- Content -->
+<script src="${pageContext.request.contextPath}/resources/js/orders.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/showimage.js"></script>
 <div class="span10 offset1">
 	<c:if test="${book != null}">
 		<div class="alert alert-info" id="bookname">${book.title}, ${book.authors}, ${book.year}, ${book.publication}</div>
@@ -20,7 +22,6 @@
 		<c:if test="${book != null}">
 			<thead>
 				<tr>
-					<th>№</th>
 					<th><spring:message code="person.firstname" /></th>
 					<th><spring:message code="person.lastname" /></th>
 					<th><spring:message code="person.mail" /></th>
@@ -35,7 +36,7 @@
 			<tbody>
 				<c:forEach items="${orders}" var="order">
 					<tr id="order${order.id}" class="table${order.id}">
-						<td><c:out value="${order.id}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${order.id}" escapeXml="true" /></td>
 						<td class="tdname"><c:out value="${order.person.name}"
 								escapeXml="true" /></td>
 						<td class="tdsurname"><c:out value="${order.person.surname}"
@@ -61,7 +62,6 @@
 			<c:if test="${person != null}">
 			<thead>
 				<tr>
-					<th>№</th>
 					<th><spring:message code="book.title" /></th>
 					<th><spring:message code="book.authors" /></th>
 					<th><spring:message code="book.year" /></th>
@@ -76,8 +76,9 @@
 			<tbody>
 				<c:forEach items="${orders}" var="order">
 					<tr id="order${order.id}" class="table${order.id}">
-						<td><c:out value="${order.id}" escapeXml="true" /></td>
-						<td class="tdtitle"><c:out value="${order.book.title}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${order.id}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${order.book.image}"></c:out></td>
+						<td class="tdtitle"><span class="show_image"><c:out value="${order.book.title}" escapeXml="true" /></span></td>
 						<td class="tdauthors"><c:out value="${order.book.authors}" escapeXml="true" /></td>
 						<td><c:out value="${order.book.year}" escapeXml="true" /></td>
 						<td><c:out value="${order.book.publication}" escapeXml="true" /></td>
@@ -94,9 +95,12 @@
 					</tr>
 				</c:forEach>
 			</tbody>
+			<div id = "popover_show_img" style="display: none;overflow:hidden;"><img id="testimg" src="" class="img-rounded pull-left"></div>
 			</c:if>
 		</table>
 	</div>
+	
+	<div class="max_term hide">${maxterm}</div>
 
 	<!-- Delete popup -->
 	<div id="popup" class="modal hide fade" role="dialog"

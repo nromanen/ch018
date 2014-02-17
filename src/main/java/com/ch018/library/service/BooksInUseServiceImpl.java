@@ -64,7 +64,7 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		booksInUse.setPerson(person);
 		booksInUse.setReturnDate(returnDate.getTime());
 		booksInUse.setIssueDate(issueDate.getTime());
-		booksInUse.setTerm(days);
+		//booksInUse.setTerm(days);
 		bookDAO.updateBook(book);
 		booksInUseDAO.addBooksInUse(booksInUse);
 		ordersDAO.deleteOrder(orderId);

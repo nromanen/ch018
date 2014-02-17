@@ -69,7 +69,7 @@ public class Person implements Serializable {
 	@Column(name = "confirmed")
 	private boolean confirm;
 	
-	@Column(name = "emailConfirmed")
+	@Column(name = "activated")
 	private boolean emailConfirmed;
 
 	@Column(name = "sms")

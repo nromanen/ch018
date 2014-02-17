@@ -49,6 +49,10 @@ import com.ch018.library.util.IConstants;
 public class PersonControllerTest {
 	
 	private MockMvc mockMvc;
+	private List<Person> persons = new ArrayList<>();
+	private Person person = new Person();
+	private Person person3 = new Person();
+	private Person person2 = new Person();
 	
 	@Autowired
 	private BookService bookService;
@@ -72,6 +76,22 @@ public class PersonControllerTest {
 		Mockito.reset(genreService);
 		Mockito.reset(booksInUseService);
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		
+		person.setId(1);
+		person.setEmail("test@test.com");
+		person.setCellphone("0000000000");
+		person.setPassword("0000");
+		
+		person2.setId(2);
+		person2.setEmail("test2@test.com");
+		person2.setCellphone("0000000002");
+		person2.setPassword("0002");
+		
+		person3.setId(0);
+		person3.setEmail("");
+		persons.add(person);
+		persons.add(person2);
+		when(personService.getAll(0,IConstants.PAGE_SIZE,"id", false)).thenReturn(persons);
 	}
 
 	@After
@@ -80,30 +100,7 @@ public class PersonControllerTest {
 
 	@Test
 	public void testShowUsers() throws Exception  {
-		List<Person> persons = new ArrayList<>();
-		
-		Person person = new Person();
-		person.setId(1);
-		person.setEmail("test@test.com");
-		person.setCellphone("0000000000");
-		person.setPassword("0000");
-		
-		Person person2 = new Person();
-		person2.setId(2);
-		person2.setEmail("test2@test.com");
-		person2.setCellphone("0000000002");
-		person2.setPassword("0002");
-		
-		Person person3 = new Person();
-		person3.setId(0);
-		person3.setEmail("");
-		persons.add(person);
-		persons.add(person2);
-		when(personService.getAll(0,IConstants.PAGE_SIZE,"id")).thenReturn(persons);
-		
-		//RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users");
-
-		mockMvc.perform(get("/users"))
+		mockMvc.perform(get("/users").sessionAttr("isAsc", false))
 				.andExpect(status().isOk())
 				.andExpect(view().name("users"))
 				.andExpect(model().attribute("person", person3))
@@ -125,8 +122,7 @@ public class PersonControllerTest {
 								)
 						))
 						);
-		verify(personService, times(1)).getAll(0,IConstants.PAGE_SIZE,"id");
-		//verifyNoMoreInteractions(personService);
+		verify(personService, times(1)).getAll(0,IConstants.PAGE_SIZE,"id", false);
 	}
 
 	@Test
