@@ -9,7 +9,6 @@
    <input type="hidden" id="hrefOrder" value="${pageContext.request.contextPath}/prepareorder" />
    <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order"/>
     <h3 class="text-info"><small><spring:message code="menu.wish" /></small></h3>
- 
             <table class="table table-bordered">
                      <thead>
                     	<tr>
@@ -21,9 +20,13 @@
                      </thead>
                          <c:forEach items="${wishByPers}" var="wishByPers">
                                <tr class="info">
-                        	<td>${wishByPers.book.title}</td>
+                        	     <td>
+                        	      <a id="showAboutBook${wishByPers.book.id}" rel="popover">
+                        	             ${wishByPers.book.title}</a>
+                        	      <input type="hidden" value="${wishByPers.id}"/>
+                        	     </td>
                                  <td>${wishByPers.book.genre}</td>
-			         <td>${wishByPers.book.authors}</td>
+			                     <td>${wishByPers.book.authors}</td>
                                  <td>${wishByPers.book.year}</td>
                                  <td>
                                      <input type="hidden" id="wishID" value="${wishByPers.id}">
@@ -35,12 +38,7 @@
                                        </div>
                                   </td>
                                      
-                                 <td><!--  <a href="<c:url 
-                                            value="/order?book=${wishByPers.book.id}&wish=${wishByPers.id}"/>">
-                                            <input type="submit" class="btn btn-success" 
-                                            value="<spring:message code="button.order"/>"/>
-                                      </a>-->
-                                      <input type="hidden" value="${wishByPers.book.id}"/>
+                                 <td> <input type="hidden" value="${wishByPers.book.id}"/>
                                       <a id="orderNow${wishByPers.book.id}" class="btn btn-success">
                                             <spring:message code="button.order" />  
 						              </a>
@@ -56,16 +54,20 @@
                                            <div class="modal-header">Message</div>
                                            <div class="modal-body"><spring:message code="message.failorder"/></div>
                                      </div>
+                                     
+                                     <div id="aboutBook${wishByPers.id}" style="display: none" class="thumbnail span3">
+                                         <div class="media"><img src="${wishByPers.book.image}" class="img-custom pull-left">
+                                            <ul class="thumbnails span6 pull-left">
+                                             <li><span class="label label-info">Title: </span><br><small>${wishByPers.book.title}</small></li>
+                                             <li><span class="label label-info">Publisher: </span><br><small>${wishByPers.book.publication}</small></li>
+                                            </ul>
+                                             </div>
+                                          <div class="caption pull-left">
+                                             ${wishByPers.book.description}
+                                          </div>
+                                     </div>
                                  </td>
 		               </tr>
 	                  </c:forEach>
              </table>
-             
-             
-             
-   <!--           <a href="#modal" role="button" class="btn" data-toggle="modal">Click Me</a>
-           
-            <input type="button" class="btn" id="butt1" value="modal"/>  -->
-             
-        ${fail}
-</div>
+  </div>

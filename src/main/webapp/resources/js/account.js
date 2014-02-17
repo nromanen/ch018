@@ -29,11 +29,11 @@ $(document).ready(function() {
 	  $.ajax({
 		  url: href,
 		  data: $("#editIssue" +$id).serialize(),
-	     type: "POST",
-	     dataType: "json",
-	     contentType: 'application/x-www-form-urlencoded',
-	     mimeType: 'application/json',
-	     success: function(data){
+	      type: "POST",
+	      dataType: "json",
+	      contentType: 'application/x-www-form-urlencoded',
+	      mimeType: 'application/json',
+	      success: function(data){
 	    	 if (data == 1) {
 	    		 $("#editissue").modal();
 	    		 setTimeout(function () {location.reload();}, 1500);
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	  e.preventDefault();
   }) 
   
-  $("#passForm").submit(function(e){
+  $("#passForm").submit(function(e) {
 	  $("#errorpassword").text("");
 	  $("#errornewPassword").text("");
 	  $("#errorconfirmPassword").text("");
@@ -186,6 +186,16 @@ $(document).ready(function() {
 	  });
   })
   
+ 	  $("a[id^=showAboutBook]").popover({
+		   html: true,
+	       placement: "right",
+	       content: function() {
+	    	                      $id = $(this).next().val();
+	    	                      console.log($id);
+	    	                      return $("#aboutBook" + $id).html();
+	    	        }
+	  });
+ 
   $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',
@@ -211,13 +221,13 @@ $(document).ready(function() {
       }
 });
  
-  $("#account").validate({
+  $("#email").validate({
 		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
+		$(element).fadeOut(function() {
 				$(element).fadeIn();
 			});
 		}
-	});
+	}); 
   
   $("#order").validate({
 		highlight: function(element, errorClass) {
@@ -248,6 +258,76 @@ $(document).ready(function() {
   })
   
   
+  $("#account").submit(function(e) {
+	  $("#errorname").text("");
+	  $("#errorsurname").text("");
+	  $("#errorcellphone").text("");
+	  
+	  $.ajax({
+		  url: $("#account").attr("action"),
+		  data: $("#account").serialize(),
+	      type: "POST",
+	      dataType: "json",
+	      contentType : 'application/x-www-form-urlencoded',
+		  mimeType : 'application/json',
+		   success: function(response) {
+			   if(response.status == "SUCCESS") {
+			     $("#success").show("slow");
+			     setTimeout(function () {
+			    	 $("#success").hide("slow");}, 2500);
+			     }  
+			   if(response.status == "FAIL") {
+				   console.log("error");
+				   for(var key in response.errorsMap) {
+			    		  console.log(response.errorsMap[key]);
+			    		  $("#error" + key).text(response.errorsMap[key]);
+			    	}
+			   }
+		   },
+		   error: function(response) {
+			   console.log("error");
+			   $("#errorDiv").show("slow");
+		   }
+	  })
+	e.preventDefault();
+  });
+  
+  $("#email").submit(function(e) {
+	  console.log("211");
+	  $.ajax({
+		  url: $("#email").attr("action"),
+	      data: $("#email").serialize(),
+	      type: "POST",
+	      dataType: "json",
+	      contentType : 'application/x-www-form-urlencoded',
+		  mimeType : 'application/json',
+		  success: function(response){
+			 console.log('1111'); 
+			 if(response.status == "SUCCESS") {
+				 console.log('SUCCESS');
+			 }
+			 if(response.status == "FAIL") {
+				 console.log("FAIL");
+				   for(var key in response.errorsMap) {
+			    		  console.log(response.errorsMap[key]);
+			    		  $("#error" + key).text(response.errorsMap[key]);
+			    		  }
+			 }
+		  },
+	      error: function(response){
+	    	  console.log("error");
+	    	 
+	      }
+	  })
+	  e.preventDefault();
+  });
+  
+  /* $("#rrr").click(function(){
+	  var regexp = [A-Z][a-z]*$ 
+      var name = $("#name").val();
+	  console.log(name);
+	  console.log(regexp.test(name));
+  }) */
 
 })
 

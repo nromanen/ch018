@@ -39,6 +39,8 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired 
 	private MessageSource messageSource;
 	
+	private VerificationKey verifyKey;
+	
 	private static final int MULTIBOOK_DEFAULT = 10;
 	
 	@Override
@@ -234,14 +236,16 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public void updateEmail(Person pers, Person pers2, HttpServletRequest request) {
-		pers.setEmail(pers2.getEmail());
-		pers.setConfirm(false);
+		//pers.setEmail(pers2.getEmail());
+		//pers.setConfirm(false);
 		pers.setEmailConfirmed(false);
+		pers.setVerificationKey(verifyKey.generate(pers2.getEmail()));
 		personDao.update(pers);
+		
 		String url = request.getRequestURL().toString();
 		String message = "You have change your e-mail address on account in J Library"
 				+ " Please confirm your new email by clicking next link: "
-				+ url + "/confirm?key=" + pers.getVerificationKey();
+				+ url + "/confirm?key=" + verifyKey.generate(pers2.getEmail()) + "&email=" +pers2.getEmail();
 		mailService.sendMail(pers.getEmail(), "Library email confirmation", message);
 	}
 

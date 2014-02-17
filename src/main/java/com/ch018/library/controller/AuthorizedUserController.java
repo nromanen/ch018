@@ -256,7 +256,7 @@ public class AuthorizedUserController {
      return model;
     }
     
-    /**
+   /* /**
      * 
      * @param updtPers
      * @param result
@@ -264,7 +264,7 @@ public class AuthorizedUserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
                               BindingResult result, Principal principal, HttpServletRequest request) {
         accountValidation.validate(updtPers, result);
@@ -272,15 +272,39 @@ public class AuthorizedUserController {
         if (result.hasErrors()) {
             return "userAccount";
         }
-      /*  if(!person.getEmail().equals(updtPers.getEmail())) { 
-            person = persService.updateAccProperties(person, updtPers, request);
-            persService.update(person);
-            return "redirect:/logout"; 
-        } */
         person = persService.updateAccProperties(person, updtPers, request);
         persService.update(person);
         return "userAccount";
-    }
+    } */
+     
+    
+    @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResponse editProfile(@Valid Person updtPers, BindingResult result, 
+    		Principal principal, HttpServletRequest request) {
+    	JsonResponse resp = new JsonResponse();
+        accountValidation.validate(updtPers, result);
+        Person person = persService.getByEmail(principal.getName());
+        if (result.hasErrors()) {
+        	Map<String,String> errors = new HashMap<>();
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            for(FieldError fieldError: fieldErrors) {
+            	String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+            	String string = resolveMessageCodes[0];
+            	String message = messageSource.getMessage(string, 
+            			  new Object[]{fieldError.getRejectedValue()}, LocaleContextHolder.getLocale());
+            	errors.put(fieldError.getField(), message);
+            }
+            resp.setStatus("FAIL");
+            resp.setErrorsMap(errors);
+            resp.setResult(result.getAllErrors());
+            return resp;
+        }
+        person = persService.updateAccProperties(person, updtPers, request);
+        persService.update(person);
+        resp.setStatus("SUCCESS");
+        return resp;
+    } 
     
     /**
      * 
@@ -323,7 +347,7 @@ public class AuthorizedUserController {
               }             
 	}
 	
-	@RequestMapping(value = "/profile-email")
+	@RequestMapping(value = "/profile-email", method = RequestMethod.GET)
 	public Model emailView(Model model, Principal principal){
 		Person person = persService.getByEmail(principal.getName());
 		model.addAttribute("email", person.getEmail());
@@ -333,14 +357,30 @@ public class AuthorizedUserController {
 	}
 	
 	@RequestMapping(value = "/profile-email", method = RequestMethod.POST)
-	public String changeEmail(@ModelAttribute("person") @Valid Person person, Principal principal, BindingResult result, HttpServletRequest request){
+	@ResponseBody
+	public JsonResponse changeEmail(@Valid Person person, Principal principal, 
+			                        BindingResult result, HttpServletRequest request){
+		JsonResponse resp = new JsonResponse();
 		personValidation.validate(person, result);
-		if(result.hasErrors()){
-			return "profile-email";
+		if(result.hasErrors()){Map<String,String> errors = new HashMap<>();
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			for(FieldError fieldError: fieldErrors) {
+				String[] resolveMessageCodes = result.resolveMessageCodes(fieldError.getCode());
+				String string = resolveMessageCodes[0];
+				String message = messageSource.getMessage(string, 
+						new Object[]{fieldError.getRejectedValue()}, LocaleContextHolder.getLocale());
+				errors.put(fieldError.getField(), message);
+			}
+			resp.setStatus("FAIL");
+			resp.setErrorsMap(errors);
+			resp.setResult(result.getAllErrors());
+			return resp;
 		}
 		Person pers = persService.getByEmail(principal.getName());
 		persService.updateEmail(pers, person, request);
-		return "redirect:/logout";
+		//return "redirect:/logout";
+		resp.setStatus("SUCCESS");
+		return resp;
 	}
     
 	/**

@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +41,7 @@ public class SecurityController {
 	
 	@Autowired 
 	private MessageSource messageSource;
-	
+		
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm(@RequestParam(required = false) String error, Model model) {
 		if (error != null) {
@@ -76,14 +81,20 @@ public class SecurityController {
 	}
 	
 	@RequestMapping(value = "/profile-email/confirm", method = RequestMethod.GET)
-	public String updateEmail(Model model, @RequestParam("key") String key) {
+	public String updateEmail(Model model, @RequestParam("key") String key, 
+			                               @RequestParam("email") String email) {
 		Person person =	personService.getByKey(key);
 		if ((person != null) && (person.getEmailConfirmed() == false)) {
+			person.setEmail(email);
 			person.setConfirm(true);
 			person.setEmailConfirmed(true);
 			person.setEmailConfirmed(true);
 			personService.update(person);
 	}
+		Authentication auth = new PreAuthenticatedAuthenticationToken(
+				email, SecurityContextHolder.getContext()
+						.getAuthentication().getPrincipal());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		return "redirect:/";
    }
 }
