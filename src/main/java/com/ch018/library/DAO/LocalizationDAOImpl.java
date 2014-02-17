@@ -18,6 +18,15 @@ public class LocalizationDAOImpl implements LocalizationDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
+	public void addGenreLocalization(Localization localization) {
+		try {
+			sessionFactory.getCurrentSession().save(localization);
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
+	
+	@Override
 	public String getName(int id, String language) {
 		Localization loc = new Localization();
 		String name = "";

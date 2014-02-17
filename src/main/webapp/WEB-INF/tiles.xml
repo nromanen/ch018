@@ -56,6 +56,13 @@
 		<put-attribute name="left" value="" />
 	</definition>
 	
+	<definition name="genres" extends="baseLayout">
+		<put-attribute name="title" value="Librarian > Genres" />
+		<put-attribute name="body" value="/view/librarian/genres.jsp" />
+		<put-attribute name="right" value="" />
+		<put-attribute name="left" value="" />
+	</definition>
+	
 	<definition name="users" extends="baseLayout">
 		<put-attribute name="title" value="Librarian > Users" />
 		<put-attribute name="body" value="/view/librarian/users.jsp" />
