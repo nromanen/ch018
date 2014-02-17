@@ -236,8 +236,6 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public void updateEmail(Person pers, Person pers2, HttpServletRequest request) {
-		//pers.setEmail(pers2.getEmail());
-		//pers.setConfirm(false);
 		pers.setEmailConfirmed(false);
 		pers.setVerificationKey(verifyKey.generate(pers2.getEmail()));
 		personDao.update(pers);

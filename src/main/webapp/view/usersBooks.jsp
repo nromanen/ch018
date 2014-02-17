@@ -14,7 +14,6 @@
                     <td><spring:message code="book.title"/></td>
                     <td><spring:message code="person.issuedate"/></td>
                     <td><spring:message code="person.returndate"/></td>
-                    <td><spring:message code="message.term"/></td>
                     <td><spring:message code="message.rating"/></td>
                 </tr>
             </thead>
@@ -23,7 +22,6 @@
                     <td><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>">${book.book.title}</a></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
-                    <td>${book.term}</td>
                     <td><c:if test="${book.mark >0}">${book.mark}</c:if>
                         <c:if test="${book.mark == 0}"><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>">Rate</a></c:if>
                     </td>

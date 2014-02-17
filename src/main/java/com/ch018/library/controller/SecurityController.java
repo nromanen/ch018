@@ -82,7 +82,7 @@ public class SecurityController {
 	
 	@RequestMapping(value = "/profile-email/confirm", method = RequestMethod.GET)
 	public String updateEmail(Model model, @RequestParam("key") String key, 
-			                               @RequestParam("email") String email) {
+			                               @RequestParam("email") String email, HttpServletRequest request) {
 		Person person =	personService.getByKey(key);
 		if ((person != null) && (person.getEmailConfirmed() == false)) {
 			person.setEmail(email);
@@ -90,10 +90,8 @@ public class SecurityController {
 			person.setEmailConfirmed(true);
 			person.setEmailConfirmed(true);
 			personService.update(person);
-	}
-		Authentication auth = new PreAuthenticatedAuthenticationToken(
-				email, SecurityContextHolder.getContext()
-						.getAuthentication().getPrincipal());
+	    }
+		Authentication auth = new PreAuthenticatedAuthenticationToken(email, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		return "redirect:/";
    }

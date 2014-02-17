@@ -256,7 +256,7 @@ public class AuthorizedUserController {
      return model;
     }
     
-   /* /**
+    /**
      * 
      * @param updtPers
      * @param result
@@ -264,20 +264,6 @@ public class AuthorizedUserController {
      * @param request
      * @return
      */
-   /* @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
-    public String editProfile(@ModelAttribute("person") @Valid Person updtPers, 
-                              BindingResult result, Principal principal, HttpServletRequest request) {
-        accountValidation.validate(updtPers, result);
-        Person person = persService.getByEmail(principal.getName());
-        if (result.hasErrors()) {
-            return "userAccount";
-        }
-        person = persService.updateAccProperties(person, updtPers, request);
-        persService.update(person);
-        return "userAccount";
-    } */
-     
-    
     @RequestMapping(value = "/userAccount", method = RequestMethod.POST)
     @ResponseBody
     public JsonResponse editProfile(@Valid Person updtPers, BindingResult result, 
@@ -340,7 +326,6 @@ public class AuthorizedUserController {
             	  
             	  return resp;
               } else {
-            	//  return "pass";
             	  resp.setStatus("WRONGPASS");
             	  resp.setResult("0");
             	  return resp;
@@ -378,7 +363,6 @@ public class AuthorizedUserController {
 		}
 		Person pers = persService.getByEmail(principal.getName());
 		persService.updateEmail(pers, person, request);
-		//return "redirect:/logout";
 		resp.setStatus("SUCCESS");
 		return resp;
 	}
