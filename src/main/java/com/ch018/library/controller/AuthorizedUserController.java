@@ -28,7 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ch018.library.domain.JsonResponse;
+
+
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
@@ -39,6 +40,7 @@ import com.ch018.library.service.GenreService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.util.IConstants;
+import com.ch018.library.util.JsonResponse;
 import com.ch018.library.validator.AccountValidation;
 import com.ch018.library.validator.ChangePasswordValid;
 import com.ch018.library.validator.PersonValidation;
@@ -351,7 +353,7 @@ public class AuthorizedUserController {
     public void changePassword(@ModelAttribute("password")Password password, 
                                BindingResult result, 
                                Principal principal) {
-     
+         
     } 
     
 }
