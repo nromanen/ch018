@@ -8,5 +8,6 @@
 	<div class="well">
 		${errorMessage} Go <a href="<c:url value="/"/>"><spring:message code="menu.home" /></a>!
 	</div>
+	<img src="<c:url value="/resources/img/error.png"/>" class="img-error">
 </div>
 <div class="span3"></div>

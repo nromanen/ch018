@@ -396,14 +396,4 @@ $(document).ready(function() {
       }
   });
   
-  $(".show_image").tooltip({
-  	html:true,
-  	placement: "right",
-  	title: function() {
-  		$img = $(this).prev().text();
-  		$("#testimg").attr("src", "http://localhost:8080/library" + $img);
-  		return $('#popover_show_img').html();
-      }
-  });
-  
 });

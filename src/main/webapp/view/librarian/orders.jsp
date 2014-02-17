@@ -8,6 +8,7 @@
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
 <!-- Content -->
 <script src="${pageContext.request.contextPath}/resources/js/orders.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/showimage.js"></script>
 <div class="span10 offset1">
 	<c:if test="${book != null}">
 		<div class="alert alert-info" id="bookname">${book.title}, ${book.authors}, ${book.year}, ${book.publication}</div>
@@ -77,7 +78,7 @@
 					<tr id="order${order.id}" class="table${order.id}">
 						<td class="hide"><c:out value="${order.id}" escapeXml="true" /></td>
 						<td class="hide"><c:out value="${order.book.image}"></c:out></td>
-						<td class="tdtitle show_image"><c:out value="${order.book.title}" escapeXml="true" /></td>
+						<td class="tdtitle"><span class="show_image"><c:out value="${order.book.title}" escapeXml="true" /></span></td>
 						<td class="tdauthors"><c:out value="${order.book.authors}" escapeXml="true" /></td>
 						<td><c:out value="${order.book.year}" escapeXml="true" /></td>
 						<td><c:out value="${order.book.publication}" escapeXml="true" /></td>

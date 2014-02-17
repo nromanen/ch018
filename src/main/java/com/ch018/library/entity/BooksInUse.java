@@ -35,8 +35,6 @@ public class BooksInUse {
 	private Book book;
 	private Date issueDate;
 	private Date returnDate;
-	private boolean inUse;
-	private int term;
 	private float mark;
 
 	public BooksInUse() {
@@ -71,16 +69,6 @@ public class BooksInUse {
 	public Date getReturnDate() {
 		return returnDate;
 	}
-
-	@Column(name = "inUse")
-	public boolean getInUse() {
-		return inUse;
-	}
-
-	@Column(name = "term")
-	public int getTerm() {
-		return term;
-	}
 	
 	@Column(name = "mark", columnDefinition = "float default 0")
     public float getMark() {
@@ -105,14 +93,6 @@ public class BooksInUse {
 
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
-	}
-
-	public void setInUse(boolean inUse) {
-		this.inUse = inUse;
-	}
-
-	public void setTerm(int term) {
-		this.term = term;
 	}
 	
 	public void setMark(float mark) {

@@ -9,6 +9,7 @@
 <%@ taglib prefix="tilesx"
 	uri="http://tiles.apache.org/tags-tiles-extras"%>
 <!-- Content -->
+<script src="${pageContext.request.contextPath}/resources/js/showimage.js"></script>
 <div class="span10 offset1">
 	<c:if test="${book != null}">
 		<div class="alert alert-info" id="bookname">${book.title}, ${book.authors}, ${book.year}, ${book.publication}</div>
@@ -80,7 +81,7 @@
 						<td class="hide"><c:out value="${bookinuse.buid}" escapeXml="true" /></td>
 						<td class="pid${bookinuse.buid}  hide"><c:out value="${bookinuse.book.id}" escapeXml="true" /></td>
 						<td class="hide"><c:out value="${bookinuse.book.image}"></c:out></td>
-						<td class="tdtitle show_image"><c:out value="${bookinuse.book.title}" escapeXml="true" /></td>
+						<td class="tdtitle"><span class="show_image"><c:out value="${bookinuse.book.title}" escapeXml="true" /></span></td>
 						<td class="tdauthors"><c:out value="${bookinuse.book.authors}" escapeXml="true" /></td>
 						<td><c:out value="${bookinuse.book.year}" escapeXml="true" /></td>
 						<td><c:out value="${bookinuse.book.publication}" escapeXml="true" /></td>
