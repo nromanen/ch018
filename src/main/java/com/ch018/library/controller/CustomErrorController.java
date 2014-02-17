@@ -37,14 +37,14 @@ public class CustomErrorController {
 	
 	@RequestMapping("error403")
 	public String accessDenied(Model model) {
-		String message = "Access is denied.";
+		String message = "403 Access is denied.";
 		model.addAttribute("errorMessage", message);
 		return "error403";
 	}
 	
 	@RequestMapping("error400")
 	public String badRequest(Model model) {
-		String message = "Bad request.";
+		String message = "400 Bad request.";
 		model.addAttribute("errorMessage", message);
 		return "error400";
 	}

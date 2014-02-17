@@ -382,6 +382,7 @@ $(document).ready(function() {
         	  $page = 1;
           }
           $max_page = $(".total-pages").text();
+          console.log($max_page);
           if ($page <= $max_page) {
         	  $rel = $(this).attr("rel")+$page;
         	  window.location.replace($rel);
