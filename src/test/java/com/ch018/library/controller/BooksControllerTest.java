@@ -1,4 +1,4 @@
-package com.ch018.test.controller;
+package com.ch018.library.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,11 +165,8 @@ public class BooksControllerTest {
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
 		//book.setTerm(-1);
-		//mockMvc.perform(post("/book/update")
-		//		.contentType(MediaType.MULTIPART_FORM_DATA)
-		//		.requestAttr("book", book)
-		//		);
-		//		.andExpect(status().isBadRequest());
+		mockMvc.perform(post("/book/update").param("title", "title")
+				).andExpect(status().isOk());
 	}
 
 	@Test

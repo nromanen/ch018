@@ -39,7 +39,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 			)
 })
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 public class Book implements Serializable {
 		
 	private static final long serialVersionUID = 8488328581221067484L;
@@ -272,7 +272,7 @@ public class Book implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		if (this.title.equals(((Book) obj).getTitle())
+		if (this.getTitle().equals(((Book) obj).getTitle())
 				&& this.getAuthors().equals(((Book) obj).getAuthors())
 				&& this.getPublication().equals(((Book) obj).getPublication())) {
 			return true;

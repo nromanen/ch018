@@ -1,4 +1,4 @@
-package com.ch018.test.controller;
+package com.ch018.library.controller;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
