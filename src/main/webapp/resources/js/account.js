@@ -221,13 +221,13 @@ $(document).ready(function() {
       }
 });
  
-/*  $("#account").validate({
+  $("#email").validate({
 		highlight: function(element, errorClass) {
 		$(element).fadeOut(function() {
 				$(element).fadeIn();
 			});
 		}
-	}); */
+	}); 
   
   $("#order").validate({
 		highlight: function(element, errorClass) {
@@ -259,10 +259,6 @@ $(document).ready(function() {
   
   
   $("#account").submit(function(e) {
-	 /*var regExp =[A-Z][a-zA-Z]
-	 var name = $("#name").val();
-	 console.log(name);
-	 console.log(regExp.test(name)); */
 	  $("#errorname").text("");
 	  $("#errorsurname").text("");
 	  $("#errorcellphone").text("");
@@ -276,9 +272,10 @@ $(document).ready(function() {
 		  mimeType : 'application/json',
 		   success: function(response) {
 			   if(response.status == "SUCCESS") {
-			     $(".alert").show("slow");
-			     setTimeout(function () {$(".alert").hide("slow");}, 2500);
-			   }  
+			     $("#success").show("slow");
+			     setTimeout(function () {
+			    	 $("#success").hide("slow");}, 2500);
+			     }  
 			   if(response.status == "FAIL") {
 				   console.log("error");
 				   for(var key in response.errorsMap) {
@@ -289,10 +286,48 @@ $(document).ready(function() {
 		   },
 		   error: function(response) {
 			   console.log("error");
+			   $("#errorDiv").show("slow");
 		   }
 	  })
 	e.preventDefault();
   });
+  
+  $("#email").submit(function(e) {
+	  console.log("211");
+	  $.ajax({
+		  url: $("#email").attr("action"),
+	      data: $("#email").serialize(),
+	      type: "POST",
+	      dataType: "json",
+	      contentType : 'application/x-www-form-urlencoded',
+		  mimeType : 'application/json',
+		  success: function(response){
+			 console.log('1111'); 
+			 if(response.status == "SUCCESS") {
+				 console.log('SUCCESS');
+			 }
+			 if(response.status == "FAIL") {
+				 console.log("FAIL");
+				   for(var key in response.errorsMap) {
+			    		  console.log(response.errorsMap[key]);
+			    		  $("#error" + key).text(response.errorsMap[key]);
+			    		  }
+			 }
+		  },
+	      error: function(response){
+	    	  console.log("error");
+	    	 
+	      }
+	  })
+	  e.preventDefault();
+  });
+  
+  /* $("#rrr").click(function(){
+	  var regexp = [A-Z][a-z]*$ 
+      var name = $("#name").val();
+	  console.log(name);
+	  console.log(regexp.test(name));
+  }) */
 
 })
 

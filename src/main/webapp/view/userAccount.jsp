@@ -7,12 +7,19 @@
 <div class="span8">
     <h3><spring:message code="message.accprop"/></h3>
     
-      <div class="alert alert-success" style="display: none">
+      <div class="alert alert-success" style="display: none" id="success">
 		<button type="button" class="close">&times;</button>
 		<h4>
 			Message
 		</h4>
 		Account successfully updated.
+	</div>	
+	<div class="alert alert-error" style="display: none" id="errorDiv">
+		<button type="button" class="close">&times;</button>
+		<h4>
+		<spring:message code="message.error" />
+		</h4>
+		Error has occurred. Please try again. 
 	</div>	
                             <form:form id="account" method="POST" commandName="person" class="form-horizontal">
                                 <div class="control-group">
@@ -68,7 +75,7 @@
                                    </div>
                                
                                 <input type="submit" value="<spring:message code="button.savechanges"/>" class="btn" id="refreshResult"/>
-                                <!-- <input type="button" value="11111" class="btn" id="rrr"/>    -->
+                                <input type="button" value="11111" class="btn" id="rrr"/>
                              </form:form>
                                 
                                
