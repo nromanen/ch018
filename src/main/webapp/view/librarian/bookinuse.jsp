@@ -9,6 +9,7 @@
 <%@ taglib prefix="tilesx"
 	uri="http://tiles.apache.org/tags-tiles-extras"%>
 <!-- Content -->
+<script src="${pageContext.request.contextPath}/resources/js/showimage.js"></script>
 <div class="span10 offset1">
 	<c:if test="${book != null}">
 		<div class="alert alert-info" id="bookname">${book.title}, ${book.authors}, ${book.year}, ${book.publication}</div>
@@ -65,7 +66,6 @@
 			<c:if test="${person != null}">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th><spring:message code="book.title" /></th>
 					<th><spring:message code="book.authors" /></th>
 					<th><spring:message code="book.year" /></th>
@@ -78,9 +78,10 @@
 			<tbody>
 				<c:forEach items="${booksinuse}" var="bookinuse">
 					<tr id="bookinuse${bookinuse.buid}" class="table${bookinuse.buid}">
-						<td><c:out value="${bookinuse.buid}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${bookinuse.buid}" escapeXml="true" /></td>
 						<td class="pid${bookinuse.buid}  hide"><c:out value="${bookinuse.book.id}" escapeXml="true" /></td>
-						<td class="tdtitle"><c:out value="${bookinuse.book.title}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${bookinuse.book.image}"></c:out></td>
+						<td class="tdtitle"><span class="show_image"><c:out value="${bookinuse.book.title}" escapeXml="true" /></span></td>
 						<td class="tdauthors"><c:out value="${bookinuse.book.authors}" escapeXml="true" /></td>
 						<td><c:out value="${bookinuse.book.year}" escapeXml="true" /></td>
 						<td><c:out value="${bookinuse.book.publication}" escapeXml="true" /></td>
@@ -99,6 +100,7 @@
 					</tr>
 				</c:forEach>
 			</tbody>
+			<div id = "popover_show_img" style="display: none;overflow:hidden;"><img id="testimg" src="" class="img-rounded pull-left"></div>
 			</c:if>
 		</table>
 	</div>

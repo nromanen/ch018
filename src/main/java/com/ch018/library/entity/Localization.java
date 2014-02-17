@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "localization")
+@Table(name = "genreLocalization")
 public class Localization {
 
     private int id;

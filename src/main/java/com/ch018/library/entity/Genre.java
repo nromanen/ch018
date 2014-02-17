@@ -17,7 +17,6 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ch018.library.service.LocalizationService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * 
  * @author Yurik Mikhaletskiy
@@ -49,7 +48,7 @@ public class Genre implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "gid", unique = true, nullable = false)
+	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return id;
 	}
