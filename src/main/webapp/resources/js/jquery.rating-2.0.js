@@ -1,6 +1,6 @@
-/** Рейтинг заметок в виде звезд jquery.rating.js
+/** Р РµР№С‚РёРЅРі Р·Р°РјРµС‚РѕРє РІ РІРёРґРµ Р·РІРµР·Рґ jquery.rating.js
  *  http://biznesguide.ru/coding/156.html
- *  Copyright (c) 2011 Шамшур Иван (http://twitter.com/ivanshamshur)
+ *  Copyright (c) 2011 РЁР°РјС€СѓСЂ Р�РІР°РЅ (http://twitter.com/ivanshamshur)
  *  Dual licensed under the MIT and GPL licenses
  */
  
@@ -60,12 +60,12 @@
 
         this.el.html(this.loader);
 
-        //Загружаем изображение звезд и высчитываем ширину и высоту одной звезды
+        //Р—Р°РіСЂСѓР¶Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ Р·РІРµР·Рґ Рё РІС‹СЃС‡РёС‚С‹РІР°РµРј С€РёСЂРёРЅСѓ Рё РІС‹СЃРѕС‚Сѓ РѕРґРЅРѕР№ Р·РІРµР·РґС‹
         var img = new Image();
         img.src = this.options.image;
         img.onload = function() {
-            self.width = this.width; //Ширина одной звезды
-            self.height = this.height/3; //Высота одной звезды
+            self.width = this.width; //РЁРёСЂРёРЅР° РѕРґРЅРѕР№ Р·РІРµР·РґС‹
+            self.height = this.height/3; //Р’С‹СЃРѕС‚Р° РѕРґРЅРѕР№ Р·РІРµР·РґС‹
             self.init();
         };
 		
@@ -106,7 +106,7 @@
                 if(width > max) width = max;
                 if(width < min) width = min;   
            
-                score = Math.round( width/self.width * 10 ) / 10; //округляем до 1 знака после запятой
+                score = Math.round( width/self.width * 10 ) / 10; //РѕРєСЂСѓРіР»СЏРµРј РґРѕ 1 Р·РЅР°РєР° РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№
            
                 if(self.options.fx == 'half'){
                     width = Math.ceil(width/self.width*2)*self.width/2;          
@@ -143,7 +143,7 @@
     			 self._data.val = (self._data.val*self._data.votes +score)/(self._data.votes + 1);
                  self._data.val = Math.round( self._data.val * 100 ) / 100;
                  self._data.score = score;
-                 self.vote_success.html('Ваша оценка: '+score);
+                 self.vote_success.html('Р’Р°С€Р° РѕС†РµРЅРєР°: '+score);
     			 
                  if(self.options.url != ''){
     				 
@@ -215,16 +215,8 @@
     			type: self.options.type,
     			//data: this._data,
                 //dataType: 'json',
-    			success: function(data){
-		            if(data.status == 'OK') {
-		               
-		              self.set();
-		            }  
-                    else{
-                        self._data.votes--;
-                        self.reset();
-                    }      
-                    
+    			success: function(data) {
+		           
                     self.setvoters();
                        
     				if(data.msg)self.vote_success.html(data.msg);
@@ -233,6 +225,8 @@
                         
                         self.options.callback.apply(self,[data]);
                     }
+                    
+                    location.reload();
     			}
     		});
     		

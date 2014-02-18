@@ -37,13 +37,9 @@
 			<sec:authorize access="isAuthenticated()">
 				<c:if test="${usermark > 0}">
 				<spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00
-			      <div id="rated">
-				     <input type="hidden" class="val" value="4"/>
-				  </div>
 				</c:if>
 			    <c:if test="${usermark < 1}">  
-				  <div class="display-item">
-						
+				  <div class="rating"></div>
 					</div>
 				</c:if>
 			</sec:authorize>
@@ -53,5 +49,5 @@
 	<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
 						<input type="hidden" id="bookID" value="${book.id}" /> 
 						<input type="hidden" id="buID" value="${buid}" />
-	<div class="rating"></div>
+   <!-- <div class="rating"></div> -->
 </div>

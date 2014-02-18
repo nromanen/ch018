@@ -323,7 +323,7 @@ $(document).ready(function() {
 	  e.preventDefault();
   });
   
-  $('.rating').rating();
+  $('.rating').rating({});
   
   $("#rated").rating({
 	  readOnly: true,
