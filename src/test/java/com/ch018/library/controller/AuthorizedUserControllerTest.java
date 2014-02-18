@@ -45,7 +45,7 @@ import com.ch018.library.validator.ChangePasswordValid;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/fortest/servlet-context.xml",
+		"file:src/main/webapp/WEB-INF/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/fortest/test-context.xml"
 })
 @WebAppConfiguration

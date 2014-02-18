@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +48,14 @@ public class GenreDAOImpl implements GenreDAO {
 	@Override
 	public Genre getGenreById(int id) {
 		Genre genre = null;
+		Session session = null;
 		try {
-			genre = (Genre) sessionFactory.getCurrentSession().get(Genre.class,
-					id);
+			session = sessionFactory.getCurrentSession();
+			genre = (Genre) session.get(Genre.class, id);
 		} catch (Exception e) {
 			log.error(e);
 		}
+		session.clear();
 		return genre;
 	}
 }
