@@ -1,10 +1,14 @@
-package com.ch018.test.controller;
+package com.ch018.library.controller;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -79,8 +83,19 @@ public class SecurityControllerTest {
 	}
 
 	@Test
-	public void testLoginForm() {
-		
+	public void testLoginForm() throws Exception {
+		mockMvc.perform(get("/login"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("login"))
+				.andExpect(model().attribute("error", hasToString("person.loginnull")));
+	}
+	
+	@Test
+	public void testLoginFormError() throws Exception {
+		mockMvc.perform(get("/login").param("error", "error"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("login"))
+				.andExpect(model().attribute("error", hasToString("person.loginerror")));
 	}
 
 	@Test

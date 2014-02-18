@@ -184,25 +184,25 @@ public class BooksController {
 				count = booksInUseService.countBooksInUse();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(booksInUseService.getAllBooks(currentPos,IConstants.PAGE_SIZE, "id"));
+				books.addAll(booksInUseService.getAllBooks(currentPos, IConstants.PAGE_SIZE, "id"));
 				break;
 			case "returntd":
 				count = booksInUseService.countBooksInUseToday();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(booksInUseService.getReturnBooksToday(currentPos,IConstants.PAGE_SIZE, "id"));
+				books.addAll(booksInUseService.getReturnBooksToday(currentPos, IConstants.PAGE_SIZE, "id"));
 				break;
 			case "issuetd":
 				count = ordersService.countOrdersToday();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(ordersService.toIssueToday(currentPos,IConstants.PAGE_SIZE, "id"));
+				books.addAll(ordersService.toIssueToday(currentPos, IConstants.PAGE_SIZE, "id"));
 				break;
 			case "issueph":
 				count = ordersService.countOrdersPerHour();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(ordersService.toIssuePerHour(currentPos,IConstants.PAGE_SIZE, "id"));
+				books.addAll(ordersService.toIssuePerHour(currentPos, IConstants.PAGE_SIZE, "id"));
 				break;
 			default:
 				session.removeAttribute("search");
@@ -212,7 +212,7 @@ public class BooksController {
 				count = bookService.countBooks();
 				pages = (int) Math.ceil(count / (float)IConstants.PAGE_SIZE);
 				currentPos = (page - 1) * IConstants.PAGE_SIZE;
-				books.addAll(bookService.getAllBooks(currentPos,IConstants.PAGE_SIZE, sessionSort, true));
+				books.addAll(bookService.getAllBooks(currentPos, IConstants.PAGE_SIZE, sessionSort, true));
 				break;
 		}
 		model.addAttribute("pages", pages);

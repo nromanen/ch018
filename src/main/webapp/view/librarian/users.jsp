@@ -6,6 +6,10 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%> 
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras" %>
+<c:set var="asc" value="" />
+<c:if test="${isAsc == null || isAsc == false}">
+	<c:set var="asc" value="&isasc=true" />
+</c:if>
 <div class="span10 offset1">
 	<!-- Alert -->
 	<div class="alert alert-error" style="display: none">
@@ -21,16 +25,16 @@
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><nobr><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"><i class="icon-chevron-down"></i></a></nobr></th>
-					<th><nobr><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.firstname" /><a href="<c:url value="?sort=name${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.mail" /><a href="<c:url value="?sort=email${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.rating" /><a href="<c:url value="?sort=rating${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
+					<th><nobr><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders${asc}"/>"><i class="icon-chevron-down"></i></a></nobr></th>
 					<th></th>
 					<th></th>
 					<th></th>

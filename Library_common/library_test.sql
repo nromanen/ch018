@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Фев 17 2014 г., 23:56
+-- Время создания: Фев 18 2014 г., 11:51
 -- Версия сервера: 5.6.11
 -- Версия PHP: 5.5.3
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `library`
+-- База данных: `library_test`
 --
-CREATE DATABASE IF NOT EXISTS `library` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `library`;
+CREATE DATABASE IF NOT EXISTS `library_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `library_test`;
 
 -- --------------------------------------------------------
 
@@ -28,7 +28,6 @@ USE `library`;
 -- Структура таблицы `book`
 --
 
-DROP TABLE IF EXISTS `book`;
 CREATE TABLE IF NOT EXISTS `book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `authors` varchar(200) NOT NULL,
@@ -48,13 +47,8 @@ CREATE TABLE IF NOT EXISTS `book` (
   `genre_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_lwwyu1h28alv6nnnb31qnfq` (`genre_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
---
--- Очистить таблицу перед добавлением данных `book`
---
-
-TRUNCATE TABLE `book`;
 --
 -- Дамп данных таблицы `book`
 --
@@ -81,7 +75,6 @@ INSERT INTO `book` (`id`, `authors`, `available`, `bookcase`, `count`, `descript
 -- Структура таблицы `booksinuse`
 --
 
-DROP TABLE IF EXISTS `booksinuse`;
 CREATE TABLE IF NOT EXISTS `booksinuse` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `issue_date` datetime DEFAULT NULL,
@@ -94,11 +87,6 @@ CREATE TABLE IF NOT EXISTS `booksinuse` (
   KEY `FK_mo4ohii4g1k8433a35y64nkyb` (`person_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
---
--- Очистить таблицу перед добавлением данных `booksinuse`
---
-
-TRUNCATE TABLE `booksinuse`;
 --
 -- Дамп данных таблицы `booksinuse`
 --
@@ -120,17 +108,11 @@ INSERT INTO `booksinuse` (`id`, `issue_date`, `mark`, `return_date`, `book_id`, 
 -- Структура таблицы `genre`
 --
 
-DROP TABLE IF EXISTS `genre`;
 CREATE TABLE IF NOT EXISTS `genre` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
---
--- Очистить таблицу перед добавлением данных `genre`
---
-
-TRUNCATE TABLE `genre`;
 --
 -- Дамп данных таблицы `genre`
 --
@@ -153,7 +135,6 @@ INSERT INTO `genre` (`id`) VALUES
 -- Структура таблицы `genrelocalization`
 --
 
-DROP TABLE IF EXISTS `genrelocalization`;
 CREATE TABLE IF NOT EXISTS `genrelocalization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `language` varchar(255) DEFAULT NULL,
@@ -163,11 +144,6 @@ CREATE TABLE IF NOT EXISTS `genrelocalization` (
   KEY `FK_37aeba2spfhks9qi0hrb7m1pe` (`genre_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
---
--- Очистить таблицу перед добавлением данных `genrelocalization`
---
-
-TRUNCATE TABLE `genrelocalization`;
 --
 -- Дамп данных таблицы `genrelocalization`
 --
@@ -210,7 +186,6 @@ INSERT INTO `genrelocalization` (`id`, `language`, `localizedName`, `genre_id`) 
 -- Структура таблицы `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_date` datetime DEFAULT NULL,
@@ -222,11 +197,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `FK_iej2da8bimqjxwvdma0eq8qus` (`person_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Очистить таблицу перед добавлением данных `orders`
---
-
-TRUNCATE TABLE `orders`;
 --
 -- Дамп данных таблицы `orders`
 --
@@ -242,7 +212,6 @@ INSERT INTO `orders` (`id`, `order_date`, `issue_date`, `book_id`, `person_id`) 
 -- Структура таблицы `person`
 --
 
-DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cellphone` varchar(255) DEFAULT NULL,
@@ -265,11 +234,6 @@ CREATE TABLE IF NOT EXISTS `person` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
--- Очистить таблицу перед добавлением данных `person`
---
-
-TRUNCATE TABLE `person`;
---
 -- Дамп данных таблицы `person`
 --
 
@@ -291,7 +255,6 @@ INSERT INTO `person` (`id`, `cellphone`, `confirmed`, `e_mail`, `activated`, `fa
 -- Структура таблицы `wishlist`
 --
 
-DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE IF NOT EXISTS `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_id` int(11) DEFAULT NULL,
@@ -301,11 +264,6 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   KEY `FK_jbjdt125j4db1tyhyj3m9pn86` (`person_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
---
--- Очистить таблицу перед добавлением данных `wishlist`
---
-
-TRUNCATE TABLE `wishlist`;
 --
 -- Дамп данных таблицы `wishlist`
 --
@@ -328,8 +286,8 @@ ALTER TABLE `book`
 -- Ограничения внешнего ключа таблицы `booksinuse`
 --
 ALTER TABLE `booksinuse`
-  ADD CONSTRAINT `FK_mo4ohii4g1k8433a35y64nkyb` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
-  ADD CONSTRAINT `FK_5y0fa2guej2upnvrhyfhhfpc8` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`);
+  ADD CONSTRAINT `FK_5y0fa2guej2upnvrhyfhhfpc8` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`),
+  ADD CONSTRAINT `FK_mo4ohii4g1k8433a35y64nkyb` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `genrelocalization`
@@ -348,8 +306,8 @@ ALTER TABLE `orders`
 -- Ограничения внешнего ключа таблицы `wishlist`
 --
 ALTER TABLE `wishlist`
-  ADD CONSTRAINT `FK_jbjdt125j4db1tyhyj3m9pn86` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
-  ADD CONSTRAINT `FK_fa5p777ket8urfn9vddi7vm4p` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`);
+  ADD CONSTRAINT `FK_fa5p777ket8urfn9vddi7vm4p` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`),
+  ADD CONSTRAINT `FK_jbjdt125j4db1tyhyj3m9pn86` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

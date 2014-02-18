@@ -57,7 +57,7 @@ public class Orders {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "books_id")
+	@JoinColumn(name = "book_id")
 	public Book getBook() {
 		return book;
 	}

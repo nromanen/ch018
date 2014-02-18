@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import com.ch018.library.entity.Book;
 import com.ch018.library.form.AdvancedSearch;
 
-// TODO: use NamedQuery somewhere
 @Component
 public class BookDAOImpl implements BookDAO {
 

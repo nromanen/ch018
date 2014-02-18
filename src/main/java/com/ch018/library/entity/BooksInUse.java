@@ -49,13 +49,13 @@ public class BooksInUse {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Person_id")
+	@JoinColumn(name = "person_id")
 	public Person getPerson() {
 		return person;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "Books_id")
+	@JoinColumn(name = "book_id")
 	public Book getBook() {
 		return book;
 	}

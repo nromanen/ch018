@@ -97,7 +97,7 @@ public class WishListDAOImpl implements WishListDAO {
         boolean exist=true;
         try {
              Query query = sessionFactory.getCurrentSession()
-                          .createSQLQuery("SELECT * FROM wishlist WHERE Person_id=:person And Books_id=:book")
+                          .createQuery("FROM wishlist W WHERE W.person.id=:person And W.book.id=:book")
                           .setParameter("person", personId)
                           .setParameter("book", bookId);
            

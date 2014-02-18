@@ -24,6 +24,7 @@
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/bookusers/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/orders/**" access="hasRole('ROLE_LIBRARIAN')" />
+		<intercept-url pattern="/genres/**" access="hasRole('ROLE_LIBRARIAN')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMINISTRATOR')" /> 
 		<intercept-url pattern="/registration/**" access="isAnonymous()" />
 		<intercept-url pattern="/login/**" access="isAnonymous()" />

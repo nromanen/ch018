@@ -1,4 +1,4 @@
-package com.ch018.test.controller;
+package com.ch018.library.controller;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
@@ -156,6 +156,7 @@ public class AuthorizedUserControllerTest {
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(genre.getName());
 		when(bookService.getAllBooks(0,IConstants.PAGE_SIZE,"name", false)).thenReturn(books);
+		when(bookService.getBooksById(1)).thenReturn(book);
 		when(bookService.countBooks()).thenReturn(2L);
 		when(bookService.simpleSearchCount(search)).thenReturn(1L);
 		when(bookService.advancedSearchCount(advancedSearch)).thenReturn(1L);
@@ -210,8 +211,11 @@ public class AuthorizedUserControllerTest {
 	}
 	
 	@Test
-	public void testBookPage() {
-		fail("Not yet implemented");
+	public void testBookPage() throws Exception {
+		mockMvc.perform(get("/book/{id}", 1))
+				.andExpect(status().isOk())
+				.andExpect(view().name("book"))
+				.andExpect(model().attribute("book", book));
 	}
 
 	@Test
