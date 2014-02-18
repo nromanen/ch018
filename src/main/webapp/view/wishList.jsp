@@ -56,7 +56,9 @@
                                      </div>
                                      
                                      <div id="aboutBook${wishByPers.id}" style="display: none" class="thumbnail span3">
-                                         <div class="media"><img src="${wishByPers.book.image}" class="img-custom pull-left">
+                                         <div class="media">
+                                         <img src="<c:url value="${wishByPers.book.image}"/>" 
+                                          class="img-custom pull-left">
                                             <ul class="thumbnails span6 pull-left">
                                              <li><span class="label label-info">Title: </span><br><small>${wishByPers.book.title}</small></li>
                                              <li><span class="label label-info">Publisher: </span><br><small>${wishByPers.book.publication}</small></li>

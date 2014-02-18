@@ -322,5 +322,11 @@ $(document).ready(function() {
 	  })
 	  e.preventDefault();
   });
+  
+  $('.rating').rating();
+  
+  $("#rated").rating({
+	  readOnly: true,
+  });
 })
 

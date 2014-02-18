@@ -5,6 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
+	    rel="stylesheet" type="text/css"/>
+<input type="hidden" value="${pageContext.request.contextPath}/resources/img/" id="starLocation">
 <!-- Center -->
 <div class="span8">
 	<div class="row-fluid">
@@ -30,16 +35,23 @@
 				</c:choose>
 			</p>
 			<sec:authorize access="isAuthenticated()">
-				<c:if test="${usermark > 0}"><spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00</c:if>
+				<c:if test="${usermark > 0}">
+				<spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00
+			      <div id="rated">
+				     <input type="hidden" class="val" value="4"/>
+				  </div>
+				</c:if>
 			    <c:if test="${usermark < 1}">  
 				  <div class="display-item">
-						<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
-						<input type="hidden" id="bookID" value="${book.id}" /> 
-						<input type="hidden" id="buID" value="${buid}" />
+						
 					</div>
 				</c:if>
 			</sec:authorize>
 
 		</div>
 	</div>
+	<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
+						<input type="hidden" id="bookID" value="${book.id}" /> 
+						<input type="hidden" id="buID" value="${buid}" />
+	<div class="rating"></div>
 </div>

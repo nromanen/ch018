@@ -18,8 +18,8 @@
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap-responsive.css"	rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/resources/css/jquery.datetimepicker.css"	
         rel="stylesheet" type="text/css"/>
-    <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
-	    rel="stylesheet" type="text/css"/>
+   <!--  <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
+	    rel="stylesheet" type="text/css"/>  -->
 	<link href="${pageContext.request.contextPath}/resources/css/jquery-ui.custom.css"
 	    rel="stylesheet" type="text/css"/>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
