@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ch018.library.entity.Book;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/fortest/database.xml",
 		"file:src/main/webapp/WEB-INF/fortest/test-context.xml",

@@ -198,7 +198,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         boolean exist = true;
         try {
             Query query = sessionFactory.getCurrentSession()
-                          .createSQLQuery("SELECT * FROM orders WHERE Person_id=:person And Books_id=:book")
+                          .createQuery("FROM Orders O WHERE O.person.id=:person And O.book.id=:book")
                           .setParameter("person", personId)
                           .setParameter("book", bookId);
             if (query.list().isEmpty())
