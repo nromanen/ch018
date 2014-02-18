@@ -216,6 +216,12 @@ public class OrdersServiceImpl implements OrdersService{
         return "redirect:/userOrder"; 
 	
     
-    } 
+    }
+
+	@Override
+	@Transactional
+	public List<Orders> getAllOrdersAfter(Date date) {
+		return ordDAO.getAllOrdersAfter(date);
+	} 
 	
 }

@@ -375,4 +375,18 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return count;
 			}
 
+	@Override
+	public List<Orders> getAllOrdersAfter(Date date) {
+		List<Orders> orders = new ArrayList<Orders>();
+		try{
+			Query query = sessionFactory.getCurrentSession()
+					.createQuery("FROM Orders O where O.issueDate > :date");
+			query.setDate("date", date);
+			orders.addAll(query.list());		
+		} catch (Exception e) {
+			log.error(e);
+		}
+		return orders;
+	}
+
 }

@@ -28,4 +28,5 @@ public interface OrdersDAO {
 	 List<Book> toIssuePerHour(int currentPos, int pageSize, String sort);
      long getCountOrdersByPerson(String name);
      long getCountOrdersBookBeetweenDates(Date dateFrom, Date dateTo , int BookId);
+     List<Orders> getAllOrdersAfter(Date date);
 }

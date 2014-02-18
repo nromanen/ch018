@@ -4,8 +4,10 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -33,6 +35,7 @@ import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.util.OrderTerm;
+import com.ch018.library.util.UserOrderTermCalculate;
 import com.ch018.library.validator.OrderValidator;
 
 // TODO: author who?
@@ -86,6 +89,8 @@ public class OrderController {
         Orders newOrder = new Orders();
         Book b = bookService.getBooksById(bookId);
         int term = 14;
+        //List<Orders> orders = new ArrayList<Orders>();
+    	//orders = UserOrderTermCalculate.calculate();
         int available = b.getAvailable();
         if (available == 0) {
             Date date = booksInUseService.getMinByReturnDate(bookId);
@@ -115,7 +120,9 @@ public class OrderController {
                               BindingResult result, Model model) {
       	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
-        int term = newOrder.getTerm();
+        //int term = newOrder.getTerm();
+        List<Orders> orders = new ArrayList<Orders>();
+    	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate());
         return orderService.createOrder(bookId, personId, newOrder);
     }
     

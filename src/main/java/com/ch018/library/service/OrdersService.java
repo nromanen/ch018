@@ -37,4 +37,5 @@ public interface OrdersService {
     int updateissueDate(int id, String issueDate) throws ParseException;
     int prepareOrder(int bookID, Person pers);
     String createOrder(int bookId, int personId, Orders newOrder);
+    List<Orders> getAllOrdersAfter(Date date);
 }
