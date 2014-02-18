@@ -10,7 +10,7 @@
 <div class="span8">
                  <br><br>
                  <span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>
-                       <form:form method="POST"  id="order" modelAttribute="order">
+                       <form:form method="POST"   modelAttribute="order">
                            <p><span>${order.book.title}</span></p>
                            <c:choose>
                                <c:when test="${order.book.available==0}">
@@ -46,6 +46,26 @@
                                            <td><form:input path="issueDate" class="datetimepicker" required="true" id="orderDate"/>
                                                 <form:errors path="issueDate" cssClass="error"/>
                                            </td>
+                                      </tr>
+                                      <tr>
+                                      <td>Choose term:</td>
+                                        <td><form:select path="term">
+                                               <form:option value="0" label="--- Select ---"/>
+                                               <form:option value="1" label="1 day"/>
+                                               <form:option value="2" label="2 days"/>
+                                               <form:option value="3" label="3 days"/>
+                                               <form:option value="4" label="4 days"/>
+                                               <form:option value="5" label="5 days"/>
+                                               <form:option value="6" label="6 days"/>
+                                               <form:option value="7" label="7 days"/>
+                                               <form:option value="8" label="8 days"/>
+                                               <form:option value="9" label="9 days"/>
+                                               <form:option value="10" label="10 days"/>
+                                               <form:option value="11" label="11 days"/>
+                                               <form:option value="12" label="12 days"/>
+                                               <form:option value="13" label="13 days"/>
+                                               <form:option value="14" label="14 days"/>
+                                             </form:select></td>
                                       </tr>
                                        <tr><td></td>
                                            <td><form:input path="book.title" type="hidden"/></td>

@@ -44,6 +44,8 @@
 	</c:if>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.rating.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.custom.min.js"></script>
+	<!-- rating plugin -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
 	<title><spring:message code="title.books"/></title>
 </head>
 <body>

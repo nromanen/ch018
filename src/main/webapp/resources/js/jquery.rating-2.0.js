@@ -122,7 +122,7 @@
     				'background-position':'left center'
     			});
                 
-                self.vote_success.html('Ваша оценка: '+score);
+                self.vote_success.html($("#voteMessage").text()+" "+score);
     		    
     		 })
     		 .bind('mouseout',function(){
@@ -143,7 +143,7 @@
     			 self._data.val = (self._data.val*self._data.votes +score)/(self._data.votes + 1);
                  self._data.val = Math.round( self._data.val * 100 ) / 100;
                  self._data.score = score;
-                 self.vote_success.html('Р’Р°С€Р° РѕС†РµРЅРєР°: '+score);
+                 self.vote_success.html($("#voteMessage").text()+": "+score);
     			 
                  if(self.options.url != ''){
     				 
@@ -235,7 +235,7 @@
     	    if(number <= 0) return '';
     		number = Math.abs(Math.floor(number));
             cases = [2, 0, 1, 1, 1, 2];  
-            return number+' '+ this.options.titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+            //return number+' '+ this.options.titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
         }  
     });
     

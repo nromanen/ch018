@@ -1,5 +1,6 @@
 package com.ch018.library.controller;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,10 @@ public class BookInUseController {
     	number++;
     	rating+=rate;
     	rating = rating/number;
+    	BigDecimal bd = new BigDecimal(rating);
+    	bd = bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
     	book.setNumberOfEvaluations(number);
+    	rating = bd.floatValue();
     	book.setRating(rating);
     	bookService.updateBook(book);
     	return "usersBooks";

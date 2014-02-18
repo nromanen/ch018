@@ -75,21 +75,6 @@ public class OrderController {
                             Principal principal) {
     	Person pers = personService.getByEmail(principal.getName());
     	return orderService.prepareOrder(bookId, pers);
-       /* Person p = personService.getByEmail(principal.getName());
-        if (booksInUseService.alreadyInUse(bookId, p.getId())) {
-            return 0;
-        }
-        int personId = p.getId();
-        int  uses = orderService.getOrdersByPersonId(personId).size();
-        uses += booksInUseService.getByPersonId(personId).size();
-        int j = p.getMultibookAllowed();
-        if (j == uses) {
-            return 2;
-        } 
-        if (orderService.orderExist(personId, bookId)) {
-              return 3;
-          }
-        return 1;*/
     }
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
@@ -103,8 +88,7 @@ public class OrderController {
         int term = 14;
         int available = b.getAvailable();
         if (available == 0) {
-            Date date;
-            date = booksInUseService.getMinByReturnDate(bookId);
+            Date date = booksInUseService.getMinByReturnDate(bookId);
             model.addAttribute("date", date);
         }
         if (available == 1) {
@@ -131,19 +115,8 @@ public class OrderController {
                               BindingResult result, Model model) {
       	int bookId = newOrder.getBook().getId();
         int personId = newOrder.getPerson().getId();
+        int term = newOrder.getTerm();
         return orderService.createOrder(bookId, personId, newOrder);
-        
-       /*
-        Calendar calendar = Calendar.getInstance();
-        newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
-        newOrder.setPerson(personService.getById(newOrder.getPerson().getId()));
-        newOrder.setDate(calendar.getTime());
-        orderService.addOrder(newOrder);
-        if (wishListService.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
-                    int id = wishListService.getWishWithoutId(bookId, personId).getId();
-					wishListService.deleteWishById(id);
-				}
-        return "redirect:/userOrder"; */
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)
@@ -159,25 +132,6 @@ public class OrderController {
 			                 Model model,
 			                 Principal principal) throws ParseException {
     	 return orderService.updateissueDate(id, issueDate);
-    	/*DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-    	Date newIssueDate = format.parse(issueDate);
-       	Orders updateOrder = orderService.getById(id);
-       	int available = updateOrder.getBook().getAvailable();
-       	long  a = booksInUseService.getCountReturnBooksBeetweenDates(updateOrder.getIssueDate(), 
-       			                                                    newIssueDate, 
-       			                                                    updateOrder.getBook().getId());
-       	long b = orderService.getCountOrdersBookBeetweenDates(updateOrder.getIssueDate(), 
-       			                                                    newIssueDate, 
-       			                                                    updateOrder.getBook().getId()) - 1;
-       	int expectedAvailable = (int) ((int) a - b);
-       	expectedAvailable = expectedAvailable + available;
-        if (expectedAvailable > 1 ) {
-        	updateOrder.setIssueDate(newIssueDate);
-            orderService.updateOrder(updateOrder);
-            return 1;
-        } else {
-                return 0;
-        }*/
     }
     
     @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)

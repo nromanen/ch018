@@ -6,12 +6,13 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 	
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+<!--  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script> -->
 <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
 	    rel="stylesheet" type="text/css"/>
 <input type="hidden" value="${pageContext.request.contextPath}/resources/img/" id="starLocation">
 <!-- Center -->
 <div class="span8">
+ <span id="voteMessage" style="display :none"><spring:message code="message.rate" /></span>
 	<div class="row-fluid">
 		<div class="thumbnail media">
 			<img src="<c:url value="${book.image}"/>" class="img-rounded pull-left">
@@ -49,5 +50,5 @@
 	<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
 						<input type="hidden" id="bookID" value="${book.id}" /> 
 						<input type="hidden" id="buID" value="${buid}" />
-   <!-- <div class="rating"></div> -->
+      <!-- <div class="rating"></div> -->
 </div>

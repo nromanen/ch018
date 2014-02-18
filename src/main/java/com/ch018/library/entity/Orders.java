@@ -37,6 +37,7 @@ public class Orders {
 	private Date issueDate;
 	private Person person;
 	private Book book;
+	private int term; 
 
 
 	public Orders() {
@@ -73,7 +74,11 @@ public class Orders {
 	public Date getIssueDate() {
 		return this.issueDate;
 	}
-
+    
+	@Column(name = "term")
+	public int getTerm() {
+		return term;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -94,7 +99,10 @@ public class Orders {
 	public void setIssueDate(Date issueDate) {
 		this.issueDate = issueDate;
 	}
-
+    
+	public void setTerm(int term) {
+		this.term = term;
+	}
 
 	@Override
 	public String toString() {
@@ -114,5 +122,4 @@ public class Orders {
 			return true;
 		return false;
 	}
-
 }
