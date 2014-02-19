@@ -380,7 +380,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		List<Orders> orders = new ArrayList<Orders>();
 		try{
 			Query query = sessionFactory.getCurrentSession()
-					.createQuery("FROM Orders O where O.book.id=:id and O.issueDate > :date");
+					.createQuery("FROM Orders O where O.book.id=:id and O.issueDate > :date order by O.issueDate");
 			query.setDate("date", date);
 			query.setInteger("id", bookId);
 			orders.addAll(query.list());		

@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set; /*111111*/
 
 import javax.validation.Valid;
@@ -133,9 +135,9 @@ public class OrderController {
         List<Orders> orders = new ArrayList<Orders>();
     	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
         if(available > orders.size()) {
-          //return orderService.createOrder(bookId, personId, newOrder);
+           aprovedOrder=true;
         }
-        if(available == orders.size()) {
+        if(available <= orders.size()) {
             Calendar c = Calendar.getInstance();
             Calendar d = Calendar.getInstance();
             c.setTime(newOrder.getIssueDate());
@@ -144,18 +146,26 @@ public class OrderController {
             c.set(Calendar.SECOND, 0);
             c.add(Calendar.DATE, newOrder.getTerm());
             Date expectedReturnDate = c.getTime();
-             if (orders.get(0).getIssueDate().after(expectedReturnDate))  {
-            	 aprovedOrder = true; 
-             } else {
-            	 
-             }
-            
-                if(aprovedOrder) {
-                	newOrder.setBook(bookService.getBooksById(bookId));
-                	newOrder.setPerson(personService.getById(personId));
-                	newOrder.setDate(Calendar.getInstance().getTime());
-                	orderService.addOrder(newOrder);
-                }
+            // if (orders.get(0).getIssueDate().after(expectedReturnDate))  {
+            	// aprovedOrder = true; 
+             //} else {
+            	//     Map<Date, Date> resultResponse = new HashMap <Date,Date>();
+            for(int i = 0; i<orders.size(); i++) {
+                 if((orders.get(i).getIssueDate().after(expectedReturnDate)) && (!orders.get(i).getPreOrder())){
+            	 aprovedOrder = true;
+            	 Orders order = orders.get(i);
+            	 order.setPreOrder(true);
+            	 orderService.updateOrder(order);
+            	 break;
+            	     }
+            }
+                
+        }
+        if(aprovedOrder) {
+        	newOrder.setBook(bookService.getBooksById(bookId));
+        	newOrder.setPerson(personService.getById(personId));
+        	newOrder.setDate(Calendar.getInstance().getTime());
+        	orderService.addOrder(newOrder);
         }
     	//return null;
         //return orderService.createOrder(bookId, personId, newOrder);

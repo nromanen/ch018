@@ -38,6 +38,7 @@ public class Orders {
 	private Person person;
 	private Book book;
 	private int term; 
+	private boolean preOrder;
 
 
 	public Orders() {
@@ -79,6 +80,11 @@ public class Orders {
 	public int getTerm() {
 		return term;
 	}
+	
+	@Column(name="preOrdered", columnDefinition = "false")
+	public boolean getPreOrder(){
+		return this.preOrder; 
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -103,7 +109,11 @@ public class Orders {
 	public void setTerm(int term) {
 		this.term = term;
 	}
-
+	
+	public void setPreOrder(boolean o){
+		this.preOrder = o;
+	}
+	
 	@Override
 	public String toString() {
 		return getId() + ": " + getPerson() 
