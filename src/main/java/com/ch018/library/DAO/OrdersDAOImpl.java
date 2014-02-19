@@ -213,7 +213,7 @@ public class OrdersDAOImpl implements OrdersDAO {
     @Override
     public Date minOrderDateOf(int bookId) {
        List<Date> dates = new ArrayList<>();
-                Date date = new Date();
+                Date date = null;
 		try {
 			Criteria criteria = sessionFactory.getCurrentSession()
 					.createCriteria(Orders.class)

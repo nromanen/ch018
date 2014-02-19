@@ -196,7 +196,7 @@ $(document).ready(function() {
 	    	        }
 	  });
  
-  $(".display-item").rateBar({
+ /* $(".display-item").rateBar({
 	  defaultStarColor : '#777777',
       ratedStarColor : '#FFD700',
       onRate : function(rate) {
@@ -219,7 +219,7 @@ $(document).ready(function() {
         	 
           });
       }
-});
+});*/
  
   $("#email").validate({
 		highlight: function(element, errorClass) {
@@ -324,11 +324,22 @@ $(document).ready(function() {
   });
   
   $("#ord").submit(function(e) {
+	  var currDate = (new Date).getTime();
 	  var orderDate = (new Date($("#orderDate").val())).getTime();
-	  var maxOrderDate = orderDate + 14;
-	  console.log(maxOrderDate);
-	  if(orderDate>maxOrderDate){
-	   console.log("211");}
+	  console.log(currDate);
+	  console.log(orderDate);
+	  
+	  if(orderDate < currDate) {
+		  alert($("#dateExpired").text());
+		  return false;
+	  } 
+	  
+	  console.log($("#term").val());
+	  if($("#term").val() == 0){
+		  alert("you forgot choose the term");
+		  return false;
+	  }	  
+	  e.preventDefault();
 	   $.ajax({
 			  url: $("#ord").attr("action"),
 		      data: $("#ord").serialize(),
@@ -337,7 +348,7 @@ $(document).ready(function() {
 		      contentType : 'application/x-www-form-urlencoded',
 			  mimeType : 'application/json',
 			  success: function(data) {
-			       console.log('sss');
+			       console.log('success');
 			       e.preventDefault();
 			       if(data.status == "FAIL"){
 			    	 // var date = new Date(1394143200000);

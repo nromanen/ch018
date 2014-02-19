@@ -43,7 +43,7 @@ import com.ch018.library.util.OrderTerm;
 //import com.ch018.library.util.UserOrderTermCalculate;
 import com.ch018.library.validator.OrderValidator;
 
-// TODO: author who?
+// TODO: author Krivorotenko Sasha
 /**
  * 
  * @author win7
@@ -96,31 +96,10 @@ public class OrderController {
     	Person p = personService.getByEmail(principal.getName());
         Orders newOrder = new Orders();
         Book b = bookService.getBooksById(bookId);
-        //List<Orders> orders = new ArrayList<Orders>();
-        int term = 14;
         int available = b.getAvailable();
         if (available == 0) {
             Date date = booksInUseService.getMinByReturnDate(bookId);
             model.addAttribute("date", date);
-        }
-        if (available == 1) {
-            Date date= orderService.minOrderDateOf(bookId);
-            if(date == null){
-            	model.addAttribute("term", term);
-               } else {
-                date.setDate(date.getDate() - 1);
-                model.addAttribute("orderDate", date.toString());
-            }
-        }
-        if (available > 1) {
-        	//orderService.getAllOrdersAfter(newOrder.getIssueDate());
-        //	 if(available > orders.size()){
-        	//	 model.addAttribute("term", term);
-        	// }
-        	 //if(available == orders.size()){
-        	//	 Date date1 = 
-        	 
-            	model.addAttribute("term", term);
         }
         newOrder.setPerson(p);
         newOrder.setBook(b);
@@ -139,9 +118,15 @@ public class OrderController {
       	Book book = bookService.getBooksById(bookId);
         int personId = newOrder.getPerson().getId();
         int available = book.getAvailable();
+        if (available == 1) {
+        	Date date= orderService.minOrderDateOf(bookId);
+        	if(date == null) {
+        		orderService.createOrder(bookId, personId, newOrder);
+        	} 
+        }
         List<Orders> orders = new ArrayList<Orders>();
-    	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
-       // orders = orderService.getAllOrdersAfter(Calendar.getInstance().getTime(), bookId);
+    	//orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
+        orders = orderService.getAllOrdersAfter(Calendar.getInstance().getTime(), bookId);
         if(available > orders.size()) {
            aprovedOrder=true;
            orderService.createOrder(bookId, personId, newOrder);
@@ -173,15 +158,12 @@ public class OrderController {
         	response.setStatus("SUCCESS");
             return response;
         } else {
+        	SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
         	Calendar firstReturnDate = Calendar.getInstance();
         	firstReturnDate.setTime(orders.get(0).getIssueDate());
-        	firstReturnDate.set(Calendar.MILLISECOND, 0);
-        	firstReturnDate.set(Calendar.SECOND, 0);
-        	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm() + 1);
-        	SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
+        	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm());
+        	response.setResult(fmt.format(firstReturnDate.getTime()));
         	response.setStatus("FAIL");
-        	response.setResult(fmt.format(firstReturnDate.getTime()).toString());
-        	
         	return response;
         }
     }
