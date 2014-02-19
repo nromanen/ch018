@@ -46,7 +46,7 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 	
 	@Override
 	@Transactional
-	public void addBooksInUse(int days, int orderId) {
+	public void addBooksInUse(int days, Orders orders) {
 		Calendar issueDate = Calendar.getInstance();
 		Calendar returnDate = Calendar.getInstance();
 		issueDate.set(Calendar.MINUTE, 0);
@@ -55,7 +55,7 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		returnDate.setTime(issueDate.getTime());
 		returnDate.add(Calendar.DATE, days);
 		BooksInUse booksInUse = new BooksInUse();
-		Orders orders = ordersDAO.getById(orderId);
+		//Orders orders = ordersDAO.getById(orderId);
 		Book book = orders.getBook();
 		book.setAvailable(book.getAvailable() - 1);
 		booksInUse.setBook(book);
@@ -67,7 +67,7 @@ public class BooksInUseServiceImpl implements BooksInUseService {
 		//booksInUse.setTerm(days);
 		bookDAO.updateBook(book);
 		booksInUseDAO.addBooksInUse(booksInUse);
-		ordersDAO.deleteOrder(orderId);
+		ordersDAO.deleteOrder(orders.getId());
 		log.info("Issue book {}", orders);
 		if (person.getSms()) {
 			log.info("Sending sms");

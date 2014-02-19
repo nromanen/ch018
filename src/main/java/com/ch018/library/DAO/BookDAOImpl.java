@@ -95,6 +95,7 @@ public class BookDAOImpl implements BookDAO {
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
+		Hibernate.initialize(book.getHistories());
 		session.clear();
 		return book;
 	}

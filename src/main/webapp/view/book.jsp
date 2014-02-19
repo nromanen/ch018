@@ -57,5 +57,11 @@
 		
 		</div>
 		</div>
+		<div class="thumbnail">
+			<h4>Comments:</h4>
+			<c:forEach items="${book.histories}" var="history">
+				<div class="comment"> <h6>${history.person.email}:</h6> ${history.comment}</div>
+			</c:forEach>
+		</div>
 	</div>
 </div>

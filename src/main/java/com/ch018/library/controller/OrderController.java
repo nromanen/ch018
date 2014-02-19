@@ -25,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.History;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
+import com.ch018.library.service.HistoryService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
@@ -61,9 +63,12 @@ public class OrderController {
     @Autowired
     private OrderValidator orderValidator;
     
+    @Autowired
+    private HistoryService historyService;
+    
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/fail")
-    public void fail(Model model){
+    public void fail(Model model) {
     	
     }
     
@@ -221,7 +226,13 @@ public class OrderController {
 	@RequestMapping(value = "/orders/issue{id}/{days}", method = RequestMethod.GET)
 	@ResponseBody
 	public String issueOrder(@PathVariable int id, @PathVariable int days) {
-		booksInUseService.addBooksInUse(days, id);
+		Orders orders = orderService.getById(id);
+		booksInUseService.addBooksInUse(days, orders);
+		History history = new History();
+		history.setBook(orders.getBook());
+		history.setPerson(orders.getPerson());
+		history.setIssueDate(new Date());
+		historyService.newEntry(history);
 		return "orders";
 	}
 

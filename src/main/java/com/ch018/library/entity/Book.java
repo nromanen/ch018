@@ -63,6 +63,7 @@ public class Book implements Serializable {
 	private Set<BooksInUse> booksinuses = new HashSet<>();
 	private Set<WishList> wishList = new HashSet<>();
 	private Set<Orders> orders = new HashSet<>();
+	private Set<History> histories = new HashSet<>();
 
 
 	public Book() {
@@ -178,6 +179,16 @@ public class Book implements Serializable {
 	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@JsonIgnore
+	public Set<History> getHistories() {
+		return histories;
+	}
+	
+	public void setHistories(Set<History> histories) {
+		this.histories = histories;
 	}
 
 	public void setWishList(Set<WishList> wishList) {

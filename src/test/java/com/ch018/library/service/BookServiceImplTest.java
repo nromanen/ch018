@@ -2,6 +2,9 @@ package com.ch018.library.service;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.Localization;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.GenreService;
 import com.ch018.library.service.LocalizationService;
@@ -29,15 +33,33 @@ import com.ch018.library.service.LocalizationService;
 public class BookServiceImplTest {
 	
 	private Book book = new Book();
+	private static Localization localization = new Localization();
+	private static Genre genre = new Genre();
 	
 	@Autowired
 	private BookService bookService;
 	
 	@Autowired
-	private GenreService genreService;
+	private static GenreService genreService;
+	
+	@Autowired
+	private static LocalizationService localizationService;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		localization.setId(1);
+		localization.setLanguage("en");
+		localization.setLocalizedName("programming");
+		localizationService.addGenreLocalization(localization);
+		
+		
+		genre.setId(1);
+		localization.setGenre(genre);
+		genre.setLocalizations(new HashSet<>(Arrays.asList(localization)));
+		genre.setName(localization.getLocalizedName());
+		
+		
+		genreService.addGenre(genre);
 		
 	}
 
@@ -47,7 +69,10 @@ public class BookServiceImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Genre genre = genreService.getGenreById(1);
+		
+		
+		
+		
 		book.setAuthors("Authors");
 		book.setAvailable(1);
 		book.setBookcase(1);
@@ -62,17 +87,13 @@ public class BookServiceImplTest {
 		book.setYear(2000);
 		book.setImage("img");
 		book.setNumberOfEvaluations(0);
-		book.setGenre(genre);
+		//book.setGenre(genre);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-	}
-	
-	/*@AfterClass
-	public void tearDownAfterClass() throws Exception {
 		
-	}*/
+	}
 
 	@Test
 	public void testAddBook() {

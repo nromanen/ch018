@@ -232,3 +232,8 @@ body.loading .modalloading {
 .input_page {
 
 }
+
+.comment {
+	padding: 10px;
+	background-color: #F0F0F0;
+}

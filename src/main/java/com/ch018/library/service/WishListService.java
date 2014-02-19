@@ -11,8 +11,6 @@ import com.ch018.library.entity.WishList;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
-
 public interface WishListService {
     void addWish(WishList wish);
     void deleteWish(WishList wish);
