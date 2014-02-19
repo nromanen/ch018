@@ -38,8 +38,9 @@ import com.ch018.library.service.HistoryService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
+import com.ch018.library.util.JsonResponse;
 import com.ch018.library.util.OrderTerm;
-import com.ch018.library.util.UserOrderTermCalculate;
+//import com.ch018.library.util.UserOrderTermCalculate;
 import com.ch018.library.validator.OrderValidator;
 
 // TODO: author who?
@@ -130,8 +131,9 @@ public class OrderController {
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     @ResponseBody
-    public void fixAndSaveOrder(@ModelAttribute("order") Orders newOrder, 
+    public JsonResponse fixAndSaveOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result, Model model) {
+    	JsonResponse response = new JsonResponse();
     	boolean aprovedOrder = false;
       	int bookId = newOrder.getBook().getId();
       	Book book = bookService.getBooksById(bookId);
@@ -139,8 +141,12 @@ public class OrderController {
         int available = book.getAvailable();
         List<Orders> orders = new ArrayList<Orders>();
     	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
+       // orders = orderService.getAllOrdersAfter(Calendar.getInstance().getTime(), bookId);
         if(available > orders.size()) {
            aprovedOrder=true;
+           orderService.createOrder(bookId, personId, newOrder);
+           response.setStatus("SUCCESS");
+           return response;
         }
         if(available <= orders.size()) {
             Calendar c = Calendar.getInstance();
@@ -151,36 +157,33 @@ public class OrderController {
             c.set(Calendar.SECOND, 0);
             c.add(Calendar.DATE, newOrder.getTerm());
             Date expectedReturnDate = c.getTime();
-            // if (orders.get(0).getIssueDate().after(expectedReturnDate))  {
-            	// aprovedOrder = true; 
-             //} else {
-            	//     Map<Date, Date> resultResponse = new HashMap <Date,Date>();
             for(int i = 0; i<orders.size(); i++) {
-                 if((orders.get(i).getIssueDate().after(expectedReturnDate)) && (!orders.get(i).getPreOrder())){
-            	 aprovedOrder = true;
-            	 Orders order = orders.get(i);
-            	 order.setPreOrder(true);
-            	 orderService.updateOrder(order);
-            	 break;
-            	     }
+				if ((orders.get(i).getIssueDate().after(expectedReturnDate))
+						&& (!orders.get(i).getPreOrder())) {
+					aprovedOrder = true;
+					Orders order = orders.get(i);
+					order.setPreOrder(true);
+					orderService.updateOrder(order);
+					break;
+				}
             }
-                
         }
-        if(aprovedOrder) {
-        	newOrder.setBook(bookService.getBooksById(bookId));
-        	newOrder.setPerson(personService.getById(personId));
-        	newOrder.setDate(Calendar.getInstance().getTime());
-        	orderService.addOrder(newOrder);
+        if (aprovedOrder) {
+        	orderService.createOrder(bookId, personId, newOrder);
+        	response.setStatus("SUCCESS");
+            return response;
         } else {
         	Calendar firstReturnDate = Calendar.getInstance();
         	firstReturnDate.setTime(orders.get(0).getIssueDate());
         	firstReturnDate.set(Calendar.MILLISECOND, 0);
         	firstReturnDate.set(Calendar.SECOND, 0);
-        	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm());
+        	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm() + 1);
+        	SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy");
+        	response.setStatus("FAIL");
+        	response.setResult(fmt.format(firstReturnDate.getTime()).toString());
         	
+        	return response;
         }
-    	//return null;
-        //return orderService.createOrder(bookId, personId, newOrder);
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)

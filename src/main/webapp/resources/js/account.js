@@ -324,7 +324,11 @@ $(document).ready(function() {
   });
   
   $("#ord").submit(function(e) {
-	   console.log("211");
+	  var orderDate = (new Date($("#orderDate").val())).getTime();
+	  var maxOrderDate = orderDate + 14;
+	  console.log(maxOrderDate);
+	  if(orderDate>maxOrderDate){
+	   console.log("211");}
 	   $.ajax({
 			  url: $("#ord").attr("action"),
 		      data: $("#ord").serialize(),
@@ -332,9 +336,17 @@ $(document).ready(function() {
 		      dataType: "json",
 		      contentType : 'application/x-www-form-urlencoded',
 			  mimeType : 'application/json',
-			  success: function() {
+			  success: function(data) {
 			       console.log('sss');
 			       e.preventDefault();
+			       if(data.status == "FAIL"){
+			    	 // var date = new Date(1394143200000);
+			    	 // var day = date.getDay();
+			    	 // var month = date.getMonth();
+			    	  //var year = date.getFullYear();
+			    	 // console.log(day +"/"+month+"/"+year);
+			    	  console.log(data.result);
+			       }
 			  },
 			  error: function(){
 				  console.log("eeee");
@@ -344,13 +356,5 @@ $(document).ready(function() {
 	  e.preventDefault();  
   })
   
-  
-  
-  
-  /*$('.rating').rating({});
-  
-  $("#rated").rating({
-	  readOnly: true,
-  });*/
 })
 

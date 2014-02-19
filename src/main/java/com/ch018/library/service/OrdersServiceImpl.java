@@ -208,6 +208,7 @@ public class OrdersServiceImpl implements OrdersService{
         newOrder.setBook(bookService.getBooksById(newOrder.getBook().getId()));
         newOrder.setPerson(personService.getById(newOrder.getPerson().getId()));
         newOrder.setDate(calendar.getTime());
+        newOrder.setPreOrder(false);
         ordDAO.addOrder(newOrder);
         if (wishListService.bookExistInWishList(newOrder.getBook().getId(), newOrder.getPerson().getId())) {
                     int id = wishListService.getWishWithoutId(bookId, personId).getId();
