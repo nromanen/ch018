@@ -166,6 +166,13 @@ public class OrderController {
         	newOrder.setPerson(personService.getById(personId));
         	newOrder.setDate(Calendar.getInstance().getTime());
         	orderService.addOrder(newOrder);
+        } else {
+        	Calendar firstReturnDate = Calendar.getInstance();
+        	firstReturnDate.setTime(orders.get(0).getIssueDate());
+        	firstReturnDate.set(Calendar.MILLISECOND, 0);
+        	firstReturnDate.set(Calendar.SECOND, 0);
+        	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm());
+        	
         }
     	//return null;
         //return orderService.createOrder(bookId, personId, newOrder);
