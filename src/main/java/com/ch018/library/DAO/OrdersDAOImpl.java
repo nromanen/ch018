@@ -376,12 +376,13 @@ public class OrdersDAOImpl implements OrdersDAO {
 			}
 
 	@Override
-	public List<Orders> getAllOrdersAfter(Date date) {
+	public List<Orders> getAllOrdersAfter(Date date, int bookId) {
 		List<Orders> orders = new ArrayList<Orders>();
 		try{
 			Query query = sessionFactory.getCurrentSession()
-					.createQuery("FROM Orders O where O.issueDate > :date");
+					.createQuery("FROM Orders O where O.book.id=:id and O.issueDate > :date");
 			query.setDate("date", date);
+			query.setInteger("id", bookId);
 			orders.addAll(query.list());		
 		} catch (Exception e) {
 			log.error(e);

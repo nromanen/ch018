@@ -220,8 +220,8 @@ public class OrdersServiceImpl implements OrdersService{
 
 	@Override
 	@Transactional
-	public List<Orders> getAllOrdersAfter(Date date) {
-		return ordDAO.getAllOrdersAfter(date);
+	public List<Orders> getAllOrdersAfter(Date date, int bookId) {
+		return ordDAO.getAllOrdersAfter(date, bookId);
 	} 
 	
 }

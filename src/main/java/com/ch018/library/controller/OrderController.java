@@ -88,16 +88,15 @@ public class OrderController {
     	Person p = personService.getByEmail(principal.getName());
         Orders newOrder = new Orders();
         Book b = bookService.getBooksById(bookId);
-        int term = 14;
         //List<Orders> orders = new ArrayList<Orders>();
-    	//orders = UserOrderTermCalculate.calculate();
+        int term = 14;
         int available = b.getAvailable();
         if (available == 0) {
             Date date = booksInUseService.getMinByReturnDate(bookId);
             model.addAttribute("date", date);
         }
         if (available == 1) {
-            Date date = orderService.minOrderDateOf(bookId);
+            Date date= orderService.minOrderDateOf(bookId);
             if(date == null){
             	model.addAttribute("term", term);
                } else {
@@ -106,7 +105,14 @@ public class OrderController {
             }
         }
         if (available > 1) {
-            model.addAttribute("term", term);
+        	//orderService.getAllOrdersAfter(newOrder.getIssueDate());
+        //	 if(available > orders.size()){
+        	//	 model.addAttribute("term", term);
+        	// }
+        	 //if(available == orders.size()){
+        	//	 Date date1 = 
+        	 
+            	model.addAttribute("term", term);
         }
         newOrder.setPerson(p);
         newOrder.setBook(b);
@@ -116,14 +122,43 @@ public class OrderController {
     
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String createOrder(@ModelAttribute("order") Orders newOrder, 
+    @ResponseBody
+    public void fixAndSaveOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result, Model model) {
+    	boolean aprovedOrder = false;
       	int bookId = newOrder.getBook().getId();
+      	Book book = bookService.getBooksById(bookId);
         int personId = newOrder.getPerson().getId();
-        //int term = newOrder.getTerm();
+        int available = book.getAvailable();
         List<Orders> orders = new ArrayList<Orders>();
-    	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate());
-        return orderService.createOrder(bookId, personId, newOrder);
+    	orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
+        if(available > orders.size()) {
+          //return orderService.createOrder(bookId, personId, newOrder);
+        }
+        if(available == orders.size()) {
+            Calendar c = Calendar.getInstance();
+            Calendar d = Calendar.getInstance();
+            c.setTime(newOrder.getIssueDate());
+            d.setTime(orders.get(0).getIssueDate());
+            c.set(Calendar.MILLISECOND, 0);
+            c.set(Calendar.SECOND, 0);
+            c.add(Calendar.DATE, newOrder.getTerm());
+            Date expectedReturnDate = c.getTime();
+             if (orders.get(0).getIssueDate().after(expectedReturnDate))  {
+            	 aprovedOrder = true; 
+             } else {
+            	 
+             }
+            
+                if(aprovedOrder) {
+                	newOrder.setBook(bookService.getBooksById(bookId));
+                	newOrder.setPerson(personService.getById(personId));
+                	newOrder.setDate(Calendar.getInstance().getTime());
+                	orderService.addOrder(newOrder);
+                }
+        }
+    	//return null;
+        //return orderService.createOrder(bookId, personId, newOrder);
     }
     
     @RequestMapping(value = "/userOrder", method = RequestMethod.GET)

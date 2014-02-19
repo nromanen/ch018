@@ -6,7 +6,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 	
-<!--  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script> -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/rating.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
 	    rel="stylesheet" type="text/css"/>
 <input type="hidden" value="${pageContext.request.contextPath}/resources/img/" id="starLocation">

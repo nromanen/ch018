@@ -10,7 +10,7 @@
 <div class="span8">
                  <br><br>
                  <span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>
-                       <form:form method="POST"   modelAttribute="order">
+                       <form:form method="POST" id="ord"  modelAttribute="order">
                            <p><span>${order.book.title}</span></p>
                            <c:choose>
                                <c:when test="${order.book.available==0}">
@@ -76,7 +76,7 @@
                                        <tr><td></td>
                                            <td><form:input path="person.id" type="hidden"/></td>
                                        </tr>
-                                       <tr><td><input type="submit" class="btn" value=<spring:message code="message.order"/>></td></tr>
+                                       <tr><td><input type="submit" class="btn" id="submitOrder" value=<spring:message code="message.order"/>></td></tr>
                                    </table>
                                </c:otherwise>
                            </c:choose>

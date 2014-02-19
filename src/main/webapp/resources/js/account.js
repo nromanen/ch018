@@ -323,10 +323,34 @@ $(document).ready(function() {
 	  e.preventDefault();
   });
   
-  $('.rating').rating({});
+  $("#ord").submit(function(e) {
+	   console.log("211");
+	   $.ajax({
+			  url: $("#ord").attr("action"),
+		      data: $("#ord").serialize(),
+		      type: "POST",
+		      dataType: "json",
+		      contentType : 'application/x-www-form-urlencoded',
+			  mimeType : 'application/json',
+			  success: function() {
+			       console.log('sss');
+			       e.preventDefault();
+			  },
+			  error: function(){
+				  console.log("eeee");
+				  e.preventDefault();
+			  }  
+			  })
+	  e.preventDefault();  
+  })
+  
+  
+  
+  
+  /*$('.rating').rating({});
   
   $("#rated").rating({
 	  readOnly: true,
-  });
+  });*/
 })
 
