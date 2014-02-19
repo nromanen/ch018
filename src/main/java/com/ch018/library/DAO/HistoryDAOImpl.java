@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.History;
+import com.ch018.library.entity.Localization;
 import com.ch018.library.entity.Person;
-import com.ch018.library.entity.WishList;
 
 @Component
 public class HistoryDAOImpl implements HistoryDAO {
@@ -27,7 +27,7 @@ public class HistoryDAOImpl implements HistoryDAO {
 	public int newEntry(History history) {
 		int result = 0;
 		try {
-			sessionFactory.getCurrentSession().save(history);
+			sessionFactory.getCurrentSession().saveOrUpdate(history);
 			result = 1;
 		} catch (Exception e) {
 			result = 0;
@@ -41,10 +41,11 @@ public class HistoryDAOImpl implements HistoryDAO {
 		History history = new History();
 		try {
 			history = (History) sessionFactory.getCurrentSession().createCriteria(History.class)
-			.add(Restrictions.eq("person.id", person.getId()))
-			.add(Restrictions.eq("book.id", book.getId())).list().get(0);
+			.add(Restrictions.eq("person", person))
+			.add(Restrictions.eq("book", book)).uniqueResult();
+
 		} catch (Exception e) {
-			log.error("Error get entry: {0}", e.getMessage());
+			log.error("Error get entry: }", e);
 		}
 		return history;
 	}

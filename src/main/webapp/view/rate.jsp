@@ -7,6 +7,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 	
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/comments.js"></script>
+
 <link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
 	    rel="stylesheet" type="text/css"/>
 <input type="hidden" value="${pageContext.request.contextPath}/resources/img/" id="starLocation">
@@ -40,14 +42,35 @@
 				</c:if>
 			    <c:if test="${usermark < 1}">  
 				  <div class="rating"></div>
-					</div>
+					
 				</c:if>
 			</sec:authorize>
-
+		</div>
+		
+		<div class="thumbnail">
+			<h4>Comment this book:</h4>
+			<form class="form-horizontal" id = "comment_it" action="${pageContext.request.contextPath}/comment">
+				<div>
+					<textarea rows="4" cols="40" id="comment" name="comment" style="width: 50%"></textarea>
+					<input type="hidden" name="buid" value="${buid}" />
+				</div>
+				<div>
+					<button type="submit" class="btn">Comment</button>
+				</div>
+			</form>
+			<h4>Comments:</h4>
+			<div id="comments">
+				<c:forEach items="${book.histories}" var="history">
+				<c:if test="${history.comment != null}">
+					<div class="comment"> <h6>${history.person.email}:</h6><c:out value=" ${history.comment}" escapeXml="true" /> </div>
+				</c:if>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 	<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
 						<input type="hidden" id="bookID" value="${book.id}" /> 
 						<input type="hidden" id="buID" value="${buid}" />
    <!-- <div class="rating"></div> -->
+   
 </div>

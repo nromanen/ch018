@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.form.AdvancedSearch;
 
 @Service
@@ -105,6 +106,12 @@ public class BookServiceImpl implements BookService {
 	@Transactional
 	public List<Book> getBooksByRating() {
 		return bookDAO.getBooksByRating();
+	}
+	
+	@Override
+	@Transactional
+	public List<Book> getMostRatedByGenre(Genre genre) {
+		return bookDAO.getMostRatedByGenre(genre);
 	}
 
 }

@@ -30,6 +30,7 @@ public class HistoryServiceImpl implements HistoryService {
 	}
 
 	@Override
+	@Transactional
 	public History getEntry(Person person, Book book) {
 		return historyDAO.getEntry(person, book);
 	}
