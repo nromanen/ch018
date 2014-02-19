@@ -30,7 +30,7 @@ import com.ch018.library.validator.ResetPwdValidation;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:src/main/webapp/WEB-INF/fortest/servlet-context.xml",
+		"file:src/main/webapp/WEB-INF/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/fortest/test-context.xml"
 })
 @WebAppConfiguration

@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
+import com.ch018.library.entity.Orders;
 
 public interface BooksInUseService {
-	void addBooksInUse(int days, int orderId);
+	void addBooksInUse(int days, Orders orders);
 	void updateBooksInUse(BooksInUse inUse);
 	void returnBook(BooksInUse booksInUse);
 	List<BooksInUse> getAllBooksInUse();

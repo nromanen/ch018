@@ -161,9 +161,9 @@ body > .navbar {
 	overflow: hidden;
 }
 
-.media-width {
+/* .media-width {
 	width: 600px;
-}
+} */
 
 .my-nav-header, .my-nav-header-top {
   display: block;
@@ -231,4 +231,9 @@ body.loading .modalloading {
 
 .input_page {
 
+}
+
+.comment {
+	padding: 10px;
+	background-color: #F0F0F0;
 }

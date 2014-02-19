@@ -57,5 +57,28 @@
 		
 		</div>
 		</div>
+		<div class="thumbnail">
+			<h4>Most rated:</h4>
+			<div class="row-fluid">
+			<c:forEach items="${mostrated}" var="book">
+					<div class="span2" style="text-align: center;"><a href="<c:url value="/book/${book.id}"/>">
+						<img src="${pageContext.request.contextPath}${book.image}" class="img-rounded img-top5"></a>
+						<div class="caption">
+							<div class = "booktitle">${book.title} <br>
+								${book.authors}
+							</div>
+						</div>
+					</div>
+			</c:forEach>
+			</div>
+		</div>
+		<c:if test="${not empty book.histories}">
+		<div class="thumbnail">
+			<h4>Comments:</h4>
+			<c:forEach items="${book.histories}" var="history">
+				<div class="comment"> <h6>${history.person.email}:</h6> ${history.comment}</div>
+			</c:forEach>
+		</div>
+		</c:if>
 	</div>
 </div>

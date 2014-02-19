@@ -107,6 +107,9 @@ public class Person implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<Orders> orders = new HashSet<>();
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+	private Set<History> histories = new HashSet<>();
+	
 	public Person() {
 
 	}
@@ -266,6 +269,14 @@ public class Person implements Serializable {
 
 	public void setOrders(Set<Orders> orders) {
 		this.orders = orders;
+	}
+	
+	public Set<History> getHistories() {
+		return histories;
+	}
+	
+	public void setHistories(Set<History> histories) {
+		this.histories = histories;
 	}
 
 

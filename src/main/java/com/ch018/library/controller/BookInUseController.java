@@ -3,6 +3,7 @@ package com.ch018.library.controller;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
+import com.ch018.library.entity.History;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
+import com.ch018.library.service.HistoryService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.JsonResponse;
 
 /**
  *
@@ -34,6 +40,9 @@ public class BookInUseController {
     
     @Autowired 
     private BookService bookService;
+    
+    @Autowired
+    private HistoryService historyService;
      
     @RequestMapping(value = "/usersBooks")
     public ModelAndView showMyBooks(Principal principal) {
@@ -60,6 +69,20 @@ public class BookInUseController {
     	book.setRating(rating);
     	bookService.updateBook(book);
     	return "usersBooks";
+    }
+    
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonResponse commentIt(@RequestParam String comment, @RequestParam Integer buid) {
+    	JsonResponse jsonResponse = new JsonResponse();
+    	BooksInUse booksInUse = inUse.getById(buid);
+    	History history = historyService.getEntry(booksInUse.getPerson(), booksInUse.getBook());
+    	history.setComment(comment);
+    	historyService.newEntry(history);
+    	jsonResponse.setResult(history);
+    	jsonResponse.setStatus("SUCCESS");
+    	jsonResponse.setErrorsMap(new HashMap<String, String>());
+		return jsonResponse;
     }
     
 }

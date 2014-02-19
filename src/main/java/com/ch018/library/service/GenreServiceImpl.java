@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.GenreDAO;
 import com.ch018.library.entity.Genre;
 
-@Component
+@Service
 public class GenreServiceImpl implements GenreService {
 
 	@Autowired

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.form.AdvancedSearch;
 
 @Service
@@ -22,4 +23,5 @@ public interface BookService {
 	long simpleSearchCount(String search);	
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
+	List<Book> getMostRatedByGenre(Genre genre);
 }

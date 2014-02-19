@@ -2,7 +2,6 @@ package com.ch018.library.service;
 
 import org.springframework.stereotype.Component;
 
-import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
 
 @Component

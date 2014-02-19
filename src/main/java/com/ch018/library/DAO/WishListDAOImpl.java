@@ -3,6 +3,8 @@ package com.ch018.library.DAO;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.hibernate.Session;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
@@ -58,12 +60,13 @@ public class WishListDAOImpl implements WishListDAO {
 	@Override
 	public WishList getWishById(int id) {
 		WishList wish = null;
-                try {
-			wish = (WishList) sessionFactory.getCurrentSession().get(WishList.class, id);
-                        
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			wish = (WishList) session.get(WishList.class, id);
 		} catch (Exception e) {
 			log.error(e);
 		}
+        session.clear();        
 		return wish;
 	}
 
@@ -126,19 +129,18 @@ public class WishListDAOImpl implements WishListDAO {
 
     @Override
     public WishList getWishWithoutId(int bookId, int personId) {
-        WishList w = new WishList();
-        ArrayList<WishList> wish = new ArrayList<WishList>();
-        try {
-                  wish.addAll(sessionFactory.getCurrentSession()
-                  .createCriteria(WishList.class)
-                  .add(Restrictions.eq("person.id", personId))
-                  .add(Restrictions.eq("book.id", bookId)).list());
-                  w=wish.get(0);
-                        
-           } catch(Exception e) {
-               log.error(e.getMessage());
-           }
-        return w;
+		WishList w = new WishList();
+		ArrayList<WishList> wish = new ArrayList<WishList>();
+		try {
+			wish.addAll(sessionFactory.getCurrentSession()
+					.createCriteria(WishList.class)
+					.add(Restrictions.eq("person.id", personId))
+					.add(Restrictions.eq("book.id", bookId)).list());
+			w = wish.get(0);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return w;
     }
     
     @Override

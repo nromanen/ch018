@@ -212,6 +212,7 @@ public class AuthorizedUserController {
 			Model model) {
 		Book books = book.getBooksById(id);
 		model.addAttribute("book", books);
+		model.addAttribute("mostrated", book.getMostRatedByGenre(books.getGenre()));
 		return "book";
 	}
 	

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.form.AdvancedSearch;
 
 @Component
@@ -95,6 +96,7 @@ public class BookDAOImpl implements BookDAO {
 		} catch (Exception e) {
 			log.error("Error get book: " + e);
 		}
+		Hibernate.initialize(book.getHistories());
 		session.clear();
 		return book;
 	}
@@ -282,9 +284,23 @@ public class BookDAOImpl implements BookDAO {
 					   .createQuery("Select B from Book B order by B.rating desc");
 		       query.setMaxResults(5);
 		       books.addAll(query.list());
-		 } catch (Exception e){
+		 } catch (Exception e) {
 			 log.error(e);
 		 }
+		return books;
+	}
+	
+	@Override
+	public List<Book> getMostRatedByGenre(Genre genre) {
+		List<Book> books = new ArrayList<Book>();
+		try {
+			Query query = sessionFactory.getCurrentSession()
+					.createQuery("Select B from Book B where B.genre=(:genre) order by B.rating desc").setEntity("genre", genre);
+			query.setMaxResults(6);
+			books.addAll(query.list());
+		} catch (Exception e) {
+			log.error(e);
+		}
 		return books;
 	}
 }

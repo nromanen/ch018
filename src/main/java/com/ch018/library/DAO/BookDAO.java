@@ -3,6 +3,7 @@ package com.ch018.library.DAO;
 import java.util.List;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.Genre;
 import com.ch018.library.form.AdvancedSearch;
 
 public interface BookDAO {
@@ -20,4 +21,5 @@ public interface BookDAO {
 	long simpleSearchCount(String parametr);
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
+	List<Book> getMostRatedByGenre(Genre genre);
 }
