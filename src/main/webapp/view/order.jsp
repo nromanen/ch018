@@ -8,11 +8,11 @@
 <%@ page import="java.util.*" %>
 			<!-- Center -->
 <div class="span8">
-                 <br><br>
+    <br><br>
 	<div class="alert alert-error" style="display: none">
 		<button type="button" class="close">&times;</button>
-		Sorry for incovinience, but you cant this take book at this time on same term.	
-		<span id='failed')></span>	
+		<spring:message code="couldnotOrder"/>
+		<span id="tryagain" style="display:none"><spring:message code="tryAgainAfter"/></span>: <span id="failed"></span>	
 	</div>
 	<span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>
                        <form:form method="POST" id="ord"  modelAttribute="order">
@@ -33,23 +33,23 @@
                                            </td>
                                       </tr>
                                        <tr>
-                                      <td>Choose term:</td>
+                                      <td><spring:message code = "choose.term"/></td>
                                         <td><form:select path="term" id="term">
-                                               <form:option value="0" label="--- Select ---"/>
-                                               <form:option value="1" label="1 day"/>
-                                               <form:option value="2" label="2 days"/>
-                                               <form:option value="3" label="3 days"/>
-                                               <form:option value="4" label="4 days"/>
-                                               <form:option value="5" label="5 days"/>
-                                               <form:option value="6" label="6 days"/>
-                                               <form:option value="7" label="7 days"/>
-                                               <form:option value="8" label="8 days"/>
-                                               <form:option value="9" label="9 days"/>
-                                               <form:option value="10" label="10 days"/>
-                                               <form:option value="11" label="11 days"/>
-                                               <form:option value="12" label="12 days"/>
-                                               <form:option value="13" label="13 days"/>
-                                               <form:option value="14" label="14 days"/>
+                                               <form:option value="0" label="------"/>
+                                               <form:option value="1" label="1"/>
+                                               <form:option value="2" label="2"/>
+                                               <form:option value="3" label="3"/>
+                                               <form:option value="4" label="4"/>
+                                               <form:option value="5" label="5"/>
+                                               <form:option value="6" label="6"/>
+                                               <form:option value="7" label="7"/>
+                                               <form:option value="8" label="8"/>
+                                               <form:option value="9" label="9"/>
+                                               <form:option value="10" label="10"/>
+                                               <form:option value="11" label="11"/>
+                                               <form:option value="12" label="12"/>
+                                               <form:option value="13" label="13"/>
+                                               <form:option value="14" label="14"/>
                                              </form:select></td>
                                       </tr>
                                        <tr><td></td>
@@ -72,23 +72,23 @@
                                                 <form:errors path="issueDate" cssClass="error"/>
                                            </td>
                                             <tr>
-                                      <td>Choose term:</td>
+                                      <td><spring:message code = "choose.term"/></td>
                                         <td><form:select path="term" id="term">
-                                               <form:option value="0" label="--- Select ---"/>
-                                               <form:option value="1" label="1 day"/>
-                                               <form:option value="2" label="2 days"/>
-                                               <form:option value="3" label="3 days"/>
-                                               <form:option value="4" label="4 days"/>
-                                               <form:option value="5" label="5 days"/>
-                                               <form:option value="6" label="6 days"/>
-                                               <form:option value="7" label="7 days"/>
-                                               <form:option value="8" label="8 days"/>
-                                               <form:option value="9" label="9 days"/>
-                                               <form:option value="10" label="10 days"/>
-                                               <form:option value="11" label="11 days"/>
-                                               <form:option value="12" label="12 days"/>
-                                               <form:option value="13" label="13 days"/>
-                                               <form:option value="14" label="14 days"/>
+                                               <form:option value="0" label="------"/>
+                                               <form:option value="1" label="1"/>
+                                               <form:option value="2" label="2"/>
+                                               <form:option value="3" label="3"/>
+                                               <form:option value="4" label="4"/>
+                                               <form:option value="5" label="5"/>
+                                               <form:option value="6" label="6"/>
+                                               <form:option value="7" label="7"/>
+                                               <form:option value="8" label="8"/>
+                                               <form:option value="9" label="9"/>
+                                               <form:option value="10" label="10"/>
+                                               <form:option value="11" label="11"/>
+                                               <form:option value="12" label="12"/>
+                                               <form:option value="13" label="13"/>
+                                               <form:option value="14" label="14"/>
                                              </form:select></td>
                                       </tr>
                                        <tr><td></td>
@@ -106,8 +106,12 @@
                            </c:choose>
                         </form:form>
                         <div id="orderSuccess" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body">Order created successfully</div>
                        </div>
+                        <div id="inOrder" class="modal hide fade">
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body">${order.book.title} <spring:message code="ordered"/></div>
+                        			  </div>
 </div> 
           

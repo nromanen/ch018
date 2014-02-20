@@ -5,26 +5,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <div class="span8">
-  <span><spring:message code="message.chEmail"/></span>
-     <br>
-     <br>
-     <br>
-      
-       <span><spring:message code="message.email"/> :</span> <span> ${email}</span>
-       <br>
-       <br>
-    <div class="alert alert-error" style="display: none" id="emailerror">
+  <span><spring:message code="message.chEmail"/></span> <br> <br> <br>
+	<span><spring:message code="message.email" /> :</span> <span>
+		${email}</span> <br> <br>
+	<div class="alert alert-error" style="display: none" id="emailerror">
 		<button type="button" class="close">&times;</button>
 		<h4>
-		  Error has occurred. Please try again.
+		  <spring:message code="error.occurred"/>
 		</h4>
 		
 	</div>
 	<div class="alert alert-success" style="display: none" id="emailSuccess">
 		<button type="button" class="close">&times;</button>
 		<h4>
-		  Check your new email and confirm your new e-mail address. 
-		  Otherwise you may continue use this site with old e-mail
+		  <spring:message code="changed.Email"/>
 		</h4>
 		
 	</div>
@@ -33,8 +27,6 @@
                                       <label class="control-label" for="email1"><spring:message code="person.mail"/>:</label>
                                       <div class="controls"> 
                                           <form:input path="email" required="true" type="email"/>
-                                          <!--<form:errors path="email" cssClass="error"/> -->
-                                          <!--  <input type="button" value="Change e-mail" class="btn btn-info"/> -->
                                           <span id="erroremail" class="error"></span>
                                           <br> <br>
                                         <input type="submit" class="btn" value="<spring:message code="button.done"/>"/>

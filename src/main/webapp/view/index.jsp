@@ -146,15 +146,15 @@
 						 
 						</div>
 						 <div id="inOrder${latest.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body">${latest.title} already in your orders!</div>
                         </div>
                          <div id="inUse${latest.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body">${latest.title} is now in your hands</div>
                         </div>
                          <div id="fail${latest.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body"><spring:message code="message.failorder"/></div>
                         </div> 
 					</sec:authorize>
@@ -174,11 +174,11 @@
 					
 				</div>
 				<div id="successAdd${latest.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body">${latest.title} successfully added to wish list</div>
                 </div>
                 <div id="errorAdd${latest.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body">You already have ${latest.title} in your wish list</div>
                 </div>
 		<c:if test="${(rowCounter.count % 4 == 0) || (rowCounter.last)}">

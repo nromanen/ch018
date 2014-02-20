@@ -11,7 +11,7 @@
 <!-- <span id="dateExpired" class="hidden"><spring:message code="date.expired"/></span>  -->
 
 <div id="dateExpired" class="modal hide fade">
-  <div class="modal-header">Message</div>
+  <div class="modal-header"><spring:message code="message.message"/></div>
   <div class="modal-body"><spring:message code="date.expired"/></div>
 </div>
 <input type="hidden" id="href" value="${pageContext.request.contextPath}/userOrder"/>
@@ -41,7 +41,7 @@
                                                <form:input path="date" type="hidden" value="${order.date}"/>
                                                <form:input path="issueDate" class="datetimepicker" style="display:none" id="newIssue${order.id}"/>
                                                <br>
-                                               <span  cssClass="error" style="display:none" id="fail${order.id}">Try to choose another date or time</span>
+                                               <span  cssClass="error" style="display:none" id="fail${order.id}"><spring:message code="anotherDate"/></span>
                                                <form:input path="person" type="hidden" value="${order.person.id}"/>
                                                <form:input path="book" type="hidden" value="${order.book.id}"/>
                                            </div>
@@ -66,7 +66,7 @@
 					</c:forEach>
 				</table>
                  <div id="editissue" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
-                                           <div class="modal-body">Issue date updated successfully</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body"><spring:message code="updateissue"/></div>
                         			  </div>        
 </div>

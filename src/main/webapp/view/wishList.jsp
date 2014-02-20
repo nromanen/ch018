@@ -33,8 +33,8 @@
                                      <input type="button" class="btn" id="deleteWish${wishByPers.id}" value="delete"/>
                                      <input type="hidden" value="${wishByPers.id}">
                                         <div id="modal${wishByPers.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
-                                           <div class="modal-body">${wishByPers.book.title} successfully deleted from wish list</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body">${wishByPers.book.title} <spring:message code="delete.wish"/></div>
                                        </div>
                                   </td>
                                      
@@ -43,15 +43,15 @@
                                             <spring:message code="button.order" />  
 						              </a>
 						              <div id="inOrder${wishByPers.book.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
-                                           <div class="modal-body">${wishByPers.book.title} already in your orders!</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body">${wishByPers.book.title} <spring:message code="ordered"/></div>
                         			  </div>
                                       <div id="inUse${wishByPers.book.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
-                                           <div class="modal-body">${wishByPers.book.title} is now in your hands</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body">${wishByPers.book.title} <spring:message code="inuse"/></div>
                                       </div>
                                       <div id="fail${wishByPers.book.id}" class="modal hide fade">
-                                           <div class="modal-header">Message</div>
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
                                            <div class="modal-body"><spring:message code="message.failorder"/></div>
                                      </div>
                                      

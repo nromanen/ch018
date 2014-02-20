@@ -10,16 +10,16 @@
       <div class="alert alert-success" style="display: none" id="success">
 		<button type="button" class="close">&times;</button>
 		<h4>
-			Message
+			<spring:message code="message.message"/>
 		</h4>
-		Account successfully updated.
+		<spring:message code="updateAccount"/>
 	</div>	
 	<div class="alert alert-error" style="display: none" id="errorDiv">
 		<button type="button" class="close">&times;</button>
 		<h4>
 		<spring:message code="message.error" />
 		</h4>
-		Error has occurred. Please try again. 
+		<spring:message code="error.occurred"/>
 	</div>	
                             <form:form id="account" method="POST" commandName="person" class="form-horizontal">
                                 <div class="control-group">
@@ -68,7 +68,7 @@
                                    </div>
                                    
                                    <div class="control-group">
-                                         <label class="control-label">Password</label>
+                                         <label class="control-label"><spring:message code="person.pass"/></label>
                                          <div class=controls>
                                             <a href="<c:url value="/pass"/>" class="btn btn-info"><spring:message code="button.changepass"/></a>
                                          </div>

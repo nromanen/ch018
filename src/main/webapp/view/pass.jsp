@@ -48,7 +48,7 @@
 				value="<spring:message code="button.changepass"/>" class="btn" />
 	</form:form>
 	<div id="passModal" class="modal hide fade">
-        <div class="modal-header">Message</div>
+        <div class="modal-header"><spring:message code="message.message"/></div>
         <div class="modal-body"><spring:message code="password.success"/></div>
     </div>
 	

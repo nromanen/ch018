@@ -112,16 +112,23 @@ public class OrderController {
     @ResponseBody
     public JsonResponse fixAndSaveOrder(@ModelAttribute("order") Orders newOrder, 
                               BindingResult result, Model model) {
+    
     	JsonResponse response = new JsonResponse();
     	boolean aprovedOrder = false;
       	int bookId = newOrder.getBook().getId();
       	Book book = bookService.getBooksById(bookId);
         int personId = newOrder.getPerson().getId();
+    	if(orderService.orderExist(personId, bookId)) {
+    		response.setStatus("ORDERED");
+    		return response;
+    	}
         int available = book.getAvailable();
         if (available == 1) {
         	Date date= orderService.minOrderDateOf(bookId);
         	if(date == null) {
         		orderService.createOrder(bookId, personId, newOrder);
+        	    response.setStatus("SUCCESS");	
+        		return response;
         	} 
         }
         List<Orders> orders = new ArrayList<Orders>();

@@ -23,7 +23,7 @@
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.issueDate}" /></td>
                     <td><fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${book.returnDate}" /></td>
                     <td><c:if test="${book.mark >0}">${book.mark}</c:if>
-                        <c:if test="${book.mark == 0}"><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>">Rate</a></c:if>
+                        <c:if test="${book.mark == 0}"><a href="<c:url value="/rate?bookID=${book.book.id}&buID=${book.buid}"/>"><spring:message code="rate"/></a></c:if>
                     </td>
                 </tr>
             </c:forEach>

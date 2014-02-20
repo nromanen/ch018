@@ -309,10 +309,6 @@ $(document).ready(function() {
 		  return false;
 	  } 
 	  
-	  if($("#orderDate").val()=""){
-		  $("#orderDate").focus();
-		  return false;
-	  }
 	  console.log($("#term").val());
 	  if($("#term").val() == 0){
 		  alert("you forgot choose the term");
@@ -336,7 +332,12 @@ $(document).ready(function() {
 			    	   $(".alert").show();
 			       }
 			       if(data.result){
+			    	   $("#tryagain").show();
 			    	   $("#failed").text(data.result);
+			       }
+			       
+			       if(data.status =="ORDERED") {
+			    	   $("#inOrder").modal();
 			       }
 			  },
 			  error: function(){
