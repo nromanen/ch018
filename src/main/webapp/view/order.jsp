@@ -22,50 +22,7 @@
                                    <spring:message code="message.orderfail"/>
                                    <br> <spring:message code="message.orderafter"/> <fmt:formatDate pattern="dd.MM.yyyy" value="${date}"/> 
                                </c:when>
-                               <c:when test="${order.book.available==1}">
-                                   <c:if test="${orderDate!=null}"><spring:message code="message.order2"/> ${orderDate} </c:if> 
-                                      
-                                          
-                                   <table>
-                                       <tr><td><spring:message code="message.issuedate"/></td> 
-                                           <td><form:input path="issueDate" class="datetimepicker" required="true" id="orderDate"/>
-                                               <form:errors path="issueDate" cssClass="error"/>
-                                           </td>
-                                      </tr>
-                                       <tr>
-                                      <td><spring:message code = "choose.term"/></td>
-                                        <td><form:select path="term" id="term">
-                                               <form:option value="0" label="------"/>
-                                               <form:option value="1" label="1"/>
-                                               <form:option value="2" label="2"/>
-                                               <form:option value="3" label="3"/>
-                                               <form:option value="4" label="4"/>
-                                               <form:option value="5" label="5"/>
-                                               <form:option value="6" label="6"/>
-                                               <form:option value="7" label="7"/>
-                                               <form:option value="8" label="8"/>
-                                               <form:option value="9" label="9"/>
-                                               <form:option value="10" label="10"/>
-                                               <form:option value="11" label="11"/>
-                                               <form:option value="12" label="12"/>
-                                               <form:option value="13" label="13"/>
-                                               <form:option value="14" label="14"/>
-                                             </form:select></td>
-                                      </tr>
-                                       <tr><td></td>
-                                           <td><form:input path="book.title" type="hidden"/></td>
-                                       </tr>
-                                       <tr><td></td>
-                                           <td><form:input path="book.id" type="hidden"/></td>
-                                       </tr>
-                                       <tr><td></td>
-                                           <td><form:input path="person.id" type="hidden"/></td>
-                                       </tr>
-                                       <tr><td><input type="submit" class="btn" value="Order" id="submitOrder"/></td></tr>
-                                   </table>
-                               </c:when>
                                <c:otherwise>
-                                
                                    <table>
                                        <tr><td><spring:message code="message.issuedate"/></td> 
                                            <td><form:input path="issueDate" class="datetimepicker" required="true" id="orderDate"/>
@@ -73,22 +30,11 @@
                                            </td>
                                             <tr>
                                       <td><spring:message code = "choose.term"/></td>
-                                        <td><form:select path="term" id="term">
-                                               <form:option value="0" label="------"/>
-                                               <form:option value="1" label="1"/>
-                                               <form:option value="2" label="2"/>
-                                               <form:option value="3" label="3"/>
-                                               <form:option value="4" label="4"/>
-                                               <form:option value="5" label="5"/>
-                                               <form:option value="6" label="6"/>
-                                               <form:option value="7" label="7"/>
-                                               <form:option value="8" label="8"/>
-                                               <form:option value="9" label="9"/>
-                                               <form:option value="10" label="10"/>
-                                               <form:option value="11" label="11"/>
-                                               <form:option value="12" label="12"/>
-                                               <form:option value="13" label="13"/>
-                                               <form:option value="14" label="14"/>
+                                         <td><form:select path="term" id="term">
+                                                 <form:option value="0" label="------"></form:option>
+                                             	 <c:forEach var="i" begin="1" end="${order.book.term}">
+                                              		<form:option value="${i}" label="${i}"></form:option>
+                                           		 </c:forEach>
                                              </form:select></td>
                                       </tr>
                                        <tr><td></td>
