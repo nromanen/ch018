@@ -196,31 +196,6 @@ $(document).ready(function() {
 	    	        }
 	  });
  
- /* $(".display-item").rateBar({
-	  defaultStarColor : '#777777',
-      ratedStarColor : '#FFD700',
-      onRate : function(rate) {
-    	  $r = rate;
-          $bookID = $("#bookID").val();
-          $buID = $("#buID").val();
-    	  console.log(rate);
-          var href = $("#hrefrate").val();
-          $.ajax({
-        	 url: href + "/" +$r+ "/" +$bookID+"/"+$buID,
-             type: "GET",
-             success: function() {
-            	           console.log("success");
-            	            alert("Thank you for voting");
-            	            location.reload();
-                     },
-        	 error: function() {
-        		        console.log("error");
-        		     }  	 
-        	 
-          });
-      }
-});*/
- 
   $("#email").validate({
 		highlight: function(element, errorClass) {
 		$(element).fadeOut(function() {
@@ -229,7 +204,7 @@ $(document).ready(function() {
 		}
 	}); 
   
-  $("#order").validate({
+  $("#ord").validate({
 		highlight: function(element, errorClass) {
 			$(element).fadeOut(function() {
 				$(element).fadeIn();
@@ -334,6 +309,10 @@ $(document).ready(function() {
 		  return false;
 	  } 
 	  
+	  if($("#orderDate").val()=""){
+		  $("#orderDate").focus();
+		  return false;
+	  }
 	  console.log($("#term").val());
 	  if($("#term").val() == 0){
 		  alert("you forgot choose the term");
@@ -349,14 +328,15 @@ $(document).ready(function() {
 			  mimeType : 'application/json',
 			  success: function(data) {
 			       console.log('success');
-			       e.preventDefault();
+			       if (data.status == "SUCCESS") {
+			    	   $("#orderSuccess").modal();
+			    	   setTimeout(function () {location.href="userOrder";}, 1500);
+			       }
 			       if(data.status == "FAIL"){
-			    	 // var date = new Date(1394143200000);
-			    	 // var day = date.getDay();
-			    	 // var month = date.getMonth();
-			    	  //var year = date.getFullYear();
-			    	 // console.log(day +"/"+month+"/"+year);
-			    	  console.log(data.result);
+			    	   $(".alert").show();
+			       }
+			       if(data.result){
+			    	   $("#failed").text(data.result);
 			       }
 			  },
 			  error: function(){

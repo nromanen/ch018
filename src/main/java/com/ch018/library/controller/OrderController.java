@@ -162,7 +162,9 @@ public class OrderController {
         	Calendar firstReturnDate = Calendar.getInstance();
         	firstReturnDate.setTime(orders.get(0).getIssueDate());
         	firstReturnDate.add(Calendar.DATE, orders.get(0).getTerm());
-        	response.setResult(fmt.format(firstReturnDate.getTime()));
+        	if (available == 1 && orders!=null) {
+        		response.setResult(fmt.format(firstReturnDate.getTime()));
+        	}
         	response.setStatus("FAIL");
         	return response;
         }

@@ -38,6 +38,10 @@ public class ChangePasswordValid implements Validator {
         
         if(!pass.getNewPassword().equals(pass.getConfirmPassword()))
             errors.rejectValue("newPassword", "notmatch");
+        
+        if(pass.getNewPassword().length()<4){
+        	errors.rejectValue("newPassword", "toshort");
+        }
     }
     
 }
