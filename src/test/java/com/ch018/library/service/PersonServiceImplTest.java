@@ -139,7 +139,7 @@ public class PersonServiceImplTest {
 		booksInUse.setBook(book);
 		booksInUse.setBuid(1);
 		booksInUse.setPerson(person);
-		
+	
 		try {
 			stmt = connection.createStatement();
 			stmt.execute("insert into genre (id) VALUES (1)");

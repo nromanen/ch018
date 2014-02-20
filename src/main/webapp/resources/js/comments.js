@@ -8,19 +8,12 @@ $(document).ready(function() {
 		      contentType : 'application/x-www-form-urlencoded',
 			  mimeType : 'application/json',
 		      success: function(response) {
-		    	  if(response.status == "SUCCESS") {
-		    		  console.log("success " + response.result);
-		    		  //$comments = $("#comments").html();
-		    		  //$("#comments").html('<div class="comment"> <h6>' + response.result.person.email + ':</h6><c:out value="' + response.result.comment + '" escapeXml="true" /> </div>' + comments)
-		    	  } else {
-		    		  for(var key in response.errorsMap) { 
-		    			  console.log(response.errorsMap[key]);
-		    			  $("#error" + key).text(response.errorsMap[key]);
-		    		  }
-		    	  }
+		    		  console.log("success " + response);
+		    		  location.reload();
+		    	
 			  },
 			  error: function(response) {
-				 // $("#errorperson").text("Error occured when data sending to server");
+				 location.reload();
 				console.log("error: " + response);
 			}
 		  });

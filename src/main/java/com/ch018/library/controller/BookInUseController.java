@@ -76,16 +76,12 @@ public class BookInUseController {
     
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     @ResponseBody
-    public JsonResponse commentIt(@RequestParam String comment, @RequestParam Integer buid) {
-    	JsonResponse jsonResponse = new JsonResponse();
+    public String commentIt(@RequestParam String comment, @RequestParam Integer buid) {
     	BooksInUse booksInUse = inUse.getById(buid);
     	History history = historyService.getEntry(booksInUse.getPerson(), booksInUse.getBook());
     	history.setComment(comment);
     	historyService.newEntry(history);
-    	jsonResponse.setResult(history);
-    	jsonResponse.setStatus("SUCCESS");
-    	jsonResponse.setErrorsMap(new HashMap<String, String>());
-		return jsonResponse;
+		return "SUCCESS";
     }
     
 }
