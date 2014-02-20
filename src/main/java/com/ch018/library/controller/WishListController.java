@@ -42,13 +42,6 @@ public class WishListController {
         return new ModelAndView("wishList", "wishByPers", wish.getWishesByPerson(personService.getByEmail(principal.getName()).getId()));
     }
     
-   /* @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String deleteWish(@RequestParam("del")Integer id) {
-        wish.deleteWishById(id);
-        return "redirect:/wishList";
-    } */
-    
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody

@@ -68,6 +68,9 @@ public class BookInUseController {
     	rating = bd.floatValue();
     	book.setRating(rating);
     	bookService.updateBook(book);
+    	History history = historyService.getEntry(bookInUse.getPerson(), bookInUse.getBook());
+    	history.setMark(rate);
+    	historyService.newEntry(history);
     	return "usersBooks";
     }
     

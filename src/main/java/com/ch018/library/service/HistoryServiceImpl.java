@@ -34,5 +34,5 @@ public class HistoryServiceImpl implements HistoryService {
 	public History getEntry(Person person, Book book) {
 		return historyDAO.getEntry(person, book);
 	}
-
+	
 }

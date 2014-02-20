@@ -7,10 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set; /*111111*/
+import java.util.Set; 
 
 import javax.validation.Valid;
 
@@ -22,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +37,11 @@ import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.util.JsonResponse;
 import com.ch018.library.util.OrderTerm;
-//import com.ch018.library.util.UserOrderTermCalculate;
 import com.ch018.library.validator.OrderValidator;
 
-// TODO: author Krivorotenko Sasha
 /**
  * 
- * @author win7
+ * @author okryvortc
  */
 @Controller
 public class OrderController {
