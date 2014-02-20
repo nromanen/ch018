@@ -99,6 +99,10 @@
 		<constructor-arg value="com.ch018.library.service.LocalizationService"/>
 	</bean>
 	
+	<bean id="historyService" name="historyService" class="org.mockito.Mockito" factory-method="mock">
+		<constructor-arg value="com.ch018.library.service.HistoryService"/>
+	</bean>
+	
 	<bean id="orderValidator" name="orderValidator" class="org.mockito.Mockito" factory-method="mock">
 		<constructor-arg value="com.ch018.library.validator.OrderValidator"/>
 	</bean>
