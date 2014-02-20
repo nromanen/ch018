@@ -81,7 +81,7 @@ public class Orders {
 		return term;
 	}
 	
-	@Column(name="preOrdered", columnDefinition = "false")
+	@Column(name="preOrdered", columnDefinition = "boolean default 0")
 	public boolean getPreOrder(){
 		return this.preOrder; 
 	}
@@ -110,8 +110,8 @@ public class Orders {
 		this.term = term;
 	}
 	
-	public void setPreOrder(boolean o){
-		this.preOrder = o;
+	public void setPreOrder(boolean preOrder){
+		this.preOrder = preOrder;
 	}
 	
 	@Override

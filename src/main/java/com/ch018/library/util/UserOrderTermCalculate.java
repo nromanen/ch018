@@ -16,7 +16,7 @@ public class UserOrderTermCalculate {
 	public static List<Orders> calculate(Date date, int term){
     	List<Orders> orders = new ArrayList<Orders>();
     	List<OrderResult> result = new ArrayList<OrderResult>();
-    	orders = orderService.getAllOrdersAfter(date);
+    	orders = orderService.getAllOrdersAfter(date, term);
     	/* Calculating order return date*/
     	Calendar c = Calendar.getInstance();
         Calendar d = Calendar.getInstance();
