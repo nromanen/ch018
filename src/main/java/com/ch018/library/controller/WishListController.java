@@ -16,6 +16,7 @@ import com.ch018.library.entity.Book;
 import com.ch018.library.entity.Person;
 import com.ch018.library.entity.WishList;
 import com.ch018.library.service.BookService;
+import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
@@ -35,7 +36,10 @@ public class WishListController {
     
     @Autowired
     private PersonService personService;
-       
+    
+    @Autowired
+    private BooksInUseService bookInUseService;
+    
     @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/wishList")
     public ModelAndView getWisheByPersonId(Principal principal) {
@@ -59,6 +63,10 @@ public class WishListController {
       Book book = bookService.getBooksById(id);
       int personId = person.getId();
       
+      if (bookInUseService.alreadyInUse(id, personId)){
+    	  return 2;
+      }
+      
       if (wish.bookExistInWishList(id, personId)) {
              return 0; 
       } else {
@@ -67,9 +75,9 @@ public class WishListController {
              newWish.setBook(book);
              wish.addWish(newWish);
              return 1;
-      }
-            
-    }
+        }
+      
+       }
     
     
 }

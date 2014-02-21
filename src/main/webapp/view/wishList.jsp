@@ -30,7 +30,7 @@
                                  <td>${wishByPers.book.year}</td>
                                  <td>
                                      <input type="hidden" id="wishID" value="${wishByPers.id}">
-                                     <input type="button" class="btn" id="deleteWish${wishByPers.id}" value="delete"/>
+                                     <input type="button" class="btn btn-danger" id="deleteWish${wishByPers.id}" value="<spring:message code="button.delete"/>"/>
                                      <input type="hidden" value="${wishByPers.id}">
                                         <div id="modal${wishByPers.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
@@ -65,7 +65,17 @@
                                             </ul>
                                              </div>
                                           <div class="caption pull-left">
-                                             ${wishByPers.book.description}
+                                            <c:choose>
+                    							<c:when test="${wishByPers.book.available==0}"><span class="label label-important"><spring:message code="book.notavailable" />
+                    							</span>
+                    							<br>
+                    							<br></c:when>
+                        						<c:otherwise><span class="label label-success"><spring:message code="book.available" />
+                    							</span>
+                    							<br>
+                    							<br>
+                    							</c:otherwise>
+                              				</c:choose>
                                           </div>
                                      </div>
                                  </td>

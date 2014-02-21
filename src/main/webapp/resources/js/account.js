@@ -133,6 +133,8 @@ $(document).ready(function() {
 	  console.log($id);
 	  var href = $("#href").val();
 	  console.log(href);
+	  var title = $("#bookTitle" +$id).val();
+	  console.log(title);
 	  $.ajax({
 		  url: href + "/" +$id,
 		  type: "GET",
@@ -141,11 +143,18 @@ $(document).ready(function() {
 			  if (data == 0){
 				  console.log("11111");
 				  $("#errorAdd" + $id).modal();
+				  console.log(title);
 			  }
 			  if (data == 1) {
 			     console.log("22222");
 			     $("#successAdd" + $id).modal();
+			     console.log(title);
 			     setTimeout(function () {location.reload();}, 1500);
+			  }
+			  
+			  if (data == 2) {
+				  console.log(title);
+				  $("#alreadyUse" + $id).modal();
 			  }
 		  },
 	      error: function() {

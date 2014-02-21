@@ -130,6 +130,7 @@
      <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
 	
 	<c:forEach items="${latest}" var="latest" varStatus="rowCounter">
+		<input type="hidden" id="bookTitle${latest.id}" value="${latest.title}">
 		<c:if test="${(rowCounter.count + 3) % 4 == 0}">
 			<div class="row-fluid row-margin">
 		</c:if>
@@ -147,11 +148,11 @@
 						</div>
 						 <div id="inOrder${latest.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
-                                           <div class="modal-body">${latest.title} already in your orders!</div>
+                                           <div class="modal-body">${latest.title} <spring:message code="ordered"/></div>
                         </div>
                          <div id="inUse${latest.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
-                                           <div class="modal-body">${latest.title} is now in your hands</div>
+                                           <div class="modal-body">${latest.title} <spring:message code="inuse"/></div>
                         </div>
                          <div id="fail${latest.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
@@ -160,12 +161,13 @@
 					</sec:authorize>
 				</div>
 				<div class="caption">
+				 
 					<div class = "booktitle">${latest.title} <br>
 					${latest.authors}</div>
 					<div class = "box">
 						<div class = "textdesc"><small>${latest.description}</small></div>
 					</div>
-					<a class="pull-right" href="<c:url value="/book/${latest.id}"/>"><small>More</small></a><br>
+					<a class="pull-right" href="<c:url value="/book/${latest.id}"/>"><small><spring:message code="more"/></small></a><br>
                     <p><c:choose>
                     	<c:when test="${latest.available==0}"><span class="label label-important"><spring:message code="book.notavailable" /></span></c:when>
                         <c:otherwise><span class="label label-success"><spring:message code="book.available" /></span></c:otherwise>
@@ -175,11 +177,15 @@
 				</div>
 				<div id="successAdd${latest.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
-                                           <div class="modal-body">${latest.title} successfully added to wish list</div>
+                                           <div class="modal-body">${latest.title} <spring:message code="wishlistAdded"/></div>
                 </div>
                 <div id="errorAdd${latest.id}" class="modal hide fade">
                                            <div class="modal-header"><spring:message code="message.message"/></div>
-                                           <div class="modal-body">You already have ${latest.title} in your wish list</div>
+                                           <div class="modal-body"><spring:message code="has"/> ${latest.title} <spring:message code="inwish"/></div>
+                </div>
+                <div id="alreadyUse${latest.id}" class="modal hide fade">
+                                           <div class="modal-header"><spring:message code="message.message"/></div>
+                                           <div class="modal-body"><spring:message code="has"/> ${latest.title} <spring:message code="inuse"/></div>
                 </div>
 		<c:if test="${(rowCounter.count % 4 == 0) || (rowCounter.last)}">
 			</div>

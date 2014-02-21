@@ -4,8 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
+<link href="${pageContext.request.contextPath}/resources/css/jquery.rating.css"
+	    rel="stylesheet" type="text/css"/>
 <!-- Center -->
 <div class="span8">
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.rating-2.0.js"></script>
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/rating.js"></script>
  <input type="hidden" id="href" value="${pageContext.request.contextPath}/wishlist" />
  <input type="hidden" id="hrefOrder" value="${pageContext.request.contextPath}/prepareorder" />
      <input type="hidden" id="hrefNewOrder" value="${pageContext.request.contextPath}/order" />
@@ -24,6 +28,13 @@
 						<c:when test="${book.available==0}"><span class="label label-important">Not Available</span></c:when>
 						<c:otherwise><span class="label label-success">Available</span></c:otherwise>
 					</c:choose>
+					<div class="rateTop5">
+						<input name="val" value="${book.rating}" type="hidden">
+					</div>
+					<span class="vote"><spring:message code="person.rating" />:
+						${book.rating}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		            <span class="vote"><spring:message code="votes" />:
+						${book.numberOfEvaluations}</span>
 				</p>
 				<sec:authorize access="isAuthenticated()">
 				<div class="btn-group btn-group-vertical">
@@ -32,6 +43,7 @@
 					    <a id="orderNow${book.id}"
 							class="btn btn-warning btn-mini">  <spring:message code="message.ordernow" />  
 						</a>
+					 
 				</div>
 				 <div id="inOrder${book.id}" class="modal hide fade">
                                            <div class="modal-header">Message</div>

@@ -37,3 +37,8 @@ div.vote-success{
     font-size: 14px;
     margin: 10px 0 0 10px;
 }
+
+.vote{
+	color: #ccc;
+    font-size: 14px;
+}

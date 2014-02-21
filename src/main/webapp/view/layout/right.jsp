@@ -21,18 +21,19 @@
 		           <a href="<c:url value="/book/${bookz.id}"/>">
 		           <img src="${pageContext.request.contextPath}${bookz.image}" class="img-top5">
 		           <br>
-		           <!-- <img src="${pageContext.request.contextPath}/resources/img/star.jpg" class="star"> <span>${bookz.rating}</span>  -->
-		           <div class="rateTop5">
-		            <!-- <input type="hidden" class="val" value=""/>
-                     <input type="hidden" class="votes" value=""/> -->
-                     <input name="val" value="${bookz.rating}" type="hidden">
-3	                 <input name="votes" value="${bookz.numberOfEvaluations}" type="hidden">
-		           </div>
+		           <!--  <img src="${pageContext.request.contextPath}/resources/img/star.jpg" class="star">-->
 		           <br>
 		           ${bookz.title}, 
-		           <br> ${bookz.authors}</a>
+		           <br> ${bookz.authors}
+		           <br>
+		           <span style="color: #ccc; font-size: 14px;"><spring:message code="person.rating"/></span> 
+		           <span style="color: #ccc; font-size: 14px;">${bookz.rating}</span>
+		           </a>
 		           </li>
 		       <li></li>
 		</c:forEach>
 	</ul>
 </div>
+
+<span style="color: #ccc; font-size: 14px;"><spring:message code="person.rating"/></span> 
+		           <span style="color: #ccc; font-size: 14px;">${bookz.rating}</span>
