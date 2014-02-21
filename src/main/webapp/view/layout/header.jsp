@@ -41,7 +41,7 @@
 						<li><a href="<c:url value="/registration"/>"><spring:message
 									code="menu.registration" /></a></li>
 					</sec:authorize>
-					<sec:authorize access="hasAnyRole({'ROLE_LIBRARIAN','ROLE_USER'})">
+					<sec:authorize access="hasAnyRole({'ROLE_USER'})">
 						<li><a href="<c:url value="/wishList"/>"><spring:message
 									code="menu.wish" />
 									<c:if test="${countWish > 0}"> <span class="badge badge-info">${countWish}</span></c:if></a></li>

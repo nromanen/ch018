@@ -157,7 +157,7 @@
 				aria-hidden="true">&times;</button>
 			<h3 class="myModalLabelEdit hide">
 				<spring:message code="button.edit" />
-				<span class="pull-right" id="rating"><spring:message code="person.rating" />:</span>
+				<small class="pull-right"><spring:message code="person.rating" />:<span id="rating"></span>&nbsp&nbsp&nbsp</small>
 			</h3>
 			<h3 class="myModalLabelNew hide">
 				<spring:message code="person.new" />

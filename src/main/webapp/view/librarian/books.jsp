@@ -116,7 +116,7 @@
 	</c:if>
 	<c:if test="${advancedSearch != null}">
 		<div class="alert">
-			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> <c:out value="${advancedSearch.genre}"/> <c:out value="${advancedSearch.available}"/>"
+			<span><spring:message code="search.results" /> </span>"<c:out value="${advancedSearch.title}"/> <c:out value="${advancedSearch.authors}"/> <c:out value="${advancedSearch.publication}"/> <c:out value="${advancedSearch.year}"/> "
 		</div>
 	</c:if>
 		<table class="table table-striped table-condensed table-hover">
@@ -322,7 +322,7 @@
 							code="book.title" /></label>
 					<div class="controls">
 						<form:input path="title" type="text" id="title"
-							placeholder="Title" />
+							placeholder="Title" required="required" />
 						<form:label id="errortitle" path="title" cssClass="error" />
 					</div>
 				</div>
@@ -332,7 +332,7 @@
 							code="book.authors" /></label>
 					<div class="controls">
 						<form:input path="authors" type="text" id="authors"
-							placeholder="Authors" />
+							placeholder="Authors" required="required" />
 						<form:label id="errorauthors" path="authors" cssClass="error" />
 					</div>
 				</div>
@@ -341,7 +341,7 @@
 					<label class="control-label" for="year"><spring:message
 							code="book.year" /></label>
 					<div class="controls">
-						<form:input path="year" type="number" id="year" placeholder="Year" />
+						<form:input path="year" type="number" id="year" placeholder="Year" required="required" />
 						<form:label id="erroryear" path="year" cssClass="error" />
 					</div>
 				</div>
@@ -351,7 +351,7 @@
 							code="book.publication" /></label>
 					<div class="controls">
 						<form:input path="publication" type="text" id="publication"
-							placeholder="Publication" />
+							placeholder="Publication" required="required" />
 						<form:label id="errorpublication" path="publication" cssClass="error" />
 					</div>
 				</div>
@@ -361,7 +361,7 @@
 							code="book.pages" /></label>
 					<div class="controls">
 						<form:input path="pages" type="number" id="pages"
-							placeholder="Pages" />
+							placeholder="Pages" required="required" />
 						<form:label id="errorpages" path="pages" cssClass="error" />
 					</div>
 				</div>
@@ -372,7 +372,7 @@
 					<div class="controls">
 						<form:input path="description" type="text" id="description"
 							placeholder="Description" />
-						<form:label id="errordescription" path="description" cssClass="error" />
+						<form:label id="errordescription" path="description" cssClass="error"  />
 					</div>
 				</div>
 
@@ -380,7 +380,7 @@
 					<label class="control-label" for="term"><spring:message
 							code="book.term" /></label>
 					<div class="controls">
-						<form:input path="term" type="number" id="term" placeholder="Term" />
+						<form:input path="term" type="number" id="term" placeholder="Term" required="required" />
 						<form:label id="errorterm" path="term" cssClass="error" />
 					</div>
 				</div>
@@ -390,7 +390,7 @@
 							code="book.bookcase" /></label>
 					<div class="controls">
 						<form:input path="bookcase" type="number" id="bookcase"
-							placeholder="Bookcase" />
+							placeholder="Bookcase" required="required" />
 						<form:label id="errorbookcase" path="bookcase" cssClass="error" />
 					</div>
 				</div>
@@ -400,7 +400,7 @@
 							code="book.shelf" /></label>
 					<div class="controls">
 						<form:input path="shelf" type="number" id="shelf"
-							placeholder="Shelf" />
+							placeholder="Shelf" required="required" />
 						<form:label id="errorshelf" path="shelf" cssClass="error" />
 					</div>
 				</div>
@@ -418,7 +418,7 @@
 							code="book.count" /></label>
 					<div class="controls">
 						<form:input path="count" type="number" id="count"
-							placeholder="count" />
+							placeholder="count" required="required" />
 						<form:label id="errorcount" path="count" cssClass="error" />
 					</div>
 				</div>
@@ -427,7 +427,7 @@
 							code="book.available" /></label>
 					<div class="controls">
 						<form:input path="available" type="number" id="available"
-							placeholder="available" />
+							placeholder="available" required="required" />
 						<form:label id="erroravailable" path="available" cssClass="error" />
 					</div>
 				</div>
@@ -436,6 +436,7 @@
 					<label class="control-label" for="file"></label>
 					<div class="controls">
 						<input id="file" name="file" type="file" accept="image/*" />
+						<button type="button" class="reset_img" aria-hidden="true">×</button>
 					</div>
 				</div>
 				

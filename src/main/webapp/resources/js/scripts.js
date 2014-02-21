@@ -72,29 +72,7 @@ function reset_form() {
 
 $(document).ready(function() { 
 	$( ".hidden-nb" ).hide();
-	$("#formlogin").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
 	
-	$("#registration").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
-	
-	$("#loginpopup").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
 	
 	$(".my-nav-header").click(function() {
 		if ( $( ".hidden-nb" ).is( ":hidden" ) ) {

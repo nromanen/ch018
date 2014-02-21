@@ -2,6 +2,17 @@ $(document).ready(function() {
 	  /**
 	   * Edit book action
 	   */
+	$(".reset_img").click(function(event) {
+		$("#file").val("").replaceWith($("#file").clone());
+	})
+	
+	$("#editbook").validate();
+	$("#file").bind('change', function() {
+		if (this.files[0].size > 1000000) {
+			$("#file").val("").replaceWith($("#file").clone());
+		}
+	});
+	
 	  $("#editbook").submit(function(event) {
 		  var formData = new FormData($("#editbook")[0]);
 		  console.log(formData);
@@ -36,4 +47,6 @@ $(document).ready(function() {
 		  });
 		  event.preventDefault();	
 	  });  
+	  
+	  
 })

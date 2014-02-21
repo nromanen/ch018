@@ -58,7 +58,7 @@
 		</div>
 		</div>
 		<div class="thumbnail">
-			<h4>Most rated:</h4>
+			<h4>Most rated for this genre</h4>
 			<div class="row-fluid">
 			<c:forEach items="${mostrated}" var="book">
 					<div class="span2" style="text-align: center;"><a href="<c:url value="/book/${book.id}"/>">
