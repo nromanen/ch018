@@ -1,7 +1,6 @@
 package com.ch018.library.controller;
 
 import java.security.Principal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,10 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set; 
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +32,6 @@ import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.util.JsonResponse;
-import com.ch018.library.util.OrderTerm;
 import com.ch018.library.validator.OrderValidator;
 
 /**
@@ -203,8 +198,6 @@ public class OrderController {
     	if (query.equals("book")) {
 			Book book = bookService.getBooksByIdWithOrders(id);
 			Set<Orders> orders = book.getOrders();
-			int orderTerm = OrderTerm.calculate(book);
-			model.addAttribute("maxterm", orderTerm);
 			model.addAttribute("orders", orders);
 			model.addAttribute("book", book);
 			return "orders";

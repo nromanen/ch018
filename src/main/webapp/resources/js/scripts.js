@@ -72,29 +72,7 @@ function reset_form() {
 
 $(document).ready(function() { 
 	$( ".hidden-nb" ).hide();
-	$("#formlogin").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
 	
-	$("#registration").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
-	
-	$("#loginpopup").validate({
-		highlight: function(element, errorClass) {
-			$(element).fadeOut(function() {
-				$(element).fadeIn();
-			});
-		}
-	});
 	
 	$(".my-nav-header").click(function() {
 		if ( $( ".hidden-nb" ).is( ":hidden" ) ) {
@@ -190,7 +168,7 @@ $(document).ready(function() {
 	/**
 	 * Return/issue click for books
 	 */  
-	$("a[id^=returnbook], a[id^=issueorder]").click(function() {
+	$("a[id^=returnbook]").click(function() {
 		var tr = "#" + $(this).parent().parent().attr("id");
 		var id = $(tr + " td:first-child").text();
 		var pid= $(".pid" + id).text(); //get person id from table
@@ -220,26 +198,7 @@ $(document).ready(function() {
 		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());
 		$('#action_popup').modal();
 	})
-	
-	$("a[id^=issueuserorder]").click(function() {
-		var tr = "#" + $(this).parent().parent().attr("id");
-		var id = $(tr + " td:first-child").text();
-		
-		var confirmed = $(tr + " .tdconfirmed").prop('checked'); 
-		
-		$("#aname").text(id);
-		$("#booknamemessage").text($(tr + " .tdtitle").text() + " " + $(tr + " .tdauthors").text());
-		$("#usernamemessage").text($("#username").text());
-		$("#bookplacemessage").text($(tr + " .tdbookcase").text() + "/" + $(tr + " .tdshelf").text());	
-		$("#confimation").prop('checked', confirmed);		
-		if ($("#confimation").prop('checked') == false) {
-			$("#confirmuser").show();
-		}
-		$("#days").val($(tr + " .tddays").text());
-		$('#action_popup').modal();
-	})
-
- 
+	 
   
   /**
    * Delete book/user action
@@ -293,27 +252,7 @@ $(document).ready(function() {
       event.preventDefault();
   });
   
-  $("#issueLink").click(function(event) {
-	  if ($("#confimation").prop('checked') == false) {
-		  return false;
-	  }
-	  var id = $("#aname").text();
-	  var days = $("#days").val();
-	  var href = $(event.target).attr("href")+id+"/"+days;
-      $.ajax({
-    	  url: href,
-    	  type: "GET",
-    	  success: function(data) {
-    		  console.log("success");
-    		  $(".table" + id).remove();
-    		  $('#action_popup').modal("hide");
-    	  },
-    	  error: function(data) {
-    		  console.log("error");
-		  }
-      });
-      event.preventDefault();
-  });
+
   
  
   

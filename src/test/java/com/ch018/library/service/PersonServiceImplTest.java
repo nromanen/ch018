@@ -15,8 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,9 +23,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -91,7 +86,7 @@ public class PersonServiceImplTest {
 		
 		try {
 			stmt = connection.createStatement();
-			stmt.execute("insert into genre (id) VALUES (1)");
+			//stmt.execute("insert into genre (id) VALUES (1)");
 			String saveTestUser = "insert into person(id, cellphone, confirmed, e_mail, "
 					+ "activated, failedOrders, multibookAllowed, name, password, rating, "
 					+ "role, sms, surname, timely_returns, untimely_returns, verificationkey) values "
@@ -139,7 +134,7 @@ public class PersonServiceImplTest {
 		booksInUse.setBook(book);
 		booksInUse.setBuid(1);
 		booksInUse.setPerson(person);
-		
+	
 		try {
 			stmt = connection.createStatement();
 			stmt.execute("insert into genre (id) VALUES (1)");
@@ -177,9 +172,10 @@ public class PersonServiceImplTest {
 		try {
 			stmt = connection.createStatement();
 			stmt.execute("delete from person");
+			stmt.execute("delete from book");
 			stmt.execute("delete from genre");
-			//stmt.execute("delete from booksinuse");
-			//stmt.execute("delete from person");
+			
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -393,7 +389,7 @@ public class PersonServiceImplTest {
 
 	@Test
 	public void testGetByEmail() {
-		String query = "select name from person where e_mail=" + person.getEmail();
+		String query = "select name from person where e_mail='" + person.getEmail() + "'";
         ResultSet rs;
         String expected = new String();
 		try {
@@ -434,27 +430,51 @@ public class PersonServiceImplTest {
 
 	@Test
 	public void testLibrarianUpdatePerson() {
-		fail("Not yet implemented");
+		Person expected = personService.getById(1);
+		expected.setEmail("updated@email.eml");
+		personService.librarianUpdatePerson(expected, person);
+		Person actual = personService.getById(1);
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testLibrarianSavePerson() {
-		fail("Not yet implemented");
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		when(request.getRequestURL()).thenReturn(new StringBuffer("http://test.te/te"));
+		when(request.getServletPath()).thenReturn("/te");
+		person.setEmail("updated@email.eml");
+		personService.librarianSavePerson(person, request);
+		Person actual = personService.getByEmail("updated@email.eml");
+		assertEquals(person, actual);
 	}
 
 	@Test
 	public void testAdminUpdatePerson() {
-		fail("Not yet implemented");
+		Person expected = personService.getById(1);
+		expected.setEmail("updated@email.eml");
+		personService.adminUpdatePerson(expected, person);
+		Person actual = personService.getById(1);
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testAdminSavePerson() {
-		fail("Not yet implemented");
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		when(request.getRequestURL()).thenReturn(new StringBuffer("http://test.te/te"));
+		when(request.getServletPath()).thenReturn("/te");
+		person.setEmail("updated@email.eml");
+		personService.adminSavePerson(person, request);
+		Person actual = personService.getByEmail("updated@email.eml");
+		assertEquals(person, actual);
 	}
 
 	@Test
 	public void testGetCount() {
-		fail("Not yet implemented");
+		person.setEmail("second@person.ppp");
+		personService.save(person);
+		Long expected = 2L;
+		Long actual = personService.getCount();
+		assertEquals(expected, actual);
 	}
 
 	@Test

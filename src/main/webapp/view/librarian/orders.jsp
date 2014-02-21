@@ -44,7 +44,7 @@
 						<td><c:out value="${order.person.email}" escapeXml="true" /></td>
 						<td><c:out value="${order.person.cellphone}" escapeXml="true" /></td>
 						<td><c:out value="${order.issueDate}" escapeXml="true" /></td>
-						<td class="tddays"><c:out value="${order.book.term}"
+						<td class="tddays"><c:out value="${order.term}"
 								escapeXml="true" /></td>
 
 						<td><a id="issueorder${order.id}" class="btn btn-primary"
@@ -83,7 +83,7 @@
 						<td><c:out value="${order.book.year}" escapeXml="true" /></td>
 						<td><c:out value="${order.book.publication}" escapeXml="true" /></td>
 						<td><c:out value="${order.issueDate}" escapeXml="true" /></td>
-						<td class="tddays"><c:out value="${order.book.term}" escapeXml="true" /></td>
+						<td class="tddays"><c:out value="${order.term}" escapeXml="true" /></td>
 
 						<td><a id="issueuserorder${order.id}" class="btn btn-primary"
 							href="#"><spring:message code="button.issue" /></a></td>
@@ -99,8 +99,6 @@
 			</c:if>
 		</table>
 	</div>
-	
-	<div class="max_term hide">${maxterm}</div>
 
 	<!-- Delete popup -->
 	<div id="popup" class="modal hide fade" role="dialog"
@@ -113,7 +111,7 @@
 			</h3>
 		</div>
 		<div class="modal-body">
-			<span><spring:message code="message.delete" /></span> <span id="name"
+			<span><spring:message code="message.delete.inuse" /></span> <span id="name"
 				class="hide"></span>
 		</div>
 		<div class="modal-footer">

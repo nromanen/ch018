@@ -23,7 +23,6 @@
 		<c:if test="${book != null}">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th><spring:message code="person.firstname" /></th>
 					<th><spring:message code="person.lastname" /></th>
 					<th><spring:message code="person.mail" /></th>
@@ -36,7 +35,7 @@
 			<tbody>
 				<c:forEach items="${booksinuse}" var="bookinuse">
 					<tr id="bookinuse${bookinuse.buid}" class="table${bookinuse.buid}">
-						<td><c:out value="${bookinuse.buid}" escapeXml="true" /></td>
+						<td class="hide"><c:out value="${bookinuse.buid}" escapeXml="true" /></td>
 						<td class="pid${bookinuse.buid}  hide"><c:out
 								value="${bookinuse.person.id}" escapeXml="true" /></td>
 						<td class="tdname"><c:out value="${bookinuse.person.name}"
@@ -114,7 +113,7 @@
 			</h3>
 		</div>
 		<div class="modal-body">
-			<span><spring:message code="message.delete.inuse" /></span> 
+			<span><spring:message code="message.delete" /></span> 
 			<span id="name"	class="hide"></span>
 		</div>
 		<div class="modal-footer">

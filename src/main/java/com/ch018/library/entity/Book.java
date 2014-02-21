@@ -17,8 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.Type;
@@ -77,7 +79,7 @@ public class Book implements Serializable {
 		return this.id;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id", nullable = false)
 	@JsonIgnore
     public Genre getGenre() {
@@ -116,7 +118,7 @@ public class Book implements Serializable {
 		return publication;
 	}
 
-	@Min(0)
+	@Min(value = 0)
 	@Column(name = "pages", columnDefinition = "int default 0")
 	public int getPages() {
 		return pages;
@@ -128,21 +130,21 @@ public class Book implements Serializable {
 		return description;
 	}
 
-	@Min(0)
+	@Min(value = 0)
 	@Max(IConstants.MAX_SHELF)
 	@Column(name = "shelf", columnDefinition = "int default 0")
 	public int getShelf() {
 		return shelf;
 	}
 
-	@Min(0)
+	@Min(value = 0)
 	@Max(IConstants.MAX_BOOKCASE)
 	@Column(name = "bookcase", columnDefinition = "int default 0")
 	public int getBookcase() {
 		return bookcase;
 	}
 
-	@Min(0)
+	@Min(value = 0)
 	@Column(name = "term", columnDefinition = "int(11) default '14'")
 	public int getTerm() {
 		return term;
@@ -153,19 +155,22 @@ public class Book implements Serializable {
 		return image;
 	}
 	
-	@Min(0)
+	@Min(value = 0)
+	@NotNull
 	@Column(name = "count", columnDefinition = "int default 0")
 	public int getCount() {
 		return count;
 	}
 	
-	@Min(0)
+	@Min(value = 0)
+	@NotNull
 	@Column(name = "available", columnDefinition = "int default 0")
 	public int getAvailable() {
 		return available;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -176,12 +181,14 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<History> getHistories() {
 		return histories;
