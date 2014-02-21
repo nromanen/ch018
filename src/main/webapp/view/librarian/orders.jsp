@@ -111,7 +111,7 @@
 			</h3>
 		</div>
 		<div class="modal-body">
-			<span><spring:message code="message.delete" /></span> <span id="name"
+			<span><spring:message code="message.delete.inuse" /></span> <span id="name"
 				class="hide"></span>
 		</div>
 		<div class="modal-footer">

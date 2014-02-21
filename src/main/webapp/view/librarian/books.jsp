@@ -285,7 +285,7 @@
 			</h3>
 		</div>
 		<div class="modal-body">
-			<span><spring:message code="message.delete" /></span> <span id="name"></span>
+			<span><spring:message code="message.delete" /></span> <span class="hide" id="name"></span>
 		</div>
 		<div class="modal-footer">
 			<a id="deleteLink" data-dismiss="modal"

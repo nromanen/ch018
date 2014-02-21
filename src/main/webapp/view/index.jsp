@@ -136,7 +136,7 @@
 				<div class="thumbnail span3 ">
 				<div class="media">
 					<a href="<c:url value="/book/${latest.id}"/>"><img src="<c:url value="${latest.image}"/>" class="img-rounded pull-left"></a>
-					<sec:authorize access="isAuthenticated()">
+					<sec:authorize access="hasRole('ROLE_USER')">
 						<div class="btn-group btn-group-vertical  pull-right">
 						<a id="addToWish${latest.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
 						<input type="hidden" value="${latest.id}"/>
