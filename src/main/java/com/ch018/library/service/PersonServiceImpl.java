@@ -1,19 +1,14 @@
 package com.ch018.library.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -164,13 +159,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void librarianUpdatePerson(Person person, Person person2) {
-		person.setPassword(person2.getPassword());
-		person.setRole(person2.getRole());
-		person.setRating(person2.getRating());
-		person.setEmailConfirmed(person2.getEmailConfirmed());
-		person.setVerificationKey(person2.getVerificationKey());
-		personDao.update(person);
+    public void librarianUpdatePerson(Person updatedPerson, Person person) {
+    	updatedPerson.setPassword(person.getPassword());
+    	updatedPerson.setRole(person.getRole());
+    	updatedPerson.setRating(person.getRating());
+    	updatedPerson.setEmailConfirmed(person.getEmailConfirmed());
+    	updatedPerson.setVerificationKey(person.getVerificationKey());
+		personDao.update(updatedPerson);
     }
     
     @Override
