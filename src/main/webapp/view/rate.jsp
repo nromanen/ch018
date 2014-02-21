@@ -14,6 +14,7 @@
 <input type="hidden" value="${pageContext.request.contextPath}/resources/img/" id="starLocation">
 <!-- Center -->
 <div class="span8">
+  ${votes}
  <span id="voteMessage" style="display :none"><spring:message code="message.rate" /></span>
 	<div class="row-fluid">
 		<div class="thumbnail media">
@@ -39,7 +40,12 @@
 			</p>
 			<sec:authorize access="isAuthenticated()">
 				<c:if test="${usermark > 0}">
-				<spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00
+				<!--<spring:message code="person.rating"/> : ${mark} <spring:message code="message.of"/> 5.00-->
+				<div class="rateTop5">
+		             <input name="val" value="${book.rating}" type="hidden">
+		             <input name="votes" value="${book.numberOfEvaluations}" type="hidden">
+		           ${book.numberOfEvaluations}
+		           </div>
 				</c:if>
 			    <c:if test="${usermark < 1}">  
 				  <div class="rating"></div>
@@ -72,7 +78,4 @@
 	<input type="hidden" id="hrefrate" value="${pageContext.request.contextPath}/vote" /> 
 						<input type="hidden" id="bookID" value="${book.id}" /> 
 						<input type="hidden" id="buID" value="${buid}" />
-
-      <!-- <div class="rating"></div> -->
-
 </div>

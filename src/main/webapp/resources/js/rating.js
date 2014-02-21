@@ -8,6 +8,12 @@ $(document).ready(function() {
 	  $("#rated").rating({
 		  readOnly: true,
 	  });
+	  
+	  $('.rateTop5').rating({
+		  width:27,
+		  readOnly: true,
+	  });
+	  
 })
 
 

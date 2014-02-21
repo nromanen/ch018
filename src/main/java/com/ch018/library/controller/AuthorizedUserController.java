@@ -229,6 +229,8 @@ public class AuthorizedUserController {
 		Book books = book.getBooksById(bookID);
 		model.addAttribute("book",books);
 		model.addAttribute("buid", buid);
+		int votes = books.getNumberOfEvaluations();
+		model.addAttribute("votes", votes);
 		float mark = books.getRating();
 		BigDecimal bd = new BigDecimal(mark);
 		float usermark = inUse.getById(buid).getMark();
