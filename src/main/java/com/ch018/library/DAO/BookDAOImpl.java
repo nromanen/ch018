@@ -131,6 +131,23 @@ public class BookDAOImpl implements BookDAO {
 		session.clear();
 		return book;
 	}
+	
+	@Override
+	public Book getBooksByIdAll(Integer id) {
+		Book book = null;
+		Session session = null;
+		try {
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
+		} catch (Exception e) {
+			log.error("Error get book: " + e);
+		}
+		Hibernate.initialize(book.getOrders());
+		Hibernate.initialize(book.getWishList());
+		Hibernate.initialize(book.getBooksinuses());
+		session.clear();
+		return book;
+	}
 
 	@Override
 	public int deleteBook(int id) {

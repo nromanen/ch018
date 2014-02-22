@@ -22,4 +22,5 @@ public interface BookDAO {
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
 	List<Book> getMostRatedByGenre(Genre genre);
+	Book getBooksByIdAll(Integer id);
 }

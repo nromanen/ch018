@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,10 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ch018.library.controller.BookInUseController;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
-import com.ch018.library.entity.Localization;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 
@@ -35,7 +33,7 @@ import com.ch018.library.entity.Person;
 									"file:src/main/webapp/WEB-INF/root-context.xml",
 									"file:src/main/webapp/WEB-INF/fortest/servlet-context.xml"
 		})
-public class OrdersServiceImplTest {
+public class BooksInUseServiceImplTest {
 	
 	Connection connection; 
 	Statement stmt;
@@ -48,7 +46,7 @@ public class OrdersServiceImplTest {
 	private Genre genre = new Genre();
 	
 	@Autowired
-	private OrdersService ordersService;
+	private BooksInUseService booksInUseService;
 
 	@Before
 	public void setUp() throws Exception {
@@ -96,7 +94,7 @@ public class OrdersServiceImplTest {
 			preparedStmt.executeUpdate();
 
 		} catch (Exception e) {
-			System.out.println(e);
+			System.err.println(e);
 		}
 		
 		book.setId(1);
@@ -117,14 +115,9 @@ public class OrdersServiceImplTest {
 		genre.setId(1);
 		book.setGenre(genre);
 		genre.setBooks(new HashSet<>(Arrays.asList(book)));
-		booksInUse.setBook(book);
-		booksInUse.setBuid(1);
-		booksInUse.setPerson(person);
-	
+
 		try {
-			//stmt = connection.createStatement();
 			stmt.execute("insert into genre (id) VALUES (1)");
-			//stmt.execute("insert into booksinuse (id, book_id, person_id) VALUES (1, 1, 1)");
 			String saveTestBook = "insert into book(id, authors, available, bookcase, count, description, genre_id, image, "
 					+ "numberOfEvaluations, pages, publication, rating, shelf, term, title, year_public) values "
 					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -151,26 +144,21 @@ public class OrdersServiceImplTest {
 		}
 		
 		
-		orders.setBook(book);
-		orders.setDate(new Date());
-		orders.setId(1);
-		orders.setIssueDate(new Date());
-		orders.setPreOrder(false);
-		orders.setTerm(14);
-		orders.setBook(book);
-		orders.setPerson(person);
+		booksInUse.setBook(book);
+		booksInUse.setReturnDate(new Date());
+		booksInUse.setBuid(1);
+		booksInUse.setIssueDate(new Date());
+		booksInUse.setPerson(person);
 		
 		try {
-			String saveTestOrders = "insert into orders(id, order_date, issue_date, book_id, person_id, term, preOrdered) "
-					+ "values (?, ?, ?, ?, ?, ?, ?)";
+			String saveTestOrders = "insert into booksinuse(id, return_date, issue_date, book_id, person_id) "
+					+ "values (?, ?, ?, ?, ?)";
 			preparedStmt = connection.prepareStatement(saveTestOrders);
 			preparedStmt.setInt(1, 1);
-			preparedStmt.setDate(2, new java.sql.Date(orders.getDate().getTime()));
-			preparedStmt.setDate(3, new java.sql.Date(orders.getIssueDate().getTime()));
-			preparedStmt.setInt(4, orders.getBook().getId());
-			preparedStmt.setInt(5, orders.getPerson().getId());
-			preparedStmt.setInt(6, orders.getTerm());
-			preparedStmt.setBoolean(7, orders.getPreOrder());
+			preparedStmt.setDate(2, new java.sql.Date(booksInUse.getReturnDate().getTime()+1000));
+			preparedStmt.setDate(3, new java.sql.Date(booksInUse.getIssueDate().getTime()));
+			preparedStmt.setInt(4, booksInUse.getBook().getId());
+			preparedStmt.setInt(5, booksInUse.getPerson().getId());
 			preparedStmt.executeUpdate();
 		} catch (Exception e) {
 			System.err.println(e);
@@ -184,7 +172,7 @@ public class OrdersServiceImplTest {
 		connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/library_test", "root", "root");
 		try {
 			stmt = connection.createStatement();
-			stmt.execute("delete from orders");
+			stmt.execute("delete from booksinuse");
 			stmt.execute("delete from person");
 			stmt.execute("delete from book");
 			stmt.execute("delete from genre");
@@ -194,85 +182,57 @@ public class OrdersServiceImplTest {
 	}
 
 	@Test
-	public void testDeleteOrder() {
-		ordersService.deleteOrder(1);
-		String query = "SELECT COUNT(*) FROM orders";
-        ResultSet rs;
-        int i = 0;
-		try {
-			rs = stmt.executeQuery(query);
-			while(rs.next()){
-				i = rs.getInt("COUNT(*)"); 
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		assertEquals(0, i);
+	public void testAddBooksInUse() {
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetOrdersByBooksId() {
-		List <Orders> actual = new ArrayList<>(ordersService.getOrdersByBooksId(1));
-		assertEquals(orders, actual.get(0));
+	public void testReturnBook() {
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetOrdersByPersonId() {
-		List <Orders> actual = new ArrayList<>(ordersService.getOrdersByPersonId(1));
-		assertEquals(orders, actual.get(0));
-	}
-
-	@Test
-	public void testGetAllOrders() {
-		List <Orders> actual = new ArrayList<Orders>(ordersService.getAllOrders());
-		List <Orders> expected = new ArrayList<Orders>(Arrays.asList(orders));
+	public void testGetAllBooksInUse() {
+		List <BooksInUse> actual = new ArrayList<BooksInUse>(booksInUseService.getAllBooksInUse());
+		List <BooksInUse> expected = new ArrayList<BooksInUse>(Arrays.asList(booksInUse));
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testGetByPersonId() {
+		List <BooksInUse> actual = new ArrayList<>(booksInUseService.getByPersonId(1));
+		assertEquals(booksInUse, actual.get(0));
+	}
+
+	@Test
+	public void testGetByBookId() {
+		List <BooksInUse> actual = new ArrayList<>(booksInUseService.getByBookId(1));
+		assertEquals(booksInUse, actual.get(0));
+	}
+
+	@Test
+	public void testGetByIssueDate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetByReturnDate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetInUse() {
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetAllBooks() {
-		List <Book> actual = new ArrayList<Book>(ordersService.getAllBooks());
-		List <Book> expected = new ArrayList<Book>(Arrays.asList(book));
-		assertEquals(expected, actual);
+		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testToIssueToday() throws SQLException {
-		orders.setDate(new Date());
-		orders.setIssueDate(new Date());
-		ordersService.createOrder(1, 1, orders);
-		List<Book> actual = new ArrayList<>(ordersService.toIssueToday(0, 0, "id"));
-		List<Book> expected = new ArrayList<>();
-		expected.add(book);
-		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testFailedOrders() {
-		Calendar issueDate = Calendar.getInstance();
-		issueDate.roll(Calendar.DAY_OF_MONTH, 1);
-		orders.setDate(new Date());
-		orders.setIssueDate(issueDate.getTime());
-		ordersService.createOrder(1, 1, orders);
-		List<Orders> actual = new ArrayList<>(ordersService.failedOrders());
-		List<Orders> expected = new ArrayList<>();
-		expected.add(orders);
-		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testToIssuePerHour() {
-		Calendar issueDate = Calendar.getInstance();
-		issueDate.add(Calendar.MINUTE, 20);
-		
-		orders.setDate(new Date());
-		orders.setIssueDate(issueDate.getTime());
-		ordersService.createOrder(1, 1, orders);
-		List<Book> actual = new ArrayList<>(ordersService.toIssuePerHour(0, 0, "id"));
-		List<Book> expected = new ArrayList<>();
-		expected.add(book);
-		assertEquals(expected, actual);
+	public void testRemoveBooksInUse() {
+		fail("Not yet implemented");
 	}
 
 	@Test
@@ -281,114 +241,45 @@ public class OrdersServiceImplTest {
 	}
 
 	@Test
-	public void testDeleteOrderInt() {
+	public void testGetMinByReturnDate() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testOrderExist() {
-		assertTrue(ordersService.orderExist(1, 1));
-		assertFalse(ordersService.orderExist(2, 2));
-	}
-
-	@Test
-	public void testMinOrderDateOf() {
+	public void testAlreadyInUse() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testUpdateOrder() {
+	public void testCountBooksInUse() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetCountOrdersByPerson() {
+	public void testCountBooksInUseToday() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testCountOrdersToday() {
-		final int HOURS_PER_DAY = 23;
-		final int MINUTES_PER_HOUR = 59;
-		final int SECONDS_PER_MINUTE = 23;
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		
-		startDate.set(Calendar.HOUR_OF_DAY, 0);
-		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
-		
-		endDate.set(Calendar.HOUR_OF_DAY, HOURS_PER_DAY);
-		endDate.set(Calendar.MINUTE, MINUTES_PER_HOUR);
-		endDate.set(Calendar.SECOND, SECONDS_PER_MINUTE);
-		String query = "SELECT COUNT(distinct book_id) FROM orders where issue_date between '" + startDate.getTime()
-				+ "' and '"+endDate.getTime()+"'";
-        ResultSet rs;
-
-        int i = 0;
-		try {
-			rs = stmt.executeQuery(query);
-			while(rs.next()){
-				i = rs.getInt("COUNT(distinct book_id)"); 
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		assertEquals(i, ordersService.countOrdersToday());
+	public void testGetReturnBooksToday() {
+		List<Book> actual = new ArrayList<> (booksInUseService.getReturnBooksToday(0, 0, "id"));
+		List<Book> expected = new ArrayList<>();
+		expected.add(book);
+		assertEquals(expected, actual);
 	}
 
-
 	@Test
-	public void testCountOrdersPerHour() {
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		Calendar expected = Calendar.getInstance();
-		expected.add(Calendar.MINUTE, 20);
-		endDate.add(Calendar.HOUR_OF_DAY, 1);
-		orders.setDate(expected.getTime());
-		ordersService.createOrder(1, 1, orders);
-		String query = "SELECT COUNT(distinct book_id) FROM orders where issue_date between '" + startDate.getTime()
-				+ "' and '"+endDate.getTime()+"'";
-        ResultSet rs;
-
-        int i = 0;
-		try {
-			rs = stmt.executeQuery(query);
-			while(rs.next()){
-				i = rs.getInt("COUNT(distinct book_id)"); 
-			}
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		assertEquals(i, ordersService.countOrdersPerHour());
-	}
-
-
-
-	@Test
-	public void testGetCountOrdersBookBeetweenDates() {
+	public void testGetCountBooksByPerson() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testUpdateissueDate() {
+	public void testGetCountReturnBooksBeetweenDates() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testPrepareOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAllOrdersAfter() {
+	public void testUpdateBooksInUse() {
 		fail("Not yet implemented");
 	}
 

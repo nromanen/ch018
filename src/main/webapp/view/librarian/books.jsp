@@ -104,6 +104,7 @@
 			<spring:message code="message.error" />
 		</h4>
 		<spring:message code="book.errordel" />
+		You must <a href="${pageContext.request.contextPath}/book/delete" class="delete_all_orders">DELETE</a> all orders this book first.<span class="book_id_remove hide"></span>
 	</div>
 
 	<!-- Books table class="TableBooks"-->

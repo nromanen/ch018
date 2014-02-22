@@ -24,4 +24,5 @@ public interface BookService {
 	List<Book> advancedSearch(AdvancedSearch search, int currentPos, int pageSize);
 	long advancedSearchCount(AdvancedSearch search);
 	List<Book> getMostRatedByGenre(Genre genre);
+	int deleteBookAll(Integer id);
 }

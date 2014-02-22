@@ -61,17 +61,6 @@ public class BooksInUseController {
 		return "404";
 	}
 	
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/booksinuse/delete{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public String deleteInUse(@PathVariable int id) {
-		booksInUseService.removeBooksInUse(id);
-		return "booksinuse";
-	}
 	
 	/**
 	 * 

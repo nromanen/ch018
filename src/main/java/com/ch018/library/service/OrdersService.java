@@ -14,15 +14,12 @@ import com.ch018.library.entity.Person;
  * @author okryvortc
  */
 public interface OrdersService {
-	void addOrder(Orders ord);
-	void deleteOrder(Orders ord);
 	Orders deleteOrder(int id);
 	Collection<Orders> getOrdersByBooksId(int id);
 	Collection<Orders> getOrdersByPersonId(int id);
 	Collection<Orders> getAllOrders();
 	List<Book> getAllBooks();
 	List<Book> toIssueToday(int currentPos, int pageSize, String sort);
-	List<Book> toIssuePerHour();
 	List<Orders> failedOrders();
 	Orders getById(int id);
 	boolean orderExist(int personId, int bookId);

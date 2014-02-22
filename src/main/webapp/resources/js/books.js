@@ -48,5 +48,29 @@ $(document).ready(function() {
 		  event.preventDefault();	
 	  });  
 	  
-	  
+	  $(".delete_all_orders").click(function(event) {
+		  var id = $(".book_id_remove").text();
+		  var href = $(event.target).attr("href")+id+"/?all="+1;
+		  $.ajax({
+			  url: href,
+	          type: "DELETE",
+	          success: function(data) {
+	        	  if (data == 0) {
+	        		  console.log("error delete");
+	        		  $(".book_id_remove").text(id);
+	        		  $(".alert").hide();
+	        	  }
+	        	  else {
+	        		  console.log("success");
+	        		  $(".table" + id).remove();
+	        		  $(".alert").hide();
+	        	  }
+	        	  $('#popup').modal("hide");
+	          },
+	          error: function(data) {
+	        	  console.log("error");
+	        	}
+		  });
+		  event.preventDefault();
+	  });
 })

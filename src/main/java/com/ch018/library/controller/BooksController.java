@@ -229,7 +229,10 @@ public class BooksController {
 	 */
 	@RequestMapping(value = "/book/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public int deleteBook(@PathVariable Integer id) {
+	public int deleteBook(@PathVariable Integer id, @RequestParam(value="all", required=false) Integer all) {
+		if (all != null) {
+			return bookService.deleteBookAll(id);
+		}
 		return bookService.deleteBook(id);
 	}
 

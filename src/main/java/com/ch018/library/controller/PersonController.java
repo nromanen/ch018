@@ -72,11 +72,11 @@ public class PersonController {
 		String field =(String) session.getAttribute("personsort");
 		if (field == null) {
 			session.setAttribute("personsort", sort);
-			field =(String) session.getAttribute("personsort");
+			field = (String) session.getAttribute("personsort");
 		}
 		if (!sort.equals("id")) {
 			session.setAttribute("personsort", sort);
-			field =(String) session.getAttribute("personsort");
+			field = (String) session.getAttribute("personsort");
 		}	
 		Person person = new Person();
 		long count = personService.getCount();
@@ -124,8 +124,6 @@ public class PersonController {
 			resp.setStatus("FAIL");
 			resp.setResult(result.getAllErrors());
 		}
-
 		return resp;
 	}
-
 }

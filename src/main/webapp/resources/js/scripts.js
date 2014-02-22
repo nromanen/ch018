@@ -212,6 +212,7 @@ $(document).ready(function() {
           success: function(data) {
         	  if (data == 0) {
         		  console.log("error delete");
+        		  $(".book_id_remove").text(id);
         		  $(".alert").show();
         	  }
         	  else {

@@ -116,7 +116,7 @@
 			</c:forEach>
 			<c:if test="${page == pages}">
 				<li class = "disabled">
-					<a href="<c:url value="#"/>">»</a>
+					<a >»</a>
 				</li>
 			</c:if>
 			<c:if test="${page < pages}">

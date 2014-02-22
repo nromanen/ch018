@@ -98,5 +98,19 @@ public class BooksInUse {
 	public void setMark(float mark) {
 		this.mark = mark;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this.book.equals(((BooksInUse)obj).book) 
+				|| this.book.equals(((BooksInUse)obj).person)) {
+			return true;
+		}
+		return super.equals(obj);
+	}
+	
+	@Override
+	public String toString() {
+		return "BooksInUse[" + this.book + ":" + this.person + "]";
+	}
 
 }

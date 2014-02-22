@@ -42,16 +42,6 @@ public class OrdersServiceImpl implements OrdersService{
     
     @Autowired
     private WishListService wishListService;
-    
-    @Transactional
-    public void addOrder(Orders ord) {
-       ordDAO.addOrder(ord); 
-    }
-
-    @Transactional
-    public void deleteOrder(Orders ord) {
-        ordDAO.deleteOrder(ord);
-    }
 
     @Transactional
     public Collection getOrdersByBooksId(int id) {
@@ -72,20 +62,10 @@ public class OrdersServiceImpl implements OrdersService{
 	public List<Book> getAllBooks() {
 		return ordDAO.getAllBooks();
 	}
-
-	@Transactional
-	public List<Book> toIssueToday() {
-		return ordDAO.toIssueToday();
-	}
 	
 	@Transactional
 	public List<Orders> failedOrders() {
 		return ordDAO.failedOrders();
-	}
-
-	@Transactional
-	public List<Book> toIssuePerHour() {
-		return ordDAO.toIssuePerHour();
 	}
 
 	@Transactional
@@ -96,7 +76,6 @@ public class OrdersServiceImpl implements OrdersService{
 	@Transactional
 	public Orders deleteOrder(int id) {
 		return ordDAO.deleteOrder(id);
-		
 	}
 
     @Override
