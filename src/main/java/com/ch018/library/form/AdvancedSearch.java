@@ -65,5 +65,18 @@ public class AdvancedSearch {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this.title.equals(((AdvancedSearch)obj).getTitle())
+				&& this.authors.equals(((AdvancedSearch)obj).getAuthors())
+				&& this.publication.equals(((AdvancedSearch)obj).getPublication())
+				&& this.available == ((AdvancedSearch)obj).getAvailable()
+				&& this.genre.equals(((AdvancedSearch)obj).getGenre())
+				&& this.year.equals(((AdvancedSearch)obj).getYear())) {
+			return true;
+		}
+		return super.equals(obj);
+	}
 
 }

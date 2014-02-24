@@ -9,11 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.DAO.BooksInUseDAO;
+import com.ch018.library.DAO.HistoryDAO;
 import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.DAO.WishListDAO;
 import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.History;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.WishList;
 import com.ch018.library.form.AdvancedSearch;
@@ -35,6 +37,9 @@ public class BookServiceImpl implements BookService {
 	
 	@Autowired
 	private LocalizationService localizationService;
+	
+	@Autowired
+	private HistoryDAO historyDAO;
 	
 	@Override
 	@Transactional
@@ -107,6 +112,10 @@ public class BookServiceImpl implements BookService {
 		List<BooksInUse> booksInUses = new ArrayList<>(book.getBooksinuses());
 		for (BooksInUse booksInUse : booksInUses) {
 			booksInUseDAO.removeBooksInUse(booksInUse.getBuid());
+		}
+		List<History> histories = new ArrayList<>(book.getHistories());
+		for (History history : histories) {
+			historyDAO.removeHistory(history);
 		}
 		return bookDAO.deleteBook(id);
 	}

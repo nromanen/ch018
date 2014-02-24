@@ -10,4 +10,5 @@ public interface HistoryDAO {
 	int newEntry(History history);
 	List<History> getAllHistory();
 	History getEntry(Person person, Book book);
+	void removeHistory(History history);
 }

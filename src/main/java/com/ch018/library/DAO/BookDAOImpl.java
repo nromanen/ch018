@@ -145,6 +145,7 @@ public class BookDAOImpl implements BookDAO {
 		Hibernate.initialize(book.getOrders());
 		Hibernate.initialize(book.getWishList());
 		Hibernate.initialize(book.getBooksinuses());
+		Hibernate.initialize(book.getHistories());
 		session.clear();
 		return book;
 	}

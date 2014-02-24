@@ -62,6 +62,13 @@ public class HistoryDAOImpl implements HistoryDAO {
 		return history;
 	}
 	
-	
+	@Override
+	public void removeHistory(History history) {
+		try {
+			sessionFactory.getCurrentSession().delete(history);
+		} catch (Exception e) {
+			log.error(e);
+		}
+	}
 
 }

@@ -34,6 +34,3 @@
 		</c:forEach>
 	</ul>
 </div>
-
-<span style="color: #ccc; font-size: 14px;"><spring:message code="person.rating"/></span> 
-		           <span style="color: #ccc; font-size: 14px;">${bookz.rating}</span>

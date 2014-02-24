@@ -40,4 +40,14 @@ public class Password {
      public void setNewPassword(String pass) {
          this.newPassword = pass;
      }
+     
+     @Override
+    public boolean equals(Object obj) {
+    	 if (this.password.equals(((Password)obj).getPassword())
+ 				&& this.confirmPassword.equals(((Password)obj).getConfirmPassword())
+ 				&& this.newPassword.equals(((Password)obj).getConfirmPassword())) {
+ 			return true;
+ 		}
+    	return super.equals(obj);
+    }
 }

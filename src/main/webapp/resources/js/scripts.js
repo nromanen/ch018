@@ -38,20 +38,20 @@ function fill_form(box, id) {
 
 function reset_form() {
 	$("#id").css("display", "none");
-	  $("#id").val(0);
+	  $("#id").val("");
 	  $("#title").val("");
 	  $("#authors").val("");
-	  $("#year").val(0);
+	  $("#year").val("");
 	  $("#publication").val("");
-	  $("#pages").val(0);
+	  $("#pages").val("");
 	  $("#description").val("");
 	  $("#term").val(14);
-	  $("#bookcase").val(0);
-	  $("#shelf").val(0);
+	  $("#bookcase").val("");
+	  $("#shelf").val("");
 	  $("#genre").val(1);
 	  $("#description").val("");
-	  $("#count").val(0);
-	  $("#available").val(0);
+	  $("#count").val("");
+	  $("#available").val("");
 	  $("#image").val("");
 	  $("#rating").val(0);
 	  $("#numberOfEvaluations").val(0);
@@ -60,7 +60,7 @@ function reset_form() {
 	  $("#surname").val("");
 	  $("#email").val("");
 	  $("#cellphone").val("");
-	  $("#multibookAllowed").val(0);
+	  $("#multibookAllowed").val("");
 	  $("#untimelyReturns").val(0);
 	  $("#timelyReturns").val(0);
 	  $("#failedOrders").val(0);
@@ -121,7 +121,6 @@ $(document).ready(function() {
 
     $("#cellphone").mask("(999) 999-9999");
 	
-	//$("table").tablesorter();
 	$(".alert .close").click(function() {
 		$(".alert").hide();
 	});
