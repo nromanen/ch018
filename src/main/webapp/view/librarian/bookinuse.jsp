@@ -29,7 +29,6 @@
 					<th><spring:message code="person.mobile" /></th>
 					<th><spring:message code="person.returndate" /></th>
 					<th></th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -55,8 +54,6 @@
 						<td><a id="returnbook${bookinuse.buid}"
 							class="btn btn-primary" href="#"><spring:message
 									code="button.return" /></a></td>
-						<td><a id="deletebiu${bookinuse.buid}" class="btn btn-danger"
-							href="#"><spring:message code="button.delete" /></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -70,7 +67,6 @@
 					<th><spring:message code="book.year" /></th>
 					<th><spring:message code="book.publication" /></th>
 					<th><spring:message code="person.returndate" /></th>
-					<th></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -90,10 +86,6 @@
 
 						<td><a id="returnuserbook${bookinuse.buid}" class="btn btn-primary" href="#">
 								<spring:message	code="button.return" />
-							</a>
-						</td>
-						<td><a id="deletebiu${bookinuse.buid}" class="btn btn-danger" href="#">
-								<spring:message code="button.delete" />
 							</a>
 						</td>
 					</tr>

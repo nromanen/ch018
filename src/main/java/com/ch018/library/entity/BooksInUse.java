@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -48,13 +49,15 @@ public class BooksInUse {
 		return buid;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JoinColumn(name = "person_id")
 	public Person getPerson() {
 		return person;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JoinColumn(name = "book_id")
 	public Book getBook() {
 		return book;
@@ -97,6 +100,20 @@ public class BooksInUse {
 	
 	public void setMark(float mark) {
 		this.mark = mark;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this.book.equals(((BooksInUse)obj).book) 
+				|| this.book.equals(((BooksInUse)obj).person)) {
+			return true;
+		}
+		return super.equals(obj);
+	}
+	
+	@Override
+	public String toString() {
+		return "BooksInUse[" + this.book + ":" + this.person + "]";
 	}
 
 }

@@ -33,4 +33,5 @@ public interface PersonService {
 	void remindPasswoed(Person person, String message,
 			HttpServletRequest request);
 	boolean updatePassword(Password password, Person person);
+	int deletePersonCascade(Integer id);
 }

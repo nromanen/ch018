@@ -136,12 +136,6 @@ public class BooksInUseControllerTest {
 	}
 
 	@Test
-	public void testDeleteInUse() throws Exception {
-		mockMvc.perform(delete("/booksinuse/delete{id}", 1))
-				.andExpect(status().isOk());
-	}
-
-	@Test
 	public void testReturnBook() throws Exception {
 		mockMvc.perform(get("/booksinuse/return{id}", 1))
 				.andExpect(status().isOk());

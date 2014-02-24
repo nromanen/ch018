@@ -170,7 +170,6 @@ public class Book implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<BooksInUse> getBooksinuses() {
 		return booksinuses;
@@ -181,14 +180,12 @@ public class Book implements Serializable {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<WishList> getWishList() {
 		return wishList;
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	@Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.SAVE_UPDATE})
 	@JsonIgnore
 	public Set<History> getHistories() {
 		return histories;

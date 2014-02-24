@@ -7,23 +7,26 @@
 <%@ taglib prefix="sec"	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="tilesx" uri="http://tiles.apache.org/tags-tiles-extras"%>
+<c:set var="asc" value="" />
+<c:if test="${isAsc == null || isAsc == false}">
+	<c:set var="asc" value="&isasc=true" />
+</c:if>
 <div style="overflow-y: scroll">
 		<table id="utable" class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
 					<th hidden="true"></th>
-					<th><spring:message code="person.firstname" /><a href="<c:url value="?sort=name"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.mail" /><a href="<c:url value="?sort=email"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.rating" /><a href="<c:url value="?sort=rating"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th><spring:message code="person.role" /><a href="<c:url value="?sort=role"/>"> <i class="icon-chevron-down"/> </a></th>
-					<th></th>
+					<th><nobr><spring:message code="person.firstname" /><a href="<c:url value="?sort=name${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.lastname" /><a href="<c:url value="?sort=surname${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.mail" /><a href="<c:url value="?sort=email${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.mobile" /><a href="<c:url value="?sort=cellphone${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.multibookallowed" /><a href="<c:url value="?sort=multibookAllowed${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.untimelly" /><a href="<c:url value="?sort=untimelyReturns${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.timelly" /><a href="<c:url value="?sort=timelyReturns${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.failed" /><a href="<c:url value="?sort=failedOrders${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.rating" /><a href="<c:url value="?sort=rating${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.confirmed" /><a href="<c:url value="?sort=confirm${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
+					<th><nobr><spring:message code="person.role" /><a href="<c:url value="?sort=role${asc}"/>"> <i class="icon-chevron-down"/> </a></nobr></th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -49,26 +52,6 @@
 							name="confirm" value="confirm"
 							${person.confirm == true ? 'checked' : ''} disabled></td>
 						<td class="role${person.id}">${person.role}</td>	
-						<td>
-							<div class="btn-group">
-								<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-									<spring:message code="button.action" />
-	    							<span class="caret"></span>
-	    						</button>
-	    						<ul class="dropdown-menu">
-	    							<li>
-	    								<a href="<c:url value="/bookusers/user/${person.id}"/>">
-	    									<spring:message code="menu.books" />
-	    								</a>
-	    							</li>
-	    							<li>
-	    								<a href="<c:url value="/orders/user/${person.id}"/>">
-	    									<spring:message code="book.orders" />
-	    								</a>
-	    							</li>
-	    						</ul>
-	    					</div>			
-						</td>
 
 						<td><a href="#" id="edituser${person.id}"
 							class="btn btn-warning"><spring:message code="button.edit" /></a></td>
@@ -90,28 +73,28 @@
 		<ul>
 			<c:if test="${page == 1}">
 				<li class = "disabled">
-					<a href="<c:url value="#"/>">«</a>
+					<a >«</a>
 				</li>
 			</c:if>
 			<c:if test="${page > 1}">
 				<li>
-					<a href="<c:url value="/users?page=${page-1}"/>">«</a>
+					<a href="<c:url value="/admin?page=${page-1}"/>">«</a>
 				</li>
 			</c:if>
 			
 			<c:forEach var="i" begin="1" end="${pages}">
    				<li>
-					<a href="<c:url value="/users?page=${i}"/>"><c:out value="${i}"/></a>
+					<a href="<c:url value="/admin?page=${i}"/>"><c:out value="${i}"/></a>
 				</li>
 			</c:forEach>
 			<c:if test="${page == pages}">
 				<li class = "disabled">
-					<a href="<c:url value="#"/>">»</a>
+					<a >»</a>
 				</li>
 			</c:if>
 			<c:if test="${page < pages}">
 				<li>
-					<a href="<c:url value="/users?page=${page+1}"/>">»</a>
+					<a href="<c:url value="/admin?page=${page+1}"/>">»</a>
 				</li>
 			</c:if>
 		</ul>
@@ -128,7 +111,7 @@
 			</h3>
 		</div>
 		<div class="modal-body">
-			<span><spring:message code="message.delete" /></span> <span id="name"></span>
+			<span><spring:message code="message.delete" /></span> <span class="hide" id="name"></span>
 		</div>
 		<div class="modal-footer">
 			<a id="deleteLink" data-dismiss="modal"

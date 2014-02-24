@@ -50,7 +50,16 @@ public class AdminController {
 	@RequestMapping(value = "/admin", method = RequestMethod.GET )
 	public String adminPage(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
 			@RequestParam(value = "sort", required = false, defaultValue = "id") String sort,
+			@RequestParam(value = "isasc", required = false, defaultValue = "false") Boolean isasc,
 			Model model, HttpSession session) {
+		if (session.getAttribute("isAsc") == null) {
+			session.setAttribute("isAsc", isasc);
+		}
+		Boolean isAsc = (Boolean) session.getAttribute("isAsc");
+		if (session.getAttribute("personsort") != null && session.getAttribute("personsort").toString().equals(sort)) {
+			isAsc = isasc;
+			session.setAttribute("isAsc", isAsc);
+		}
 		String field =(String) session.getAttribute("personsort");
 		if (field == null) {
 			session.setAttribute("personsort", sort);
@@ -72,7 +81,7 @@ public class AdminController {
 			roles.add(role.toString());
 		}
 		model.addAttribute("role", roles);
-		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field, true));
+		model.addAttribute("persons", personService.getAll(currentPos,IConstants.PAGE_SIZE, field, isAsc));
 		model.addAttribute("person", person);
 		return "admin";
 	}

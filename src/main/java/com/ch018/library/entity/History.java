@@ -47,13 +47,13 @@ public class History implements Serializable {
 		return comment;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id")
 	public Book getBook() {
 		return book;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "person_id")
 	public Person getPerson() {
 		return person;

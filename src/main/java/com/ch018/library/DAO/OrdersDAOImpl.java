@@ -101,31 +101,6 @@ public class OrdersDAOImpl implements OrdersDAO {
 		}
 		return books;
 	}
-
-	@Override
-	public List<Book> toIssueToday() {
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		startDate.set(Calendar.HOUR_OF_DAY, 0);
-		startDate.set(Calendar.MINUTE, 0);
-		startDate.set(Calendar.SECOND, 0);
-		endDate.set(Calendar.HOUR_OF_DAY, 23);
-		endDate.set(Calendar.MINUTE, 59);
-		endDate.set(Calendar.SECOND, 59);
-		
-		List<Book> books = new ArrayList<Book>();
-		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
-					.createCriteria(Orders.class)
-					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
-					.setProjection(Projections.distinct(Projections.property("book")))
-					.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return books;
-	}
 	
 	@Override
 	public List<Orders> failedOrders() {
@@ -141,29 +116,6 @@ public class OrdersDAOImpl implements OrdersDAO {
 			log.error(e);
 		}
 		return orders;
-	}
-
-	@Override
-	public List<Book> toIssuePerHour() {
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		
-
-		endDate.add(Calendar.HOUR_OF_DAY, 1);
-		
-		List<Book> books = new ArrayList<Book>();
-		try {
-			books.addAll(sessionFactory
-					.getCurrentSession()
-					.createCriteria(Orders.class)
-					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
-					.setProjection(Projections.distinct(Projections.property("book")))
-					.list());
-		} catch (Exception e) {
-			log.error(e);
-		}
-
-		return books;
 	}
 
 	@Override
@@ -272,13 +224,18 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 		List<Book> books = new ArrayList<Book>();
 		try {
-			books.addAll(sessionFactory
+			Criteria criteria = sessionFactory
 					.getCurrentSession()
-					.createCriteria(Orders.class)
-					.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
-					.setProjection(Projections.distinct(Projections.property("book")))
-					.setMaxResults(pageSize).setFirstResult(currentPos).addOrder(Order.asc("book." + sort))
-					.list());
+					.createCriteria(Orders.class);
+			criteria.add(Restrictions.between("issueDate", startDate.getTime(), endDate.getTime()))
+					.setProjection(Projections.distinct(Projections.property("book")));
+			if (pageSize > 0) {
+				criteria.setMaxResults(pageSize).setFirstResult(currentPos);
+			}
+			if (sort != null) {
+				criteria.addOrder(Order.asc("book." + sort));
+			}
+			books.addAll(criteria.list());
 		} catch (Exception e) {
 			log.error(e);
 		}

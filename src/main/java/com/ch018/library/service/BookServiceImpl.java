@@ -1,5 +1,6 @@
 package com.ch018.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ch018.library.DAO.BookDAO;
+import com.ch018.library.DAO.BooksInUseDAO;
+import com.ch018.library.DAO.HistoryDAO;
+import com.ch018.library.DAO.OrdersDAO;
+import com.ch018.library.DAO.WishListDAO;
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
+import com.ch018.library.entity.History;
+import com.ch018.library.entity.Orders;
+import com.ch018.library.entity.WishList;
 import com.ch018.library.form.AdvancedSearch;
 
 @Service
@@ -18,7 +27,16 @@ public class BookServiceImpl implements BookService {
 	private BookDAO bookDAO;
 	
 	@Autowired
-	private LocalizationService localizationService;
+	private OrdersDAO ordersDAO;
+	
+	@Autowired
+	private WishListDAO wishListDAO;
+	
+	@Autowired
+	private BooksInUseDAO booksInUseDAO;
+	
+	@Autowired
+	private HistoryDAO historyDAO;
 	
 	@Override
 	@Transactional
@@ -73,6 +91,33 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional
 	public int deleteBook(int id) {
+		return bookDAO.deleteBook(id);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteBookAll(Integer id) {
+		Book book = bookDAO.getBooksByIdAll(id);
+		List<WishList> wishList = new ArrayList<>(book.getWishList());
+		for (WishList wish : wishList) {
+			wishListDAO.deleteWish(wish);
+		}
+		List<Orders> orders = new ArrayList<>(book.getOrders());
+		for (Orders order : orders) {
+			ordersDAO.deleteOrder(order);
+		}
+		List<BooksInUse> booksInUses = new ArrayList<>(book.getBooksinuses());
+		for (BooksInUse booksInUse : booksInUses) {
+			booksInUseDAO.removeBooksInUse(booksInUse.getBuid());
+		}
+		List<History> histories = new ArrayList<>(book.getHistories());
+		for (History history : histories) {
+			historyDAO.removeHistory(history);
+		}
+		book.setBooksinuses(null);
+		book.setOrders(null);
+		book.setWishList(null);
+		book.setHistories(null);
 		return bookDAO.deleteBook(id);
 	}
 	

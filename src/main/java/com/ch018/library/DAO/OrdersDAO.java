@@ -17,9 +17,7 @@ public interface OrdersDAO {
 	 Collection getOrdersByPersonId(int id);
 	 Collection getAllOrders();
 	 List<Book> getAllBooks(); 
-	 List<Book> toIssueToday();
 	 List<Orders> failedOrders();
-	 List<Book> toIssuePerHour(); 
      boolean orderExist(int personId, int bookId);
      Date minOrderDateOf(int bookId);
      long countOrdersToday();

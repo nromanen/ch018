@@ -247,3 +247,24 @@ body.loading .modalloading {
     text-shadow: 0 1px 0 #FFFFFF;
     border: none;
 }
+
+#sortby_btn {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    padding-top: 5px;
+    color: #111111;    
+}
+
+#sortby_btn:HOVER {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-top: 5px;
+    color: #111111;    
+}
+
+.icon_sort_by {
+	margin-left: 5px;
+    margin-top: 5px;
+}

@@ -76,6 +76,24 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	@Override
+	public Person getByIdWithAll(Integer id) {
+		Session session = null;
+		Person person = null;
+		try {
+			session = sessionFactory.getCurrentSession();
+			person = (Person) session.get(Person.class, id);
+		} catch (Exception e) {
+			log.error(e);
+		}
+		Hibernate.initialize(person.getBooksinuses());
+		Hibernate.initialize(person.getOrders());
+		Hibernate.initialize(person.getWishList());
+		Hibernate.initialize(person.getHistories());
+		session.clear();
+		return person;
+	}
+	
+	@Override
 	public Person getByIdWithBooks(int id) {
 		Session session = null;
 		Person person = null;

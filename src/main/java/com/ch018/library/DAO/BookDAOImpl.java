@@ -94,7 +94,7 @@ public class BookDAOImpl implements BookDAO {
 			session = sessionFactory.getCurrentSession();
 			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
-			log.error("Error get book: " + e);
+			log.error("Error get book: " + e.getMessage());
 		}
 		Hibernate.initialize(book.getHistories());
 		session.clear();
@@ -110,7 +110,7 @@ public class BookDAOImpl implements BookDAO {
 			book = (Book) session.get(Book.class, id);
 			
 		} catch (Exception e) {
-			log.error("Error get book: " + e);
+			log.error("Error get book: " + e.getMessage());
 		}
 		Hibernate.initialize(book.getBooksinuses());
 		session.clear();
@@ -128,6 +128,24 @@ public class BookDAOImpl implements BookDAO {
 			log.error("Error get book: " + e);
 		}
 		Hibernate.initialize(book.getOrders());
+		session.clear();
+		return book;
+	}
+	
+	@Override
+	public Book getBooksByIdAll(Integer id) {
+		Book book = null;
+		Session session = null;
+		try {
+			session = sessionFactory.getCurrentSession();
+			book = (Book) session.get(Book.class, id);
+		} catch (Exception e) {
+			log.error("Error get book: " + e);
+		}
+		Hibernate.initialize(book.getOrders());
+		Hibernate.initialize(book.getWishList());
+		Hibernate.initialize(book.getBooksinuses());
+		Hibernate.initialize(book.getHistories());
 		session.clear();
 		return book;
 	}
@@ -211,7 +229,7 @@ public class BookDAOImpl implements BookDAO {
 			if (search.getAvailable()) {
 				criteria.add(Restrictions.gt("available", 0));
 			}
-			if (search.getYear() != null) {
+			if (search.getYear() != null && search.getGenre() != 0) {
 				criteria.add(Restrictions.eq("year", search.getYear()));
 			}
 			if (search.getGenre() != 0) {

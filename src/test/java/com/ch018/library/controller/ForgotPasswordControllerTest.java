@@ -122,10 +122,4 @@ public class ForgotPasswordControllerTest {
 				.andExpect(view().name("restore"));
 	}
 
-	@Test
-	public void testPasswordRestoreResetPassword() {
-		
-		//fail("Not yet implemented");
-	}
-
 }

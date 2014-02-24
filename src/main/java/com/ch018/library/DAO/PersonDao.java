@@ -24,4 +24,5 @@ public interface PersonDao {
 	long isExist(String email);
 	long count();
 	List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc);
+	Person getByIdWithAll(Integer id);
 }

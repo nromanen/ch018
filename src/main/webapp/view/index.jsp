@@ -34,8 +34,8 @@
 </div>
  -->
 <div class="navbar-inner row-margin">
-	<div class="container" style="width: auto; padding: 5px 20px;">
-		<a type="button" class="btn pull-left" id="sortby_btn" > <spring:message code="sort.field" /> <b class="caret"></b></a>
+	<div class="container" style="width: auto; padding-top: 5px;">	
+	<a type="button" id="sortby_btn" > <spring:message code="sort.field" /> <b class="caret icon_sort_by"></b></a>	
 		<c:if test="${indexSearch != null && indexSearch != ''}">
 			<span><spring:message code="search.results" /> </span>"<c:out value="${indexSearch}"/>" | <a href="<c:url value="/"/>" ><spring:message code="search.showall" /></a>
 		</c:if>

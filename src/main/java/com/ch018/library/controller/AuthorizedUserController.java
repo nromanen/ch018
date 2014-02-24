@@ -175,6 +175,7 @@ public class AuthorizedUserController {
 		AdvancedSearch advancedSearch = new AdvancedSearch();
 		advancedSearch.setTitle("");
 		advancedSearch.setGenre(0);
+		advancedSearch.setYear(0);
 		advancedSearch.setAuthors("");
 		advancedSearch.setPublication("");
 		if (field.equals("title")) {

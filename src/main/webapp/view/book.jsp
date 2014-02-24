@@ -23,7 +23,7 @@
 				<p><strong><spring:message code="book.year" />: </strong>${book.year}</p>
 				<p><strong><spring:message code="book.publication" />: </strong>${book.publication}</p>
 				<p><strong><spring:message code="book.description" />: </strong>${book.description}</p>
-				<p> 
+				
 					<c:choose>
 						<c:when test="${book.available==0}"><span class="label label-important">Not Available</span></c:when>
 						<c:otherwise><span class="label label-success">Available</span></c:otherwise>
@@ -35,8 +35,8 @@
 						${book.rating}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 		            <span class="vote"><spring:message code="votes" />:
 						${book.numberOfEvaluations}</span>
-				</p>
-				<sec:authorize access="isAuthenticated()">
+				<div></div>
+				<sec:authorize access="hasRole('ROLE_USER')">
 				<div class="btn-group btn-group-vertical">
 					<a id="addToWish${book.id}" class="btn btn-success btn-mini"><spring:message code="message.cart" /></a>
 						<input type="hidden" value="${book.id}"/>

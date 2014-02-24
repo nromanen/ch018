@@ -72,11 +72,11 @@ public class PersonController {
 		String field =(String) session.getAttribute("personsort");
 		if (field == null) {
 			session.setAttribute("personsort", sort);
-			field =(String) session.getAttribute("personsort");
+			field = (String) session.getAttribute("personsort");
 		}
 		if (!sort.equals("id")) {
 			session.setAttribute("personsort", sort);
-			field =(String) session.getAttribute("personsort");
+			field = (String) session.getAttribute("personsort");
 		}	
 		Person person = new Person();
 		long count = personService.getCount();
@@ -92,7 +92,10 @@ public class PersonController {
 
 	@RequestMapping(value = "/user/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public int deleteUser(@PathVariable Integer id) {
+	public int deleteUser(@PathVariable Integer id, @RequestParam(value="all", required=false) Integer all) {
+		if (all != null) {
+			return personService.deletePersonCascade(id);
+		}
 		return personService.delete(id);
 	}
 
@@ -124,8 +127,6 @@ public class PersonController {
 			resp.setStatus("FAIL");
 			resp.setResult(result.getAllErrors());
 		}
-
 		return resp;
 	}
-
 }
