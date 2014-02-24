@@ -29,7 +29,11 @@
 		<intercept-url pattern="/registration/**" access="isAnonymous()" />
 		<intercept-url pattern="/login/**" access="isAnonymous()" />
 		<intercept-url pattern="/remind/**" access="isAnonymous()" />
-
+        <intercept-url pattern="/rate/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')"/>
+        <intercept-url pattern="/pass/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')"/>
+        <intercept-url pattern="/profile-email/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')"/>
+        <intercept-url pattern="/delete/**" access="hasAnyRole('ROLE_LIBRARIAN', 'ROLE_USER')"/>
+        
 		<form-login login-page="/login"
 					authentication-failure-url="/login?error" default-target-url="/" />
 		<logout logout-url="/logout"/>

@@ -62,13 +62,7 @@ public class OrderController {
     @Autowired
     private HistoryService historyService;
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
-    @RequestMapping(value = "/fail")
-    public void fail(Model model) {
-    	
-    }
-    
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+        
     @RequestMapping(value = "/prepareorder", method = RequestMethod.GET)
     @ResponseBody
     public int prepareOrder(Model model, 
@@ -78,7 +72,7 @@ public class OrderController {
     	return orderService.prepareOrder(bookId, pers);
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+   
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String order(Model model, 
             @RequestParam("book") int bookId, 
@@ -97,7 +91,7 @@ public class OrderController {
         return "order";
    }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
+   
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     @ResponseBody
     public JsonResponse fixAndSaveOrder(@ModelAttribute("order") Orders newOrder, 
@@ -181,6 +175,7 @@ public class OrderController {
 			                 Principal principal) throws ParseException {
     	 return orderService.updateissueDate(id, issueDate);
     }
+    
     
     @RequestMapping(value = "/deleteorder", method = RequestMethod.GET)
     public String deleteOrder(@RequestParam("id") int id) {

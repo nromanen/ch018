@@ -230,15 +230,15 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public void updateEmail(Person pers, Person pers2, HttpServletRequest request) {
+	public void updateEmail(String message, Person pers, Person pers2, HttpServletRequest request) {
 		pers.setEmailConfirmed(false);
 		pers.setVerificationKey(verifyKey.generate(pers2.getEmail()));
 		personDao.update(pers);
-		
 		String url = request.getRequestURL().toString();
-		String message = "You have change your e-mail address on account in J Library"
-				+ " Please confirm your new email by clicking next link: "
-				+ url + "/confirm?key=" + verifyKey.generate(pers2.getEmail()) + "&email=" +pers2.getEmail();
+		//String message = "You have change your e-mail address on account in J Library"
+			//	+ " Please confirm your new email by clicking next link: "
+				//+ url + "/confirm?key=" + verifyKey.generate(pers2.getEmail()) + "&email=" +pers2.getEmail();
+		message+= url + "/confirm?key=" + verifyKey.generate(pers2.getEmail()) + "&email=" +pers2.getEmail();
 		mailService.sendMail(pers2.getEmail(), "Library email confirmation", message);
 	}
 

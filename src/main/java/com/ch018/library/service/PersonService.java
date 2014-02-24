@@ -29,7 +29,7 @@ public interface PersonService {
 	List<Person> getAll(int currentPos, int pageSize, String field, boolean isAsc);
 	void adminSavePerson(Person person, HttpServletRequest request);
 	void adminUpdatePerson(Person person, Person person2);
-	void updateEmail(Person pers, Person pers2, HttpServletRequest request);
+	void updateEmail(String message, Person pers, Person pers2, HttpServletRequest request);
 	void remindPasswoed(Person person, String message,
 			HttpServletRequest request);
 	boolean updatePassword(Password password, Person person);

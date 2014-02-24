@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.hasSize;
 })
 @WebAppConfiguration
 public class WishListControllerTest {
-
+    
 	@Autowired 
     private WishListService wish;
 	
@@ -67,13 +67,13 @@ public class WishListControllerTest {
 	private Book book = new Book();
 	private Book book2 = new Book();
 	
-	private Person pers = new Person();
+	private Person person = new Person();
 	
 	ArrayList<WishList> wishes = new ArrayList<WishList>();
-	
+			
 	@Before
 	public void setUp() throws Exception {
-		Mockito.reset(wish);
+	//Mockito.reset(wish);
 		
 		book.setAuthors("Authors");
 		book.setAvailable(1);
@@ -108,29 +108,29 @@ public class WishListControllerTest {
 		book2.setGenre(genre2);
 		book2.setImage("img");
 		
-		pers.setId(19);
-		pers.setCellphone("(050) 279-1710");
-		pers.setConfirm(true);
-		pers.setEmail("alex9523@yandex.ru");
-		pers.setEmailConfirmed(true);
-		pers.setFailedOrders(0);
-		pers.setMultibookAllowed(10);
-		pers.setName("Alexandr");
-		pers.setSurname("Krivorotenko");
-		pers.setPassword("1111");
-		pers.setRating(0.88);
-		pers.setRole("ROLE_USER");
-		pers.setSms(true);
-		pers.setTimelyReturns(0);
-		pers.setUntimelyReturns(0);
-		pers.setVerificationKey("dfghjfghk");
+		person.setId(19);
+		person.setCellphone("(050) 279-1710");
+		person.setConfirm(true);
+		person.setEmail("alex9523@yandex.ru");
+		person.setEmailConfirmed(true);
+		person.setFailedOrders(0);
+		person.setMultibookAllowed(10);
+		person.setName("Alexandr");
+		person.setSurname("Krivorotenko");
+		person.setPassword("1111");
+		person.setRating(0.88);
+		person.setRole("ROLE_USER");
+		person.setSms(true);
+		person.setTimelyReturns(0);
+		person.setUntimelyReturns(0);
+		person.setVerificationKey("dfghjfghk");
 		
 		wish1.setBook(book);
-		wish1.setPerson(pers);
+		wish1.setPerson(person);
 		wish1.setId(1);
 		
 		wish2.setBook(book2);
-		wish2.setPerson(pers);
+		wish2.setPerson(person);
 		wish2.setId(2);
 		
 		wishes.add(wish1);
@@ -141,9 +141,15 @@ public class WishListControllerTest {
 		genre2.setId(2);
 		genre2.setName("New");
 		
-		when(principal.getName()).thenReturn("alex9523@yandex.ru");
-		when(personService.getByEmail(principal.getName())).thenReturn(pers);
-		when(wish.getWishesByPerson(personService.getByEmail(principal.getName()).getId())).thenReturn(wishes);
+
+		String email = "alex9523@yandex.ru";
+		String role = "ROLE_USER";
+		int pId = 19;
+		
+		when(principal.getName()).thenReturn(email);
+		when(personService.getByEmail(email)).thenReturn(person);
+		when(person.getId()).thenReturn(pId);
+		when(wish.getWishesByPerson(pId)).thenReturn(wishes);
 	}
 
 	@After
@@ -152,12 +158,13 @@ public class WishListControllerTest {
 
 	@Test
 	public void testGetWisheByPersonId() throws Exception {
-		mockMvc.perform(get("/wishList"))
-		        .andExpect(status().isOk())
-		        .andExpect(view().name("wishList"))
-		        .andExpect(model().attribute("wishByPers", hasSize(2)))
-                .andExpect(model().attribute("wishByPers", hasItem(wish1)))
-                .andExpect(model().attribute("wishByPers", hasItem(wish2)));
+	    mockMvc.perform(get("/wishList"))
+	           .andExpect(status().isOk())
+	           .andExpect(view().name("wishList"))
+	           .andExpect(model().attribute("wishByPers", hasSize(2)))
+	           .andExpect(model().attribute("wishByPers", hasItem(wish1)))
+	           .andExpect(model().attribute("wishByPers", hasItem(wish2)));
+	    verify(wish, times(1)).getWishesByPerson(19);
 	}
 
 	@Test
@@ -171,3 +178,4 @@ public class WishListControllerTest {
 	}
 
 }
+

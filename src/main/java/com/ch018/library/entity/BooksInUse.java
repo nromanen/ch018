@@ -70,7 +70,7 @@ public class BooksInUse {
 		return returnDate;
 	}
 	
-	@Column(name = "mark", columnDefinition = "float default 0")
+   @Column(name = "mark", columnDefinition = "float default 0")
     public float getMark() {
 		return this.mark;
 	}

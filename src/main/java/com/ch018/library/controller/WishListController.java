@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,13 +41,16 @@ public class WishListController {
     @Autowired
     private BooksInUseService bookInUseService;
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/wishList")
-    public ModelAndView getWisheByPersonId(Principal principal) {
-        return new ModelAndView("wishList", "wishByPers", wish.getWishesByPerson(personService.getByEmail(principal.getName()).getId()));
+    public Model getWisheByPersonId(Principal principal, Model model) {
+        String email = principal.getName();
+        Person person = personService.getByEmail(email);
+        int pId = person.getId();
+        model.addAttribute("wishByPers", wish.getWishesByPerson(pId));
+        return model;
+    	//return new ModelAndView("wishList", "wishByPers", wish.getWishesByPerson(personService.getByEmail(principal.getName()).getId()));
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public int deleteWish2(@PathVariable int id){
@@ -54,7 +58,6 @@ public class WishListController {
     	return 0;
     }
     
-    @Secured({"ROLE_USER", "ROLE_LIBRARIAN" })
     @RequestMapping(value = "/wishlist/{id}", method = RequestMethod.GET)
     @ResponseBody
     public int addWish(@PathVariable int id,

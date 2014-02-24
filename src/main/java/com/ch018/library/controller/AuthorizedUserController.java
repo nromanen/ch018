@@ -26,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.History;
 import com.ch018.library.entity.Person;
 import com.ch018.library.form.AdvancedSearch;
 import com.ch018.library.form.Password;
 import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.GenreService;
+import com.ch018.library.service.HistoryService;
 import com.ch018.library.service.PersonService;
 import com.ch018.library.service.WishListService;
 import com.ch018.library.util.IConstants;
@@ -70,6 +72,8 @@ public class AuthorizedUserController {
     @Autowired 
 	private MessageSource messageSource;
     
+    @Autowired
+    private HistoryService historyService;
     /**
      * 
      * @param page - current page
@@ -233,13 +237,13 @@ public class AuthorizedUserController {
 		model.addAttribute("votes", votes);
 		float mark = books.getRating();
 		BigDecimal bd = new BigDecimal(mark);
-		float usermark = inUse.getById(buid).getMark();
+		History history = historyService.getEntry(inUse.getById(buid).getPerson(), books);
+		float usermark = history.getMark();
 		BigDecimal bdUserMark = new BigDecimal(usermark);
 		bd = bd.setScale(2, BigDecimal.ROUND_HALF_DOWN);
 		bdUserMark.setScale(2,BigDecimal.ROUND_HALF_DOWN);
 		model.addAttribute("mark", bd);
 		model.addAttribute("usermark", bdUserMark);
-		System.out.println(bookID);
 	}
 	
 	/**
@@ -360,7 +364,8 @@ public class AuthorizedUserController {
 			return resp;
 		}
 		Person pers = persService.getByEmail(principal.getName());
-		persService.updateEmail(pers, person, request);
+		String message = messageSource.getMessage("message.change.email", new Object[]{}, LocaleContextHolder.getLocale());
+		persService.updateEmail(message, pers, person, request);
 		resp.setStatus("SUCCESS");
 		return resp;
 	}
