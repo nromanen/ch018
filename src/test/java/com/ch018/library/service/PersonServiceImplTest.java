@@ -231,11 +231,6 @@ public class PersonServiceImplTest {
 	}
 
 	@Test
-	public void testRemindPasswoed() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testRestorePassword() {
 		String query = "select id, cellphone, confirmed, e_mail, "
 				+ "activated, failedOrders, multibookAllowed, name, password, rating, "
@@ -378,16 +373,6 @@ public class PersonServiceImplTest {
 	}
 
 	@Test
-	public void testGetByIdWithBooks() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetByIdWithOrders() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetByEmail() {
 		String query = "select name from person where e_mail='" + person.getEmail() + "'";
         ResultSet rs;
@@ -406,26 +391,6 @@ public class PersonServiceImplTest {
 		Person actual = new Person();
 		actual = personService.getByEmail(person.getEmail());
 		assertEquals(person, actual);
-	}
-
-	@Test
-	public void testGetByKey() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSmsEnabled() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateAccProperties() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsExist() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -475,16 +440,6 @@ public class PersonServiceImplTest {
 		Long expected = 2L;
 		Long actual = personService.getCount();
 		assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testUpdateEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdatePassword() {
-		fail("Not yet implemented");
 	}
 
 }

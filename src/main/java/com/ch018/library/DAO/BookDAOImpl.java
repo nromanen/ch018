@@ -94,7 +94,7 @@ public class BookDAOImpl implements BookDAO {
 			session = sessionFactory.getCurrentSession();
 			book = (Book) session.get(Book.class, id);
 		} catch (Exception e) {
-			log.error("Error get book: " + e);
+			log.error("Error get book: " + e.getMessage());
 		}
 		Hibernate.initialize(book.getHistories());
 		session.clear();
@@ -110,7 +110,7 @@ public class BookDAOImpl implements BookDAO {
 			book = (Book) session.get(Book.class, id);
 			
 		} catch (Exception e) {
-			log.error("Error get book: " + e);
+			log.error("Error get book: " + e.getMessage());
 		}
 		Hibernate.initialize(book.getBooksinuses());
 		session.clear();
@@ -229,7 +229,7 @@ public class BookDAOImpl implements BookDAO {
 			if (search.getAvailable()) {
 				criteria.add(Restrictions.gt("available", 0));
 			}
-			if (search.getYear() != null) {
+			if (search.getYear() != null && search.getGenre() != 0) {
 				criteria.add(Restrictions.eq("year", search.getYear()));
 			}
 			if (search.getGenre() != 0) {

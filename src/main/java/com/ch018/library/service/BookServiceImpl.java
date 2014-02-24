@@ -36,9 +36,6 @@ public class BookServiceImpl implements BookService {
 	private BooksInUseDAO booksInUseDAO;
 	
 	@Autowired
-	private LocalizationService localizationService;
-	
-	@Autowired
 	private HistoryDAO historyDAO;
 	
 	@Override
@@ -117,6 +114,10 @@ public class BookServiceImpl implements BookService {
 		for (History history : histories) {
 			historyDAO.removeHistory(history);
 		}
+		book.setBooksinuses(null);
+		book.setOrders(null);
+		book.setWishList(null);
+		book.setHistories(null);
 		return bookDAO.deleteBook(id);
 	}
 	

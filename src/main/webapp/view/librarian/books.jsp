@@ -97,15 +97,7 @@
 		</form>
 	</div>
 
-	<!-- Alert -->
-	<div class="alert alert-error" style="display: none">
-		<button type="button" class="close">&times;</button>
-		<h4>
-			<spring:message code="message.error" />
-		</h4>
-		<spring:message code="book.errordel" />
-		You must <a href="${pageContext.request.contextPath}/book/delete" class="delete_all_orders">DELETE</a> all orders this book first.<span class="book_id_remove hide"></span>
-	</div>
+	
 
 	<!-- Books table class="TableBooks"-->
 	<div style="overflow-y: scroll">
@@ -287,9 +279,17 @@
 		</div>
 		<div class="modal-body">
 			<span><spring:message code="message.delete" /></span> <span class="hide" id="name"></span>
+			<!-- Alert -->
+			<div class="alert alert-error" style="display: none">
+				<h4>
+					<spring:message code="message.error" />
+				</h4>
+				<spring:message code="book.errordel" />
+				You must <a href="${pageContext.request.contextPath}/book/delete" class="delete_all_orders">DELETE</a> all orders this book first.<span class="book_id_remove hide"></span>
+			</div>
 		</div>
 		<div class="modal-footer">
-			<a id="deleteLink" data-dismiss="modal"
+			<a id="deleteLink" 
 				href="${pageContext.request.contextPath}/book/delete"
 				class="btn btn-danger"><spring:message code="button.delete" /></a> <a
 				id="canceldelete" href="#" class="btn" data-dismiss="modal"

@@ -163,12 +163,6 @@ public class BooksControllerTest {
 	}
 
 	@Test
-	public void testNewOrUpdateBook() throws Exception {
-		mockMvc.perform(post("/book/update").param("title", "title")
-				).andExpect(status().isOk());
-	}
-
-	@Test
 	public void testShowBooks() throws Exception {
 		mockMvc.perform(get("/books").sessionAttr("sort", "id"))
 				.andExpect(status().isOk())
@@ -179,7 +173,6 @@ public class BooksControllerTest {
 				.andExpect(model().attribute("books", hasItem(book)))
 				.andExpect(model().attribute("books", hasItem(book2)));
 		verify(bookService, times(1)).getAllBooks(0,IConstants.PAGE_SIZE,"id", false);
-		//verifyNoMoreInteractions(bookService);
 		verify(genreService, times(1)).getAllGenres("en");
 		verifyNoMoreInteractions(genreService);
 	}

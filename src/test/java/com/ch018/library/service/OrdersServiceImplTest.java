@@ -275,35 +275,11 @@ public class OrdersServiceImplTest {
 		assertEquals(expected, actual);
 	}
 
-	@Test
-	public void testGetById() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDeleteOrderInt() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testOrderExist() {
 		assertTrue(ordersService.orderExist(1, 1));
 		assertFalse(ordersService.orderExist(2, 2));
-	}
-
-	@Test
-	public void testMinOrderDateOf() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCountOrdersByPerson() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -363,33 +339,6 @@ public class OrdersServiceImplTest {
 			e.printStackTrace();
 		}
 		assertEquals(i, ordersService.countOrdersPerHour());
-	}
-
-
-
-	@Test
-	public void testGetCountOrdersBookBeetweenDates() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateissueDate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPrepareOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAllOrdersAfter() {
-		fail("Not yet implemented");
 	}
 
 }

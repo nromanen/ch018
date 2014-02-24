@@ -116,16 +116,6 @@ public class OrderControllerTest {
 	}
 
 	@Test
-	public void testPrepareOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testFixAndSaveOrder() throws Exception {
 		JsonResponse jsonResponse = new JsonResponse();
 		jsonResponse.setStatus("SUCCESS");
@@ -134,21 +124,6 @@ public class OrderControllerTest {
 				.param("book.id", "1").param("person.id", "1"))
 				.andReturn().getResponse().getContentAsString();
 		//assertEquals(((Object)jsonResponse).toString(), ret);
-	}
-
-	@Test
-	public void testShowOrder() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEditIssueDate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDeleteOrderInt() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -173,16 +148,6 @@ public class OrderControllerTest {
 		
 		verify(personService, times(1)).getByIdWithOrders(1);
 		verifyNoMoreInteractions(personService);
-	}
-
-	@Test
-	public void testDeleteOrderInteger() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIssueOrder() {
-		fail("Not yet implemented");
 	}
 
 }

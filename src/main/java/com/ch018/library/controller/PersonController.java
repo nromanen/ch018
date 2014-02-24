@@ -92,7 +92,10 @@ public class PersonController {
 
 	@RequestMapping(value = "/user/delete{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public int deleteUser(@PathVariable Integer id) {
+	public int deleteUser(@PathVariable Integer id, @RequestParam(value="all", required=false) Integer all) {
+		if (all != null) {
+			return personService.deletePersonCascade(id);
+		}
 		return personService.delete(id);
 	}
 

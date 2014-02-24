@@ -1,5 +1,6 @@
 package com.ch018.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ch018.library.DAO.BooksInUseDAO;
+import com.ch018.library.DAO.HistoryDAO;
+import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.DAO.PersonDao;
+import com.ch018.library.DAO.WishListDAO;
+import com.ch018.library.entity.BooksInUse;
+import com.ch018.library.entity.History;
+import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
+import com.ch018.library.entity.WishList;
 import com.ch018.library.entity.Person.Role;
 import com.ch018.library.form.Password;
 import com.ch018.library.form.Registration;
@@ -33,6 +42,18 @@ public class PersonServiceImpl implements PersonService {
 	
 	@Autowired 
 	private MessageSource messageSource;
+	
+	@Autowired
+	private OrdersDAO ordersDAO;
+	
+	@Autowired
+	private WishListDAO wishListDAO;
+	
+	@Autowired
+	private BooksInUseDAO booksInUseDAO;
+	
+	@Autowired
+	private HistoryDAO historyDAO;
 	
 	private VerificationKey verifyKey;
 	
@@ -91,6 +112,33 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	@Transactional
 	public int delete(int id) {
+		return personDao.delete(id);
+	}
+	
+	@Override
+	@Transactional
+	public int deletePersonCascade(Integer id) {
+		Person person = personDao.getByIdWithAll(id);
+		List<WishList> wishList = new ArrayList<>(person.getWishList());
+		for (WishList wish : wishList) {
+			wishListDAO.deleteWish(wish);
+		}
+		List<Orders> orders = new ArrayList<>(person.getOrders());
+		for (Orders order : orders) {
+			ordersDAO.deleteOrder(order);
+		}
+		List<BooksInUse> booksInUses = new ArrayList<>(person.getBooksinuses());
+		for (BooksInUse booksInUse : booksInUses) {
+			booksInUseDAO.removeBooksInUse(booksInUse.getBuid());
+		}
+		List<History> histories = new ArrayList<>(person.getHistories());
+		for (History history : histories) {
+			historyDAO.removeHistory(history);
+		}
+		person.setBooksinuses(null);
+		person.setWishList(null);
+		person.setOrders(null);
+		person.setHistories(null);
 		return personDao.delete(id);
 	}
 

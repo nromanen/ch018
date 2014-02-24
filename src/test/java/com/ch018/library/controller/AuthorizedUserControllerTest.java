@@ -337,27 +337,4 @@ public class AuthorizedUserControllerTest {
 		verify(bookService, times(1)).getBooksById(1);
 	}
 
-	@Test
-	public void testViewAccount() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEditProfile() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPasswordView() throws Exception {
-		mockMvc.perform(post("/pass").param("password", "123456")
-				.param("confirmPassword", "654321")
-				.param("newPassword", "654321"))
-				.andExpect(status().isOk());
-	}
-
-	@Test
-	public void testChangePassword() {
-		fail("Not yet implemented");
-	}
-
 }

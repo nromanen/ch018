@@ -38,7 +38,7 @@ function fill_form(box, id) {
 
 function reset_form() {
 	$("#id").css("display", "none");
-	  $("#id").val("");
+	  $("#id").val("0");
 	  $("#title").val("");
 	  $("#authors").val("");
 	  $("#year").val("");
@@ -217,8 +217,8 @@ $(document).ready(function() {
         	  else {
         		  console.log("success");
         		  $(".table" + id).remove();
+        		  $('#popup').modal("hide");
         	  }
-        	  $('#popup').modal("hide");
           },
           error: function(data) {
         	  console.log("error");
