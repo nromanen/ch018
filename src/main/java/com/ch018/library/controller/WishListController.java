@@ -41,14 +41,14 @@ public class WishListController {
     @Autowired
     private BooksInUseService bookInUseService;
     
-    @RequestMapping(value = "/wishList")
+    @RequestMapping(value = "/wishList", method = RequestMethod.GET)
     public Model getWisheByPersonId(Principal principal, Model model) {
-        String email = principal.getName();
-        Person person = personService.getByEmail(email);
+        //String email = principal.getName();
+        Person person = personService.getByEmail(principal.getName());
         int pId = person.getId();
         model.addAttribute("wishByPers", wish.getWishesByPerson(pId));
         return model;
-    	//return new ModelAndView("wishList", "wishByPers", wish.getWishesByPerson(personService.getByEmail(principal.getName()).getId()));
+    	
     }
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

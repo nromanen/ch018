@@ -12,10 +12,12 @@ import com.ch018.library.DAO.BookDAO;
 import com.ch018.library.DAO.BooksInUseDAO;
 import com.ch018.library.DAO.OrdersDAO;
 import com.ch018.library.DAO.PersonDao;
+import com.ch018.library.entity.Book;
 import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Orders;
 import com.ch018.library.entity.Person;
 import com.ch018.library.util.CalculateRating;
+import com.ch018.library.util.Smsc;
 
 @Service
 public class ScheduleServise {
@@ -35,7 +37,10 @@ public class ScheduleServise {
 	@Autowired
 	private MailService mailService;
 	
-	@Scheduled(cron="0 45 15 * * MON-FRI")
+	@Autowired
+	Smsc sd= new Smsc();
+	
+	@Scheduled(cron="0 45 20 * * MON-FRI")
 	@Transactional
 	public void setFailedOrder() {
 		Person person = new Person();
@@ -56,13 +61,19 @@ public class ScheduleServise {
 	@Transactional
 	public void checkReturn() {
 		Person person = new Person();
+		Book book = new Book();
 		Calendar calendar = Calendar.getInstance();
 		calendar.roll(Calendar.DAY_OF_YEAR, 5);
 		String message = "Its 5 days left for books: ";
 		List<BooksInUse> booksInUse = booksInUseDAO.getByReturnDate(calendar.getTime());
 		for (BooksInUse bookInUse : booksInUse) {
 			person = bookInUse.getPerson();
+			book = bookInUse.getBook();
 			mailService.sendMail(person.getEmail(),	"Library email confirmation", message + bookInUse.getBook().getTitle());
+			if(person.getSms()) {
+				sd.send_sms("+38" + person.getCellphone(), "Don't forget to return "+book.getTitle()+ " "+bookInUse.getReturnDate()+ "!!!"
+						   , 0, "", "", 0, "J Library", "");
+			}
 		}
 	}
 }

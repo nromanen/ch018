@@ -116,7 +116,6 @@ public class OrderController {
         	} 
         }
         List<Orders> orders = new ArrayList<Orders>();
-    	//orders = orderService.getAllOrdersAfter(newOrder.getIssueDate(), bookId);
         orders = orderService.getAllOrdersAfter(Calendar.getInstance().getTime(), bookId);
         if(available > orders.size()) {
            aprovedOrder=true;
@@ -137,7 +136,7 @@ public class OrderController {
 				if ((orders.get(i).getIssueDate().after(expectedReturnDate))
 						&& (!orders.get(i).getPreOrder())) {
 					aprovedOrder = true;
-					Orders order = orders.get(i);
+					Orders order = orders.get(i); 
 					order.setPreOrder(true);
 					orderService.updateOrder(order);
 					break;
