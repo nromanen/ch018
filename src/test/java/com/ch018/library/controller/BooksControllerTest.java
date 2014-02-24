@@ -164,7 +164,6 @@ public class BooksControllerTest {
 
 	@Test
 	public void testNewOrUpdateBook() throws Exception {
-		//book.setTerm(-1);
 		mockMvc.perform(post("/book/update").param("title", "title")
 				).andExpect(status().isOk());
 	}

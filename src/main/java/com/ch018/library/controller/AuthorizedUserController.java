@@ -240,7 +240,6 @@ public class AuthorizedUserController {
 		bdUserMark.setScale(2,BigDecimal.ROUND_HALF_DOWN);
 		model.addAttribute("mark", bd);
 		model.addAttribute("usermark", bdUserMark);
-		System.out.println(bookID);
 	}
 	
 	/**

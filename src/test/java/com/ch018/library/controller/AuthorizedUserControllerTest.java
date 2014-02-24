@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.ch018.library.entity.Book;
+import com.ch018.library.entity.BooksInUse;
 import com.ch018.library.entity.Genre;
 import com.ch018.library.entity.Localization;
 import com.ch018.library.entity.Person;
@@ -66,6 +68,7 @@ public class AuthorizedUserControllerTest {
 	private String search = "java";
 	private AdvancedSearch advancedSearch = new AdvancedSearch();
 	private Password password = new Password();
+	private BooksInUse booksInUse = new BooksInUse();
 
 	private MockMvc mockMvc;
 
@@ -181,6 +184,13 @@ public class AuthorizedUserControllerTest {
 		password.setPassword("123456");
 		password.setNewPassword("654321");
 		password.setConfirmPassword("654321");
+		
+		booksInUse.setBook(book);
+		booksInUse.setBuid(1);
+		booksInUse.setIssueDate(new Date());
+		booksInUse.setMark(5);
+		booksInUse.setPerson(person);
+		booksInUse.setReturnDate(new Date());
 
 		when(genreService.getAllGenres("en")).thenReturn(Arrays.asList(genre));
 		when(localizationService.getName(genre.getId(), "en")).thenReturn(
@@ -199,7 +209,7 @@ public class AuthorizedUserControllerTest {
 						IConstants.PAGE_SIZE)).thenReturn(Arrays.asList(book2));
 		when(personService.getByEmail(person.getEmail())).thenReturn(person);
 		when(personService.updatePassword(password, person)).thenReturn(true);
-		//when(booksInUseService.getById(1).getMark()).thenReturn(5f);
+		when(booksInUseService.getById(1)).thenReturn(booksInUse);
 		//when(principal.getName()).thenReturn(person.getEmail());
 	}
 
@@ -324,7 +334,7 @@ public class AuthorizedUserControllerTest {
 				.andExpect(model().attribute("book", book))
 				.andExpect(model().attribute("buid", 1))
 				.andExpect(model().attribute("votes", book.getNumberOfEvaluations()));
-				//.andExpect(model().attribute("", matcher))
+		verify(bookService, times(1)).getBooksById(1);
 	}
 
 	@Test
