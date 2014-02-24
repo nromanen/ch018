@@ -37,6 +37,7 @@ import com.ch018.library.service.BookService;
 import com.ch018.library.service.BooksInUseService;
 import com.ch018.library.service.OrdersService;
 import com.ch018.library.service.PersonService;
+import com.ch018.library.util.JsonResponse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -126,12 +127,13 @@ public class OrderControllerTest {
 
 	@Test
 	public void testFixAndSaveOrder() throws Exception {
-		mockMvc.perform(post("/order").param("issueDate", order.getIssueDate().toString())
+		JsonResponse jsonResponse = new JsonResponse();
+		jsonResponse.setStatus("SUCCESS");
+		String ret = mockMvc.perform(post("/order").param("issueDate", order.getIssueDate().toString())
 				.param("term", "14").param("book.title", order.getBook().getTitle())
-				.param("book.id", "1").param("person.id", "1"));
-		
-		
-		
+				.param("book.id", "1").param("person.id", "1"))
+				.andReturn().getResponse().getContentAsString();
+		//assertEquals(((Object)jsonResponse).toString(), ret);
 	}
 
 	@Test

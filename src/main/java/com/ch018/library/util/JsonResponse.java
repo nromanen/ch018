@@ -29,5 +29,10 @@ public class JsonResponse {
     public void setErrorsMap(Map<String,String> errorsMap) {
         this.errorsMap = errorsMap;
     }
+    
+    @Override
+    public String toString() {
+    	return "JsonResponse[status: " + getStatus() + ", result: " + getResult() + ", Errors: " + getErrorsMap() + "]";
+    }
 
 }
