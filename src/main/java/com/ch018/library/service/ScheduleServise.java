@@ -37,7 +37,7 @@ public class ScheduleServise {
 	@Autowired
 	private MailService mailService;
 	
-	@Autowired
+	
 	Smsc sd= new Smsc();
 	
 	@Scheduled(cron="0 45 20 * * MON-FRI")
