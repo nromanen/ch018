@@ -135,10 +135,6 @@ public class PersonServiceImpl implements PersonService {
 		for (History history : histories) {
 			historyDAO.removeHistory(history);
 		}
-		person.setBooksinuses(null);
-		person.setWishList(null);
-		person.setOrders(null);
-		person.setHistories(null);
 		return personDao.delete(id);
 	}
 

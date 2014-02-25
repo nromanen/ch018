@@ -326,15 +326,4 @@ public class AuthorizedUserControllerTest {
 		verify(bookService, times(1)).getBooksById(1);
 	}
 
-	@Test
-	public void testRate() throws Exception {
-		mockMvc.perform(get("/rate").param("bookID", "1")
-				.param("buID", "1"))
-				.andExpect(status().isOk())
-				.andExpect(model().attribute("book", book))
-				.andExpect(model().attribute("buid", 1))
-				.andExpect(model().attribute("votes", book.getNumberOfEvaluations()));
-		verify(bookService, times(1)).getBooksById(1);
-	}
-
 }
