@@ -94,7 +94,8 @@ public class PersonController {
 	@ResponseBody
 	public int deleteUser(@PathVariable Integer id, @RequestParam(value="all", required=false) Integer all) {
 		if (all != null) {
-			return personService.deletePersonCascade(id);
+			personService.deletePersonCascade(id);
+			return personService.delete(id);
 		}
 		return personService.delete(id);
 	}

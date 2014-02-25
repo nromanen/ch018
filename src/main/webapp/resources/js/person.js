@@ -37,6 +37,7 @@ $(document).ready(function() {
 		    	  } else {
 		    		  for(var key in response.errorsMap) { 
 		    			  console.log(response.errorsMap[key]);
+		    			  $("#error" + key).show();
 		    			  $("#error" + key).text(response.errorsMap[key]);
 		    		  }
 		    	  }
