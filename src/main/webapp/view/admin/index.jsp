@@ -112,10 +112,17 @@
 		</div>
 		<div class="modal-body">
 			<span><spring:message code="message.delete" /></span> <span class="hide" id="name"></span>
+			<!-- Alert -->
+			<div class="alert alert-error" style="display: none">
+				<h4>
+					<spring:message code="message.error" />
+				</h4>
+				<spring:message code="book.errordel" />
+				You must <a href="${pageContext.request.contextPath}/user/delete" class="delete_all_orders">DELETE</a> all orders of this user first.<span class="book_id_remove hide"></span>
+			</div>
 		</div>
 		<div class="modal-footer">
-			<a id="deleteLink" data-dismiss="modal"
-				href="${pageContext.request.contextPath}/user/delete"
+			<a id="deleteLink" href="${pageContext.request.contextPath}/user/delete"
 				class="btn btn-danger"><spring:message code="button.delete" /></a> <a
 				id="canceldelete" href="#" class="btn" data-dismiss="modal"
 				aria-hidden="true"><spring:message code="button.cancel" /></a>

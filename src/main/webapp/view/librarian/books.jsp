@@ -20,7 +20,7 @@
 <div class="span10 offset1">
 	<div class="row-fluid">
 		<!-- Button group -->
-		<div class="span7" style="overflow: scroll;">
+		<div class="span7" style="overflow: auto;">
 			<div class="btn-group" data-toggle="buttons-radio">
 				<a href="<c:url value="/books"/>" class="btn btn-primary"><spring:message
 						code="book.all" /></a> <a href="<c:url value="/books/show/issuetd"/>"
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<div class="offset1 span4">
+		<div class="span4 pull-right">
 			<form class="formi" method="GET"
 				action="${pageContext.request.contextPath}/books/search">
 				<div class="input-append row">
@@ -149,7 +149,7 @@
 						<c:if test="${show == null}">
 							<a href="<c:url value="?sort=term${asc}"/>"><i class="icon-chevron-down"></i></a>
 						</c:if></nobr></th>
-					<th><nobr><spring:message code="book.count" />
+					<th><nobr><spring:message code="book.count.avail" />
 						<c:if test="${show == null}">
 							<a href="<c:url value="?sort=count${asc}"/>"><i class="icon-chevron-down"></i></a>
 						</c:if></nobr></th>
@@ -285,7 +285,7 @@
 					<spring:message code="message.error" />
 				</h4>
 				<spring:message code="book.errordel" />
-				You must <a href="${pageContext.request.contextPath}/book/delete" class="delete_all_orders">DELETE</a> all orders this book first.<span class="book_id_remove hide"></span>
+				You must <a href="${pageContext.request.contextPath}/book/delete" class="delete_all_orders">DELETE</a> all orders of this book first.<span class="book_id_remove hide"></span>
 			</div>
 		</div>
 		<div class="modal-footer">
