@@ -231,7 +231,8 @@ public class BooksController {
 	@ResponseBody
 	public int deleteBook(@PathVariable Integer id, @RequestParam(value="all", required=false) Integer all) {
 		if (all != null) {
-			return bookService.deleteBookAll(id);
+			bookService.deleteBookAll(id);
+			return  bookService.deleteBook(id);
 		}
 		return bookService.deleteBook(id);
 	}
